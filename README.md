@@ -1,4 +1,4 @@
-![Suspect](https://github.com/moxvallix/opensuspect/blob/main/source/images/suspect.png?raw=true =250x)
+<img alt="Little Suspect" src="ttps://github.com/moxvallix/opensuspect/blob/main/source/images/suspect.png?raw=true" width="200" />
 
 # OpenSuspect
 
