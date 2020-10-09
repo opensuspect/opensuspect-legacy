@@ -16,3 +16,4 @@ Interested to get involved? We'd love to hear from you.
 
 * Collaborative game play
 * Easy to modify and extend
+* Voice chat integration with Mumble
