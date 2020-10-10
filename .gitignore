@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-*.import
-=======
 # Godot-specific ignores
 .import/
 
@@ -10,4 +7,3 @@
 # Mono-specific ignores
 .mono/
 data_*/
->>>>>>> 64361c2c9373962910efc597b1b9af1e0b0fb56f
