@@ -50,11 +50,6 @@ ui_down={
  ]
 }
 
-[locale]
-
-locale_filter=[ 0, [ "en", "en_US" ] ]
-translations=PoolStringArray( "res://Localizations/en_US.csv" )
-
 [rendering]
 
 vram_compression/import_etc=true
