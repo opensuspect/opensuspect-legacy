@@ -14,7 +14,7 @@ func get_input():
 	if Input.is_action_pressed('ui_left'):
 		velocity.x = -speed
 	if Input.is_action_pressed('ui_down'):
-		velocity.y += speed
+		velocity.y = speed
 	if Input.is_action_pressed('ui_up'):
 		velocity.y = -speed
 func _physics_process(delta):
