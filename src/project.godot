@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="opensuspect"
-run/main_scene="res://Scenes/Title.tscn"
+run/main_scene="res://Scenes/main.tscn"
 config/icon="res://icon.png"
 
 [input]
@@ -49,11 +49,6 @@ ui_down={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
  ]
 }
-
-[locale]
-
-locale_filter=[ 0, [ "en", "en_US" ] ]
-translations=PoolStringArray( "res://Localizations/en_US.csv" )
 
 [rendering]
 
