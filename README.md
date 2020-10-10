@@ -1,4 +1,4 @@
-<img alt="Little Suspect" src="ttps://github.com/moxvallix/opensuspect/blob/main/source/images/suspect.png?raw=true" width="200" />
+<img alt="Little Suspect" src="https://github.com/moxvallix/opensuspect/blob/main/misc/images/icon_1.png">
 
 # OpenSuspect
 
