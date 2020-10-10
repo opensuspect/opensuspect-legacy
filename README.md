@@ -11,6 +11,7 @@ It is built using the Godot engine.
 
 This project is in *very early stage* development.
 Interested to get involved? We'd love to hear from you.
+Join us at #opensuspect:matrix.org on a Matrix client (element.io).
 
 ## Aims
 
