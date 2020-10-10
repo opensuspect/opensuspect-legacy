@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 export (int) var speed = 200
 
+# Set by main.gd. Is the client's unique id for this player
+var id
 var velocity = Vector2()
 
 func get_input():
