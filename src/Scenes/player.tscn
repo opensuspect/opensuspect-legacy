@@ -8,7 +8,7 @@
 [ext_resource path="res://Assets/Characters/black/black-proto-1.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 23.6249, 45.7498 )
+extents = Vector2( 21, 36.2059 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -33,3 +33,7 @@ shape = SubResource( 1 )
 frames = SubResource( 2 )
 animation = "idle"
 playing = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.5, 0.5 )
