@@ -4,9 +4,9 @@
 
 *One amongst us is not like the rest*
 
-OpenSuspect is an open source Among Us / Mafia clone.
+OpenSuspect is an open source online social deduction game, like mafia.
 
-OpenSuspect aims to be an easily modifiable social deduction game.
+OpenSuspect aims to be easily modifiable.
 It is built using the Godot engine.
 
 This project is in *very early stage* development.
@@ -18,3 +18,6 @@ Join us at [`#opensuspect:matrix.org`](https://matrix.to/#/#opensuspect:matrix.o
 * Collaborative game play
 * Easy to modify and extend
 * Voice chat integration with Mumble
+
+## Requirements
+Currently you need git-lfs, which we are using to handle asset storage
