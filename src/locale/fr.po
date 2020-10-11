@@ -20,19 +20,19 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
 msgid "TUTORIAL"
-msgstr ""
+msgstr "TUTORIEL"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "JOIN GAME"
-msgstr ""
+msgstr "REJOINDRE UNE PARTIE"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
 msgid "CREATE GAME"
-msgstr ""
+msgstr "CRÉER UNE PARTIE"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
 msgid "BACK"
-msgstr ""
+msgstr "RETOUR"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
@@ -40,19 +40,19 @@ msgstr "Non d'hôte"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:81
 msgid "localhost"
-msgstr "localhost"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
 msgid "Port"
-msgstr "Port"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "CONNECT"
-msgstr ""
+msgstr "CONNECTER"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
 msgid "CREATE"
-msgstr ""
+msgstr "CRÉER"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
@@ -60,61 +60,24 @@ msgstr "Plein écran"
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
-msgstr "OpenSuspect"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
 msgid "PLAY"
-msgstr ""
+msgstr "JOUER"
 
 #: ../../src/Scenes/UI/Title.tscn:75
 msgid "APPEARANCE"
-msgstr ""
+msgstr "APPARENCE"
 
 #: ../../src/Scenes/UI/Title.tscn:85
 msgid "SETTINGS"
-msgstr ""
+msgstr "PARAMÈTRES"
 
 #: ../../src/Scenes/UI/Title.tscn:95
 msgid "LANGUAGE"
-msgstr ""
+msgstr "LANGUE"
 
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
-msgstr ""
-
-#: ../../src/Scripts/Languages.gd:12
-msgid "Back"
-msgstr "RETOUR"
-
-#~ msgid "Tutorial"
-#~ msgstr "TUTORIEL"
-
-#~ msgid "Join Game"
-#~ msgstr "REJOINDRE UNE PARTIE"
-
-#~ msgid "Create Game"
-#~ msgstr "CRÉER UNE PARTIE"
-
-#~ msgid "Connect"
-#~ msgstr "Connecter"
-
-#~ msgid "Create"
-#~ msgstr "CRÉER"
-
-#~ msgid "Play"
-#~ msgstr "JOUER"
-
-#~ msgid "Edit Appearance"
-#~ msgstr "MODIFIER L'APPARENCE"
-
-#~ msgid "Settings"
-#~ msgstr "PARAMÈTRES"
-
-#~ msgid "Language"
-#~ msgstr "LANGUE"
-
-#~ msgid "Quit"
-#~ msgstr "QUITTER"
-
-#~ msgid "Test button"
-#~ msgstr "Bouton de test"
+msgstr "QUITTER"

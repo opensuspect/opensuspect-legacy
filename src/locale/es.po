@@ -24,19 +24,19 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "JOIN GAME"
-msgstr ""
+msgstr "UNIRSE A UNA PARTIDA"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
 msgid "CREATE GAME"
-msgstr ""
+msgstr "CREAR PARTIDA"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
 msgid "BACK"
-msgstr ""
+msgstr "ATRÁS"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
-msgstr "Nombre del host"
+msgstr "NOMBRE DEL HOST"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:81
 msgid "localhost"
@@ -44,15 +44,15 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
 msgid "Port"
-msgstr "Puerto"
+msgstr "PUERTO"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "CONNECT"
-msgstr ""
+msgstr "CONECTAR"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
 msgid "CREATE"
-msgstr ""
+msgstr "CREAR"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
@@ -64,57 +64,20 @@ msgstr "OpenSuspect"
 
 #: ../../src/Scenes/UI/Title.tscn:68
 msgid "PLAY"
-msgstr ""
+msgstr "JUGAR"
 
 #: ../../src/Scenes/UI/Title.tscn:75
 msgid "APPEARANCE"
-msgstr ""
+msgstr "APARIENCIA"
 
 #: ../../src/Scenes/UI/Title.tscn:85
 msgid "SETTINGS"
-msgstr ""
+msgstr "AJUSTES"
 
 #: ../../src/Scenes/UI/Title.tscn:95
 msgid "LANGUAGE"
-msgstr ""
+msgstr "IDIOMA"
 
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
-msgstr ""
-
-#: ../../src/Scripts/Languages.gd:12
-msgid "Back"
-msgstr "Atrás"
-
-#~ msgid "Tutorial"
-#~ msgstr "Tutorial"
-
-#~ msgid "Join Game"
-#~ msgstr "Unirse a una partida"
-
-#~ msgid "Create Game"
-#~ msgstr "Crear partida"
-
-#~ msgid "Connect"
-#~ msgstr "Conectar"
-
-#~ msgid "Create"
-#~ msgstr "Crear"
-
-#~ msgid "Play"
-#~ msgstr "Jugar"
-
-#~ msgid "Edit Appearance"
-#~ msgstr "Editar Apariencia"
-
-#~ msgid "Settings"
-#~ msgstr "Ajustes"
-
-#~ msgid "Language"
-#~ msgstr "Idioma"
-
-#~ msgid "Quit"
-#~ msgstr "Salir"
-
-#~ msgid "Test button"
-#~ msgstr "Botón de prueba"
+msgstr "SALIR"

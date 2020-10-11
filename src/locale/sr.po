@@ -21,19 +21,19 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
 msgid "TUTORIAL"
-msgstr ""
+msgstr "ТУТОРИЈАЛ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "JOIN GAME"
-msgstr ""
+msgstr "ПРИДРУЖИ СЕ ИГРИ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
 msgid "CREATE GAME"
-msgstr ""
+msgstr "НАПРАВИ ИГРУ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
 msgid "BACK"
-msgstr ""
+msgstr "НАЗАД"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
@@ -49,11 +49,11 @@ msgstr "Порт"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "CONNECT"
-msgstr ""
+msgstr "КОНЕКТУЈ СЕ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
 msgid "CREATE"
-msgstr ""
+msgstr "НАПРАВИ"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
@@ -65,58 +65,20 @@ msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
 msgid "PLAY"
-msgstr ""
+msgstr "ИГРАЈ"
 
 #: ../../src/Scenes/UI/Title.tscn:75
 msgid "APPEARANCE"
-msgstr ""
+msgstr "ИЗГЛЕД"
 
 #: ../../src/Scenes/UI/Title.tscn:85
 msgid "SETTINGS"
-msgstr ""
+msgstr "ОПЦИЈЕ"
 
 #: ../../src/Scenes/UI/Title.tscn:95
 msgid "LANGUAGE"
-msgstr ""
+msgstr "ЈЕЗИК"
 
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
-msgstr ""
-
-#: ../../src/Scripts/Languages.gd:12
-msgid "Back"
-msgstr "Назад"
-
-#~ msgid "Tutorial"
-#~ msgstr "Туторијал"
-
-#~ msgid "Join Game"
-#~ msgstr "Придружи се Игри"
-
-#~ msgid "Create Game"
-#~ msgstr "Направи Игру"
-
-#~ msgid "Connect"
-#~ msgstr "Конектуј се"
-
-#, fuzzy
-#~ msgid "Create"
-#~ msgstr "Направи Игру"
-
-#~ msgid "Play"
-#~ msgstr "Играј"
-
-#~ msgid "Edit Appearance"
-#~ msgstr "Промени изглед"
-
-#~ msgid "Settings"
-#~ msgstr "Опције"
-
-#~ msgid "Language"
-#~ msgstr "Језик"
-
-#~ msgid "Quit"
-#~ msgstr "Изађи"
-
-#~ msgid "Test button"
-#~ msgstr "Тест дугме"
+msgstr "ИЗАЂИ"

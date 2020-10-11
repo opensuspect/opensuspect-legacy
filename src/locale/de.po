@@ -24,15 +24,15 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "JOIN GAME"
-msgstr ""
+msgstr "SPIEL BEITRETEN"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
 msgid "CREATE GAME"
-msgstr ""
+msgstr "SPIEL ERSTELLEN"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
 msgid "BACK"
-msgstr ""
+msgstr "ZURÜCK"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
@@ -48,11 +48,11 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "CONNECT"
-msgstr ""
+msgstr "VERBINDEN"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
 msgid "CREATE"
-msgstr ""
+msgstr "ERSTELLEN"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
@@ -60,58 +60,24 @@ msgstr "Vollbild"
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
-msgstr "OpenSuspect"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
 msgid "PLAY"
-msgstr ""
+msgstr "SPIELEN"
 
 #: ../../src/Scenes/UI/Title.tscn:75
 msgid "APPEARANCE"
-msgstr ""
+msgstr "ANPASSEN"
 
 #: ../../src/Scenes/UI/Title.tscn:85
 msgid "SETTINGS"
-msgstr ""
+msgstr "EINSTELLUNGEN"
 
 #: ../../src/Scenes/UI/Title.tscn:95
 msgid "LANGUAGE"
-msgstr ""
+msgstr "SPRACHE"
 
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
-msgstr ""
-
-#: ../../src/Scripts/Languages.gd:12
-msgid "Back"
-msgstr "Zurück"
-
-#~ msgid "Join Game"
-#~ msgstr "Spiel Beitreten"
-
-#~ msgid "Create Game"
-#~ msgstr "Spiel Erstellen"
-
-#~ msgid "Connect"
-#~ msgstr "Verbinden"
-
-#~ msgid "Create"
-#~ msgstr "Erstellen"
-
-#~ msgid "Play"
-#~ msgstr "Spielen"
-
-#~ msgid "Edit Appearance"
-#~ msgstr "Aussehen Anpassen"
-
-#~ msgid "Settings"
-#~ msgstr "Einstellungen"
-
-#~ msgid "Language"
-#~ msgstr "Sprache"
-
-#~ msgid "Quit"
-#~ msgstr "Beenden"
-
-#~ msgid "Test button"
-#~ msgstr "Test Knopf"
+msgstr "BEENDEN"
