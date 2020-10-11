@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 signal main_player_moved(position)
 
-export (int) var speed = 200
+export (int) var speed = 150
 
 # Set by main.gd. Is the client's unique id for this player
 var id
@@ -28,10 +28,10 @@ func get_input():
 		$Sprite.play("walk-h")
 	if Input.is_action_pressed('ui_down'):
 		velocity.y = 1
-		$Sprite.play("walk-v")
+		$Sprite.play("walk-down")
 	if Input.is_action_pressed('ui_up'):
 		velocity.y = -1
-		$Sprite.play("walk-v")
+		$Sprite.play("walk-down")
 	velocity = velocity.normalized() * speed
 
 	#interpolate velocity:

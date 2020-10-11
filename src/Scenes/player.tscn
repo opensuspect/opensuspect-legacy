@@ -12,7 +12,7 @@
 [ext_resource path="res://Assets/Characters/black/walk-v/black-down-4-4.png" type="Texture" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 23.6249, 45.7498 )
+extents = Vector2( 19.3158, 29.233 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -23,7 +23,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
 "loop": true,
-"name": "walk-v",
+"name": "walk-down",
 "speed": 8.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
@@ -36,6 +36,7 @@ animations = [ {
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 3.8147e-06, -1.24318 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
@@ -45,3 +46,10 @@ playing = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2( 0.5, 0.5 )
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.65
+drag_margin_top = 0.65
+drag_margin_right = 0.65
+drag_margin_bottom = 0.65
