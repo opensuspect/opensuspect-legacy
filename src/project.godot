@@ -23,6 +23,10 @@ config/icon="res://icon.png"
 
 Network="*res://Scripts/network.gd"
 
+[gui]
+
+theme/custom_font="res://Assets/Fonts/menufont.tres"
+
 [input]
 
 ui_left={
@@ -56,7 +60,7 @@ ui_down={
 
 [locale]
 
-translations=PoolStringArray( "res://locale/en.po", "res://locale/sr.po" )
+translations=PoolStringArray( "res://locale/en.po", "res://locale/sr.po", "res://locale/de.po" )
 locale_filter=[ 0, [  ] ]
 
 [rendering]
