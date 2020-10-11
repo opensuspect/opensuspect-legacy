@@ -39,7 +39,10 @@ func _player_connected(id):
 	print("Players: ", players)
 
 # Called from server when another client connects
-puppet func player_join(other_id):
+remote func player_join(other_id):
+	# Should only be run on the client
+	if get_tree().is_network_server():
+		return
 	var new_player = player_scene.instance()
 	new_player.id = other_id
 	new_player.main_player = false
@@ -48,7 +51,10 @@ puppet func player_join(other_id):
 	print("New player: ", other_id)
 
 # Called from client sides when a player moves
-master func player_moved(new_x, new_y):
+remote func player_moved(new_x, new_y):
+	# Should only be run on the server
+	if !get_tree().is_network_server():
+		return
 	var id = get_tree().get_rpc_sender_id()
 	print("Got player move from ", id)
 	# Check movement validity here
@@ -62,6 +68,9 @@ master func player_moved(new_x, new_y):
 			rpc_id(other_id, "other_player_moved", id, new_pos.x, new_pos.y)
 
 # Called from server when other players move
-puppet func other_player_moved(id, new_x, new_y):
+remote func other_player_moved(id, new_x, new_y):
+	# Should only be run on the client
+	if get_tree().is_network_server():
+		return
 	print("Moving ", id, " to ", new_x, ", ", new_y)
 	players[id].move_to(new_x, new_y)
