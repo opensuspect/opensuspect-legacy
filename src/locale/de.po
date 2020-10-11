@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
 msgid "Tutorial"
-msgstr "Tutorial"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "Join Game"
@@ -36,15 +36,15 @@ msgstr "Zurück"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
-msgstr "Hostname"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:81
 msgid "localhost"
-msgstr "Lokales Spiel"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
 msgid "Port"
-msgstr "Port"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "Connect"
