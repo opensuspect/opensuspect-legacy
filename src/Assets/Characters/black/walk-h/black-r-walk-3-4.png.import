@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/black-r-walk-2-4.png-6fd617ca0b267bdb4ac9b3d38fe96bd6.stex"
+path="res://.import/black-r-walk-3-4.png-3bb82e435d6302e6dbb3142c694f5eee.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/black/walk/black-r-walk-2-4.png"
-dest_files=[ "res://.import/black-r-walk-2-4.png-6fd617ca0b267bdb4ac9b3d38fe96bd6.stex" ]
+source_file="res://Assets/Characters/black/walk-h/black-r-walk-3-4.png"
+dest_files=[ "res://.import/black-r-walk-3-4.png-3bb82e435d6302e6dbb3142c694f5eee.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
