@@ -23,6 +23,10 @@ config/icon="res://icon.png"
 
 Network="*res://Scripts/network.gd"
 
+[gui]
+
+theme/custom_font="res://Assets/Fonts/menufont.tres"
+
 [input]
 
 ui_left={
