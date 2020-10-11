@@ -8,7 +8,6 @@ var players = {}
 
 func _ready():
 	$Player.connect("main_player_moved", self, "_on_main_player_moved")
-
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
 	if Network.connection == Network.Connection.CLIENT_SERVER:
@@ -18,6 +17,7 @@ func _enter_tree():
 		get_tree().network_peer = peer
 		get_tree().connect("network_peer_connected", self, "_player_connected")
 	elif Network.connection == Network.Connection.CLIENT:
+		player_join(1)
 		print("Connecting to ", Network.host, " on port ", Network.port)
 		var peer = NetworkedMultiplayerENet.new()
 		peer.create_client(Network.host, Network.port)
@@ -66,7 +66,7 @@ remote func player_moved(new_x, new_y):
 	# so that's why we don't reuse them
 	var new_pos = players[id].position
 	for other_id in players:
-		if id != other_id:
+		if id != other_id && other_id != 1:
 			print("Sending player moved to client ", other_id)
 			rpc_id(other_id, "other_player_moved", id, new_pos.x, new_pos.y)
 
@@ -79,9 +79,10 @@ remote func other_player_moved(id, new_x, new_y):
 	players[id].move_to(new_x, new_y)
 
 func _on_main_player_moved(position : Vector2):
-	#SUBMIT TO THE S P H A G E T T I
-	#about 50% of the fix for the "host invisible" bug
+	#In the beginning Godot created the heaven and the earth
+	#about 100% of the fix for the "host invisible" bug
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", position.x, position.y)
 	else:
-		rpc("player_moved", position.x, position.y)
+		rpc("other_player_moved", 1, position.x, position.y)
+		print("you called?")
