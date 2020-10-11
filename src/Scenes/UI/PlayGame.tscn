@@ -46,7 +46,7 @@ flat = true
 [node name="JoinGameDialog" type="WindowDialog" parent="."]
 margin_top = 144.0
 margin_right = 640.0
-margin_bottom = 234.0
+margin_bottom = 233.0
 size_flags_vertical = 3
 window_title = "JOIN_GAME"
 
@@ -69,12 +69,12 @@ margin_bottom = 24.0
 
 [node name="Hostname" type="Label" parent="JoinGameDialog/JoinGameOptions/HostnameLine"]
 margin_top = 5.0
-margin_right = 73.0
+margin_right = 66.0
 margin_bottom = 19.0
 text = "Hostname"
 
 [node name="HostnameField" type="LineEdit" parent="JoinGameDialog/JoinGameOptions/HostnameLine"]
-margin_left = 77.0
+margin_left = 70.0
 margin_right = 608.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
@@ -87,12 +87,12 @@ margin_bottom = 52.0
 
 [node name="Port" type="Label" parent="JoinGameDialog/JoinGameOptions/Port"]
 margin_top = 5.0
-margin_right = 34.0
+margin_right = 26.0
 margin_bottom = 19.0
 text = "Port"
 
 [node name="PortField" type="LineEdit" parent="JoinGameDialog/JoinGameOptions/Port"]
-margin_left = 38.0
+margin_left = 30.0
 margin_right = 608.0
 margin_bottom = 24.0
 size_flags_horizontal = 3

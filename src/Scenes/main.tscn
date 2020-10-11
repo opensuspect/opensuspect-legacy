@@ -13,14 +13,11 @@ script = ExtResource( 3 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 129.029, -25.568 )
-scale = Vector2( 1, 1 )
 
 [node name="Sprite2" type="Sprite" parent="StaticBody2D"]
-scale = Vector2( 1, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-scale = Vector2( 0.607206, 0.607206 )
