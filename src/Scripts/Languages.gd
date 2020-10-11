@@ -9,7 +9,7 @@ func _ready() -> void:
 		add_child(btn)
 	
 	var backBtn: Button = Button.new()
-	backBtn.text = tr("Back")
+	backBtn.text = tr("BACK")
 	backBtn.connect("pressed", get_node("../.."), "_on_Return")
 	add_child(backBtn)
 

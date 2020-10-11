@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 15:55+0200\n"
+"POT-Creation-Date: 2020-10-11 22:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,24 +19,25 @@ msgstr ""
 "Generated-By: Babel 2.8.0\n"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
-msgid "Tutorial"
-msgstr "Tutorial"
+msgid "TUTORIAL"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
-msgid "Join Game"
-msgstr "Unirse a una partida"
+msgid "JOIN GAME"
+msgstr "UNIRSE A UNA PARTIDA"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
-msgid "Create Game"
-msgstr "Crear partida"
+msgid "CREATE GAME"
+msgstr "CREAR PARTIDA"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
-msgid "Back"
-msgstr "Atrás"
+#: ../../src/Scripts/Languages.gd:12
+msgid "BACK"
+msgstr "ATRÁS"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
-msgstr "Nombre del host"
+msgstr "NOMBRE DEL HOST"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:81
 msgid "localhost"
@@ -44,15 +45,15 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
 msgid "Port"
-msgstr "Puerto"
+msgstr "PUERTO"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
-msgid "Connect"
-msgstr "Conectar"
+msgid "CONNECT"
+msgstr "CONECTAR"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
-msgid "Create"
-msgstr "Crear"
+msgid "CREATE"
+msgstr "CREAR"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
@@ -63,25 +64,21 @@ msgid "OpenSuspect"
 msgstr "OpenSuspect"
 
 #: ../../src/Scenes/UI/Title.tscn:68
-msgid "Play"
-msgstr "Jugar"
+msgid "PLAY"
+msgstr "JUGAR"
 
 #: ../../src/Scenes/UI/Title.tscn:75
-msgid "Edit Appearance"
-msgstr "Editar Apariencia"
+msgid "APPEARANCE"
+msgstr "APARIENCIA"
 
 #: ../../src/Scenes/UI/Title.tscn:85
-msgid "Settings"
-msgstr "Ajustes"
+msgid "SETTINGS"
+msgstr "AJUSTES"
 
 #: ../../src/Scenes/UI/Title.tscn:95
-msgid "Language"
-msgstr "Idioma"
+msgid "LANGUAGE"
+msgstr "IDIOMA"
 
 #: ../../src/Scenes/UI/Title.tscn:102
-msgid "Quit"
-msgstr "Salir"
-
-#: ../../src/Scenes/UI/Title.tscn:130
-msgid "Test button"
-msgstr "Botón de prueba"
+msgid "QUIT"
+msgstr "SALIR"

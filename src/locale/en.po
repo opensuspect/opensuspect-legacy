@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 15:55+0200\n"
+"POT-Creation-Date: 2020-10-11 22:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,19 +19,20 @@ msgstr ""
 "Generated-By: Babel 2.8.0\n"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
-msgid "Tutorial"
+msgid "TUTORIAL"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
-msgid "Join Game"
+msgid "JOIN GAME"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
-msgid "Create Game"
+msgid "CREATE GAME"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
-msgid "Back"
+#: ../../src/Scripts/Languages.gd:12
+msgid "BACK"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
@@ -47,11 +48,11 @@ msgid "Port"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
-msgid "Connect"
+msgid "CONNECT"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
-msgid "Create"
+msgid "CREATE"
 msgstr ""
 
 #: ../../src/Scenes/UI/Settings.tscn:30
@@ -63,25 +64,21 @@ msgid "OpenSuspect"
 msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
-msgid "Play"
+msgid "PLAY"
 msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:75
-msgid "Edit Appearance"
+msgid "APPEARANCE"
 msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:85
-msgid "Settings"
+msgid "SETTINGS"
 msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:95
-msgid "Language"
+msgid "LANGUAGE"
 msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:102
-msgid "Quit"
-msgstr ""
-
-#: ../../src/Scenes/UI/Title.tscn:130
-msgid "Test button"
+msgid "QUIT"
 msgstr ""

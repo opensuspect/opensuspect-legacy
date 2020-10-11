@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 22:38+0200\n"
-"PO-Revision-Date: 2020-10-11 15:55+0200\n"
+"POT-Creation-Date: 2020-10-11 22:39+0200\n"
+"PO-Revision-Date: 2020-10-11 22:39+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: de\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,16 +24,16 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "JOIN GAME"
-msgstr "SPIEL BEITRETEN"
+msgstr "ΣΥΝΔΕΣΗ ΠΑΙΧΝΙΔΙΟΥ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
 msgid "CREATE GAME"
-msgstr "SPIEL ERSTELLEN"
+msgstr "ΔΗΜΙΟΥΡΓΙΑ ΠΑΙΧΝΙΔΙΟΥ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
 #: ../../src/Scripts/Languages.gd:12
 msgid "BACK"
-msgstr "ZURÜCK"
+msgstr "ΠΙΣΩ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
@@ -49,15 +49,15 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "CONNECT"
-msgstr "VERBINDEN"
+msgstr "ΣΥΝΔΕΣΗ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
 msgid "CREATE"
-msgstr "ERSTELLEN"
+msgstr "ΔΗΜΙΟΥΡΓΙΑ"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
-msgstr "Vollbild"
+msgstr "Πλήρης Οθόνη"
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
@@ -65,20 +65,20 @@ msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
 msgid "PLAY"
-msgstr "SPIELEN"
+msgstr "ΠΑΙΞΕ"
 
 #: ../../src/Scenes/UI/Title.tscn:75
 msgid "APPEARANCE"
-msgstr "ANPASSEN"
+msgstr "ΕΜΦΑΝΙΣΗ"
 
 #: ../../src/Scenes/UI/Title.tscn:85
 msgid "SETTINGS"
-msgstr "EINSTELLUNGEN"
+msgstr "ΡΥΘΜΙΣΕΙΣ"
 
 #: ../../src/Scenes/UI/Title.tscn:95
 msgid "LANGUAGE"
-msgstr "SPRACHE"
+msgstr "ΓΛΩΣΣΑ"
 
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
-msgstr "BEENDEN"
+msgstr "ΕΞΟΔΟΣ"

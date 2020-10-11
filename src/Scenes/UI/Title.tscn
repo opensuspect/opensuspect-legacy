@@ -64,15 +64,15 @@ custom_constants/separation = 16
 
 [node name="PlayGame" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
 margin_right = 640.0
-margin_bottom = 20.0
-text = "Play"
+margin_bottom = 28.0
+text = "PLAY"
 flat = true
 
 [node name="Appearence" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
 margin_top = 36.0
 margin_right = 640.0
-margin_bottom = 56.0
-text = "Edit Appearance"
+margin_bottom = 72.0
+text = "APPEARANCE"
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -81,8 +81,8 @@ __meta__ = {
 [node name="Settings" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
 margin_top = 72.0
 margin_right = 640.0
-margin_bottom = 92.0
-text = "Settings"
+margin_bottom = 116.0
+text = "SETTINGS"
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -91,15 +91,15 @@ __meta__ = {
 [node name="Language" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
 margin_top = 108.0
 margin_right = 640.0
-margin_bottom = 128.0
-text = "Language"
+margin_bottom = 160.0
+text = "LANGUAGE"
 flat = true
 
 [node name="Quit" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
 margin_top = 144.0
 margin_right = 640.0
-margin_bottom = 164.0
-text = "Quit"
+margin_bottom = 204.0
+text = "QUIT"
 flat = true
 
 [node name="AppearenceEditor" type="HBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
