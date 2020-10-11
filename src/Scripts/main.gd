@@ -79,4 +79,9 @@ remote func other_player_moved(id, new_x, new_y):
 	players[id].move_to(new_x, new_y)
 
 func _on_main_player_moved(position : Vector2):
-	rpc_id(1, "player_moved", position.x, position.y)
+	#SUBMIT TO THE S P H A G E T T I
+	#about 50% of the fix for the "host invisible" bug
+	if not get_tree().is_network_server():
+		rpc_id(1, "player_moved", position.x, position.y)
+	else:
+		rpc("player_moved", position.x, position.y)
