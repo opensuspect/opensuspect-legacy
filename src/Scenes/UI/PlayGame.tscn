@@ -19,28 +19,28 @@ __meta__ = {
 margin_right = 640.0
 margin_bottom = 20.0
 disabled = true
-text = "TUTORIAL"
+text = "Tutorial"
 flat = true
 
 [node name="JoinGame" type="Button" parent="."]
 margin_top = 36.0
 margin_right = 640.0
 margin_bottom = 56.0
-text = "JOIN_GAME"
+text = "Join Game"
 flat = true
 
 [node name="CreateGame" type="Button" parent="."]
 margin_top = 72.0
 margin_right = 640.0
 margin_bottom = 92.0
-text = "CREATE_GAME"
+text = "Create Game"
 flat = true
 
 [node name="Back" type="Button" parent="."]
 margin_top = 108.0
 margin_right = 640.0
 margin_bottom = 128.0
-text = "BACK"
+text = "Back"
 flat = true
 
 [node name="JoinGameDialog" type="WindowDialog" parent="."]
@@ -71,7 +71,7 @@ margin_bottom = 24.0
 margin_top = 5.0
 margin_right = 73.0
 margin_bottom = 19.0
-text = "HOSTNAME"
+text = "Hostname"
 
 [node name="HostnameField" type="LineEdit" parent="JoinGameDialog/JoinGameOptions/HostnameLine"]
 margin_left = 77.0
@@ -89,7 +89,7 @@ margin_bottom = 52.0
 margin_top = 5.0
 margin_right = 34.0
 margin_bottom = 19.0
-text = "PORT"
+text = "Port"
 
 [node name="PortField" type="LineEdit" parent="JoinGameDialog/JoinGameOptions/Port"]
 margin_left = 38.0
@@ -101,7 +101,7 @@ size_flags_horizontal = 3
 margin_top = 56.0
 margin_right = 608.0
 margin_bottom = 76.0
-text = "CONNECT"
+text = "Connect"
 
 [node name="CreateGameDialog" type="WindowDialog" parent="."]
 margin_top = 144.0
@@ -109,7 +109,7 @@ margin_right = 640.0
 margin_bottom = 234.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-window_title = "CREATE_GAME"
+window_title = "Create Game"
 
 [node name="CreateGameOptions" type="VBoxContainer" parent="CreateGameDialog"]
 anchor_right = 1.0
@@ -129,7 +129,7 @@ margin_bottom = 24.0
 margin_top = 5.0
 margin_right = 34.0
 margin_bottom = 19.0
-text = "PORT"
+text = "Port"
 
 [node name="PortField" type="LineEdit" parent="CreateGameDialog/CreateGameOptions/PortLine"]
 margin_left = 38.0
@@ -141,7 +141,7 @@ size_flags_horizontal = 3
 margin_top = 28.0
 margin_right = 640.0
 margin_bottom = 48.0
-text = "CREATE"
+text = "Create"
 [connection signal="pressed" from="JoinGame" to="." method="_on_JoinGame_pressed"]
 [connection signal="pressed" from="CreateGame" to="." method="_on_CreateGame_pressed"]
 [connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]

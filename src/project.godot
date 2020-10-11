@@ -54,6 +54,11 @@ ui_down={
  ]
 }
 
+[locale]
+
+translations=PoolStringArray( "res://locale/en.po", "res://locale/sr.po" )
+locale_filter=[ 0, [  ] ]
+
 [rendering]
 
 vram_compression/import_etc=true
