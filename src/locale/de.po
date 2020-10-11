@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 15:55+0200\n"
+"POT-Creation-Date: 2020-10-11 22:02+0200\n"
 "PO-Revision-Date: 2020-10-11 15:55+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -19,20 +19,20 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
-msgid "Tutorial"
+msgid "TUTORIAL"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
-msgid "Join Game"
-msgstr "Spiel Beitreten"
+msgid "JOIN GAME"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
-msgid "Create Game"
-msgstr "Spiel Erstellen"
+msgid "CREATE GAME"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
-msgid "Back"
-msgstr "Zurück"
+msgid "BACK"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
@@ -47,12 +47,12 @@ msgid "Port"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
-msgid "Connect"
-msgstr "Verbinden"
+msgid "CONNECT"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
-msgid "Create"
-msgstr "Erstellen"
+msgid "CREATE"
+msgstr ""
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
@@ -63,25 +63,55 @@ msgid "OpenSuspect"
 msgstr "OpenSuspect"
 
 #: ../../src/Scenes/UI/Title.tscn:68
-msgid "Play"
-msgstr "Spielen"
+msgid "PLAY"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:75
-msgid "Edit Appearance"
-msgstr "Aussehen Anpassen"
+msgid "APPEARANCE"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:85
-msgid "Settings"
-msgstr "Einstellungen"
+msgid "SETTINGS"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:95
-msgid "Language"
-msgstr "Sprache"
+msgid "LANGUAGE"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:102
-msgid "Quit"
-msgstr "Beenden"
+msgid "QUIT"
+msgstr ""
 
-#: ../../src/Scenes/UI/Title.tscn:130
-msgid "Test button"
-msgstr "Test Knopf"
+#: ../../src/Scripts/Languages.gd:12
+msgid "Back"
+msgstr "Zurück"
+
+#~ msgid "Join Game"
+#~ msgstr "Spiel Beitreten"
+
+#~ msgid "Create Game"
+#~ msgstr "Spiel Erstellen"
+
+#~ msgid "Connect"
+#~ msgstr "Verbinden"
+
+#~ msgid "Create"
+#~ msgstr "Erstellen"
+
+#~ msgid "Play"
+#~ msgstr "Spielen"
+
+#~ msgid "Edit Appearance"
+#~ msgstr "Aussehen Anpassen"
+
+#~ msgid "Settings"
+#~ msgstr "Einstellungen"
+
+#~ msgid "Language"
+#~ msgstr "Sprache"
+
+#~ msgid "Quit"
+#~ msgstr "Beenden"
+
+#~ msgid "Test button"
+#~ msgstr "Test Knopf"

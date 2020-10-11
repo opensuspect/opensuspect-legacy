@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 15:54+0200\n"
+"POT-Creation-Date: 2020-10-11 22:02+0200\n"
 "PO-Revision-Date: 2020-10-11 15:07+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -20,20 +20,20 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
-msgid "Tutorial"
-msgstr "Туторијал"
+msgid "TUTORIAL"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
-msgid "Join Game"
-msgstr "Придружи се Игри"
+msgid "JOIN GAME"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
-msgid "Create Game"
-msgstr "Направи Игру"
+msgid "CREATE GAME"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
-msgid "Back"
-msgstr "Назад"
+msgid "BACK"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
@@ -48,13 +48,12 @@ msgid "Port"
 msgstr "Порт"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
-msgid "Connect"
-msgstr "Конектуј се"
+msgid "CONNECT"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
-#, fuzzy
-msgid "Create"
-msgstr "Направи Игру"
+msgid "CREATE"
+msgstr ""
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
@@ -65,25 +64,59 @@ msgid "OpenSuspect"
 msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
-msgid "Play"
-msgstr "Играј"
+msgid "PLAY"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:75
-msgid "Edit Appearance"
-msgstr "Промени изглед"
+msgid "APPEARANCE"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:85
-msgid "Settings"
-msgstr "Опције"
+msgid "SETTINGS"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:95
-msgid "Language"
-msgstr "Језик"
+msgid "LANGUAGE"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:102
-msgid "Quit"
-msgstr "Изађи"
+msgid "QUIT"
+msgstr ""
 
-#: ../../src/Scenes/UI/Title.tscn:130
-msgid "Test button"
-msgstr "Тест дугме"
+#: ../../src/Scripts/Languages.gd:12
+msgid "Back"
+msgstr "Назад"
+
+#~ msgid "Tutorial"
+#~ msgstr "Туторијал"
+
+#~ msgid "Join Game"
+#~ msgstr "Придружи се Игри"
+
+#~ msgid "Create Game"
+#~ msgstr "Направи Игру"
+
+#~ msgid "Connect"
+#~ msgstr "Конектуј се"
+
+#, fuzzy
+#~ msgid "Create"
+#~ msgstr "Направи Игру"
+
+#~ msgid "Play"
+#~ msgstr "Играј"
+
+#~ msgid "Edit Appearance"
+#~ msgstr "Промени изглед"
+
+#~ msgid "Settings"
+#~ msgstr "Опције"
+
+#~ msgid "Language"
+#~ msgstr "Језик"
+
+#~ msgid "Quit"
+#~ msgstr "Изађи"
+
+#~ msgid "Test button"
+#~ msgstr "Тест дугме"

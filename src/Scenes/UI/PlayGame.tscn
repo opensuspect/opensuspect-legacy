@@ -17,36 +17,36 @@ __meta__ = {
 
 [node name="Tutorial" type="Button" parent="."]
 margin_right = 640.0
-margin_bottom = 20.0
+margin_bottom = 28.0
 disabled = true
-text = "Tutorial"
+text = "TUTORIAL"
 flat = true
 
 [node name="JoinGame" type="Button" parent="."]
-margin_top = 36.0
+margin_top = 44.0
 margin_right = 640.0
-margin_bottom = 56.0
-text = "Join Game"
+margin_bottom = 72.0
+text = "JOIN GAME"
 flat = true
 
 [node name="CreateGame" type="Button" parent="."]
-margin_top = 72.0
+margin_top = 88.0
 margin_right = 640.0
-margin_bottom = 92.0
-text = "Create Game"
+margin_bottom = 116.0
+text = "CREATE GAME"
 flat = true
 
 [node name="Back" type="Button" parent="."]
-margin_top = 108.0
+margin_top = 132.0
 margin_right = 640.0
-margin_bottom = 128.0
-text = "Back"
+margin_bottom = 160.0
+text = "BACK"
 flat = true
 
 [node name="JoinGameDialog" type="WindowDialog" parent="."]
-margin_top = 144.0
+margin_top = 176.0
 margin_right = 640.0
-margin_bottom = 234.0
+margin_bottom = 233.0
 size_flags_vertical = 3
 window_title = "JOIN_GAME"
 
@@ -65,43 +65,43 @@ __meta__ = {
 
 [node name="HostnameLine" type="HBoxContainer" parent="JoinGameDialog/JoinGameOptions"]
 margin_right = 608.0
-margin_bottom = 24.0
+margin_bottom = 32.0
 
 [node name="Hostname" type="Label" parent="JoinGameDialog/JoinGameOptions/HostnameLine"]
 margin_top = 5.0
-margin_right = 73.0
-margin_bottom = 19.0
+margin_right = 74.0
+margin_bottom = 27.0
 text = "Hostname"
 
 [node name="HostnameField" type="LineEdit" parent="JoinGameDialog/JoinGameOptions/HostnameLine"]
-margin_left = 77.0
+margin_left = 78.0
 margin_right = 608.0
-margin_bottom = 24.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 text = "localhost"
 
 [node name="Port" type="HBoxContainer" parent="JoinGameDialog/JoinGameOptions"]
-margin_top = 28.0
+margin_top = 36.0
 margin_right = 608.0
-margin_bottom = 52.0
+margin_bottom = 68.0
 
 [node name="Port" type="Label" parent="JoinGameDialog/JoinGameOptions/Port"]
 margin_top = 5.0
-margin_right = 34.0
-margin_bottom = 19.0
+margin_right = 30.0
+margin_bottom = 27.0
 text = "Port"
 
 [node name="PortField" type="LineEdit" parent="JoinGameDialog/JoinGameOptions/Port"]
-margin_left = 38.0
+margin_left = 34.0
 margin_right = 608.0
-margin_bottom = 24.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 
 [node name="Connect" type="Button" parent="JoinGameDialog/JoinGameOptions"]
-margin_top = 56.0
+margin_top = 72.0
 margin_right = 608.0
-margin_bottom = 76.0
-text = "Connect"
+margin_bottom = 100.0
+text = "CONNECT"
 
 [node name="CreateGameDialog" type="WindowDialog" parent="."]
 margin_top = 144.0
@@ -141,7 +141,7 @@ size_flags_horizontal = 3
 margin_top = 28.0
 margin_right = 640.0
 margin_bottom = 48.0
-text = "Create"
+text = "CREATE"
 [connection signal="pressed" from="JoinGame" to="." method="_on_JoinGame_pressed"]
 [connection signal="pressed" from="CreateGame" to="." method="_on_CreateGame_pressed"]
 [connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]
