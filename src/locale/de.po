@@ -24,11 +24,11 @@ msgstr "Tutorial"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "Join Game"
-msgstr "Spiel beitreten"
+msgstr "Spiel Beitreten"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
 msgid "Create Game"
-msgstr "Spiel erstellen"
+msgstr "Spiel Erstellen"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
 msgid "Back"
@@ -68,7 +68,7 @@ msgstr "Spielen"
 
 #: ../../src/Scenes/UI/Title.tscn:75
 msgid "Edit Appearance"
-msgstr "Aussehen ändern"
+msgstr "Aussehen Anpassen"
 
 #: ../../src/Scenes/UI/Title.tscn:85
 msgid "Settings"
