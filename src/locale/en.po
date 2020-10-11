@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 22:02+0200\n"
+"POT-Creation-Date: 2020-10-11 22:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,7 @@ msgid "CREATE GAME"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
+#: ../../src/Scripts/Languages.gd:12
 msgid "BACK"
 msgstr ""
 
@@ -80,8 +81,4 @@ msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
-msgstr ""
-
-#: ../../src/Scripts/Languages.gd:12
-msgid "Back"
 msgstr ""
