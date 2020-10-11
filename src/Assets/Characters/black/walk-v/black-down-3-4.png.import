@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/black-proto-1.png-60bf95d2ea8d1d36c2abbe61e967bdba.stex"
+path="res://.import/black-down-3-4.png-ef4c5aa64a988d19b71ac118cb84ee94.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/black/black-proto-1.png"
-dest_files=[ "res://.import/black-proto-1.png-60bf95d2ea8d1d36c2abbe61e967bdba.stex" ]
+source_file="res://Assets/Characters/black/walk-v/black-down-3-4.png"
+dest_files=[ "res://.import/black-down-3-4.png-ef4c5aa64a988d19b71ac118cb84ee94.stex" ]
 
 [params]
 

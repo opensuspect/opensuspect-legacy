@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/black-proto-1.png-60bf95d2ea8d1d36c2abbe61e967bdba.stex"
+path="res://.import/black-r-walk-4-4.png-01827dca8417d7f0a9fcb85f534d2fbc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/black/black-proto-1.png"
-dest_files=[ "res://.import/black-proto-1.png-60bf95d2ea8d1d36c2abbe61e967bdba.stex" ]
+source_file="res://Assets/Characters/black/walk-h/black-r-walk-4-4.png"
+dest_files=[ "res://.import/black-r-walk-4-4.png-01827dca8417d7f0a9fcb85f534d2fbc.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
