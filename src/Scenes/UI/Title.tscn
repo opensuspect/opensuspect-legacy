@@ -2,9 +2,9 @@
 
 [ext_resource path="res://Assets/Fonts/title-font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scripts/Languages.gd" type="Script" id=2]
-[ext_resource path="res://Scenes/Title.gd" type="Script" id=3]
-[ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/Title.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=5]
 
 [node name="TitleScreen" type="MarginContainer"]
 anchor_right = 1.0
@@ -54,7 +54,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 64
 custom_constants/margin_left = 64
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 
 [node name="MenuItems" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MainMenu"]
 margin_left = 64.0
@@ -123,7 +123,7 @@ margin_right = 640.0
 margin_bottom = 20.0
 text = "Test button"
 
-[node name="Settings" parent="VBoxContainer/MarginContainer/MainMenu" instance=ExtResource( 4 )]
+[node name="Settings" parent="VBoxContainer/MarginContainer/MainMenu" instance=ExtResource( 5 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
