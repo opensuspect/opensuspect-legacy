@@ -1,11 +1,15 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/KinematicBody2D.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Characters/black/walk/black-r-walk-4-4.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Characters/black/walk/black-r-walk-3-4.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Characters/black/walk/black-r-walk-2-4.png" type="Texture" id=4]
-[ext_resource path="res://Assets/Characters/black/walk/black-r-walk-1-4.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Characters/black/walk-h/black-r-walk-4-4.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Characters/black/walk-h/black-r-walk-3-4.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Characters/black/walk-h/black-r-walk-2-4.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Characters/black/walk-h/black-r-walk-1-4.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Characters/black/black-proto-1.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Characters/black/walk-v/black-down-2-4.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Characters/black/walk-v/black-down-3-4.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Characters/black/walk-v/black-down-1-4.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Characters/black/walk-v/black-down-4-4.png" type="Texture" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 23.6249, 45.7498 )
@@ -17,9 +21,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "walk-v",
+"speed": 8.0
+}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
-"name": "walk",
+"name": "walk-h",
 "speed": 8.0
 } ]
 

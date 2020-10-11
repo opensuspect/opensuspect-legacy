@@ -18,17 +18,20 @@ func _ready():
 func get_input():
 	var prev_velocity = velocity
 	velocity = Vector2(0, 0)
-	$Sprite.play("walk")
 	if Input.is_action_pressed('ui_right'):
 		velocity.x = 1
 		$Sprite.flip_h = false
+		$Sprite.play("walk-h")
 	if Input.is_action_pressed('ui_left'):
 		velocity.x = -1
 		$Sprite.flip_h = true
+		$Sprite.play("walk-h")
 	if Input.is_action_pressed('ui_down'):
 		velocity.y = 1
+		$Sprite.play("walk-v")
 	if Input.is_action_pressed('ui_up'):
 		velocity.y = -1
+		$Sprite.play("walk-v")
 	velocity = velocity.normalized() * speed
 
 	#interpolate velocity:
