@@ -9,6 +9,11 @@ var id
 var velocity = Vector2(0,0)
 # Only true when this is the player being controlled
 var main_player = true
+#anim margin controls how different the player posision must be before animations are played
+var lastpos = Vector2(0,0)
+var x_anim_margin = 0.35
+var y_anim_margin = 0.05
+var idletime = 1
 
 func _ready():
 	if "--server" in OS.get_cmdline_args():
@@ -31,6 +36,7 @@ func get_input():
 		$Sprite.play("walk-down")
 	if Input.is_action_pressed('ui_up'):
 		velocity.y = -1
+		#replace with walking up anim when done
 		$Sprite.play("walk-down")
 	velocity = velocity.normalized() * speed
 
@@ -51,7 +57,26 @@ func _physics_process(delta):
 	else:
 		$Camera2D.current = false
 		# We handle animations and stuff here
-		pass
+		if position.x - lastpos.x > x_anim_margin:
+			$Sprite.play("walk-h")
+			$Sprite.flip_h = false
+			idletime = 1
+		elif position.x - lastpos.x < -x_anim_margin:
+			$Sprite.play("walk-h")
+			$Sprite.flip_h = true
+			idletime = 1
+		elif position.y - lastpos.y > y_anim_margin:
+			$Sprite.play("walk-down")
+			idletime = 1
+		elif position.y - lastpos.y < -y_anim_margin:
+			#replace with walking up anim when done
+			$Sprite.play("walk-down")
+			idletime = 1
+		elif idletime > 1:
+			$Sprite.play("idle")
+		else:
+			idletime += 2
+		lastpos = position
 
 func move_to(new_x, new_y):
 	# Movement check here
