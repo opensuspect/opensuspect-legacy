@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 15:54+0200\n"
+"POT-Creation-Date: 2020-10-11 22:38+0200\n"
 "PO-Revision-Date: 2020-10-11 15:07+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -20,20 +20,21 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
-msgid "Tutorial"
-msgstr "Туторијал"
+msgid "TUTORIAL"
+msgstr "ТУТОРИЈАЛ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
-msgid "Join Game"
-msgstr "Придружи се Игри"
+msgid "JOIN GAME"
+msgstr "ПРИДРУЖИ СЕ ИГРИ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
-msgid "Create Game"
-msgstr "Направи Игру"
+msgid "CREATE GAME"
+msgstr "НАПРАВИ ИГРУ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
-msgid "Back"
-msgstr "Назад"
+#: ../../src/Scripts/Languages.gd:12
+msgid "BACK"
+msgstr "НАЗАД"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
@@ -48,13 +49,12 @@ msgid "Port"
 msgstr "Порт"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
-msgid "Connect"
-msgstr "Конектуј се"
+msgid "CONNECT"
+msgstr "КОНЕКТУЈ СЕ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
-#, fuzzy
-msgid "Create"
-msgstr "Направи Игру"
+msgid "CREATE"
+msgstr "НАПРАВИ"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
@@ -65,25 +65,21 @@ msgid "OpenSuspect"
 msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
-msgid "Play"
-msgstr "Играј"
+msgid "PLAY"
+msgstr "ИГРАЈ"
 
 #: ../../src/Scenes/UI/Title.tscn:75
-msgid "Edit Appearance"
-msgstr "Промени изглед"
+msgid "APPEARANCE"
+msgstr "ИЗГЛЕД"
 
 #: ../../src/Scenes/UI/Title.tscn:85
-msgid "Settings"
-msgstr "Опције"
+msgid "SETTINGS"
+msgstr "ОПЦИЈЕ"
 
 #: ../../src/Scenes/UI/Title.tscn:95
-msgid "Language"
-msgstr "Језик"
+msgid "LANGUAGE"
+msgstr "ЈЕЗИК"
 
 #: ../../src/Scenes/UI/Title.tscn:102
-msgid "Quit"
-msgstr "Изађи"
-
-#: ../../src/Scenes/UI/Title.tscn:130
-msgid "Test button"
-msgstr "Тест дугме"
+msgid "QUIT"
+msgstr "ИЗАЂИ"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 15:55+0200\n"
+"POT-Creation-Date: 2020-10-11 22:38+0200\n"
 "PO-Revision-Date: 2020-10-11 15:55+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -19,20 +19,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
-msgid "Tutorial"
+msgid "TUTORIAL"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
-msgid "Join Game"
-msgstr "Spiel Beitreten"
+msgid "JOIN GAME"
+msgstr "SPIEL BEITRETEN"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
-msgid "Create Game"
-msgstr "Spiel Erstellen"
+msgid "CREATE GAME"
+msgstr "SPIEL ERSTELLEN"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
-msgid "Back"
-msgstr "Zurück"
+#: ../../src/Scripts/Languages.gd:12
+msgid "BACK"
+msgstr "ZURÜCK"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
@@ -47,12 +48,12 @@ msgid "Port"
 msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
-msgid "Connect"
-msgstr "Verbinden"
+msgid "CONNECT"
+msgstr "VERBINDEN"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
-msgid "Create"
-msgstr "Erstellen"
+msgid "CREATE"
+msgstr "ERSTELLEN"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
@@ -60,28 +61,24 @@ msgstr "Vollbild"
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
-msgstr "OpenSuspect"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
-msgid "Play"
-msgstr "Spielen"
+msgid "PLAY"
+msgstr "SPIELEN"
 
 #: ../../src/Scenes/UI/Title.tscn:75
-msgid "Edit Appearance"
-msgstr "Aussehen Anpassen"
+msgid "APPEARANCE"
+msgstr "ANPASSEN"
 
 #: ../../src/Scenes/UI/Title.tscn:85
-msgid "Settings"
-msgstr "Einstellungen"
+msgid "SETTINGS"
+msgstr "EINSTELLUNGEN"
 
 #: ../../src/Scenes/UI/Title.tscn:95
-msgid "Language"
-msgstr "Sprache"
+msgid "LANGUAGE"
+msgstr "SPRACHE"
 
 #: ../../src/Scenes/UI/Title.tscn:102
-msgid "Quit"
-msgstr "Beenden"
-
-#: ../../src/Scenes/UI/Title.tscn:130
-msgid "Test button"
-msgstr "Test Knopf"
+msgid "QUIT"
+msgstr "BEENDEN"

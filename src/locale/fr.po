@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 15:55+0200\n"
+"POT-Creation-Date: 2020-10-11 22:38+0200\n"
 "PO-Revision-Date: 2020-10-11 15:55+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -19,19 +19,20 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
-msgid "Tutorial"
+msgid "TUTORIAL"
 msgstr "TUTORIEL"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
-msgid "Join Game"
+msgid "JOIN GAME"
 msgstr "REJOINDRE UNE PARTIE"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
-msgid "Create Game"
+msgid "CREATE GAME"
 msgstr "CRÉER UNE PARTIE"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
-msgid "Back"
+#: ../../src/Scripts/Languages.gd:12
+msgid "BACK"
 msgstr "RETOUR"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
@@ -40,18 +41,18 @@ msgstr "Non d'hôte"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:81
 msgid "localhost"
-msgstr "localhost"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
 msgid "Port"
-msgstr "Port"
+msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
-msgid "Connect"
-msgstr "Connecter"
+msgid "CONNECT"
+msgstr "CONNECTER"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
-msgid "Create"
+msgid "CREATE"
 msgstr "CRÉER"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
@@ -60,28 +61,24 @@ msgstr "Plein écran"
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
-msgstr "OpenSuspect"
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
-msgid "Play"
+msgid "PLAY"
 msgstr "JOUER"
 
 #: ../../src/Scenes/UI/Title.tscn:75
-msgid "Edit Appearance"
-msgstr "MODIFIER L'APPARENCE"
+msgid "APPEARANCE"
+msgstr "APPARENCE"
 
 #: ../../src/Scenes/UI/Title.tscn:85
-msgid "Settings"
+msgid "SETTINGS"
 msgstr "PARAMÈTRES"
 
 #: ../../src/Scenes/UI/Title.tscn:95
-msgid "Language"
+msgid "LANGUAGE"
 msgstr "LANGUE"
 
 #: ../../src/Scenes/UI/Title.tscn:102
-msgid "Quit"
+msgid "QUIT"
 msgstr "QUITTER"
-
-#: ../../src/Scenes/UI/Title.tscn:130
-msgid "Test button"
-msgstr "Bouton de test"
