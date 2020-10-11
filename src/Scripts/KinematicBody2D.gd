@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal main_player_moved(position)
+
 export (int) var speed = 200
 
 # Set by main.gd. Is the client's unique id for this player
@@ -42,8 +44,7 @@ func _physics_process(delta):
 		$Camera2D.current = true
 		get_input()
 		velocity = move_and_slide(velocity)
-		# Send move rpc to server
-		get_node("../").rpc_id(1, "player_moved", position.x, position.y)
+		emit_signal("main_player_moved", position)
 	else:
 		$Camera2D.current = false
 		# We handle animations and stuff here

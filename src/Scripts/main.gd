@@ -7,6 +7,9 @@ var player_scene = preload("res://Scenes/player.tscn")
 # Used on both sides, to keep track of all players.
 var players = {}
 
+func _ready():
+	$Player.connect("main_player_moved", self, "_on_main_player_moved")
+
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
 	if "--server" in OS.get_cmdline_args():
@@ -33,6 +36,7 @@ func _player_connected(id):
 		# Sends the add_player rpc to all other clients
 		print("Sending add player to other player ", players[id])
 		rpc_id(id, "player_join", new_player.id)
+
 	players[id] = new_player
 	add_child(new_player)
 	print("Got connection: ", id)
@@ -65,3 +69,6 @@ master func player_moved(new_x, new_y):
 puppet func other_player_moved(id, new_x, new_y):
 	print("Moving ", id, " to ", new_x, ", ", new_y)
 	players[id].move_to(new_x, new_y)
+
+func _on_main_player_moved(position : Vector2):
+	rpc_id(1, "player_moved", position.x, position.y)
