@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Fonts/title-font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scripts/Languages.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Title.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/UI/PlayGame.tscn" type="PackedScene" id=6]
 
 [node name="TitleScreen" type="MarginContainer"]
 anchor_right = 1.0
@@ -138,40 +139,12 @@ margin_left = 64.0
 margin_right = 704.0
 margin_bottom = 234.0
 
-[node name="PlayGame" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+[node name="PlayGame" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 6 )]
+visible = false
 margin_left = 64.0
+margin_top = 0.0
 margin_right = 704.0
 margin_bottom = 234.0
-custom_constants/separation = 16
-
-[node name="Tutorial" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/PlayGame"]
-margin_right = 640.0
-margin_bottom = 20.0
-disabled = true
-text = "TUTORIAL"
-flat = true
-
-[node name="JoinGame" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/PlayGame"]
-margin_top = 36.0
-margin_right = 640.0
-margin_bottom = 56.0
-text = "JOIN_GAME"
-flat = true
-
-[node name="CreateGame" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/PlayGame"]
-margin_top = 72.0
-margin_right = 640.0
-margin_bottom = 92.0
-text = "CREATE_GAME"
-flat = true
-
-[node name="Back" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/PlayGame"]
-margin_top = 108.0
-margin_right = 640.0
-margin_bottom = 128.0
-text = "BACK"
-flat = true
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/PlayGame/Back" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Back_pressed"]

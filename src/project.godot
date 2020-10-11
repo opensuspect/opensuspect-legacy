@@ -19,6 +19,10 @@ config/name="opensuspect"
 run/main_scene="res://Scenes/UI/Title.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Network="*res://Scripts/network.gd"
+
 [input]
 
 ui_left={

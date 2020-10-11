@@ -1,6 +1,5 @@
 extends Node2D
 
-export (int) var SERVER_PORT = 1234
 export (int) var MAX_PLAYERS = 10
 
 var player_scene = preload("res://Scenes/player.tscn")
@@ -12,16 +11,16 @@ func _ready():
 
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
-	if "--server" in OS.get_cmdline_args():
+	if Network.connection == Network.Connection.CLIENT_SERVER:
 		print("Starting server")
 		var peer = NetworkedMultiplayerENet.new()
-		peer.create_server(SERVER_PORT, MAX_PLAYERS)
+		peer.create_server(Network.port, MAX_PLAYERS)
 		get_tree().network_peer = peer
 		get_tree().connect("network_peer_connected", self, "_player_connected")
-	else:
-		print("Connecting to localhost:", SERVER_PORT)
+	elif Network.connection == Network.Connection.CLIENT:
+		print("Connecting to ", Network.host, " on port ", Network.port)
 		var peer = NetworkedMultiplayerENet.new()
-		peer.create_client("localhost", SERVER_PORT)
+		peer.create_client(Network.host, Network.port)
 		get_tree().network_peer = peer
 
 # Called on the server when a new client connects
