@@ -27,7 +27,7 @@ margin_top = 13.0
 margin_right = 944.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
-text = "FULLSCREEN"
+text = "Fullscreen"
 align = 1
 valign = 1
 
@@ -40,6 +40,6 @@ margin_bottom = 40.0
 margin_top = 44.0
 margin_right = 1024.0
 margin_bottom = 64.0
-text = "BACK"
+text = "Back"
 [connection signal="toggled" from="VBoxContainer/Fullscreen/Fullscreen_toggle" to="." method="_on_Fullscreen_toggle_toggled"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]
