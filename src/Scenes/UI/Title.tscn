@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/Fonts/title-font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scripts/Languages.gd" type="Script" id=2]
-[ext_resource path="res://Scripts/Title.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/UI/PlayGame.tscn" type="PackedScene" id=6]
@@ -14,7 +13,6 @@ custom_constants/margin_right = 64
 custom_constants/margin_top = 64
 custom_constants/margin_left = 64
 custom_constants/margin_bottom = 64
-script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
