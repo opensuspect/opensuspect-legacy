@@ -28,4 +28,4 @@ func _on_Back_pressed() -> void:
 	default_state()
 
 func _on_Language_pressed() -> void:
-	show_only("LanguageSelector")
+	show_only("LanguageMenu")

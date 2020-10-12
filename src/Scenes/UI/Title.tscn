@@ -108,22 +108,6 @@ margin_left = 64.0
 margin_right = 704.0
 margin_bottom = 234.0
 
-[node name="LanguageSelector" type="ScrollContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
-visible = false
-margin_left = 64.0
-margin_right = 704.0
-margin_bottom = 234.0
-rect_min_size = Vector2( 0, 100 )
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="LanguageList" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageSelector"]
-margin_right = 640.0
-margin_bottom = 234.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource( 2 )
-
 [node name="Settings" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 5 )]
 visible = false
 anchor_right = 0.0
@@ -138,7 +122,33 @@ margin_left = 64.0
 margin_top = 0.0
 margin_right = 704.0
 margin_bottom = 234.0
+
+[node name="LanguageMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+margin_left = 64.0
+margin_right = 704.0
+margin_bottom = 234.0
+
+[node name="LanguageSelector" type="ScrollContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu"]
+margin_right = 640.0
+margin_bottom = 202.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LanguageList" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/LanguageSelector"]
+margin_right = 640.0
+margin_bottom = 202.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+
+[node name="Back" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu"]
+margin_top = 206.0
+margin_right = 640.0
+margin_bottom = 234.0
+text = "BACK"
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Language" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Language_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/Back" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Back_pressed"]

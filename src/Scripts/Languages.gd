@@ -7,11 +7,6 @@ func _ready() -> void:
 		btn.text = TranslationServer.get_locale_name(lang)
 		btn.connect("pressed", self, "set_language", [lang])
 		add_child(btn)
-	
-	var backBtn: Button = Button.new()
-	backBtn.text = tr("BACK")
-	backBtn.connect("pressed", get_node("../.."), "_on_Return")
-	add_child(backBtn)
 
 func set_language(lang: String) -> void:
 	TranslationServer.set_locale(lang)
