@@ -13,6 +13,7 @@ This project is in *very early stage* development.
 Interested to get involved? We'd love to hear from you.
 Join us at [`#opensuspect:matrix.org`](https://matrix.to/#/#opensuspect:matrix.org) on a Matrix client (element.io).
 
+OpenSuspect is licensed under the GNU GPL v3 (see LICENSE.txt)
 ## Aims
 
 * Collaborative game play
