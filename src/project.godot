@@ -65,7 +65,7 @@ ui_down={
 
 [locale]
 
-translations=PoolStringArray( "res://locale/en.po", "res://locale/sr.po", "res://locale/de.po", "res://locale/fr.po", "res://locale/es.po", "res://locale/el.po" )
+translations=PoolStringArray( "res://locale/en.po", "res://locale/sr.po", "res://locale/de.po", "res://locale/fr.po", "res://locale/es.po", "res://locale/el.po", "res://locale/af.po", "res://locale/ar.po", "res://locale/ca.po", "res://locale/cs.po", "res://locale/da.po", "res://locale/fi.po", "res://locale/he.po", "res://locale/hu.po", "res://locale/it.po", "res://locale/ja.po", "res://locale/ko.po", "res://locale/nl.po", "res://locale/no.po", "res://locale/pl.po", "res://locale/pt.po", "res://locale/ro.po", "res://locale/ru.po", "res://locale/sv.po", "res://locale/tr.po", "res://locale/uk.po", "res://locale/vi.po", "res://locale/zh.po" )
 locale_filter=[ 0, [  ] ]
 
 [rendering]
