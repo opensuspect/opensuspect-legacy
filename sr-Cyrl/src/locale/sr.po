@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-10-11 22:39+0200\n"
-"PO-Revision-Date: 2020-10-12 09:45\n"
+"PO-Revision-Date: 2020-10-12 10:43\n"
 "Last-Translator: \n"
 "Language-Team: Serbian (Cyrillic)\n"
 "Language: sr_Cyrl\n"
@@ -20,66 +20,66 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
 msgid "TUTORIAL"
-msgstr ""
+msgstr "ТУТОРИЈАЛ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "JOIN GAME"
-msgstr ""
+msgstr "ПРИДРУЖИ СЕ ИГРИ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
 msgid "CREATE GAME"
-msgstr ""
+msgstr "НАПРАВИ ИГРУ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
 #: ../../src/Scripts/Languages.gd:12
 msgid "BACK"
-msgstr ""
+msgstr "НАЗАД"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
-msgstr ""
+msgstr "Име хоста"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:81
 msgid "localhost"
-msgstr ""
+msgstr "localhost"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
 msgid "Port"
-msgstr ""
+msgstr "Порт"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "CONNECT"
-msgstr ""
+msgstr "КОНЕКТУЈ СЕ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
 msgid "CREATE"
-msgstr ""
+msgstr "НАПРАВИ"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
-msgstr ""
+msgstr "Цео Екран"
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
-msgstr ""
+msgstr "OpenSuspect"
 
 #: ../../src/Scenes/UI/Title.tscn:68
 msgid "PLAY"
-msgstr ""
+msgstr "ИГРАЈ"
 
 #: ../../src/Scenes/UI/Title.tscn:75
 msgid "APPEARANCE"
-msgstr ""
+msgstr "ИЗГЛЕД"
 
 #: ../../src/Scenes/UI/Title.tscn:85
 msgid "SETTINGS"
-msgstr ""
+msgstr "ОПЦИЈЕ"
 
 #: ../../src/Scenes/UI/Title.tscn:95
 msgid "LANGUAGE"
-msgstr ""
+msgstr "ЈЕЗИК"
 
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
-msgstr ""
+msgstr "ИЗАЂИ"
 
