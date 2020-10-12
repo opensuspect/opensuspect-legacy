@@ -24,16 +24,16 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "JOIN GAME"
-msgstr ""
+msgstr "ALĂTURĂ-TE JOCULUI"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
 msgid "CREATE GAME"
-msgstr ""
+msgstr "CREEAZĂ UN JOC"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
 #: ../../src/Scripts/Languages.gd:12
 msgid "BACK"
-msgstr ""
+msgstr "ÎNAPOI"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
@@ -49,11 +49,11 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "CONNECT"
-msgstr ""
+msgstr "CONECTEAZĂ-TE"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
 msgid "CREATE"
-msgstr ""
+msgstr "CREEAZĂ"
 
 #: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
@@ -65,21 +65,21 @@ msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
 msgid "PLAY"
-msgstr ""
+msgstr "JOACĂ"
 
 #: ../../src/Scenes/UI/Title.tscn:75
 msgid "APPEARANCE"
-msgstr ""
+msgstr "APARENȚĂ"
 
 #: ../../src/Scenes/UI/Title.tscn:85
 msgid "SETTINGS"
-msgstr ""
+msgstr "SETĂRI"
 
 #: ../../src/Scenes/UI/Title.tscn:95
 msgid "LANGUAGE"
-msgstr ""
+msgstr "LIMBĂ"
 
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
-msgstr ""
+msgstr "IEŞI"
 
