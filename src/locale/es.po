@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-10-11 22:39+0200\n"
-"PO-Revision-Date: 2020-10-12 11:42\n"
+"PO-Revision-Date: 2020-10-12 17:52\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
 msgid "TUTORIAL"
-msgstr ""
+msgstr "TUTORIAL"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "JOIN GAME"
@@ -37,7 +37,7 @@ msgstr "ATRÁS"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
-msgstr "NOMBRE DEL HOST"
+msgstr "Nombre del host"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:81
 msgid "localhost"
@@ -45,7 +45,7 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
 msgid "Port"
-msgstr "PUERTO"
+msgstr "Puerto"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "CONNECT"
