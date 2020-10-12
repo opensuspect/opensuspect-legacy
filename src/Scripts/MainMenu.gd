@@ -2,7 +2,7 @@ extends MarginContainer
 
 func _ready() -> void:
 	default_state()
-	print(TranslationServer.get_loaded_locales())
+	print("Loaded locales: ", TranslationServer.get_loaded_locales())
 
 func _on_NewGame_pressed() -> void:
 	show_only("PlayGame")
@@ -26,7 +26,6 @@ func _on_Quit_pressed() -> void:
 
 func _on_Back_pressed() -> void:
 	default_state()
-
 
 func _on_Language_pressed() -> void:
 	show_only("LanguageSelector")
