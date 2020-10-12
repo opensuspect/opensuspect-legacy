@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/play_button_dark.png-5a947785b2881fc8f3229a69f833791b.stex"
+path="res://.import/appearance_light_pressed.png-c65952080823779a60478727a896691f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Title/play_button_dark.png"
-dest_files=[ "res://.import/play_button_dark.png-5a947785b2881fc8f3229a69f833791b.stex" ]
+source_file="res://Assets/UI/Title/Light/appearance_light_pressed.png"
+dest_files=[ "res://.import/appearance_light_pressed.png-c65952080823779a60478727a896691f.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

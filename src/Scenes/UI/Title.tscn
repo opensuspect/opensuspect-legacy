@@ -1,14 +1,26 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://Assets/Fonts/title-font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Assets/UI/Title/Light/play_button_light_pressed.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Languages.gd" type="Script" id=2]
+[ext_resource path="res://Assets/UI/Title/Light/title_light.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/UI/Settings.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/UI/PlayGame.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/UI/Title/Light/play_button_light.png" type="Texture" id=7]
+[ext_resource path="res://Assets/UI/Title/Light/locale_light.png" type="Texture" id=8]
+[ext_resource path="res://Assets/UI/Title/Light/settings_light.png" type="Texture" id=9]
+[ext_resource path="res://Assets/UI/Title/Light/locale_light_pressed.png" type="Texture" id=10]
+[ext_resource path="res://Assets/UI/Title/Light/exit_light_pressed.png" type="Texture" id=11]
+[ext_resource path="res://Assets/UI/Title/Light/settings_light_pressed.png" type="Texture" id=12]
+[ext_resource path="res://Assets/UI/Title/Light/exit_light.png" type="Texture" id=13]
+[ext_resource path="res://Assets/UI/Title/Light/appearance_light.png" type="Texture" id=14]
+[ext_resource path="res://Assets/UI/Title/Light/appearance_light_pressed.png" type="Texture" id=15]
 
 [node name="TitleScreen" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 3.1748
+margin_right = 3.17493
 custom_constants/margin_right = 64
 custom_constants/margin_top = 64
 custom_constants/margin_left = 64
@@ -17,60 +29,56 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Background"]
+scale = Vector2( 10, 10 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Play" type="Node2D" parent="."]
+
+[node name="OldMenu" type="VBoxContainer" parent="."]
+visible = false
 margin_left = 64.0
 margin_top = 64.0
-margin_right = 960.0
-margin_bottom = 536.0
+margin_right = 1856.0
+margin_bottom = 1016.0
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
-margin_right = 896.0
-margin_bottom = 234.0
-size_flags_vertical = 3
-
-[node name="Title" type="Label" parent="VBoxContainer/CenterContainer"]
-margin_left = 255.0
-margin_top = 74.0
-margin_right = 640.0
-margin_bottom = 160.0
-custom_fonts/font = ExtResource( 1 )
-text = "OpenSuspect"
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
-margin_top = 238.0
-margin_right = 896.0
-margin_bottom = 472.0
+[node name="MarginContainer" type="MarginContainer" parent="OldMenu"]
+margin_right = 1792.0
+margin_bottom = 952.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 64
 custom_constants/margin_left = 64
 
-[node name="MenuArea" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
+[node name="MenuArea" type="MarginContainer" parent="OldMenu/MarginContainer"]
 margin_left = 64.0
-margin_right = 832.0
-margin_bottom = 234.0
+margin_right = 1728.0
+margin_bottom = 952.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 64
 custom_constants/margin_left = 64
 script = ExtResource( 4 )
 
-[node name="MainMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+[node name="MainMenu" type="VBoxContainer" parent="OldMenu/MarginContainer/MenuArea"]
 margin_left = 64.0
-margin_right = 704.0
-margin_bottom = 234.0
+margin_right = 1600.0
+margin_bottom = 952.0
 size_flags_vertical = 3
 custom_constants/separation = 16
 
-[node name="PlayGame" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
-margin_right = 640.0
+[node name="PlayGame" type="Button" parent="OldMenu/MarginContainer/MenuArea/MainMenu"]
+margin_right = 1536.0
 margin_bottom = 28.0
 text = "PLAY"
 flat = true
 
-[node name="Appearence" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+[node name="Appearence" type="Button" parent="OldMenu/MarginContainer/MenuArea/MainMenu"]
 margin_top = 44.0
-margin_right = 640.0
+margin_right = 1536.0
 margin_bottom = 72.0
 text = "APPEARANCE"
 flat = true
@@ -78,9 +86,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Settings" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+[node name="Settings" type="Button" parent="OldMenu/MarginContainer/MenuArea/MainMenu"]
 margin_top = 88.0
-margin_right = 640.0
+margin_right = 1536.0
 margin_bottom = 116.0
 text = "SETTINGS"
 flat = true
@@ -88,61 +96,155 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Language" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+[node name="Language" type="Button" parent="OldMenu/MarginContainer/MenuArea/MainMenu"]
 margin_top = 132.0
-margin_right = 640.0
+margin_right = 1536.0
 margin_bottom = 160.0
 text = "LANGUAGE"
 flat = true
 
-[node name="Quit" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+[node name="Quit" type="Button" parent="OldMenu/MarginContainer/MenuArea/MainMenu"]
 margin_top = 176.0
-margin_right = 640.0
+margin_right = 1536.0
 margin_bottom = 204.0
 text = "QUIT"
 flat = true
 
-[node name="AppearenceEditor" type="HBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+[node name="AppearenceEditor" type="HBoxContainer" parent="OldMenu/MarginContainer/MenuArea"]
 visible = false
 margin_left = 64.0
-margin_right = 704.0
-margin_bottom = 234.0
+margin_right = 1600.0
+margin_bottom = 952.0
 
-[node name="LanguageSelector" type="ScrollContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+[node name="LanguageSelector" type="ScrollContainer" parent="OldMenu/MarginContainer/MenuArea"]
 visible = false
 margin_left = 64.0
-margin_right = 704.0
-margin_bottom = 234.0
+margin_right = 1600.0
+margin_bottom = 952.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LanguageList" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageSelector"]
-margin_right = 640.0
-margin_bottom = 234.0
+[node name="LanguageList" type="VBoxContainer" parent="OldMenu/MarginContainer/MenuArea/LanguageSelector"]
+margin_right = 1536.0
+margin_bottom = 952.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 2 )
 
-[node name="Button" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/LanguageSelector/LanguageList"]
+[node name="Button" type="Button" parent="OldMenu/MarginContainer/MenuArea/LanguageSelector/LanguageList"]
 margin_right = 640.0
 margin_bottom = 20.0
 text = "Test button"
 
-[node name="Settings" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 5 )]
+[node name="Settings" parent="OldMenu/MarginContainer/MenuArea" instance=ExtResource( 5 )]
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 64.0
-margin_right = 704.0
-margin_bottom = 234.0
+margin_right = 1600.0
+margin_bottom = 952.0
+resDropdown_path = NodePath("../../../../OldMenu/MarginContainer/MenuArea/Settings/VBoxContainer/resDropdown")
 
-[node name="PlayGame" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 6 )]
+[node name="PlayGame" parent="OldMenu/MarginContainer/MenuArea" instance=ExtResource( 6 )]
 visible = false
 margin_left = 64.0
 margin_top = 0.0
-margin_right = 704.0
-margin_bottom = 234.0
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
+margin_right = 1600.0
+margin_bottom = 952.0
+
+[node name="NewMenu" type="VBoxContainer" parent="."]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 1856.0
+margin_bottom = 1016.0
+size_flags_stretch_ratio = 0.0
+custom_constants/separation = 35
+alignment = 2
+
+[node name="PlayContainer" type="HBoxContainer" parent="NewMenu"]
+margin_top = 617.0
+margin_right = 1792.0
+margin_bottom = 787.0
+
+[node name="Play" type="TextureButton" parent="NewMenu/PlayContainer"]
+margin_left = 691.0
+margin_right = 1101.0
+margin_bottom = 170.0
+rect_min_size = Vector2( 410, 170 )
+size_flags_horizontal = 6
+size_flags_vertical = 3
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuContainer" type="HBoxContainer" parent="NewMenu"]
+margin_top = 822.0
+margin_right = 1792.0
+margin_bottom = 952.0
+custom_constants/separation = 37
+alignment = 1
+
+[node name="Settings" type="TextureButton" parent="NewMenu/MenuContainer"]
+margin_right = 130.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 130, 130 )
+size_flags_horizontal = 0
+size_flags_vertical = 3
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 12 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Appearance" type="TextureButton" parent="NewMenu/MenuContainer"]
+margin_left = 167.0
+margin_right = 297.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 130, 130 )
+size_flags_horizontal = 0
+size_flags_vertical = 3
+texture_normal = ExtResource( 14 )
+texture_pressed = ExtResource( 15 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Locale" type="TextureButton" parent="NewMenu/MenuContainer"]
+margin_left = 1495.0
+margin_right = 1625.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 130, 130 )
+size_flags_horizontal = 10
+size_flags_vertical = 3
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="TextureButton" parent="NewMenu/MenuContainer"]
+margin_left = 1662.0
+margin_right = 1792.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 130, 130 )
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 11 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="OldMenu/MarginContainer/MenuArea/MainMenu/PlayGame" to="OldMenu/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
+[connection signal="pressed" from="OldMenu/MarginContainer/MenuArea/MainMenu/Settings" to="OldMenu/MarginContainer/MenuArea" method="_on_Settings_pressed"]
+[connection signal="pressed" from="OldMenu/MarginContainer/MenuArea/MainMenu/Quit" to="OldMenu/MarginContainer/MenuArea" method="_on_Quit_pressed"]
+[connection signal="pressed" from="NewMenu/PlayContainer/Play" to="OldMenu/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
+[connection signal="pressed" from="NewMenu/MenuContainer/Settings" to="OldMenu/MarginContainer/MenuArea" method="_on_Settings_pressed"]
+[connection signal="pressed" from="NewMenu/MenuContainer/Exit" to="OldMenu/MarginContainer/MenuArea" method="_on_Quit_pressed"]

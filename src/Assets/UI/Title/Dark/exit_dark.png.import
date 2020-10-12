@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/locale_light.png-2c63a79b6dd25a75f4d7bd04a15c0fbd.stex"
+path="res://.import/exit_dark.png-912b63b0b32281407223a6cd714c2620.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Title/locale_light.png"
-dest_files=[ "res://.import/locale_light.png-2c63a79b6dd25a75f4d7bd04a15c0fbd.stex" ]
+source_file="res://Assets/UI/Title/Dark/exit_dark.png"
+dest_files=[ "res://.import/exit_dark.png-912b63b0b32281407223a6cd714c2620.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/locale_dark_pressed.png-d6de1839f889f91edb39e8dff1d87ac6.stex"
+path="res://.import/appearance_dark.png-f8a7a240554e78e87e23a09854be0d70.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Title/locale_dark_pressed.png"
-dest_files=[ "res://.import/locale_dark_pressed.png-d6de1839f889f91edb39e8dff1d87ac6.stex" ]
+source_file="res://Assets/UI/Title/Dark/appearance_dark.png"
+dest_files=[ "res://.import/appearance_dark.png-f8a7a240554e78e87e23a09854be0d70.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

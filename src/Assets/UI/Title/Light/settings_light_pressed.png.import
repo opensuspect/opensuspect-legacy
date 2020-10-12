@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/settings_light_pressed.png-2b26acc1b7f82b313cffc03f25db4808.stex"
+path="res://.import/settings_light_pressed.png-6b52e1fff3d7e88007db4c73dc189f46.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Title/settings_light_pressed.png"
-dest_files=[ "res://.import/settings_light_pressed.png-2b26acc1b7f82b313cffc03f25db4808.stex" ]
+source_file="res://Assets/UI/Title/Light/settings_light_pressed.png"
+dest_files=[ "res://.import/settings_light_pressed.png-6b52e1fff3d7e88007db4c73dc189f46.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
