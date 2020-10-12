@@ -35,7 +35,7 @@ jobs:
       - name: Linux Build
         run: |
           mkdir -v -p build/linux
-          cd src
+          cd $GITHUB_WORKSPACE/src
           godot -v --export "Client" ../build/linux/$EXPORT_NAME.x86_64
       - name: Upload Linux Artifact
         uses: actions/upload-artifact@v1
@@ -45,12 +45,12 @@ jobs:
       - name: Windows Desktop Build
         run: |
           mkdir -v -p build/windows-desktop
-          cd src
+          cd $GITHUB_WORKSPACE/src
           godot -v --export "Windows Desktop" ../build/windows-desktop/$EXPORT_NAME.exe
       - name: Correct Windows icon
         run: |
-          ls ~ -R
-          convert icon.png -define icon:auto-resize="256,128,96,64,48,32,16" ~/icon.ico
+          ls $GITHUB_WORKSPACE -R
+          convert $GITHUB_WORKSPACE/src/icon.png -define icon:auto-resize="256,128,96,64,48,32,16" ~/icon.ico
           wine rcedit.exe ../build/windows-desktop/$EXPORT_NAME.exe -set-icon ~/icon.ico
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v1
