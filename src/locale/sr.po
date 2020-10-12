@@ -1,23 +1,22 @@
-# Translations template for PROJECT.
-# Copyright (C) 2020 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# Automatically generated, 2020.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
+"Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 22:38+0200\n"
-"PO-Revision-Date: 2020-10-11 15:07+0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: sr\n"
+"POT-Creation-Date: 2020-10-11 22:39+0200\n"
+"PO-Revision-Date: 2020-10-12 13:02\n"
+"Last-Translator: \n"
+"Language-Team: Serbian (Cyrillic)\n"
+"Language: sr_Cyrl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Crowdin-Project: 90338d6e66b962c2e6ed4ca042c527e0\n"
+"X-Crowdin-Project-ID: 2\n"
+"X-Crowdin-Language: sr-Cyrl\n"
+"X-Crowdin-File: /main/src/locale/en.po\n"
+"X-Crowdin-File-ID: 8\n"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
 msgid "TUTORIAL"
@@ -42,7 +41,7 @@ msgstr "Име хоста"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:81
 msgid "localhost"
-msgstr ""
+msgstr "localhost"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
 msgid "Port"
@@ -62,7 +61,7 @@ msgstr "Цео Екран"
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
-msgstr ""
+msgstr "OpenSuspect"
 
 #: ../../src/Scenes/UI/Title.tscn:68
 msgid "PLAY"
@@ -83,3 +82,4 @@ msgstr "ЈЕЗИК"
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
 msgstr "ИЗАЂИ"
+
