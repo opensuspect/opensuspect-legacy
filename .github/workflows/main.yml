@@ -29,6 +29,7 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+          apt-get update
           apt-get install wine --yes
           wget --progress=dot https://github.com/electron/rcedit/releases/download/v1.1.1/rcedit-x64.exe -O ~/rcedit.exe
       - name: Linux Build
