@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 33.5967, 32.9132 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="YSort"]
 position = Vector2( 104.785, 99.4456 )
 script = ExtResource( 3 )
 
