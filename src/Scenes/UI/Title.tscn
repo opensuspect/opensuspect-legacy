@@ -145,4 +145,5 @@ margin_right = 704.0
 margin_bottom = 234.0
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Language" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Language_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
