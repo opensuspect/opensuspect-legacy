@@ -15,8 +15,8 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  export-linux:
-    name: Linux Export
+  export:
+    name: Export
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:3.2.3
@@ -34,8 +34,18 @@ jobs:
           mkdir -v -p build/linux
           cd src
           godot -v --export "Client" ../build/linux/$EXPORT_NAME.x86_64
-      - name: Upload Artifact
+      - name: Upload Linux Artifact
         uses: actions/upload-artifact@v1
         with:
           name: linux
           path: build/linux
+      - name: Windows Desktop Build
+        run: |
+          mkdir -v -p build/windows-desktop
+          cd src
+          godot -v --export "Windows Desktop" ../build/windows-desktop/$EXPORT_NAME.exe
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: windows-desktop
+          path: build/windows-desktop
