@@ -46,77 +46,126 @@ size_flags_vertical = 3
 custom_constants/margin_right = 64
 custom_constants/margin_left = 64
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer"]
+[node name="MenuArea" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
 margin_left = 64.0
 margin_right = 832.0
 margin_bottom = 234.0
-
-[node name="MenuArea" type="MarginContainer" parent="VBoxContainer/MarginContainer/CenterContainer"]
-margin_left = 263.0
-margin_top = 15.0
-margin_right = 505.0
-margin_bottom = 219.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 64
 custom_constants/margin_left = 64
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="MainMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea"]
+[node name="MainMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
 margin_left = 64.0
-margin_right = 178.0
-margin_bottom = 204.0
+margin_right = 704.0
+margin_bottom = 234.0
 size_flags_vertical = 3
-custom_constants/separation = 16
+custom_constants/separation = 55
 
-[node name="PlayGame" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu"]
-margin_right = 114.0
-margin_bottom = 28.0
+[node name="Control" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+margin_right = 640.0
+
+[node name="PlayGame" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -26.0
+margin_top = -14.0
+margin_right = 26.0
+margin_bottom = 14.0
 custom_fonts/font = ExtResource( 3 )
 text = "PLAY"
 flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Appearence" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu"]
-margin_top = 44.0
-margin_right = 114.0
-margin_bottom = 72.0
+[node name="Control2" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+margin_top = 55.0
+margin_right = 640.0
+margin_bottom = 55.0
+
+[node name="Appearence" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -57.0
+margin_top = -14.0
+margin_right = 57.0
+margin_bottom = 14.0
 text = "APPEARANCE"
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Settings" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu"]
-margin_top = 88.0
-margin_right = 114.0
-margin_bottom = 116.0
+[node name="Control3" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+margin_top = 110.0
+margin_right = 640.0
+margin_bottom = 110.0
+
+[node name="Settings" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -44.0
+margin_top = -14.0
+margin_right = 44.0
+margin_bottom = 14.0
 text = "SETTINGS"
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Language" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu"]
-margin_top = 132.0
-margin_right = 114.0
-margin_bottom = 160.0
+[node name="Control4" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+margin_top = 165.0
+margin_right = 640.0
+margin_bottom = 165.0
+
+[node name="Language" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -48.0
+margin_top = -14.0
+margin_right = 48.0
+margin_bottom = 14.0
 text = "LANGUAGE"
 flat = true
 
-[node name="Quit" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu"]
-margin_top = 176.0
-margin_right = 114.0
-margin_bottom = 204.0
+[node name="Control5" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+margin_top = 220.0
+margin_right = 640.0
+margin_bottom = 220.0
+
+[node name="Quit" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -24.5
+margin_top = -14.0
+margin_right = 24.5
+margin_bottom = 14.0
 text = "QUIT"
 flat = true
 
-[node name="AppearenceEditor" type="HBoxContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea"]
+[node name="AppearenceEditor" type="HBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
 visible = false
 margin_left = 64.0
-margin_right = 178.0
-margin_bottom = 204.0
+margin_right = 704.0
+margin_bottom = 234.0
 
-[node name="Settings" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea" instance=ExtResource( 5 )]
+[node name="Settings" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 5 )]
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -124,47 +173,86 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 64.0
 margin_top = 0.0
-margin_right = 178.0
-margin_bottom = 204.0
+margin_right = 704.0
+margin_bottom = 234.0
 
-[node name="VBoxContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/Settings" index="0"]
+[node name="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/Settings" index="0"]
+margin_right = 640.0
+
+[node name="Fullscreen" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="0"]
 margin_right = 164.0
 
-[node name="PlayGame" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea" instance=ExtResource( 6 )]
+[node name="Fullscreen" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer/Fullscreen" index="0"]
+margin_right = 84.0
+
+[node name="Fullscreen_toggle" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer/Fullscreen" index="1"]
+margin_left = 88.0
+margin_right = 164.0
+
+[node name="Label" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="1"]
+margin_right = 164.0
+
+[node name="resDropdown" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="2"]
+margin_right = 164.0
+
+[node name="Music Volume" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="3"]
+margin_right = 164.0
+
+[node name="Music" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer/Music Volume" index="1"]
+margin_right = 164.0
+
+[node name="Sound Volume" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="4"]
+margin_right = 164.0
+
+[node name="Sound" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer/Sound Volume" index="1"]
+margin_right = 164.0
+
+[node name="HBoxContainer3" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="5"]
+margin_right = 164.0
+
+[node name="Back" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="6"]
+margin_right = 164.0
+
+[node name="PlayGame" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 6 )]
 visible = false
 margin_left = 64.0
 margin_top = 0.0
-margin_right = 184.0
-margin_bottom = 204.0
+margin_right = 704.0
+margin_bottom = 234.0
 
-[node name="LanguageMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea"]
+[node name="LanguageMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
 margin_left = 64.0
-margin_right = 178.0
-margin_bottom = 204.0
+margin_right = 704.0
+margin_bottom = 234.0
 
-[node name="LanguageSelector" type="ScrollContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/LanguageMenu"]
-margin_right = 114.0
-margin_bottom = 172.0
+[node name="LanguageSelector" type="ScrollContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu"]
+margin_right = 640.0
+margin_bottom = 202.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LanguageList" type="VBoxContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/LanguageMenu/LanguageSelector"]
-margin_right = 114.0
-margin_bottom = 172.0
+[node name="LanguageList" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/LanguageSelector"]
+margin_right = 640.0
+margin_bottom = 202.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 2 )
 
-[node name="Back" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/LanguageMenu"]
-margin_top = 176.0
-margin_right = 114.0
-margin_bottom = 204.0
-text = "BACK"
-[connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu/PlayGame" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_NewGame_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu/Settings" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Settings_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu/Language" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Language_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu/Quit" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Quit_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/LanguageMenu/Back" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Back_pressed"]
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu"]
+margin_top = 206.0
+margin_right = 640.0
+margin_bottom = 234.0
 
-[editable path="VBoxContainer/MarginContainer/CenterContainer/MenuArea/Settings"]
+[node name="Back" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/CenterContainer"]
+margin_left = 293.0
+margin_right = 346.0
+margin_bottom = 28.0
+text = "BACK"
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/Language" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Language_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/CenterContainer/Back" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Back_pressed"]
+
+[editable path="VBoxContainer/MarginContainer/MenuArea/Settings"]
