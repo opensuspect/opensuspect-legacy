@@ -4,8 +4,6 @@
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://scripts/main.gd" type="Script" id=3]
 
-
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 33.5967, 32.9132 )
 
