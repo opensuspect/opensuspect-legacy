@@ -11,10 +11,11 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+resDropdown_path = NodePath("VBoxContainer/resDropdown")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_right = 1024.0
-margin_bottom = 72.0
+margin_bottom = 130.0
 size_flags_horizontal = 3
 
 [node name="Fullscreen" type="HBoxContainer" parent="VBoxContainer"]
@@ -41,5 +42,16 @@ margin_top = 44.0
 margin_right = 1024.0
 margin_bottom = 72.0
 text = "BACK"
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_top = 76.0
+margin_right = 1024.0
+margin_bottom = 98.0
+text = "Fullscreen Resolution: "
+
+[node name="resDropdown" type="OptionButton" parent="VBoxContainer"]
+margin_top = 102.0
+margin_right = 1024.0
+margin_bottom = 130.0
 [connection signal="toggled" from="VBoxContainer/Fullscreen/Fullscreen_toggle" to="." method="_on_Fullscreen_toggle_toggled"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]
