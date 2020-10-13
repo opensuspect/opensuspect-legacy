@@ -64,20 +64,22 @@ margin_left = 64.0
 margin_right = 704.0
 margin_bottom = 234.0
 size_flags_vertical = 3
-custom_constants/separation = 55
+custom_constants/separation = 50
 
 [node name="Control" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
 margin_right = 640.0
 
-[node name="PlayGame" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -26.0
-margin_top = -14.0
-margin_right = 26.0
-margin_bottom = 14.0
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayGame" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer"]
+margin_left = 294.0
+margin_right = 346.0
+margin_bottom = 28.0
 custom_fonts/font = ExtResource( 3 )
 text = "PLAY"
 flat = true
@@ -86,19 +88,21 @@ __meta__ = {
 }
 
 [node name="Control2" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
-margin_top = 55.0
+margin_top = 50.0
 margin_right = 640.0
-margin_bottom = 55.0
+margin_bottom = 50.0
 
-[node name="Appearence" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -57.0
-margin_top = -14.0
-margin_right = 57.0
-margin_bottom = 14.0
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Appearence" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2/CenterContainer"]
+margin_left = 263.0
+margin_right = 377.0
+margin_bottom = 28.0
 text = "APPEARANCE"
 flat = true
 __meta__ = {
@@ -106,19 +110,21 @@ __meta__ = {
 }
 
 [node name="Control3" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
-margin_top = 110.0
+margin_top = 100.0
 margin_right = 640.0
-margin_bottom = 110.0
+margin_bottom = 100.0
 
-[node name="Settings" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -44.0
-margin_top = -14.0
-margin_right = 44.0
-margin_bottom = 14.0
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settings" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer"]
+margin_left = 276.0
+margin_right = 364.0
+margin_bottom = 28.0
 text = "SETTINGS"
 flat = true
 __meta__ = {
@@ -126,38 +132,49 @@ __meta__ = {
 }
 
 [node name="Control4" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
-margin_top = 165.0
+margin_top = 150.0
 margin_right = 640.0
-margin_bottom = 165.0
+margin_bottom = 150.0
 
-[node name="Language" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -48.0
-margin_top = -14.0
-margin_right = 48.0
-margin_bottom = 14.0
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Language" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/CenterContainer"]
+margin_left = 272.0
+margin_right = 368.0
+margin_bottom = 28.0
 text = "LANGUAGE"
 flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Control5" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
-margin_top = 220.0
+margin_top = 200.0
 margin_right = 640.0
-margin_bottom = 220.0
+margin_bottom = 200.0
 
-[node name="Quit" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -24.5
-margin_top = -14.0
-margin_right = 24.5
-margin_bottom = 14.0
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 28.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/CenterContainer"]
+margin_left = 295.0
+margin_right = 344.0
+margin_bottom = 28.0
 text = "QUIT"
 flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AppearenceEditor" type="HBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
 visible = false
@@ -249,10 +266,10 @@ margin_left = 293.0
 margin_right = 346.0
 margin_bottom = 28.0
 text = "BACK"
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/Language" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Language_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/CenterContainer/Language" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Language_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/CenterContainer/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/CenterContainer/Back" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Back_pressed"]
 
 [editable path="VBoxContainer/MarginContainer/MenuArea/Settings"]
