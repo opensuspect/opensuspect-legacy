@@ -1,5 +1,7 @@
 <img alt="Little Suspect" src="https://github.com/moxvallix/opensuspect/blob/main/misc/images/icon_1.png">
 
+![CI](https://github.com/opensuspect/opensuspect/workflows/CI/badge.svg?branch=main)
+
 # OpenSuspect
 
 *One amongst us is not like the rest*
