@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-11 22:39+0200\n"
+"POT-Creation-Date: 2020-10-13 14:57+0200\n"
 "PO-Revision-Date: 2020-10-12 17:52\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
@@ -30,8 +30,8 @@ msgstr "UNIRSE A UNA PARTIDA"
 msgid "CREATE GAME"
 msgstr "CREAR PARTIDA"
 
-#: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
-#: ../../src/Scripts/Languages.gd:12
+#: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:113
+#: ../../src/Scenes/UI/Title.tscn:152
 msgid "BACK"
 msgstr "ATRÁS"
 
@@ -55,9 +55,26 @@ msgstr "CONECTAR"
 msgid "CREATE"
 msgstr "CREAR"
 
-#: ../../src/Scenes/UI/Settings.tscn:30
+#: ../../src/Scenes/UI/Settings.tscn:37
 msgid "Fullscreen"
 msgstr "Pantalla completa"
+
+#: ../../src/Scenes/UI/Settings.tscn:50
+#, fuzzy
+msgid "Fullscreen Resolution: "
+msgstr "Pantalla completa"
+
+#: ../../src/Scenes/UI/Settings.tscn:65
+msgid "Music Volume: "
+msgstr ""
+
+#: ../../src/Scenes/UI/Settings.tscn:83
+msgid "Sound Volume: "
+msgstr ""
+
+#: ../../src/Scenes/UI/Settings.tscn:102
+msgid "Colorblind Mode: "
+msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
@@ -82,4 +99,3 @@ msgstr "IDIOMA"
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
 msgstr "SALIR"
-
