@@ -25,8 +25,13 @@ func _enter_tree():
 
 # Called on the server when a new client connects
 func _player_connected(id):
+	rpc_id(id, "getplayerinfo", id)
+remote func getplayerinfo(id):
+	rpc_id(1, "playerconnect_proper", Network.name, id)
+remote func playerconnect_proper(playername, id):
 	var new_player = player_scene.instance()
 	new_player.id = id
+	new_player.playername = playername
 	new_player.main_player = false
 	for id in players:
 		# Sends an add_player rpc to the player that just joined
@@ -35,7 +40,6 @@ func _player_connected(id):
 		# Sends the add_player rpc to all other clients
 		print("Sending add player to other player ", players[id])
 		rpc_id(id, "player_join", new_player.id)
-
 	players[id] = new_player
 	add_child(new_player)
 	print("Got connection: ", id)
@@ -49,6 +53,7 @@ remote func player_join(other_id):
 	var new_player = player_scene.instance()
 	new_player.id = other_id
 	new_player.main_player = false
+	new_player.playername = name
 	add_child(new_player)
 	players[other_id] = new_player
 	print("New player: ", other_id)
@@ -80,8 +85,9 @@ remote func other_player_moved(id, new_x, new_y):
 
 func _on_main_player_moved(position : Vector2):
 	#In the beginning Godot created the heaven and the earth
-	#about 100% of the fix for the "host invisible" bug
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", position.x, position.y)
 	else:
 		rpc("other_player_moved", 1, position.x, position.y)
+remote func player_getname():
+	rpc_id(1,"player_nameget", Network.name)

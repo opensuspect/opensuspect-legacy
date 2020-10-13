@@ -6,6 +6,7 @@ export (int) var speed = 150
 
 # Set by main.gd. Is the client's unique id for this player
 var id
+var playername
 var velocity = Vector2(0,0)
 # Only true when this is the player being controlled
 var main_player = true
@@ -18,6 +19,10 @@ var idletime = 1
 func _ready():
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
+	if main_player:
+		print(Network.name)
+		playername = Network.name
+	$Label.text = playername
 
 # Only called when main_player is true
 func get_input():
@@ -70,7 +75,7 @@ func _physics_process(delta):
 			idletime = 1
 		elif position.y - lastpos.y < -y_anim_margin:
 			#replace with walking up anim when done
-			$Sprite.play("walk-down")
+			$Sprite.play("walk-up")
 			idletime = 1
 		elif idletime > 1:
 			$Sprite.play("idle")
