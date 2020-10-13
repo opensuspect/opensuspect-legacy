@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-13 14:57+0200\n"
-"PO-Revision-Date: 2020-10-12 13:05\n"
+"POT-Creation-Date: 2020-10-11 22:39+0200\n"
+"PO-Revision-Date: 2020-10-13 13:10\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -20,24 +20,24 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:22
 msgid "TUTORIAL"
-msgstr ""
+msgstr "PRÓBAJÁTÉK"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "JOIN GAME"
-msgstr ""
+msgstr "CSATLAKOZÁS MEGLÉVŐ JÁTÉKHOZ"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
 msgid "CREATE GAME"
-msgstr ""
+msgstr "ÚJ JÁTÉK LÉTREHOZÁS"
 
-#: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:113
-#: ../../src/Scenes/UI/Title.tscn:152
+#: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:43
+#: ../../src/Scripts/Languages.gd:12
 msgid "BACK"
-msgstr ""
+msgstr "VISSZA"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
-msgstr ""
+msgstr "Host neve"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:81
 msgid "localhost"
@@ -45,35 +45,19 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
 msgid "Port"
-msgstr ""
+msgstr "Portszám"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "CONNECT"
-msgstr ""
+msgstr "CSATLAKOZÁS"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
 msgid "CREATE"
-msgstr ""
+msgstr "LÉTREHOZ"
 
-#: ../../src/Scenes/UI/Settings.tscn:37
+#: ../../src/Scenes/UI/Settings.tscn:30
 msgid "Fullscreen"
-msgstr ""
-
-#: ../../src/Scenes/UI/Settings.tscn:50
-msgid "Fullscreen Resolution: "
-msgstr ""
-
-#: ../../src/Scenes/UI/Settings.tscn:65
-msgid "Music Volume: "
-msgstr ""
-
-#: ../../src/Scenes/UI/Settings.tscn:83
-msgid "Sound Volume: "
-msgstr ""
-
-#: ../../src/Scenes/UI/Settings.tscn:102
-msgid "Colorblind Mode: "
-msgstr ""
+msgstr "Teljes képernyő"
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
@@ -81,20 +65,21 @@ msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
 msgid "PLAY"
-msgstr ""
+msgstr "JÁTÉK"
 
 #: ../../src/Scenes/UI/Title.tscn:75
 msgid "APPEARANCE"
-msgstr ""
+msgstr "MEGJELENÉS"
 
 #: ../../src/Scenes/UI/Title.tscn:85
 msgid "SETTINGS"
-msgstr ""
+msgstr "BEÁLLÍTÁSOK"
 
 #: ../../src/Scenes/UI/Title.tscn:95
 msgid "LANGUAGE"
-msgstr ""
+msgstr "NYELV"
 
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
-msgstr ""
+msgstr "KILÉPÉS"
+
