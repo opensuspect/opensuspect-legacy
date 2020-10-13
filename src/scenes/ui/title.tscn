@@ -126,7 +126,9 @@ margin_left = 64.0
 margin_top = 0.0
 margin_right = 178.0
 margin_bottom = 204.0
-resDropdown_path = NodePath("../../CenterContainer/MenuArea/Settings/VBoxContainer/resDropdown")
+
+[node name="VBoxContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/Settings" index="0"]
+margin_right = 164.0
 
 [node name="PlayGame" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea" instance=ExtResource( 6 )]
 visible = false
@@ -164,3 +166,5 @@ text = "BACK"
 [connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu/Language" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Language_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu/Quit" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Quit_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/LanguageMenu/Back" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Back_pressed"]
+
+[editable path="VBoxContainer/MarginContainer/CenterContainer/MenuArea/Settings"]
