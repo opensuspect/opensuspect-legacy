@@ -45,32 +45,38 @@ size_flags_vertical = 3
 custom_constants/margin_right = 64
 custom_constants/margin_left = 64
 
-[node name="MenuArea" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer"]
 margin_left = 64.0
 margin_right = 832.0
 margin_bottom = 234.0
+
+[node name="MenuArea" type="MarginContainer" parent="VBoxContainer/MarginContainer/CenterContainer"]
+margin_left = 272.0
+margin_top = 35.0
+margin_right = 495.0
+margin_bottom = 199.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 64
 custom_constants/margin_left = 64
 script = ExtResource( 4 )
 
-[node name="MainMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+[node name="MainMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea"]
 margin_left = 64.0
-margin_right = 704.0
-margin_bottom = 234.0
+margin_right = 159.0
+margin_bottom = 164.0
 size_flags_vertical = 3
 custom_constants/separation = 16
 
-[node name="PlayGame" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
-margin_right = 640.0
+[node name="PlayGame" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu"]
+margin_right = 95.0
 margin_bottom = 20.0
 text = "PLAY"
 flat = true
 
-[node name="Appearence" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+[node name="Appearence" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu"]
 margin_top = 36.0
-margin_right = 640.0
+margin_right = 95.0
 margin_bottom = 56.0
 text = "APPEARANCE"
 flat = true
@@ -78,9 +84,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Settings" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+[node name="Settings" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu"]
 margin_top = 72.0
-margin_right = 640.0
+margin_right = 95.0
 margin_bottom = 92.0
 text = "SETTINGS"
 flat = true
@@ -88,27 +94,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Language" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+[node name="Language" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu"]
 margin_top = 108.0
-margin_right = 640.0
+margin_right = 95.0
 margin_bottom = 128.0
 text = "LANGUAGE"
 flat = true
 
-[node name="Quit" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+[node name="Quit" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu"]
 margin_top = 144.0
-margin_right = 640.0
+margin_right = 95.0
 margin_bottom = 164.0
 text = "QUIT"
 flat = true
 
-[node name="AppearenceEditor" type="HBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+[node name="AppearenceEditor" type="HBoxContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea"]
 visible = false
 margin_left = 64.0
-margin_right = 704.0
-margin_bottom = 234.0
+margin_right = 159.0
+margin_bottom = 164.0
 
-[node name="Settings" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 5 )]
+[node name="Settings" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea" instance=ExtResource( 5 )]
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -116,42 +122,43 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 64.0
 margin_top = 0.0
-margin_right = 704.0
-margin_bottom = 234.0
+margin_right = 159.0
+margin_bottom = 164.0
+resDropdown_path = NodePath("../../CenterContainer/MenuArea/Settings/VBoxContainer/resDropdown")
 
-[node name="PlayGame" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 6 )]
+[node name="PlayGame" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea" instance=ExtResource( 6 )]
 visible = false
 margin_left = 64.0
 margin_top = 0.0
-margin_right = 704.0
-margin_bottom = 234.0
+margin_right = 164.0
+margin_bottom = 164.0
 
-[node name="LanguageMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+[node name="LanguageMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea"]
 margin_left = 64.0
-margin_right = 704.0
-margin_bottom = 234.0
+margin_right = 159.0
+margin_bottom = 164.0
 
-[node name="LanguageSelector" type="ScrollContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu"]
-margin_right = 640.0
-margin_bottom = 210.0
+[node name="LanguageSelector" type="ScrollContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/LanguageMenu"]
+margin_right = 95.0
+margin_bottom = 140.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LanguageList" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/LanguageSelector"]
-margin_right = 640.0
-margin_bottom = 210.0
+[node name="LanguageList" type="VBoxContainer" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/LanguageMenu/LanguageSelector"]
+margin_right = 95.0
+margin_bottom = 140.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 2 )
 
-[node name="Back" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu"]
-margin_top = 214.0
-margin_right = 640.0
-margin_bottom = 234.0
+[node name="Back" type="Button" parent="VBoxContainer/MarginContainer/CenterContainer/MenuArea/LanguageMenu"]
+margin_top = 144.0
+margin_right = 95.0
+margin_bottom = 164.0
 text = "BACK"
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Language" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Language_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/Back" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Back_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu/PlayGame" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_NewGame_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu/Settings" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu/Language" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Language_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/MainMenu/Quit" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Quit_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/CenterContainer/MenuArea/LanguageMenu/Back" to="VBoxContainer/MarginContainer/CenterContainer/MenuArea" method="_on_Back_pressed"]
