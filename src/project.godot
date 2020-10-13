@@ -21,7 +21,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Network="*res://scripts/network.gd"
+Network="*res://Scripts/network.gd"
 
 [display]
 
@@ -30,7 +30,7 @@ window/stretch/aspect="keep"
 
 [gui]
 
-theme/custom_font="res://assets/fonts/menufont.tres"
+theme/custom_font="res://assets/Fonts/menufont.tres"
 
 [input]
 
