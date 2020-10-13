@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/KinematicBody2D.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Characters/black/walk-h/black-r-walk-4-4.png" type="Texture" id=2]
@@ -10,9 +10,14 @@
 [ext_resource path="res://Assets/Characters/black/walk-v/black-down-3-4.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Characters/black/walk-v/black-down-1-4.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Characters/black/walk-v/black-down-4-4.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Characters/black/walk-v/black-up2-2-4.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Characters/black/walk-v/black-up2-1-4.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Characters/black/walk-v/black-up2-4-4.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Characters/black/walk-v/black-up2-3-4.png" type="Texture" id=14]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 8.0
+radius = 21.9046
+height = 35.1494
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -21,15 +26,20 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "walk-h",
+"speed": 8.0
+}, {
 "frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk-down",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
-"name": "walk-h",
-"speed": 8.0
+"name": "walk-up",
+"speed": 5.0
 } ]
 
 [node name="Player" type="KinematicBody2D"]
@@ -38,17 +48,18 @@ collision_layer = 2
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 19 )
+position = Vector2( 0, 40 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
-animation = "idle"
+animation = "walk-up"
+frame = 3
 playing = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2( 0.5, 0.5 )
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 smoothing_enabled = true
