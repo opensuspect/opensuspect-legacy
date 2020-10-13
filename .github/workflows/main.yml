@@ -27,6 +27,7 @@ jobs:
           lfs: true
       - name: Setup
         run: |
+          chown -R root:root $HOME
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
           apt-get update
