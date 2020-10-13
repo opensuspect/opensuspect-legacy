@@ -85,4 +85,3 @@ func _on_main_player_moved(position : Vector2):
 		rpc_id(1, "player_moved", position.x, position.y)
 	else:
 		rpc("other_player_moved", 1, position.x, position.y)
-		print("you called?")
