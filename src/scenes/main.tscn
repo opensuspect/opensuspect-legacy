@@ -23,3 +23,5 @@ texture = ExtResource( 2 )
 shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
