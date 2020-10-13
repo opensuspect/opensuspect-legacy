@@ -39,7 +39,7 @@ animations = [ {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk-up",
-"speed": 5.0
+"speed": 8.0
 } ]
 
 [node name="Player" type="KinematicBody2D"]
@@ -55,8 +55,7 @@ shape = SubResource( 1 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
-animation = "walk-up"
-frame = 3
+animation = "idle"
 playing = true
 
 [node name="Camera2D" type="Camera2D" parent="."]

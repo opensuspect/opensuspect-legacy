@@ -60,8 +60,7 @@ func _physics_process(delta):
 	elif velocity.y > y_anim_margin:
 		$Sprite.play("walk-down")
 	elif velocity.y < -y_anim_margin:
-		#replace with walking up anim when done
-		$Sprite.play("walk-down")
+		$Sprite.play("walk-up")
 	else:
 		$Sprite.play("idle")
 
