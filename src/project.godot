@@ -31,7 +31,7 @@ window/stretch/aspect="keep"
 
 [gui]
 
-theme/custom_font="res://assets/Fonts/menufont.tres"
+theme/custom_font="res://assets/fonts/menufont.tres"
 
 [input]
 
