@@ -10,11 +10,9 @@ var playername
 var velocity = Vector2(0,0)
 # Only true when this is the player being controlled
 var main_player = true
-#anim margin controls how different the player posision must be before animations are played
-var lastpos = Vector2(0,0)
-var x_anim_margin = 0.35
-var y_anim_margin = 0.05
-var idletime = 1
+#anim margin controls how big the player velocity must be before animations are played
+var x_anim_margin = 50
+var y_anim_margin = 50
 
 func _ready():
 	if "--server" in OS.get_cmdline_args():
@@ -30,19 +28,16 @@ func get_input():
 	velocity = Vector2(0, 0)
 	if Input.is_action_pressed('ui_right'):
 		velocity.x = 1
-		$Sprite.flip_h = false
-		$Sprite.play("walk-h")
 	if Input.is_action_pressed('ui_left'):
 		velocity.x = -1
-		$Sprite.flip_h = true
-		$Sprite.play("walk-h")
 	if Input.is_action_pressed('ui_down'):
 		velocity.y = 1
-		$Sprite.play("walk-down")
 	if Input.is_action_pressed('ui_up'):
 		velocity.y = -1
+
 		#we did it boys, micheal jackson is no more
 		$Sprite.play("walk-up")
+
 	velocity = velocity.normalized() * speed
 
 	#interpolate velocity:
@@ -50,15 +45,13 @@ func get_input():
 		velocity.x = lerp(prev_velocity.x, 0, 0.17)
 	if velocity.y == 0:
 		velocity.y = lerp(prev_velocity.y, 0, 0.17)
-	if velocity.length() < 50:
-		$Sprite.play("idle")
 
 func _physics_process(delta):
 	if main_player:
 		$Camera2D.current = true
 		get_input()
 		velocity = move_and_slide(velocity)
-		emit_signal("main_player_moved", position)
+		emit_signal("main_player_moved", position, velocity)
 	else:
 		$Camera2D.current = false
 		# We handle animations and stuff here
@@ -83,7 +76,9 @@ func _physics_process(delta):
 			idletime += 2
 		lastpos = position
 
-func move_to(new_x, new_y):
+
+
+func move_to(new_pos, new_velocity):
 	# Movement check here
-	position.x = new_x
-	position.y = new_y
+	position = new_pos
+	velocity = new_velocity
