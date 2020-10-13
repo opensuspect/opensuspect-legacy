@@ -17,6 +17,7 @@ _global_script_class_icons={
 
 config/name="opensuspect"
 run/main_scene="res://scenes/ui/title.tscn"
+config/use_custom_user_dir=true
 config/icon="res://icon.png"
 
 [autoload]
