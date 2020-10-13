@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-10-13 14:57+0200\n"
-"PO-Revision-Date: 2020-10-13 17:32\n"
+"PO-Revision-Date: 2020-10-13 17:42\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -69,11 +69,11 @@ msgstr "Musik Lautstärke: "
 
 #: ../../src/Scenes/UI/Settings.tscn:83
 msgid "Sound Volume: "
-msgstr ""
+msgstr "Spiel Lautstärke: "
 
 #: ../../src/Scenes/UI/Settings.tscn:102
 msgid "Colorblind Mode: "
-msgstr ""
+msgstr "Farbenblindmodus: "
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
