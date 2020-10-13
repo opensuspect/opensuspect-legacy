@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-10-13 14:57+0200\n"
-"PO-Revision-Date: 2020-10-13 16:34\n"
+"PO-Revision-Date: 2020-10-13 17:32\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -61,11 +61,11 @@ msgstr "Vollbild"
 
 #: ../../src/Scenes/UI/Settings.tscn:50
 msgid "Fullscreen Resolution: "
-msgstr ""
+msgstr "Vollbild-Auflösung: "
 
 #: ../../src/Scenes/UI/Settings.tscn:65
 msgid "Music Volume: "
-msgstr ""
+msgstr "Musik Lautstärke: "
 
 #: ../../src/Scenes/UI/Settings.tscn:83
 msgid "Sound Volume: "
