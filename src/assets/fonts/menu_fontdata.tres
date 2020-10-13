@@ -1,4 +1,4 @@
 [gd_resource type="DynamicFontData" format=2]
 
 [resource]
-font_path = "res://Assets/Fonts/Roboto-Bold.ttf"
+font_path = "res://assets/fonts/roboto-bold.ttf"
