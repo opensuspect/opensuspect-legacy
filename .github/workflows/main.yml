@@ -15,8 +15,8 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  export-linux:
-    name: Linux Export
+  export:
+    name: Export
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:3.2.3
@@ -27,15 +27,33 @@ jobs:
           lfs: true
       - name: Setup
         run: |
+          chown -R root:root $HOME
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+          apt-get update
+          apt-get install imagemagick wine-stable --yes
+          wget --progress=dot https://github.com/electron/rcedit/releases/download/v1.1.1/rcedit-x64.exe -O ~/rcedit.exe
       - name: Linux Build
         run: |
-          mkdir -v -p build/linux
-          cd src
-          godot -v --export "Client" ../build/linux/$EXPORT_NAME.x86_64
-      - name: Upload Artifact
+          mkdir -v -p $GITHUB_WORKSPACE/build/linux
+          cd $GITHUB_WORKSPACE/src
+          godot -v --export "Client" $GITHUB_WORKSPACE/build/linux/$EXPORT_NAME.x86_64
+      - name: Upload Linux Artifact
         uses: actions/upload-artifact@v1
         with:
           name: linux
           path: build/linux
+      - name: Windows Desktop Build
+        run: |
+          mkdir -v -p $GITHUB_WORKSPACE/build/windows-desktop
+          cd $GITHUB_WORKSPACE/src
+          godot -v --export "Windows Desktop" $GITHUB_WORKSPACE/build/windows-desktop/$EXPORT_NAME.exe
+      - name: Convert png to ico
+        run: convert $GITHUB_WORKSPACE/src/icon.png -define icon:auto-resize="256,128,96,64,48,32,16" ~/icon.ico
+      - name: Change exe icon
+        run: wine ~/rcedit.exe $GITHUB_WORKSPACE/build/windows-desktop/$EXPORT_NAME.exe --set-icon ~/icon.ico
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: windows-desktop
+          path: build/windows-desktop
