@@ -16,12 +16,12 @@ _global_script_class_icons={
 [application]
 
 config/name="opensuspect"
-run/main_scene="res://Scenes/UI/Title.tscn"
+run/main_scene="res://scenes/ui/title.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-Network="*res://Scripts/network.gd"
+Network="*res://scripts/network.gd"
 
 [display]
 
@@ -30,7 +30,7 @@ window/stretch/aspect="keep"
 
 [gui]
 
-theme/custom_font="res://Assets/Fonts/menufont.tres"
+theme/custom_font="res://assets/fonts/menufont.tres"
 
 [input]
 
