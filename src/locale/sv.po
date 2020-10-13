@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-10-13 14:57+0200\n"
-"PO-Revision-Date: 2020-10-13 16:34\n"
+"PO-Revision-Date: 2020-10-13 17:32\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -57,23 +57,23 @@ msgstr "SKAPA"
 
 #: ../../src/Scenes/UI/Settings.tscn:37
 msgid "Fullscreen"
-msgstr "Fullskärm"
+msgstr "Helskärm"
 
 #: ../../src/Scenes/UI/Settings.tscn:50
 msgid "Fullscreen Resolution: "
-msgstr ""
+msgstr "Helskärmsupplösning: "
 
 #: ../../src/Scenes/UI/Settings.tscn:65
 msgid "Music Volume: "
-msgstr ""
+msgstr "Volym Musik: "
 
 #: ../../src/Scenes/UI/Settings.tscn:83
 msgid "Sound Volume: "
-msgstr ""
+msgstr "Volym Ljud: "
 
 #: ../../src/Scenes/UI/Settings.tscn:102
 msgid "Colorblind Mode: "
-msgstr ""
+msgstr "Färgblindläge: "
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
