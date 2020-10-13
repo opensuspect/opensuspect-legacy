@@ -31,7 +31,7 @@ func get_input():
 		velocity.y = -1
 
 		#we did it boys, micheal jackson is no more
-		$Sprite.play("walk-up")
+#		$Sprite.play("walk-up") for some reason having this makes it not work
 
 	velocity = velocity.normalized() * speed
 
