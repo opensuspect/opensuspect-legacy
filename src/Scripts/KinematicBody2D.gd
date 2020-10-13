@@ -36,8 +36,8 @@ func get_input():
 		$Sprite.play("walk-down")
 	if Input.is_action_pressed('ui_up'):
 		velocity.y = -1
-		#replace with walking up anim when done
-		$Sprite.play("walk-down")
+		#we did it boys, micheal jackson is no more
+		$Sprite.play("walk-up")
 	velocity = velocity.normalized() * speed
 
 	#interpolate velocity:
