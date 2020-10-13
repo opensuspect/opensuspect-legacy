@@ -57,22 +57,3 @@ scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
 animation = "walk-up"
 playing = true
-
-[node name="Camera2D" type="Camera2D" parent="."]
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-smoothing_enabled = true
-drag_margin_left = 0.65
-drag_margin_top = 0.65
-drag_margin_right = 0.65
-drag_margin_bottom = 0.65
-
-[node name="Label" type="Label" parent="."]
-margin_left = -74.0
-margin_top = -103.0
-margin_right = 74.0
-margin_bottom = -64.0
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}

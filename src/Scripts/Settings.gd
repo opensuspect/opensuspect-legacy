@@ -19,8 +19,8 @@ func _on_Fullscreen_toggle_toggled(button_pressed):
 func addItems():
 	resDropdown.add_item("1024x768")
 	resDropdown.add_item("1366x768")
-	
-	
+
+
 func _on_Music_value_changed(value):
 	music = value
 	emit_signal("button_pressed", "Music")
