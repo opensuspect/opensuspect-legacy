@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: linux
-          path: $GITHUB_WORKSPACE/build/linux
+          path: build/linux
       - name: Windows Desktop Build
         run: |
           mkdir -v -p $GITHUB_WORKSPACE/build/windows-desktop
@@ -57,4 +57,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: windows-desktop
-          path: $GITHUB_WORKSPACE/build/windows-desktop
+          path: build/windows-desktop
