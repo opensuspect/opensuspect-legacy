@@ -110,9 +110,12 @@ margin_bottom = 234.0
 
 [node name="Settings" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 5 )]
 visible = false
+anchor_left = 0.0
+anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 64.0
+margin_top = 0.0
 margin_right = 704.0
 margin_bottom = 234.0
 
