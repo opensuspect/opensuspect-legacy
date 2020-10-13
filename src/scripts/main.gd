@@ -2,7 +2,7 @@ extends Node2D
 
 export (int) var MAX_PLAYERS = 10
 
-var player_scene = preload("res://Scenes/player.tscn")
+var player_scene = preload("res://scenes/player.tscn")
 # Used on both sides, to keep track of all players.
 var players = {}
 
