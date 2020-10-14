@@ -5,7 +5,7 @@
 [ext_resource path="res://scripts/main.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 26.6917, 43.3369 )
+extents = Vector2( 420.733, 180.052 )
 
 [node name="Node2D" type="YSort"]
 position = Vector2( 104.785, 99.4456 )
@@ -19,7 +19,7 @@ position = Vector2( 129.029, -25.568 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( -0.496094, 8.43311 )
+position = Vector2( -21.709, 793.322 )
 shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
