@@ -184,51 +184,11 @@ margin_bottom = 234.0
 
 [node name="Settings" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 5 )]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 64.0
-margin_top = 0.0
 margin_right = 704.0
 margin_bottom = 234.0
-
-[node name="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/Settings" index="0"]
-margin_right = 640.0
-
-[node name="Fullscreen" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="0"]
-margin_right = 164.0
-
-[node name="Fullscreen" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer/Fullscreen" index="0"]
-margin_right = 84.0
-
-[node name="Fullscreen_toggle" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer/Fullscreen" index="1"]
-margin_left = 88.0
-margin_right = 164.0
-
-[node name="Label" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="1"]
-margin_right = 164.0
-
-[node name="resDropdown" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="2"]
-margin_right = 164.0
-
-[node name="Music Volume" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="3"]
-margin_right = 164.0
-
-[node name="Music" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer/Music Volume" index="1"]
-margin_right = 164.0
-
-[node name="Sound Volume" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="4"]
-margin_right = 164.0
-
-[node name="Sound" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer/Sound Volume" index="1"]
-margin_right = 164.0
-
-[node name="HBoxContainer3" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="5"]
-margin_right = 164.0
-
-[node name="Back" parent="VBoxContainer/MarginContainer/MenuArea/Settings/VBoxContainer" index="6"]
-margin_right = 164.0
 
 [node name="PlayGame" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 6 )]
 visible = false
