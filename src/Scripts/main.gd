@@ -91,4 +91,3 @@ func _on_main_player_moved(position : Vector2, velocity : Vector2):
 		rpc("other_player_moved", 1, position.x, position.y)
 remote func player_getname():
 	rpc_id(1,"player_nameget", Network.name)
-		rpc("other_player_moved", 1, position, velocity)

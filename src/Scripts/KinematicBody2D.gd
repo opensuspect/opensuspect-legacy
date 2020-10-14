@@ -55,26 +55,21 @@ func _physics_process(delta):
 	else:
 		$Camera2D.current = false
 		# We handle animations and stuff here
-		if position.x - lastpos.x > x_anim_margin:
+		print(velocity.x)
+	if velocity.x > x_anim_margin:
 			$Sprite.play("walk-h")
 			$Sprite.flip_h = false
-			idletime = 1
-		elif position.x - lastpos.x < -x_anim_margin:
+	elif velocity.x < -x_anim_margin:
 			$Sprite.play("walk-h")
 			$Sprite.flip_h = true
-			idletime = 1
-		elif position.y - lastpos.y > y_anim_margin:
-			$Sprite.play("walk-down")
-			idletime = 1
-		elif position.y - lastpos.y < -y_anim_margin:
-			#replace with walking up anim when done
+	elif velocity.y > y_anim_margin:
+				$Sprite.play("walk-down")
+	elif velocity.y < -y_anim_margin:
+				#replace with walking up anim when done
 			$Sprite.play("walk-up")
-			idletime = 1
-		elif idletime > 1:
+	else:
 			$Sprite.play("idle")
-		else:
-			idletime += 2
-		lastpos = position
+
 
 
 
