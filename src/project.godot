@@ -20,6 +20,7 @@ run/main_scene="res://scenes/ui/title.tscn"
 config/use_custom_user_dir=true
 boot_splash/image="res://bootsplash.png"
 config/icon="res://icon.png"
+config/version="dev"
 
 [autoload]
 
