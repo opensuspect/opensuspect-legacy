@@ -7,7 +7,7 @@ enum Connection {
 }
 
 var connection = Connection.LOCAL
-var host: String = '' #not sure why this is needed or a string, server network ID will always be 1
+var hostName: String = '' #name of host server
 var ip: String = ''
 var port: int = 0
 var hosting: bool = false
