@@ -52,6 +52,11 @@ func _ready():
 	if err != OK:
 		raise()
 	
+	# Init back button
+	var back_button = Button.new()
+	back_button.text = "Back"
+	back_button.connect("pressed", get_node(".."), "_on_Return")
+	
 	# Init settings view
 	var vbox = VBoxContainer.new()
 	add_child(vbox)
@@ -79,8 +84,9 @@ func _ready():
 				check_button.pressed = setting.value
 				check_button.connect("pressed", self, "_save_state", [setting.function, check_button, setting])
 				hbox.add_child(check_button)
-
+				
 		vbox.add_child(hbox)
+	vbox.add_child(back_button)
 
 func toggle_colorblind(setting):
 	# apply shader
