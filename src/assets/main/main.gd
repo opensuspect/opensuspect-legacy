@@ -41,7 +41,6 @@ func _player_connected(id):
 		rpc_id(id, "player_join", new_player.id)
 
 	players[id] = new_player
-	new_player.scale = Vector2(10, 10) #otherwise the player looks super small
 	add_child(new_player)
 	print("Got connection: ", id)
 	print("Players: ", players)
