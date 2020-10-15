@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+path="res://.import/black-down.png-69a08c0655d5b15f6135a6430c4f8afa.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex" ]
+source_file="res://assets/characters/black/walk-v/black-down.png"
+dest_files=[ "res://.import/black-down.png-69a08c0655d5b15f6135a6430c4f8afa.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+path="res://.import/black-up2-3-4.png-dfcc0de8f54f042264224d4963610fa5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex" ]
+source_file="res://assets/characters/black/walk-v/black-up2-3-4.png"
+dest_files=[ "res://.import/black-up2-3-4.png-dfcc0de8f54f042264224d4963610fa5.stex" ]
 
 [params]
 

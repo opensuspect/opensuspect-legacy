@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+path="res://.import/black-proto-1.png-c7aff04cda67af01fef01eb42e6b1ab4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex" ]
+source_file="res://assets/characters/black/black-proto-1.png"
+dest_files=[ "res://.import/black-proto-1.png-c7aff04cda67af01fef01eb42e6b1ab4.stex" ]
 
 [params]
 
