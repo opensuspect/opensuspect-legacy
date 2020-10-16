@@ -2,7 +2,6 @@
 
 [ext_resource path="res://assets/ui/mainmenu/playgame/playgame.gd" type="Script" id=1]
 
-
 [node name="PlayGame" type="VBoxContainer"]
 margin_left = 59.0
 margin_top = 34.0
@@ -45,10 +44,10 @@ text = "BACK"
 flat = true
 
 [node name="JoinGameDialog" type="WindowDialog" parent="."]
-visible = true
-margin_top = 144.0
+margin_top = 176.0
 margin_right = 640.0
-margin_bottom = 266.0
+margin_bottom = 296.0
+rect_min_size = Vector2( 0, 120 )
 size_flags_vertical = 3
 window_title = "JOIN_GAME"
 resizable = true
@@ -107,9 +106,10 @@ margin_bottom = 100.0
 text = "CONNECT"
 
 [node name="CreateGameDialog" type="WindowDialog" parent="."]
-margin_top = 144.0
+margin_top = 312.0
 margin_right = 640.0
-margin_bottom = 234.0
+margin_bottom = 382.0
+rect_min_size = Vector2( 0, 70 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 window_title = "Create Game"
@@ -126,24 +126,24 @@ __meta__ = {
 
 [node name="PortLine" type="HBoxContainer" parent="CreateGameDialog/CreateGameOptions"]
 margin_right = 640.0
-margin_bottom = 24.0
+margin_bottom = 32.0
 
 [node name="Port" type="Label" parent="CreateGameDialog/CreateGameOptions/PortLine"]
 margin_top = 5.0
-margin_right = 34.0
-margin_bottom = 19.0
+margin_right = 30.0
+margin_bottom = 27.0
 text = "Port"
 
 [node name="PortField" type="LineEdit" parent="CreateGameDialog/CreateGameOptions/PortLine"]
-margin_left = 38.0
+margin_left = 34.0
 margin_right = 640.0
-margin_bottom = 24.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 
 [node name="Create" type="Button" parent="CreateGameDialog/CreateGameOptions"]
-margin_top = 28.0
+margin_top = 36.0
 margin_right = 640.0
-margin_bottom = 48.0
+margin_bottom = 64.0
 text = "CREATE"
 [connection signal="pressed" from="JoinGame" to="." method="_on_JoinGame_pressed"]
 [connection signal="pressed" from="CreateGame" to="." method="_on_CreateGame_pressed"]

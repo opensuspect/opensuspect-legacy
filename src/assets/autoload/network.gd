@@ -14,7 +14,7 @@ var hosting: bool = false
 var server
 var client
 puppet var peers: Array = [] #keeps track of network IDs of players
-puppet var myID: int = 0
+puppet var myID: int = 1
 
 func ready():
 	set_network_master(1) #gives the server access to puppet functions and variables
