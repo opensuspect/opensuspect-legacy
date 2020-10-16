@@ -2,7 +2,6 @@
 
 [ext_resource path="res://assets/ui/mainmenu/playgame/playgame.gd" type="Script" id=1]
 
-
 [node name="PlayGame" type="VBoxContainer"]
 margin_left = 59.0
 margin_top = 34.0
@@ -46,10 +45,10 @@ flat = true
 
 [node name="JoinGameDialog" type="WindowDialog" parent="."]
 visible = true
-margin_top = 144.0
+margin_top = 176.0
 margin_right = 640.0
-margin_bottom = 266.0
-size_flags_vertical = 3
+margin_bottom = 296.0
+rect_min_size = Vector2( 0, 120 )
 window_title = "JOIN_GAME"
 resizable = true
 
