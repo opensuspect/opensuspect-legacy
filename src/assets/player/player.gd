@@ -21,14 +21,15 @@ func _ready():
 func get_input():
 	var prev_velocity = velocity
 	velocity = Vector2(0, 0)
-	if Input.is_action_pressed('ui_right'):
-		velocity.x = 1
-	if Input.is_action_pressed('ui_left'):
-		velocity.x = -1
-	if Input.is_action_pressed('ui_down'):
-		velocity.y = 1
-	if Input.is_action_pressed('ui_up'):
-		velocity.y = -1
+	if not PlayerManager.inMenu:
+		if Input.is_action_pressed('ui_right'):
+			velocity.x = 1
+		if Input.is_action_pressed('ui_left'):
+			velocity.x = -1
+		if Input.is_action_pressed('ui_down'):
+			velocity.y = 1
+		if Input.is_action_pressed('ui_up'):
+			velocity.y = -1
 
 		#we did it boys, micheal jackson is no more
 #		$Sprite.play("walk-up") for some reason having this makes it not work

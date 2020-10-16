@@ -30,10 +30,10 @@ margin_bottom = 234.0
 size_flags_vertical = 3
 
 [node name="Title" type="Label" parent="VBoxContainer/CenterContainer"]
-margin_left = 442.0
-margin_top = 116.0
-margin_right = 453.0
-margin_bottom = 118.0
+margin_left = 255.0
+margin_top = 74.0
+margin_right = 640.0
+margin_bottom = 160.0
 custom_fonts/font = ExtResource( 5 )
 text = "OpenSuspect"
 
@@ -77,9 +77,9 @@ __meta__ = {
 }
 
 [node name="PlayGame" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer"]
-margin_left = 312.0
-margin_right = 328.0
-margin_bottom = 8.0
+margin_left = 294.0
+margin_right = 346.0
+margin_bottom = 28.0
 custom_fonts/font = ExtResource( 6 )
 text = "PLAY"
 flat = true
@@ -100,9 +100,9 @@ __meta__ = {
 }
 
 [node name="Appearence" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2/CenterContainer"]
-margin_left = 309.0
-margin_right = 331.0
-margin_bottom = 8.0
+margin_left = 263.0
+margin_right = 377.0
+margin_bottom = 28.0
 text = "APPEARANCE"
 flat = true
 __meta__ = {
@@ -122,9 +122,9 @@ __meta__ = {
 }
 
 [node name="Settings" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer"]
-margin_left = 310.0
-margin_right = 330.0
-margin_bottom = 8.0
+margin_left = 276.0
+margin_right = 364.0
+margin_bottom = 28.0
 text = "SETTINGS"
 flat = true
 __meta__ = {
@@ -144,9 +144,9 @@ __meta__ = {
 }
 
 [node name="Language" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/CenterContainer"]
-margin_left = 310.0
-margin_right = 330.0
-margin_bottom = 8.0
+margin_left = 272.0
+margin_right = 368.0
+margin_bottom = 28.0
 text = "LANGUAGE"
 flat = true
 __meta__ = {
@@ -167,10 +167,9 @@ __meta__ = {
 }
 
 [node name="Quit" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/CenterContainer"]
-margin_left = 312.0
-margin_top = 10.0
-margin_right = 328.0
-margin_bottom = 18.0
+margin_left = 295.0
+margin_right = 344.0
+margin_bottom = 28.0
 text = "QUIT"
 flat = true
 __meta__ = {
@@ -205,27 +204,27 @@ margin_bottom = 234.0
 
 [node name="LanguageSelector" type="ScrollContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu"]
 margin_right = 640.0
-margin_bottom = 222.0
+margin_bottom = 202.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="LanguageList" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/LanguageSelector"]
 margin_right = 640.0
-margin_bottom = 222.0
+margin_bottom = 202.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 2 )
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu"]
-margin_top = 226.0
+margin_top = 206.0
 margin_right = 640.0
 margin_bottom = 234.0
 
 [node name="Back" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/CenterContainer"]
-margin_left = 312.0
-margin_right = 328.0
-margin_bottom = 8.0
+margin_left = 293.0
+margin_right = 346.0
+margin_bottom = 28.0
 text = "BACK"
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
