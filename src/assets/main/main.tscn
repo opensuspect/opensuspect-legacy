@@ -1,15 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/common/textures/icons/icon.png" type="Texture" id=2]
 [ext_resource path="res://assets/main/main.gd" type="Script" id=3]
-
-
-
-
+[ext_resource path="res://assets/shaders/colorblind.shader" type="Shader" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 420.733, 180.052 )
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 4 )
+shader_param/mode = 0
 
 [node name="Node2D" type="YSort"]
 position = Vector2( 104.785, 99.4456 )
@@ -31,3 +32,13 @@ position = Vector2( -911.138, 148.324 )
 scale = Vector2( 10, 10 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
