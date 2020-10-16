@@ -1,0 +1,236 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/ui/mainmenu/mainmenu.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/mainmenu/languages.gd" type="Script" id=2]
+[ext_resource path="res://assets/ui/settings/settings.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/ui/mainmenu/playgame/playgame.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/common/fonts/title-font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/common/fonts/menufont.tres" type="DynamicFont" id=6]
+
+[node name="TitleScreen" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 64
+custom_constants/margin_top = 64
+custom_constants/margin_left = 64
+custom_constants/margin_bottom = 64
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 960.0
+margin_bottom = 536.0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_right = 896.0
+margin_bottom = 234.0
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="VBoxContainer/CenterContainer"]
+margin_left = 442.0
+margin_top = 116.0
+margin_right = 453.0
+margin_bottom = 118.0
+custom_fonts/font = ExtResource( 5 )
+text = "OpenSuspect"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+margin_top = 238.0
+margin_right = 896.0
+margin_bottom = 472.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 64
+custom_constants/margin_left = 64
+
+[node name="MenuArea" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
+margin_left = 64.0
+margin_right = 832.0
+margin_bottom = 234.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 64
+custom_constants/margin_left = 64
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+margin_left = 64.0
+margin_right = 704.0
+margin_bottom = 234.0
+size_flags_vertical = 3
+custom_constants/separation = 50
+
+[node name="Control" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+margin_right = 640.0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayGame" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer"]
+margin_left = 312.0
+margin_right = 328.0
+margin_bottom = 8.0
+custom_fonts/font = ExtResource( 6 )
+text = "PLAY"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control2" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+margin_top = 50.0
+margin_right = 640.0
+margin_bottom = 50.0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Appearence" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2/CenterContainer"]
+margin_left = 309.0
+margin_right = 331.0
+margin_bottom = 8.0
+text = "APPEARANCE"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control3" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+margin_top = 100.0
+margin_right = 640.0
+margin_bottom = 100.0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settings" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer"]
+margin_left = 310.0
+margin_right = 330.0
+margin_bottom = 8.0
+text = "SETTINGS"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control4" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+margin_top = 150.0
+margin_right = 640.0
+margin_bottom = 150.0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Language" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/CenterContainer"]
+margin_left = 310.0
+margin_right = 330.0
+margin_bottom = 8.0
+text = "LANGUAGE"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control5" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+margin_top = 200.0
+margin_right = 640.0
+margin_bottom = 200.0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 28.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/CenterContainer"]
+margin_left = 312.0
+margin_top = 10.0
+margin_right = 328.0
+margin_bottom = 18.0
+text = "QUIT"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AppearenceEditor" type="HBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+visible = false
+margin_left = 64.0
+margin_right = 704.0
+margin_bottom = 234.0
+
+[node name="Settings" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 3 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 64.0
+margin_right = 704.0
+margin_bottom = 234.0
+
+[node name="PlayGame" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 4 )]
+visible = false
+margin_left = 64.0
+margin_top = 0.0
+margin_right = 704.0
+margin_bottom = 234.0
+
+[node name="LanguageMenu" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
+margin_left = 64.0
+margin_right = 704.0
+margin_bottom = 234.0
+
+[node name="LanguageSelector" type="ScrollContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu"]
+margin_right = 640.0
+margin_bottom = 222.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LanguageList" type="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/LanguageSelector"]
+margin_right = 640.0
+margin_bottom = 222.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu"]
+margin_top = 226.0
+margin_right = 640.0
+margin_bottom = 234.0
+
+[node name="Back" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/CenterContainer"]
+margin_left = 312.0
+margin_right = 328.0
+margin_bottom = 8.0
+text = "BACK"
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/CenterContainer/Language" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Language_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/CenterContainer/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/LanguageMenu/CenterContainer/Back" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Back_pressed"]
+
+[editable path="VBoxContainer/MarginContainer/MenuArea/Settings"]

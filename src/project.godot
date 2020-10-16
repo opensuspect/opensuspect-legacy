@@ -16,15 +16,15 @@ _global_script_class_icons={
 [application]
 
 config/name="opensuspect"
-run/main_scene="res://scenes/ui/title.tscn"
+run/main_scene="res://assets/ui/mainmenu/mainmenu.tscn"
 config/use_custom_user_dir=true
-boot_splash/image="res://bootsplash.png"
-config/icon="res://icon.png"
+boot_splash/image="res://assets/common/textures/icons/bootsplash.png"
+config/icon="res://assets/common/textures/icons/icon.png"
 config/version="dev"
 
 [autoload]
 
-Network="*res://scripts/network.gd"
+Network="*res://assets/autoload/network.gd"
 
 [display]
 
@@ -33,7 +33,7 @@ window/stretch/aspect="keep"
 
 [gui]
 
-theme/custom_font="res://assets/fonts/menufont.tres"
+theme/custom_font="res://assets/common/fonts/menufont.tres"
 
 [input]
 
