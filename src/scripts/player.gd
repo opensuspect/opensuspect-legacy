@@ -48,6 +48,7 @@ func _physics_process(delta):
 		velocity = move_and_slide(velocity)
 		emit_signal("main_player_moved", position, velocity)
 	else:
+		return #Camera2D does not exist for newly created players, and crashes the game
 		$Camera2D.current = false
 
 	# We handle animations and stuff here
