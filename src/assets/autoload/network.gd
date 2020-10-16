@@ -33,13 +33,13 @@ func client(hostName: String, port: int) -> void:
 	var url: String = "ws://" + hostName + ":" + str(port)
 	# 3rd argument true means use Godot's high level networking API
 	var _error: int = client.connect_to_url(url, PoolStringArray(), true)
-	if (!_error):
-		get_tree().set_network_peer(client)
-		connect_signals()
-		#do not switch to main scene here, wait until the connection was successful
-	else:
+	if (_error):
 		print("Error when connecting to server: ", _error)
 		get_tree().quit()
+		
+	get_tree().set_network_peer(client)
+	connect_signals()
+	#do not switch to main scene here, wait until the connection was successful
 
 func _player_connected(id) -> void:
 	peers.append(id)
@@ -65,10 +65,10 @@ func _server_disconnected() -> void:
 	pass #this is called when the player is kicked, when the server crashes, or whenever the connection is severed
 
 func _process(_delta) -> void:
-	if server != null:			#since this is a websocket connection, it must be manually polled
+	if server:			#since this is a websocket connection, it must be manually polled
 		if server.is_listening():
 			server.poll()
-	elif client != null:
+	elif client:
 		if client.get_connection_status() == NetworkedMultiplayerPeer.CONNECTION_CONNECTED || client.get_connection_status() == NetworkedMultiplayerPeer.CONNECTION_CONNECTING:
 			client.poll()
 
