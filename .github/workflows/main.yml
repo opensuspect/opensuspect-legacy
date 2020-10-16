@@ -49,7 +49,7 @@ jobs:
           cd $GITHUB_WORKSPACE/src
           godot -v --export "Windows Desktop" $GITHUB_WORKSPACE/build/windows-desktop/$EXPORT_NAME.exe
       - name: Convert png to ico
-        run: convert $GITHUB_WORKSPACE/src/icon.png -define icon:auto-resize="256,128,96,64,48,32,16" ~/icon.ico
+        run: convert $GITHUB_WORKSPACE/src/assets/common/textures/icons/icon.png -define icon:auto-resize="256,128,96,64,48,32,16" ~/icon.ico
       - name: Change exe icon
         run: wine ~/rcedit.exe $GITHUB_WORKSPACE/build/windows-desktop/$EXPORT_NAME.exe --set-icon ~/icon.ico
       - name: Upload Windows Artifact
