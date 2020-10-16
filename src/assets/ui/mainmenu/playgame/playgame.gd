@@ -5,13 +5,13 @@ func _ready() -> void:
 
 func _on_Connect_pressed() -> void:
 	Network.connection = Network.Connection.CLIENT
-	Network.host = $JoinGameMenu/HostnameLine/HostnameField.text
+	Network.hostName = $JoinGameMenu/HostnameLine/HostnameField.text
 	Network.port = $JoinGameMenu/Port/PortField.text
 	Network.client()
 
 func _on_Create_pressed() -> void:
 	Network.connection = Network.Connection.CLIENT_SERVER
-	Network.host = 'localhost'
+	Network.hostName = 'localhost'
 	Network.port = $CreateGameMenu/PortLine/PortField.text
 	Network.server()
 
