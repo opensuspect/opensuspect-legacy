@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/common/textures/icons/icon.png" type="Texture" id=2]
 [ext_resource path="res://assets/main/main.gd" type="Script" id=3]
 [ext_resource path="res://assets/ui/lobbyui/chatbox/chatbox.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=5]
 [ext_resource path="res://assets/common/shaders/colorblind.shader" type="Shader" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -57,7 +56,6 @@ anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -45.0
 margin_bottom = 28.0
-theme = ExtResource( 5 )
 text = "Chat"
 __meta__ = {
 "_edit_use_anchors_": false
