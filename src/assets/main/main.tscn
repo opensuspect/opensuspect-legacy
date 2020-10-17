@@ -32,6 +32,14 @@ shape = SubResource( 1 )
 position = Vector2( -911.138, 148.324 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.65
+drag_margin_top = 0.65
+drag_margin_right = 0.65
+drag_margin_bottom = 0.65
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Player/Camera2D"]
 

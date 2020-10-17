@@ -1,7 +1,6 @@
 extends Node2D
 
 export (int) var MAX_PLAYERS = 10
-
 export (String, FILE, "*.tscn") var player_s = "res://assets/player/player.tscn"
 var player_scene = load(player_s)
 #onready var player_scene = preload(player_s)
@@ -28,7 +27,7 @@ func _enter_tree():
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	elif Network.connection == Network.Connection.CLIENT:
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-		player_join(1)
+		player_join(1,"PLACEHOLDER NAME, THIS IS THE HOST")
 		#print("Connecting to ", Network.host, " on port ", Network.port)
 		#var peer = NetworkedMultiplayerENet.new()
 		#peer.create_client(Network.host, Network.port)
@@ -36,32 +35,40 @@ func _enter_tree():
 
 # Called on the server when a new client connects
 func _player_connected(id):
+	rpc_id(id,"getname",id)
+
+remote func getname(id):
+	rpc_id(1,"playerjoin_proper",Network.playername,id)
+remote func playerjoin_proper(thename,id):
 	var new_player = player_scene.instance()
+	id = get_tree().get_rpc_sender_id()
 	new_player.id = id
+	new_player.ourname = thename
 	new_player.main_player = false
+	print(thename)
 	for id in players:
 		# Sends an add_player rpc to the player that just joined
 		print("Sending add player to new player ", new_player)
-		rpc_id(new_player.id, "player_join", id)
+		rpc_id(new_player.id, "player_join", id, thename)
 		# Sends the add_player rpc to all other clients
 		print("Sending add player to other player ", players[id])
-		rpc_id(id, "player_join", new_player.id)
-
+		rpc_id(id, "player_join", new_player.id, thename)
 	players[id] = new_player
 	add_child(new_player)
 	print("Got connection: ", id)
 	print("Players: ", players)
-
 func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects
+	players.erase(id)
 
 # Called from server when another client connects
-remote func player_join(other_id):
+remote func player_join(other_id, pname):
 	# Should only be run on the client
 	if get_tree().is_network_server():
 		return
 	var new_player = player_scene.instance()
 	new_player.id = other_id
+	new_player.ourname = pname
 	new_player.main_player = false
 	new_player.scale = Vector2(10, 10) #otherwise the player looks super small
 	add_child(new_player)
@@ -74,6 +81,7 @@ remote func player_moved(new_pos, new_movement):
 	if !get_tree().is_network_server():
 		return
 	var id = get_tree().get_rpc_sender_id()
+	#print(id)
 	#print("Got player move from ", id) #no reason to spam console so much
 	# Check movement validity here
 	players[id].move_to(new_pos, new_movement)
