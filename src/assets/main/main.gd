@@ -12,10 +12,10 @@ onready var config = ConfigFile.new()
 func _ready():
 	var err = config.load("user://settings.cfg")
 	if err == OK:
-		$Player/Camera2D/CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
+		$players/Player/Camera2D/CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
 	
 
-	$Player.connect("main_player_moved", self, "_on_main_player_moved")
+	$players/Player.connect("main_player_moved", self, "_on_main_player_moved")
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
 	if Network.connection == Network.Connection.CLIENT_SERVER:
@@ -55,7 +55,7 @@ remote func playerjoin_proper(thename,id):
 		print("Sending add player to other player ", players[id])
 		rpc_id(id, "player_join", new_player.id, thename)
 	players[id] = new_player
-	add_child(new_player)
+	$players.add_child(new_player)
 	print("Got connection: ", id)
 	print("Players: ", players)
 func _player_disconnected(id):
@@ -71,7 +71,6 @@ remote func player_join(other_id, pname):
 	new_player.id = other_id
 	new_player.ourname = pname
 	new_player.main_player = false
-	new_player.scale = Vector2(10, 10) #otherwise the player looks super small
 	add_child(new_player)
 	players[other_id] = new_player
 	print("New player: ", other_id)
@@ -85,6 +84,8 @@ remote func player_moved(new_pos, new_movement):
 	#print(id)
 	#print("Got player move from ", id) #no reason to spam console so much
 	# Check movement validity here
+	if not players.keys().has(id):
+		return
 	players[id].move_to(new_pos, new_movement)
 	# The move_to function validates new_x, new_y,
 	# so that's why we don't reuse them
