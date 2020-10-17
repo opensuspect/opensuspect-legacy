@@ -14,5 +14,6 @@ func switchMap(newMap: String):
 		return
 	for i in get_children():
 		i.queue_free()
+	currentMap = newMap
 	var mapClone = maps[newMap].instance()
 	add_child(mapClone)
