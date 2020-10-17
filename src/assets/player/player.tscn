@@ -43,7 +43,7 @@ animations = [ {
 } ]
 
 [node name="Player" type="KinematicBody2D"]
-scale = Vector2( 0.6, 0.6 )
+scale = Vector2( 10, 10 )
 collision_layer = 2
 script = ExtResource( 1 )
 

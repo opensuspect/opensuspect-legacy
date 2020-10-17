@@ -192,8 +192,9 @@ margin_bottom = 234.0
 
 [node name="PlayGame" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 4 )]
 visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = 64.0
-margin_top = 0.0
 margin_right = 704.0
 margin_bottom = 234.0
 
@@ -226,6 +227,7 @@ margin_left = 293.0
 margin_right = 346.0
 margin_bottom = 28.0
 text = "BACK"
+[connection signal="returnToMainMenu" from="VBoxContainer/MarginContainer/MenuArea" to="VBoxContainer/MarginContainer/MenuArea" method="_on_MenuArea_returnToMainMenu"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/CenterContainer/Language" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Language_pressed"]
