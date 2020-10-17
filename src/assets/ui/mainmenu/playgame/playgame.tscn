@@ -1,12 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/ui/mainmenu/playgame/playgame.gd" type="Script" id=1]
+[ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=2]
 
 [node name="PlayGame" type="Container"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 9
 size_flags_vertical = 9
+theme = ExtResource( 2 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -136,29 +138,29 @@ custom_constants/separation = 8
 
 [node name="Tutorial" type="Button" parent="PlayGameMenu"]
 margin_right = 640.0
-margin_bottom = 28.0
+margin_bottom = 14.0
 disabled = true
 text = "TUTORIAL"
 flat = true
 
 [node name="JoinGame" type="Button" parent="PlayGameMenu"]
-margin_top = 36.0
+margin_top = 22.0
 margin_right = 640.0
-margin_bottom = 64.0
+margin_bottom = 36.0
 text = "JOIN GAME"
 flat = true
 
 [node name="CreateGame" type="Button" parent="PlayGameMenu"]
-margin_top = 72.0
+margin_top = 44.0
 margin_right = 640.0
-margin_bottom = 100.0
+margin_bottom = 58.0
 text = "CREATE GAME"
 flat = true
 
 [node name="Back" type="Button" parent="PlayGameMenu"]
-margin_top = 108.0
+margin_top = 66.0
 margin_right = 640.0
-margin_bottom = 136.0
+margin_bottom = 80.0
 text = "BACK"
 flat = true
 [connection signal="pressed" from="CreateGameMenu/Create" to="." method="_on_Create_pressed"]
