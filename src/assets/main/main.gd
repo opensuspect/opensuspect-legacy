@@ -70,7 +70,6 @@ remote func player_join(other_id, pname):
 	new_player.id = other_id
 	new_player.ourname = pname
 	new_player.main_player = false
-	new_player.scale = Vector2(10, 10) #otherwise the player looks super small
 	add_child(new_player)
 	players[other_id] = new_player
 	print("New player: ", other_id)
@@ -84,6 +83,8 @@ remote func player_moved(new_pos, new_movement):
 	#print(id)
 	#print("Got player move from ", id) #no reason to spam console so much
 	# Check movement validity here
+	if not players.keys().has(id):
+		return
 	players[id].move_to(new_pos, new_movement)
 	# The move_to function validates new_x, new_y,
 	# so that's why we don't reuse them
