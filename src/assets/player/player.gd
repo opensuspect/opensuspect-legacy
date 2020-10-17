@@ -7,11 +7,13 @@ export (int) var speed = 150
 # Set by main.gd. Is the client's unique id for this player
 var id
 var velocity = Vector2(0,0)
+# Contains the current intended movement direction and magnitude in range 0 to 1
+var movement = Vector2(0,0)
 # Only true when this is the player being controlled
 var main_player = true
-#anim margin controls how big the player velocity must be before animations are played
-var x_anim_margin = 50
-var y_anim_margin = 50
+#anim margin controls how big the player movement must be before animations are played
+var x_anim_margin = 0.1
+var y_anim_margin = 0.1
 
 func _ready():
 	if "--server" in OS.get_cmdline_args():
@@ -34,7 +36,7 @@ func get_input():
 		#we did it boys, micheal jackson is no more
 #		$Sprite.play("walk-up") for some reason having this makes it not work
 
-	velocity = velocity.normalized() * speed
+	velocity = movement * speed
 
 	#interpolate velocity:
 	if velocity.x == 0:
@@ -44,29 +46,25 @@ func get_input():
 
 func _physics_process(delta):
 	if main_player:
-		$Camera2D.current = true
 		get_input()
 		velocity = move_and_slide(velocity)
-		emit_signal("main_player_moved", position, velocity)
-	else:
-		return #Camera2D does not exist for newly created players, and crashes the game
-		$Camera2D.current = false
+		emit_signal("main_player_moved", position, movement)
 
 	# We handle animations and stuff here
-	if velocity.x > x_anim_margin:
+	if movement.x > x_anim_margin:
 		$Sprite.play("walk-h")
 		$Sprite.flip_h = false
-	elif velocity.x < -x_anim_margin:
+	elif movement.x < -x_anim_margin:
 		$Sprite.play("walk-h")
 		$Sprite.flip_h = true
-	elif velocity.y > y_anim_margin:
+	elif movement.y > y_anim_margin:
 		$Sprite.play("walk-down")
-	elif velocity.y < -y_anim_margin:
+	elif movement.y < -y_anim_margin:
 		$Sprite.play("walk-up")
 	else:
 		$Sprite.play("idle")
 
-func move_to(new_pos, new_velocity):
+func move_to(new_pos, new_movement):
 	# Movement check here
 	position = new_pos
-	velocity = new_velocity
+	movement = new_movement

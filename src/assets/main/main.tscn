@@ -25,7 +25,6 @@ shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( -911.138, 148.324 )
-scale = Vector2( 10, 10 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
