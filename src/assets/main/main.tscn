@@ -27,6 +27,7 @@ shape = SubResource( 1 )
 position = Vector2( -911.138, 148.324 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Player/Camera2D"]
 
@@ -41,7 +42,6 @@ __meta__ = {
 }
 
 [node name="chatbox" parent="Player/Camera2D/CanvasLayer" instance=ExtResource( 4 )]
-visible = false
 margin_left = -247.972
 margin_top = -13.1382
 margin_right = -247.972

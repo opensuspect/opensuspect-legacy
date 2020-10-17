@@ -39,6 +39,14 @@ text = "42420"
 caret_blink = true
 caret_blink_speed = 0.5
 
+[node name="Name" type="HBoxContainer" parent="CreateGameMenu"]
+margin_right = 58.0
+margin_bottom = 40.0
+
+[node name="NameField" type="LineEdit" parent="CreateGameMenu/Name"]
+margin_right = 58.0
+margin_bottom = 32.0
+
 [node name="Create" type="Button" parent="CreateGameMenu"]
 margin_top = 36.0
 margin_right = 640.0
@@ -99,6 +107,14 @@ size_flags_horizontal = 3
 text = "42420"
 caret_blink = true
 caret_blink_speed = 0.5
+
+[node name="Name" type="HBoxContainer" parent="JoinGameMenu"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="NameField" type="LineEdit" parent="JoinGameMenu/Name"]
+margin_right = 58.0
+margin_bottom = 32.0
 
 [node name="Connect" type="Button" parent="JoinGameMenu"]
 margin_top = 72.0

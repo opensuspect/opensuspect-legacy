@@ -19,7 +19,7 @@ func _enter_tree():
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	elif Network.connection == Network.Connection.CLIENT:
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-		player_join(1,"the host with the most")
+		player_join(1,"PLACEHOLDER NAME, THIS IS THE HOST")
 		#print("Connecting to ", Network.host, " on port ", Network.port)
 		#var peer = NetworkedMultiplayerENet.new()
 		#peer.create_client(Network.host, Network.port)
