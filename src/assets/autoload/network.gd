@@ -13,6 +13,9 @@ var port: int = 0
 var hosting: bool = false
 var server
 var client
+var playername
+#Entry #1
+#This is my chance to help develop something that many people will play! How hard could making a simple game like this be anyways?
 puppet var peers: Array = [] #keeps track of network IDs of players
 puppet var myID: int = 0
 
@@ -23,7 +26,7 @@ func ready():
 	#get_tree().connect("connected_to_server", self, "_connected_to_server")
 	#get_tree().connect("connection_failed", self, "_connection_failed")
 	#get_tree().connect("server_disconnected", self, "_server_disconnected")
-
+	Network.name = "not network"
 func server(typestr: String = "CLIENT_SERVER"):
 	if typestr == "DEDICATED":
 		connection = Connection.DEDICATED_SERVER

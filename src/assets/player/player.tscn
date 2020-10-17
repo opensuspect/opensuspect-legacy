@@ -15,8 +15,6 @@
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-4-4.png" type="Texture" id=13]
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-3-4.png" type="Texture" id=14]
 
-
-
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 21.9046
 height = 35.1494
@@ -28,11 +26,6 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
-"loop": true,
-"name": "walk-down",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk-up",
@@ -41,6 +34,11 @@ animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "walk-h",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "walk-down",
 "speed": 8.0
 } ]
 
@@ -59,3 +57,14 @@ scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
 animation = "idle"
 playing = true
+
+[node name="Label" type="Label" parent="."]
+margin_left = -39.0
+margin_top = -102.0
+margin_right = 40.0
+margin_bottom = -61.0
+text = "Pog"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
