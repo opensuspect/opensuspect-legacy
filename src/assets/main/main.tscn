@@ -1,13 +1,18 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/common/textures/icons/icon.png" type="Texture" id=2]
 [ext_resource path="res://assets/main/main.gd" type="Script" id=3]
 [ext_resource path="res://assets/ui/lobbyui/chatbox/chatbox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=5]
+[ext_resource path="res://assets/common/shaders/colorblind.shader" type="Shader" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 420.733, 180.052 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 5 )
+shader_param/mode = 0
 
 [node name="Node2D" type="YSort"]
 position = Vector2( 104.785, 99.4456 )
@@ -28,8 +33,24 @@ shape = SubResource( 1 )
 position = Vector2( -911.138, 148.324 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.65
+drag_margin_top = 0.65
+drag_margin_right = 0.65
+drag_margin_bottom = 0.65
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Player/Camera2D"]
+
+[node name="ColorRect" type="ColorRect" parent="Player/Camera2D/CanvasLayer"]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button" type="Button" parent="Player/Camera2D/CanvasLayer"]
 anchor_left = 1.0

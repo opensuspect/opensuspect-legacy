@@ -31,15 +31,15 @@ animations = [ {
 "name": "walk-down",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "walk-h",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk-up",
 "speed": 8.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "walk-h",
+"speed": 5.0
 } ]
 
 [node name="Player" type="KinematicBody2D"]
@@ -55,5 +55,16 @@ shape = SubResource( 1 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
-animation = "idle"
+animation = "walk-h"
 playing = true
+
+[node name="Label" type="Label" parent="."]
+margin_left = -39.0
+margin_top = -102.0
+margin_right = 40.0
+margin_bottom = -61.0
+text = "Pog"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

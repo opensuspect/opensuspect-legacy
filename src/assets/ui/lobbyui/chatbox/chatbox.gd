@@ -32,16 +32,16 @@ func sendMessage(content, color: String = defaultColor):
 	showMessage("You", content, color, sentSide)
 	textbox.text = ""
 	currentText = ""
-	rpc("receiveMessage", Network.myID, content, color) #TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
+	rpc("receiveMessage", Network.myID, content, color, Network.playername) #TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
 
-remote func receiveMessage(sender: int, content: String, color: String): #TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
+remote func receiveMessage(sender: int, content: String, color: String, sentname: String): #TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
 	#add checks here to make sure it's valid (correct color-sender combo, etc.)
 	if sender != get_tree().get_rpc_sender_id():
 		#having the sender be sent and then checked allows to double check if get_rpc_sender_id returns the wrong id, most likely won't happen as long as we stay single threaded
 		pass
 	if isEmpty(content) or hasLineBreaks(content):
 		return
-	showMessage(str(sender), content, color, receivedSide) #eventually use id to find the player's name
+	showMessage(str(sentname), content, color, receivedSide) #eventually use id to find the player's name
 
 func showMessage(sender, content, color, align: String = ""):
 	if sender == "" or content == "":
