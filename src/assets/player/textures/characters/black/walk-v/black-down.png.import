@@ -2,16 +2,11 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/black-down.png-ae247f1faa91d12364ce14e587a2acec.stex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://assets/player/textures/characters/black/walk-v/black-down.png"
-dest_files=[ "res://.import/black-down.png-ae247f1faa91d12364ce14e587a2acec.stex" ]
-
 [params]
 
 compress/mode=0

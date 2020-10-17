@@ -2,16 +2,11 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/suspect.png-0bf40dcdb7636d3290dc08d739275e6d.stex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://assets/common/textures/icons/suspect.png"
-dest_files=[ "res://.import/suspect.png-0bf40dcdb7636d3290dc08d739275e6d.stex" ]
-
 [params]
 
 compress/mode=0

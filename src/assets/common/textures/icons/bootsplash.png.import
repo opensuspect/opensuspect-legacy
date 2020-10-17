@@ -2,16 +2,11 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bootsplash.png-89d2c368746da349672d047a01fe7965.stex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://assets/common/textures/icons/bootsplash.png"
-dest_files=[ "res://.import/bootsplash.png-89d2c368746da349672d047a01fe7965.stex" ]
-
 [params]
 
 compress/mode=0

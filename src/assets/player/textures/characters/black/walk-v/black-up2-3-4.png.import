@@ -2,16 +2,11 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/black-up2-3-4.png-9363bfa9d6cf16a6925d5960e823f5e6.stex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://assets/player/textures/characters/black/walk-v/black-up2-3-4.png"
-dest_files=[ "res://.import/black-up2-3-4.png-9363bfa9d6cf16a6925d5960e823f5e6.stex" ]
-
 [params]
 
 compress/mode=0

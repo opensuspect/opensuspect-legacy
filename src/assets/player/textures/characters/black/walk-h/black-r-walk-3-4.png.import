@@ -2,16 +2,11 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/black-r-walk-3-4.png-dc91fd1a49b8adc673303ed40312879b.stex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://assets/player/textures/characters/black/walk-h/black-r-walk-3-4.png"
-dest_files=[ "res://.import/black-r-walk-3-4.png-dc91fd1a49b8adc673303ed40312879b.stex" ]
-
 [params]
 
 compress/mode=0

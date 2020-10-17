@@ -2,16 +2,11 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/black-proto-1.png-7ddc7b6fe02e09d7aca7a193ff0f5de0.stex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://assets/player/textures/characters/black/black-proto-1.png"
-dest_files=[ "res://.import/black-proto-1.png-7ddc7b6fe02e09d7aca7a193ff0f5de0.stex" ]
-
 [params]
 
 compress/mode=0
