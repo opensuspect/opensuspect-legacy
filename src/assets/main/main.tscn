@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/common/textures/icons/icon.png" type="Texture" id=2]
 [ext_resource path="res://assets/main/main.gd" type="Script" id=3]
 [ext_resource path="res://assets/ui/lobbyui/chatbox/chatbox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 420.733, 180.052 )
@@ -35,13 +36,13 @@ anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -45.0
 margin_bottom = 28.0
+theme = ExtResource( 5 )
 text = "Chat"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="chatbox" parent="Player/Camera2D/CanvasLayer" instance=ExtResource( 4 )]
-visible = false
 margin_left = -247.972
 margin_top = -13.1382
 margin_right = -247.972
