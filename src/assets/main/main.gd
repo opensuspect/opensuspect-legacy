@@ -13,7 +13,7 @@ onready var config = ConfigFile.new()
 func _ready():
 	var err = config.load("user://settings.cfg")
 	if err == OK:
-		$CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
+		$Player/Camera2D/CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
 	
 
 	$Player.connect("main_player_moved", self, "_on_main_player_moved")
@@ -48,7 +48,6 @@ func _player_connected(id):
 		rpc_id(id, "player_join", new_player.id)
 
 	players[id] = new_player
-	new_player.scale = Vector2(10, 10) #otherwise the player looks super small
 	add_child(new_player)
 	print("Got connection: ", id)
 	print("Players: ", players)
@@ -70,34 +69,34 @@ remote func player_join(other_id):
 	print("New player: ", other_id)
 
 # Called from client sides when a player moves
-remote func player_moved(new_pos, new_velocity):
+remote func player_moved(new_pos, new_movement):
 	# Should only be run on the server
 	if !get_tree().is_network_server():
 		return
 	var id = get_tree().get_rpc_sender_id()
 	#print("Got player move from ", id) #no reason to spam console so much
 	# Check movement validity here
-	players[id].move_to(new_pos, new_velocity)
+	players[id].move_to(new_pos, new_movement)
 	# The move_to function validates new_x, new_y,
 	# so that's why we don't reuse them
 	new_pos = players[id].position
 	for other_id in players:
 		if id != other_id && other_id != 1:
 			#print("Sending player moved to client ", other_id) #no reason to spam console so much
-			rpc_id(other_id, "other_player_moved", id, new_pos, new_velocity)
+			rpc_id(other_id, "other_player_moved", id, new_pos, new_movement)
 
 # Called from server when other players move
-remote func other_player_moved(id, new_pos, new_velocity):
+remote func other_player_moved(id, new_pos, new_movement):
 	# Should only be run on the client
 	if get_tree().is_network_server():
 		return
 	#print("Moving ", id, " to ", new_pos.x, ", ", new_pos.y) #no reason to spam console so much
-	players[id].move_to(new_pos, new_velocity)
+	players[id].move_to(new_pos, new_movement)
 
-func _on_main_player_moved(position : Vector2, velocity : Vector2):
+func _on_main_player_moved(position : Vector2, movement : Vector2):
 	#In the beginning Godot created the heaven and the earth
 	#about 100% of the fix for the "host invisible" bug
 	if not get_tree().is_network_server():
-		rpc_id(1, "player_moved", position, velocity)
+		rpc_id(1, "player_moved", position, movement)
 	else:
-		rpc("other_player_moved", 1, position, velocity)
+		rpc("other_player_moved", 1, position, movement)

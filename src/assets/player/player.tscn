@@ -15,8 +15,6 @@
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-4-4.png" type="Texture" id=13]
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-3-4.png" type="Texture" id=14]
 
-
-
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 21.9046
 height = 35.1494
@@ -33,19 +31,19 @@ animations = [ {
 "name": "walk-down",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
-"loop": true,
-"name": "walk-up",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "walk-h",
 "speed": 8.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "walk-up",
+"speed": 8.0
 } ]
 
 [node name="Player" type="KinematicBody2D"]
-scale = Vector2( 0.6, 0.6 )
+scale = Vector2( 10, 10 )
 collision_layer = 2
 script = ExtResource( 1 )
 
