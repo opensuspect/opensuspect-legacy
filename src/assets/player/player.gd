@@ -22,17 +22,17 @@ func _ready():
 # Only called when main_player is true
 func get_input():
 	var prev_velocity = velocity
-	velocity = Vector2(0, 0)
+	movement = Vector2(0, 0)
 	if not PlayerManager.inMenu:
 		if Input.is_action_pressed('ui_right'):
-			velocity.x = 1
+			movement.x = 1
 		if Input.is_action_pressed('ui_left'):
-			velocity.x = -1
+			movement.x = -1
 		if Input.is_action_pressed('ui_down'):
-			velocity.y = 1
+			movement.y = 1
 		if Input.is_action_pressed('ui_up'):
-			velocity.y = -1
-
+			movement.y = -1
+		movement = movement.normalized()
 		#we did it boys, micheal jackson is no more
 #		$Sprite.play("walk-up") for some reason having this makes it not work
 
