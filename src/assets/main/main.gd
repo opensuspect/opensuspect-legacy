@@ -51,6 +51,7 @@ remote func playerjoin_proper(thename,id):
 	print("Players: ", players)
 func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects
+	players.erase(id)
 
 # Called from server when another client connects
 remote func player_join(other_id, pname):
