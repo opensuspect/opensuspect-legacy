@@ -4,6 +4,7 @@
 [ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=2]
 
 [node name="chatbox" type="WindowDialog"]
+visible = true
 anchor_left = 0.3
 anchor_top = 0.2
 anchor_right = 0.7
@@ -46,7 +47,7 @@ __meta__ = {
 }
 
 [node name="TextEdit" type="TextEdit" parent="Control/HBoxContainer"]
-margin_right = 369.0
+margin_right = 336.0
 margin_bottom = 55.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 3
@@ -58,7 +59,7 @@ __meta__ = {
 }
 
 [node name="send" type="Button" parent="Control/HBoxContainer"]
-margin_left = 373.0
+margin_left = 340.0
 margin_right = 389.0
 margin_bottom = 55.0
 text = "Send"

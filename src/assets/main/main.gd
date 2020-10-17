@@ -12,10 +12,10 @@ onready var config = ConfigFile.new()
 func _ready():
 	var err = config.load("user://settings.cfg")
 	if err == OK:
-		$Player/Camera2D/CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
+		$players/Player/Camera2D/CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
 	
 
-	$Player.connect("main_player_moved", self, "_on_main_player_moved")
+	$players/Player.connect("main_player_moved", self, "_on_main_player_moved")
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
 	if Network.connection == Network.Connection.CLIENT_SERVER:
@@ -54,7 +54,7 @@ remote func playerjoin_proper(thename,id):
 		print("Sending add player to other player ", players[id])
 		rpc_id(id, "player_join", new_player.id, thename)
 	players[id] = new_player
-	add_child(new_player)
+	$players.add_child(new_player)
 	print("Got connection: ", id)
 	print("Players: ", players)
 func _player_disconnected(id):

@@ -16,8 +16,7 @@
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-3-4.png" type="Texture" id=14]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 21.9046
-height = 35.1494
+radius = 15.0
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -26,14 +25,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
-"loop": true,
-"name": "walk-down",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk-up",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "walk-down",
 "speed": 8.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
@@ -43,25 +42,24 @@ animations = [ {
 } ]
 
 [node name="Player" type="KinematicBody2D"]
-scale = Vector2( 10, 10 )
 collision_layer = 2
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 40 )
+position = Vector2( 0, 20 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
-scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
 animation = "walk-h"
+frame = 2
 playing = true
 
 [node name="Label" type="Label" parent="."]
-margin_left = -39.0
-margin_top = -102.0
-margin_right = 40.0
+margin_left = -250.0
+margin_top = -55.0
+margin_right = 250.0
 margin_bottom = -61.0
 text = "Pog"
 align = 1
