@@ -6,7 +6,6 @@ enum SettingType{
 }
 
 # Init config
-# This should be in start of game
 onready var config = ConfigFile.new()
 
 # Setting class
@@ -41,9 +40,12 @@ func _save_state(function, node, setting):
 	config.save("user://settings.cfg")
 	call(function, setting)
 
+func dummy_function(setting):
+	pass
+
 var settings = [
 	Setting.new(true, SettingType.SWITCH, tr("Fullscreen"), "toggle_fullscreen"),
-	Setting.new(false, SettingType.SWITCH, tr("Colorblind mode"), "toggle_colorblind"),
+	Setting.new(false, SettingType.SWITCH, tr("Colorblind mode"), "dummy_function"),
 ]
 
 func _ready():
@@ -87,10 +89,6 @@ func _ready():
 				
 		vbox.add_child(hbox)
 	vbox.add_child(back_button)
-
-func toggle_colorblind(setting):
-	# apply shader
-	pass
 
 func toggle_fullscreen(setting):
 	OS.window_fullscreen = setting.value
