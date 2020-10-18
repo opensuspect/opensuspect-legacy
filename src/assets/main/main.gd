@@ -134,8 +134,10 @@ func _on_startgamebutton_gamestartpressed():
 			intruders = intruders + 1
 		rpc_id(other_id,"startgame",isintruder)
 		isintruder = false
+	$maps.switchMap("test")
 	emit_signal("clientstartgame")
 	get_tree().set_refuse_new_network_connections(true)
+
 remote func startgame(areweanintruder):
 	if areweanintruder:
 		print("we are the intruder!")
