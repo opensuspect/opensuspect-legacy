@@ -39,11 +39,11 @@ func _enter_tree():
 # Called on the server when a new client connects
 func _player_connected(id):
 	rpc_id(id,"getname",id, version)
-	rpc_id(id,"serverinfo",Network.playername, version)
+	rpc_id(id,"serverinfo",Network.get_player_name(), version)
 remote func serverinfo(sname,sversion):
 	player_join(1,sname)
 remote func getname(id,sversion):
-	rpc_id(1,"playerjoin_proper",Network.playername,id)
+	rpc_id(1,"playerjoin_proper",Network.get_player_name(),id)
 	if not version == sversion:
 		print("HEY! YOU! YOU FORGOT TO UPDATE YOUR CLIENT. RE EXPORT AND TRY AGAIN!")
 remote func playerjoin_proper(thename,id):

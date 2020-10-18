@@ -20,7 +20,7 @@ func _ready():
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
 	if main_player:
-		ourname = Network.playername
+		ourname = Network.get_player_name()
 	print(ourname)
 	$Label.text = ourname
 # Only called when main_player is true
