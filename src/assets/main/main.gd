@@ -8,7 +8,7 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 3
+var version = 4
 var intruders = 0
 var errdc = false
 onready var config = ConfigFile.new()
