@@ -8,8 +8,8 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 2
-
+var version = 3
+var intruders = 0
 var errdc = false
 onready var config = ConfigFile.new()
 
@@ -118,10 +118,39 @@ func _on_main_player_moved(position : Vector2, movement : Vector2):
 		rpc("other_player_moved", 1, position, movement)
 
 signal clientstartgame
+#since this code can only be triggered when the server presses the start game button, we will put task assignment or role assignment here
 func _on_startgamebutton_gamestartpressed():
 	print("game start triggered")
-	rpc("startgame")
+	serverassign()
+	for other_id in players:
+		print("pog")
+		var rng = RandomNumberGenerator.new()
+		var isintruder = false
+		rng.randomize()
+		var my_random_number = rng.randf_range(0, 10.0)
+		if intruders <= 2 and my_random_number > 8:
+		#technically should generate a 1 in 10 chance of you being an intruder
+			isintruder = true
+			intruders = intruders + 1
+		rpc_id(other_id,"startgame",isintruder)
+		isintruder = false
 	emit_signal("clientstartgame")
 	get_tree().set_refuse_new_network_connections(true)
-remote func startgame():
+remote func startgame(areweanintruder):
+	if areweanintruder:
+		print("we are the intruder!")
+		PlayerManager.isintruder = true
+	else:
+		print("we are not the intruder")
 	emit_signal("clientstartgame")
+func serverassign():
+	var rng = RandomNumberGenerator.new()
+	var isintruder = false
+	rng.randomize()
+	var my_random_number = rng.randf_range(0, 10)
+	print(my_random_number)
+	if intruders <= 2 and my_random_number > 8:
+		print("host is the intruder!")
+		PlayerManager.isintruder = true
+	else:
+		print("we are not the intruder")
