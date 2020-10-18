@@ -27,7 +27,6 @@ func _enter_tree():
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	elif Network.connection == Network.Connection.CLIENT:
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-		player_join(1,"PLACEHOLDER NAME, THIS IS THE HOST")
 		#print("Connecting to ", Network.host, " on port ", Network.port)
 		#var peer = NetworkedMultiplayerENet.new()
 		#peer.create_client(Network.host, Network.port)
@@ -36,7 +35,9 @@ func _enter_tree():
 # Called on the server when a new client connects
 func _player_connected(id):
 	rpc_id(id,"getname",id)
-
+	rpc_id(id,"serverinfo",Network.playername)
+remote func serverinfo(sname):
+	player_join(1,sname)
 remote func getname(id):
 	rpc_id(1,"playerjoin_proper",Network.playername,id)
 remote func playerjoin_proper(thename,id):
@@ -45,7 +46,7 @@ remote func playerjoin_proper(thename,id):
 	new_player.id = id
 	new_player.ourname = thename
 	new_player.main_player = false
-	print(thename)
+	#print(thename)
 	for id in players:
 		# Sends an add_player rpc to the player that just joined
 		print("Sending add player to new player ", new_player)
