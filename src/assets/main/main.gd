@@ -6,7 +6,11 @@ var player_scene = load(player_s)
 #onready var player_scene = preload(player_s)
 # Used on both sides, to keep track of all players.
 var players = {}
+#!!!THIS IS IMPORTANT!!!
+#INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
+var version = 1
 
+var errdc = false
 onready var config = ConfigFile.new()
 
 func _ready():
@@ -34,12 +38,14 @@ func _enter_tree():
 
 # Called on the server when a new client connects
 func _player_connected(id):
-	rpc_id(id,"getname",id)
-	rpc_id(id,"serverinfo",Network.playername)
-remote func serverinfo(sname):
+	rpc_id(id,"getname",id, version)
+	rpc_id(id,"serverinfo",Network.playername, version)
+remote func serverinfo(sname,sversion):
 	player_join(1,sname)
-remote func getname(id):
+remote func getname(id,sversion):
 	rpc_id(1,"playerjoin_proper",Network.playername,id)
+	if not version == sversion:
+		print("HEY! YOU! YOU FORGOT TO UPDATE YOUR CLIENT. RE EXPORT AND TRY AGAIN!")
 remote func playerjoin_proper(thename,id):
 	var new_player = player_scene.instance()
 	id = get_tree().get_rpc_sender_id()
