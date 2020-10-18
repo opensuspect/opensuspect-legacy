@@ -8,7 +8,7 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 1
+var version = 2
 
 var errdc = false
 onready var config = ConfigFile.new()
@@ -116,3 +116,12 @@ func _on_main_player_moved(position : Vector2, movement : Vector2):
 		rpc_id(1, "player_moved", position, movement)
 	else:
 		rpc("other_player_moved", 1, position, movement)
+
+signal clientstartgame
+func _on_startgamebutton_gamestartpressed():
+	print("game start triggered")
+	rpc("startgame")
+	emit_signal("clientstartgame")
+	get_tree().set_refuse_new_network_connections(true)
+remote func startgame():
+	emit_signal("clientstartgame")
