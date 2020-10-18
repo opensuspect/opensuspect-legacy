@@ -1,15 +1,25 @@
 extends Node2D
 
 export (int) var MAX_PLAYERS = 10
-
 export (String, FILE, "*.tscn") var player_s = "res://assets/player/player.tscn"
 var player_scene = load(player_s)
 #onready var player_scene = preload(player_s)
 # Used on both sides, to keep track of all players.
 var players = {}
+#!!!THIS IS IMPORTANT!!!
+#INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
+var version = 3
+var intruders = 0
+var errdc = false
+onready var config = ConfigFile.new()
 
 func _ready():
-	$Player.connect("main_player_moved", self, "_on_main_player_moved")
+	var err = config.load("user://settings.cfg")
+	if err == OK:
+		$players/Player/Camera2D/CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
+	
+
+	$players/Player.connect("main_player_moved", self, "_on_main_player_moved")
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
 	if Network.connection == Network.Connection.CLIENT_SERVER:
@@ -21,7 +31,6 @@ func _enter_tree():
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	elif Network.connection == Network.Connection.CLIENT:
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-		player_join(1)
 		#print("Connecting to ", Network.host, " on port ", Network.port)
 		#var peer = NetworkedMultiplayerENet.new()
 		#peer.create_client(Network.host, Network.port)
@@ -29,34 +38,45 @@ func _enter_tree():
 
 # Called on the server when a new client connects
 func _player_connected(id):
+	rpc_id(id,"getname",id, version)
+	rpc_id(id,"serverinfo",Network.get_player_name(), version)
+remote func serverinfo(sname,sversion):
+	player_join(1,sname)
+remote func getname(id,sversion):
+	rpc_id(1,"playerjoin_proper",Network.get_player_name(),id)
+	if not version == sversion:
+		print("HEY! YOU! YOU FORGOT TO UPDATE YOUR CLIENT. RE EXPORT AND TRY AGAIN!")
+remote func playerjoin_proper(thename,id):
 	var new_player = player_scene.instance()
+	id = get_tree().get_rpc_sender_id()
 	new_player.id = id
+	new_player.ourname = thename
 	new_player.main_player = false
+	#print(thename)
 	for id in players:
 		# Sends an add_player rpc to the player that just joined
 		print("Sending add player to new player ", new_player)
-		rpc_id(new_player.id, "player_join", id)
+		rpc_id(new_player.id, "player_join", id, thename)
 		# Sends the add_player rpc to all other clients
 		print("Sending add player to other player ", players[id])
-		rpc_id(id, "player_join", new_player.id)
-
+		rpc_id(id, "player_join", new_player.id, thename)
 	players[id] = new_player
-	add_child(new_player)
+	$players.add_child(new_player)
 	print("Got connection: ", id)
 	print("Players: ", players)
-
 func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects
+	players.erase(id)
 
 # Called from server when another client connects
-remote func player_join(other_id):
+remote func player_join(other_id, pname):
 	# Should only be run on the client
 	if get_tree().is_network_server():
 		return
 	var new_player = player_scene.instance()
 	new_player.id = other_id
+	new_player.ourname = pname
 	new_player.main_player = false
-	new_player.scale = Vector2(10, 10) #otherwise the player looks super small
 	add_child(new_player)
 	players[other_id] = new_player
 	print("New player: ", other_id)
@@ -67,8 +87,11 @@ remote func player_moved(new_pos, new_movement):
 	if !get_tree().is_network_server():
 		return
 	var id = get_tree().get_rpc_sender_id()
+	#print(id)
 	#print("Got player move from ", id) #no reason to spam console so much
 	# Check movement validity here
+	if not players.keys().has(id):
+		return
 	players[id].move_to(new_pos, new_movement)
 	# The move_to function validates new_x, new_y,
 	# so that's why we don't reuse them
@@ -93,3 +116,41 @@ func _on_main_player_moved(position : Vector2, movement : Vector2):
 		rpc_id(1, "player_moved", position, movement)
 	else:
 		rpc("other_player_moved", 1, position, movement)
+
+signal clientstartgame
+#since this code can only be triggered when the server presses the start game button, we will put task assignment or role assignment here
+func _on_startgamebutton_gamestartpressed():
+	print("game start triggered")
+	serverassign()
+	for other_id in players:
+		print("pog")
+		var rng = RandomNumberGenerator.new()
+		var isintruder = false
+		rng.randomize()
+		var my_random_number = rng.randf_range(0, 10.0)
+		if intruders <= 2 and my_random_number > 8:
+		#technically should generate a 1 in 10 chance of you being an intruder
+			isintruder = true
+			intruders = intruders + 1
+		rpc_id(other_id,"startgame",isintruder)
+		isintruder = false
+	emit_signal("clientstartgame")
+	get_tree().set_refuse_new_network_connections(true)
+remote func startgame(areweanintruder):
+	if areweanintruder:
+		print("we are the intruder!")
+		PlayerManager.isintruder = true
+	else:
+		print("we are not the intruder")
+	emit_signal("clientstartgame")
+func serverassign():
+	var rng = RandomNumberGenerator.new()
+	var isintruder = false
+	rng.randomize()
+	var my_random_number = rng.randf_range(0, 10)
+	print(my_random_number)
+	if intruders <= 2 and my_random_number > 8:
+		print("host is the intruder!")
+		PlayerManager.isintruder = true
+	else:
+		print("we are not the intruder")

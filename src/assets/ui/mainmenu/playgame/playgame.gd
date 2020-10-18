@@ -4,16 +4,15 @@ func _ready() -> void:
 	pass
 
 func _on_Connect_pressed() -> void:
-	Network.connection = Network.Connection.CLIENT
-	Network.hostName = $JoinGameMenu/HostnameLine/HostnameField.text
-	Network.port = $JoinGameMenu/Port/PortField.text
-	Network.client()
+	var hostName: String = $JoinGameMenu/HostnameLine/HostnameField.text
+	var port: int = $JoinGameMenu/Port/PortField.text as int
+	var playerName: String = $JoinGameMenu/Name/NameField.text
+	Network.client(hostName, port, playerName)
 
 func _on_Create_pressed() -> void:
-	Network.connection = Network.Connection.CLIENT_SERVER
-	Network.hostName = 'localhost'
-	Network.port = $CreateGameMenu/PortLine/PortField.text
-	Network.server()
+	var port: int = $CreateGameMenu/PortLine/PortField.text as int
+	var playerName: String = $CreateGameMenu/Name/NameField.text
+	Network.client_server(port, playerName)
 
 func _on_JoinGame_pressed() -> void:
 	show_only('JoinGameMenu')

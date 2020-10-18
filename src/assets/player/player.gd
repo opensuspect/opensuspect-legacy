@@ -6,6 +6,7 @@ export (int) var speed = 150
 
 # Set by main.gd. Is the client's unique id for this player
 var id
+var ourname
 var velocity = Vector2(0,0)
 # Contains the current intended movement direction and magnitude in range 0 to 1
 var movement = Vector2(0,0)
@@ -18,7 +19,10 @@ var y_anim_margin = 0.1
 func _ready():
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
-
+	if main_player:
+		ourname = Network.get_player_name()
+	print(ourname)
+	$Label.text = ourname
 # Only called when main_player is true
 func get_input():
 	var prev_velocity = velocity
