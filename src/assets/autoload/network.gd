@@ -17,20 +17,20 @@ func ready() -> void:
 	# give the server access to puppet functions and variables
 	set_network_master(1)
 
-func client_server(port: int, player_name: String) -> void:
+func client_server(port: int, playerName: String) -> void:
 	print("Starting server on port ", port, " with host player name ", player_name)
 	connection = Connection.CLIENT_SERVER
-	self.player_name = player_name
+	player_name = playerName
 	server = WebSocketServer.new()
 	server.listen(port, PoolStringArray(), true) #3rd input must be true to use Godot's high level networking API
 	get_tree().set_network_peer(server)
 	connect_signals()
 	get_tree().change_scene("res://assets/main/main.tscn")
 
-func client(hostName: String, port: int, player_name: String) -> void:
+func client(hostName: String, port: int, playerName: String) -> void:
 	print("Connecting to server ", hostName, " on port ", port, " with host player name ", player_name)
 	connection = Connection.CLIENT
-	self.player_name = player_name
+	player_name = playerName
 	client = WebSocketClient.new()
 	#use "ws://" at the beginning of address for websocket connections
 	var url: String = "ws://" + hostName + ":" + str(port)
