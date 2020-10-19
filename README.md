@@ -21,6 +21,6 @@ OpenSuspect is licensed under the GNU GPL v3 (see LICENSE.txt)
 * Collaborative game play
 * Easy to modify and extend
 * Voice chat integration with Mumble
-
+* Open Source, as all things should be
 ## Requirements
 Currently you need git-lfs, which we are using to handle asset storage
