@@ -21,6 +21,8 @@ func _ready():
 		main_player = false
 	if main_player:
 		ourname = Network.playername
+		$VisibleArea.enabled = true
+		$Dark.enabled = true
 	print(ourname)
 	$Label.text = ourname
 # Only called when main_player is true
