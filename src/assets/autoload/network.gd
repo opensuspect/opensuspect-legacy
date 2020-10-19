@@ -6,92 +6,92 @@ enum Connection {
 	CLIENT				# Client only, remote server
 }
 
-var connection = Connection.LOCAL
-var hostName: String = '' #name of host server
-var ip: String = ''
-var port: int = 0
-var hosting: bool = false
-var server
-var client
-var playername
-#Entry #1
-#This is my chance to help develop something that many people will play! How hard could making a simple game like this be anyways?
-puppet var peers: Array = [] #keeps track of network IDs of players
+var connection: int = Connection.LOCAL setget toss, get_connection
+var server: WebSocketServer setget toss, deny
+var client: WebSocketClient setget toss, deny
+var player_name: String setget toss, get_player_name
+puppet var peers: Array = []
 puppet var myID: int = 1
 
-func ready():
-	set_network_master(1) #gives the server access to puppet functions and variables
-	#get_tree().connect("network_peer_connected", self, "_player_connected")			#moved to after network peer is created, was causing _connected_to_server() to never be called
-	#get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-	#get_tree().connect("connected_to_server", self, "_connected_to_server")
-	#get_tree().connect("connection_failed", self, "_connection_failed")
-	#get_tree().connect("server_disconnected", self, "_server_disconnected")
-	Network.name = "not network"
-func server(typestr: String = "CLIENT_SERVER"):
-	if typestr == "DEDICATED":
-		connection = Connection.DEDICATED_SERVER
-	elif typestr == "CLIENT_SERVER":
-		connection = Connection.CLIENT_SERVER
-	hosting = true
-	client = null
-	print("Starting server")
+func ready() -> void:
+	# give the server access to puppet functions and variables
+	set_network_master(1)
+
+func client_server(port: int, player_name: String) -> void:
+	connection = Connection.CLIENT_SERVER
+	self.player_name = player_name
+	print("Starting server on port ", port)
 	server = WebSocketServer.new()
 	server.listen(port, PoolStringArray(), true) #3rd input must be true to use Godot's high level networking API
 	get_tree().set_network_peer(server)
-	get_tree().connect("network_peer_connected", self, "_player_connected")
-	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-	get_tree().connect("connected_to_server", self, "_connected_to_server")
-	get_tree().connect("connection_failed", self, "_connection_failed")
-	get_tree().connect("server_disconnected", self, "_server_disconnected")
+	connect_signals()
 	get_tree().change_scene("res://assets/main/main.tscn")
 
-func client(IPstr: String = hostName, typestr: String = "CLIENT"):
-	if typestr == "CLIENT":
-		connection = Connection.CLIENT
-	else:
-		connection = Connection.LOCAL
-	hosting = false
-	ip = IPstr
-	server = null
+func client(hostName: String, port: int, player_name: String) -> void:
+	connection = Connection.CLIENT
+	self.player_name = player_name
 	print("Connecting to ", hostName, " on port ", port)
 	client = WebSocketClient.new()
-	var url = "ws://" + ip + ":" + str(port) #use "ws://" at the beginning of address for websocket connections
-	var _error = client.connect_to_url(url, PoolStringArray(), true) #3rd input must be true to use Godot's high level networking API
+	#use "ws://" at the beginning of address for websocket connections
+	var url: String = "ws://" + hostName + ":" + str(port)
+	# 3rd argument true means use Godot's high level networking API
+	var _error: int = client.connect_to_url(url, PoolStringArray(), true)
+	if (_error):
+		print("Error when connecting to server: ", _error)
+		get_tree().quit()
+		
 	get_tree().set_network_peer(client)
-	get_tree().connect("network_peer_connected", self, "_player_connected")
-	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-	get_tree().connect("connected_to_server", self, "_connected_to_server")
-	get_tree().connect("connection_failed", self, "_connection_failed")
-	get_tree().connect("server_disconnected", self, "_server_disconnected")
+	connect_signals()
 	#do not switch to main scene here, wait until the connection was successful
 
-func _player_connected(id):
+func _player_connected(id) -> void:
 	peers.append(id)
 	if get_tree().is_network_server():
-		rset_id(id, "myID", str(id)) #remotely sets myID var of new player to their network id
-		rset("peers", peers) #syncs peer list of all players
+		# remotely set myID var of new player to their network id
+		rset_id(id, "myID", str(id))
+		# sync peer list of all players
+		rset("peers", peers)
 
-func _player_disconnected(id):
+func _player_disconnected(id) -> void:
 	peers.erase(id)
 	rset("peers", peers) #syncs peer list of all players
 
-func _connected_to_server():
-	print("Connection to ", hostName, " on port ", port, " succeeded")
+func _connected_to_server() -> void:
+	print("Connection to server succeeded")
 	get_tree().change_scene("res://assets/main/main.tscn")
 	pass #here is where you would put stuff that happens when you connect, such as switching to a lobby scene
 
-func _connection_failed():
-	print("Connection to ", hostName, " on port ", port, " failed")
+func _connection_failed() -> void:
+	print("Connection to server failed")
 	pass #here is where you would handle the fact that the connection failed
 
-func _server_disconnected():
+func _server_disconnected() -> void:
 	print("server disconnected")
 	pass #this is called when the player is kicked, when the server crashes, or whenever the connection is severed
 
-func _process(_delta):
+func _process(_delta) -> void:
 	if server != null:			#since this is a websocket connection, it must be manually polled
 		if server.is_listening():
 			server.poll()
 	elif client != null:
 		if client.get_connection_status() == NetworkedMultiplayerPeer.CONNECTION_CONNECTED || client.get_connection_status() == NetworkedMultiplayerPeer.CONNECTION_CONNECTING:
 			client.poll()
+
+func toss(newValue) -> void:
+	pass
+	
+func deny() -> void:
+	pass
+
+func get_connection() -> int:
+	return connection
+
+func connect_signals() -> void:
+	get_tree().connect("network_peer_connected", self, "_player_connected")
+	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
+	get_tree().connect("connected_to_server", self, "_connected_to_server")
+	get_tree().connect("connection_failed", self, "_connection_failed")
+	get_tree().connect("server_disconnected", self, "_server_disconnected")
+
+func get_player_name() -> String:
+	return player_name

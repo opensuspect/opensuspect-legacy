@@ -1,28 +1,19 @@
 extends WindowDialog
 
 onready var chatbox = get_node("Control/chatboxText")
-
 onready var textbox = get_node("Control/HBoxContainer/TextEdit")
 
 var defaultColor: String = "white"
-
 var emptyChars: Array = [" ", "	", "\n", "\r", "\r\n"] #chars considered empty (spaces, tabs, etc.)
-
 var breakChars: Array = ["\n", "\r", "\r\n"]
-
 var maxChars: int = 140
-
 var currentText: String = ""
-
 var cursorCoord: Vector2 = Vector2(0,0) #x is line, y is column
-
 var sentSide: String = "right" #side of chatbox sent messages are on
-
 var receivedSide: String = "left" #side of chatbox received messages are on
 
 func _ready():
 	pass
-	#popup()
 
 func sendMessage(content, color: String = defaultColor):
 	if isEmpty(content) or hasLineBreaks(content):
@@ -32,16 +23,19 @@ func sendMessage(content, color: String = defaultColor):
 	showMessage("You", content, color, sentSide)
 	textbox.text = ""
 	currentText = ""
-	rpc("receiveMessage", Network.myID, content, color, Network.playername) #TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
+	#TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
+	rpc("receiveMessage", Network.myID, content, color, Network.get_player_name())
 
-remote func receiveMessage(sender: int, content: String, color: String, sentname: String): #TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
+#TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
+remote func receiveMessage(sender: int, content: String, color: String, sentname: String):
 	#add checks here to make sure it's valid (correct color-sender combo, etc.)
 	if sender != get_tree().get_rpc_sender_id():
 		#having the sender be sent and then checked allows to double check if get_rpc_sender_id returns the wrong id, most likely won't happen as long as we stay single threaded
 		pass
 	if isEmpty(content) or hasLineBreaks(content):
 		return
-	showMessage(str(sentname), content, color, receivedSide) #eventually use id to find the player's name
+	#eventually use id to find the player's name
+	showMessage(str(sentname), content, color, receivedSide)
 
 func showMessage(sender, content, color, align: String = ""):
 	if sender == "" or content == "":
@@ -49,7 +43,8 @@ func showMessage(sender, content, color, align: String = ""):
 	chatbox.pop()
 	var newMessage: String
 	var scroller = chatbox.get_v_scroll()
-	if scroller.max_value - scroller.page <= scroller.value: #if scrolled all the way down, automatically scroll down to show new message
+	#if scrolled all the way down, automatically scroll down to show new message
+	if scroller.max_value - scroller.page <= scroller.value:
 		chatbox.scroll_following = true
 	else:
 		chatbox.scroll_following = false
@@ -68,7 +63,8 @@ func restrictText():
 	else:
 		currentText = newText
 
-func isEmpty(inputStr): #tests if the string is full of empty chars, like tabs and spaces
+#tests if the string is full of empty chars, like tabs and spaces
+func isEmpty(inputStr):
 	var emptyCount = 0
 	for i in emptyChars:
 		emptyCount += inputStr.count(i)
