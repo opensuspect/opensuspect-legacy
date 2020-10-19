@@ -1,17 +1,23 @@
 extends Node2D
 
-var maps: Dictionary = {"test": preload("res://assets/maps/test/test.tscn")}
+var maps: Dictionary = {"lobby": preload("res://assets/maps/lobby/lobby.tscn"), "test": preload("res://assets/maps/test/test.tscn")}
 
-var currentMap: String = "test"
+var currentMap: String = "lobby"
 
 func _ready():
-	switchMap("test")
+	set_network_master(1)
+	switchMap(currentMap)
 
-func switchMap(newMap: String):
+puppet func switchMap(newMap: String):
+	#if the func is not remotely called rpc sender id will be 0, if server sent it will be 1, negative should be impossible
+	if not get_tree().get_rpc_sender_id() < 2:
+		return
 	if GameManager.ingame:
 		return
 	if not maps.keys().has(newMap):
 		return
+	if get_tree().is_network_server():
+		rpc("switchMap", newMap)
 	for i in get_children():
 		i.queue_free()
 	currentMap = newMap

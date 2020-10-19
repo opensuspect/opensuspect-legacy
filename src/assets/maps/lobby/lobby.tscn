@@ -1,0 +1,11 @@
+[gd_scene format=2]
+
+[node name="lobby" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 22.0
+text = "LOBBY"
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -8,7 +8,7 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 3
+var version = 4
 var intruders = 0
 var errdc = false
 onready var config = ConfigFile.new()
@@ -134,8 +134,10 @@ func _on_startgamebutton_gamestartpressed():
 			intruders = intruders + 1
 		rpc_id(other_id,"startgame",isintruder)
 		isintruder = false
+	$maps.switchMap("test")
 	emit_signal("clientstartgame")
 	get_tree().set_refuse_new_network_connections(true)
+
 remote func startgame(areweanintruder):
 	if areweanintruder:
 		print("we are the intruder!")
