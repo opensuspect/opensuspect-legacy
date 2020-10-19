@@ -9,7 +9,6 @@ var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
 var version = 5
-
 var intruders = 0
 var newnumber
 var errdc = false
@@ -136,9 +135,8 @@ func _on_startgamebutton_gamestartpressed():
 		intruders = intruders + 1
 		rpc("startgame",my_random_number)
 		isintruder = false
-	$maps.switchMap("test")
-	emit_signal("clientstartgame")
-	get_tree().set_refuse_new_network_connections(true)
+	# TODO: Looser coupling here would be nice
+	GameManager.state = GameManager.State.Normal
 
 remote func startgame(intrudernumber):
 	if intrudernumber == PlayerManager.ournumber:

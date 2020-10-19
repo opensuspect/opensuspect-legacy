@@ -1,11 +1,39 @@
 extends Node
 
-#this script will sync game events, like round resetting and meetings
-var ingame: bool = false
-#signal to detect if the game has started; defaults to false
+enum State { Start, Lobby, Normal }
+var state: int = State.Start setget transition, get_state
+
+const TRANSITIONS = {
+	State.Start: [State.Lobby],
+	State.Lobby: [State.Normal],
+	State.Normal: [State.Lobby],
+}
+
 #signals that help sync the gamestate
 #can be connected to from anywhere with GameManager.connect("<signal name>", self, "<function name>")
-signal resetLobby
-signal gamestart
+signal state_changed
+
 func _ready():
-	pass
+	get_tree().connect("connected_to_server", self, "_on_connected")
+	Network.connect("server_started", self, "_on_connected")
+
+
+func transition(new_state) -> bool:
+	print("attempting to transition gamestate from ", state, " to ", new_state)
+	if (TRANSITIONS[state].has(new_state)):
+		var old_state: int = state
+		state = new_state
+		emit_signal('state_changed', old_state, new_state)
+		print("transition successful")
+		return true
+	print("transition failed")
+	return false
+
+func get_state() -> int:
+	return state
+
+func ingame() -> bool:
+	return [State.Normal].has(state)
+
+func _on_connected() -> void:
+	transition(State.Lobby)
