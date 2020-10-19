@@ -27,6 +27,7 @@ config/version="dev"
 Network="*res://assets/autoload/network.gd"
 GameManager="*res://assets/autoload/gamemanager.gd"
 PlayerManager="*res://assets/autoload/playermanager.gd"
+SceneManager="*res://assets/autoload/scenemanager.gd"
 
 [display]
 

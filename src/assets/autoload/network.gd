@@ -13,9 +13,12 @@ var player_name: String setget toss, get_player_name
 puppet var peers: Array = []
 puppet var myID: int = 1
 
+signal server_started
+
 func ready() -> void:
 	# give the server access to puppet functions and variables
 	set_network_master(1)
+	GameManager.connect('state_changed', self, '_on_state_changed')
 
 func client_server(port: int, playerName: String) -> void:
 	print("Starting server on port ", port, " with host player name ", player_name)
@@ -25,7 +28,7 @@ func client_server(port: int, playerName: String) -> void:
 	server.listen(port, PoolStringArray(), true) #3rd input must be true to use Godot's high level networking API
 	get_tree().set_network_peer(server)
 	connect_signals()
-	get_tree().change_scene("res://assets/main/main.tscn")
+	emit_signal("server_started")
 
 func client(hostName: String, port: int, playerName: String) -> void:
 	print("Connecting to server ", hostName, " on port ", port, " with host player name ", player_name)
@@ -58,7 +61,6 @@ func _player_disconnected(id) -> void:
 
 func _connected_to_server() -> void:
 	print("Connection to server succeeded")
-	get_tree().change_scene("res://assets/main/main.tscn")
 	pass #here is where you would put stuff that happens when you connect, such as switching to a lobby scene
 
 func _connection_failed() -> void:
@@ -95,3 +97,12 @@ func connect_signals() -> void:
 
 func get_player_name() -> String:
 	return player_name
+
+func on_state_changed(old_state, new_state) -> void:
+	match new_state:
+		GameManager.State.Normal:
+			print('Network manager refusing further connections')
+			get_tree().set_refuse_new_network_connections(true)
+		GameManager.State.Lobby:
+			print('Network manager allowing connections')
+			get_tree().set_refuse_new_network_connections(false)

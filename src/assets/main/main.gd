@@ -8,8 +8,9 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 4
+var version = 5
 var intruders = 0
+var newnumber
 var errdc = false
 onready var config = ConfigFile.new()
 
@@ -29,6 +30,7 @@ func _enter_tree():
 		#get_tree().network_peer = peer
 		get_tree().connect("network_peer_connected", self, "_player_connected")
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
+		PlayerManager.ournumber = 0
 	elif Network.connection == Network.Connection.CLIENT:
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 		#print("Connecting to ", Network.host, " on port ", Network.port)
@@ -38,12 +40,14 @@ func _enter_tree():
 
 # Called on the server when a new client connects
 func _player_connected(id):
-	rpc_id(id,"getname",id, version)
+	newnumber = Network.peers.size()
+	rpc_id(id,"getname",id, version, newnumber)
 	rpc_id(id,"serverinfo",Network.get_player_name(), version)
 remote func serverinfo(sname,sversion):
 	player_join(1,sname)
-remote func getname(id,sversion):
+remote func getname(id,sversion,assignednumber):
 	rpc_id(1,"playerjoin_proper",Network.get_player_name(),id)
+	PlayerManager.ournumber = assignednumber
 	if not version == sversion:
 		print("HEY! YOU! YOU FORGOT TO UPDATE YOUR CLIENT. RE EXPORT AND TRY AGAIN!")
 remote func playerjoin_proper(thename,id):
@@ -63,7 +67,7 @@ remote func playerjoin_proper(thename,id):
 	players[id] = new_player
 	$players.add_child(new_player)
 	print("Got connection: ", id)
-	print("Players: ", players)
+	print(Network.peers.size())
 func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects
 	players.erase(id)
@@ -122,24 +126,20 @@ signal clientstartgame
 func _on_startgamebutton_gamestartpressed():
 	print("game start triggered")
 	serverassign()
-	for other_id in players:
-		print("pog")
+	while intruders <= 2:
 		var rng = RandomNumberGenerator.new()
 		var isintruder = false
 		rng.randomize()
-		var my_random_number = rng.randf_range(0, 10.0)
-		if intruders <= 2 and my_random_number > 8:
+		var my_random_number = rng.randi_range(0, Network.peers.size())
 		#technically should generate a 1 in 10 chance of you being an intruder
-			isintruder = true
-			intruders = intruders + 1
-		rpc_id(other_id,"startgame",isintruder)
+		intruders = intruders + 1
+		rpc("startgame",my_random_number)
 		isintruder = false
-	$maps.switchMap("test")
-	emit_signal("clientstartgame")
-	get_tree().set_refuse_new_network_connections(true)
+	# TODO: Looser coupling here would be nice
+	GameManager.state = GameManager.State.Normal
 
-remote func startgame(areweanintruder):
-	if areweanintruder:
+remote func startgame(intrudernumber):
+	if intrudernumber == PlayerManager.ournumber:
 		print("we are the intruder!")
 		PlayerManager.isintruder = true
 	else:
@@ -149,9 +149,9 @@ func serverassign():
 	var rng = RandomNumberGenerator.new()
 	var isintruder = false
 	rng.randomize()
-	var my_random_number = rng.randf_range(0, 10)
+	var my_random_number = rng.randf_range(0, Network.peers.size())
 	print(my_random_number)
-	if intruders <= 2 and my_random_number > 8:
+	if intruders <= 2 and my_random_number == 0:
 		print("host is the intruder!")
 		PlayerManager.isintruder = true
 	else:

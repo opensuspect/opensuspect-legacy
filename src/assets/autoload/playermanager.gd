@@ -5,3 +5,4 @@ extends Node
 
 var inMenu = false
 var isintruder = false
+var ournumber
