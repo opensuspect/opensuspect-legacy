@@ -60,10 +60,10 @@ margin_right = -247.972
 margin_bottom = -13.1382
 
 [node name="startgamebutton" type="Button" parent="players/Player/Camera2D/CanvasLayer"]
-margin_left = 1.77539
-margin_top = 571.249
-margin_right = 95.7754
-margin_bottom = 599.249
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -28.0
+margin_right = 94.0
 text = "Start Game"
 script = ExtResource( 7 )
 __meta__ = {
@@ -74,6 +74,7 @@ __meta__ = {
 script = ExtResource( 2 )
 
 [node name="test" parent="maps" instance=ExtResource( 6 )]
+light_mask = 2
 [connection signal="clientstartgame" from="." to="players/Player/Camera2D/CanvasLayer/Button" method="_on_Node2D_clientstartgame"]
 [connection signal="pressed" from="players/Player/Camera2D/CanvasLayer/Button" to="players/Player/Camera2D/CanvasLayer/chatbox" method="popup"]
 [connection signal="gamestartpressed" from="players/Player/Camera2D/CanvasLayer/startgamebutton" to="." method="_on_startgamebutton_gamestartpressed"]
