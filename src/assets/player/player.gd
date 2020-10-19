@@ -5,13 +5,13 @@ signal main_player_moved(position)
 export (int) var speed = 150
 
 # Set by main.gd. Is the client's unique id for this player
-var id
-var ourname
+var id: int
+var ourname: String
 var velocity = Vector2(0,0)
 # Contains the current intended movement direction and magnitude in range 0 to 1
 var movement = Vector2(0,0)
 # Only true when this is the player being controlled
-var main_player = true
+export var main_player = false
 #anim margin controls how big the player movement must be before animations are played
 var x_anim_margin = 0.1
 var y_anim_margin = 0.1
@@ -22,9 +22,12 @@ func _ready():
 	if main_player:
 		$VisibleArea.enabled = true
 		$Dark.enabled = true
-		ourname = Network.get_player_name()
-	print("ourname: ", ourname)
+		setName(Network.get_player_name())
+
+func setName(newName):
+	ourname = newName
 	$Label.text = ourname
+
 # Only called when main_player is true
 func get_input():
 	var prev_velocity = velocity
