@@ -8,7 +8,7 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 5
+var version = 6
 var intruders = 0
 var newnumber
 var errdc = false
@@ -92,10 +92,7 @@ puppet func createPlayer(id, playerName):
 	print("New player: ", id)
 
 # Called from client sides when a player moves
-remote func player_moved(new_pos, new_movement):
-	# Should only be run on the server
-	if !get_tree().is_network_server():
-		return
+master func player_moved(new_pos, new_movement):
 	var id = get_tree().get_rpc_sender_id()
 	#print(id)
 	#print("Got player move from ", id) #no reason to spam console so much
@@ -112,21 +109,13 @@ remote func player_moved(new_pos, new_movement):
 			rpc_id(other_id, "other_player_moved", id, new_pos, new_movement)
 
 # Called from server when other players move
-remote func other_player_moved(id, new_pos, new_movement):
-	# Should only be run on the client
-	if get_tree().is_network_server():
-		return
+puppet func other_player_moved(id, new_pos, new_movement):
 	#print("Moving ", id, " to ", new_pos.x, ", ", new_pos.y) #no reason to spam console so much
 	if players.keys().has(id):
 		players[id].move_to(new_pos, new_movement)
 
 func _on_main_player_moved(position : Vector2, movement : Vector2):
-	#In the beginning Godot created the heaven and the earth
-	#about 100% of the fix for the "host invisible" bug
-	if not get_tree().is_network_server():
-		rpc_id(1, "player_moved", position, movement)
-	else:
-		rpc("other_player_moved", 1, position, movement)
+	rpc_id(1, "player_moved", position, movement)
 
 #since this code can only be triggered when the server presses the start game button, we will tell the FSM to change state
 func _on_startgamebutton_gamestartpressed():
