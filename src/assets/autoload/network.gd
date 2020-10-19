@@ -11,9 +11,11 @@ var server: WebSocketServer setget toss, deny
 var client: WebSocketClient setget toss, deny
 var player_name: String setget toss, get_player_name
 puppet var peers: Array = []
-puppet var myID: int = 1
+puppet var names: Dictionary = {}
+var myID: int = 1
 
 signal server_started
+signal connection_handled
 
 func ready() -> void:
 	# give the server access to puppet functions and variables
@@ -21,9 +23,12 @@ func ready() -> void:
 	GameManager.connect('state_changed', self, '_on_state_changed')
 
 func client_server(port: int, playerName: String) -> void:
-	print("Starting server on port ", port, " with host player name ", player_name)
+	print("Starting server on port ", port, " with host player name ", playerName)
 	connection = Connection.CLIENT_SERVER
 	player_name = playerName
+	myID = 1
+	names[1] = player_name
+	print(names)
 	server = WebSocketServer.new()
 	server.listen(port, PoolStringArray(), true) #3rd input must be true to use Godot's high level networking API
 	get_tree().set_network_peer(server)
@@ -31,9 +36,10 @@ func client_server(port: int, playerName: String) -> void:
 	emit_signal("server_started")
 
 func client(hostName: String, port: int, playerName: String) -> void:
-	print("Connecting to server ", hostName, " on port ", port, " with host player name ", player_name)
+	print("Connecting to server ", hostName, " on port ", port, " with host player name ", playerName)
 	connection = Connection.CLIENT
 	player_name = playerName
+	names[1] = playerName
 	client = WebSocketClient.new()
 	#use "ws://" at the beginning of address for websocket connections
 	var url: String = "ws://" + hostName + ":" + str(port)
@@ -47,11 +53,22 @@ func client(hostName: String, port: int, playerName: String) -> void:
 	connect_signals()
 	#do not switch to main scene here, wait until the connection was successful
 
+remote func receiveName(newName):
+	var sender = get_tree().get_rpc_sender_id()
+	if not get_tree().is_network_server():
+		return
+	if names.keys().has(sender):
+		return
+	names[sender] = newName
+	print("names: ", names)
+	print(get_tree().is_network_server())
+	rset("names", names)
+	emit_signal("connection_handled", sender, newName)
+
 func _player_connected(id) -> void:
 	peers.append(id)
 	if get_tree().is_network_server():
 		# remotely set myID var of new player to their network id
-		rset_id(id, "myID", str(id))
 		# sync peer list of all players
 		rset("peers", peers)
 
@@ -61,6 +78,9 @@ func _player_disconnected(id) -> void:
 
 func _connected_to_server() -> void:
 	print("Connection to server succeeded")
+	myID = get_tree().get_network_unique_id()
+	print("sending name")
+	rpc_id(1, "receiveName", player_name)
 	pass #here is where you would put stuff that happens when you connect, such as switching to a lobby scene
 
 func _connection_failed() -> void:
@@ -95,8 +115,11 @@ func connect_signals() -> void:
 	get_tree().connect("connection_failed", self, "_connection_failed")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 
-func get_player_name() -> String:
-	return player_name
+func get_player_name(id: int = myID) -> String:
+	if names.keys().has(id):
+		return names[id]
+	else:
+		return player_name
 
 func on_state_changed(old_state, new_state) -> void:
 	match new_state:
