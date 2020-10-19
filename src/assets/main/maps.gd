@@ -1,6 +1,6 @@
 extends Node2D
 
-var maps: Dictionary = {"lobby": preload("res://assets/maps/lobby/lobby.tscn"), "test": preload("res://assets/maps/test/test.tscn")}
+var maps: Dictionary = {"lobby": {"dir": preload("res://assets/maps/lobby/lobby.tscn")}, "test": {"dir": preload("res://assets/maps/test/test.tscn")}}
 
 var currentMap: String = "lobby"
 
@@ -21,5 +21,5 @@ puppet func switchMap(newMap: String):
 	for i in get_children():
 		i.queue_free()
 	currentMap = newMap
-	var mapClone = maps[newMap].instance()
+	var mapClone = maps[newMap].dir.instance()
 	add_child(mapClone)
