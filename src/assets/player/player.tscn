@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/textures/characters/black/walk-h/black-r-walk-4-4.png" type="Texture" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-1-4.png" type="Texture" id=12]
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-4-4.png" type="Texture" id=13]
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-3-4.png" type="Texture" id=14]
+[ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
+[ext_resource path="res://assets/player/textures/dark.png" type="Texture" id=16]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 15.0
@@ -25,11 +27,6 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
-"loop": true,
-"name": "walk-up",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk-down",
@@ -39,6 +36,11 @@ animations = [ {
 "loop": true,
 "name": "walk-h",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "walk-up",
+"speed": 8.0
 } ]
 
 [node name="Player" type="KinematicBody2D"]
@@ -53,7 +55,7 @@ shape = SubResource( 1 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 animation = "walk-h"
-frame = 2
+frame = 3
 playing = true
 
 [node name="Label" type="Label" parent="."]
@@ -66,3 +68,17 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Dark" type="Light2D" parent="."]
+scale = Vector2( 2065.42, -2756.44 )
+enabled = false
+texture = ExtResource( 16 )
+color = Color( 1, 1, 1, 0 )
+mode = 3
+shadow_item_cull_mask = -2147483647
+
+[node name="VisibleArea" type="Light2D" parent="."]
+enabled = false
+texture = ExtResource( 15 )
+mode = 2
+shadow_item_cull_mask = -2147483647
