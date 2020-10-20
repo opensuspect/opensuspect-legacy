@@ -3,13 +3,13 @@
 [ext_resource path="res://assets/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/main/maps.gd" type="Script" id=2]
 [ext_resource path="res://assets/main/main.gd" type="Script" id=3]
-[ext_resource path="res://assets/ui/uimaster/uimaster.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/ui/uicontroller/uicontroller.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/maps/test/test.tscn" type="PackedScene" id=6]
 
 [node name="Node2D" type="YSort"]
 script = ExtResource( 3 )
 
-[node name="uimaster" parent="." instance=ExtResource( 4 )]
+[node name="uicontroller" parent="." instance=ExtResource( 4 )]
 
 [node name="players" type="Node2D" parent="."]
 

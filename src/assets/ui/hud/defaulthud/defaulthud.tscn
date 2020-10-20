@@ -23,10 +23,6 @@ __meta__ = {
 }
 
 [node name="chatbox" parent="." instance=ExtResource( 3 )]
-margin_left = -247.972
-margin_top = -13.1382
-margin_right = -247.972
-margin_bottom = -13.1382
 
 [node name="startgamebutton" type="Button" parent="."]
 anchor_top = 1.0
