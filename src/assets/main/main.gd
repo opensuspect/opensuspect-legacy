@@ -112,10 +112,7 @@ remote func player_moved(new_pos, new_movement):
 			rpc_id(other_id, "other_player_moved", id, new_pos, new_movement)
 
 # Called from server when other players move
-remote func other_player_moved(id, new_pos, new_movement):
-	# Should only be run on the client
-	if get_tree().is_network_server():
-		return
+puppet func other_player_moved(id, new_pos, new_movement):
 	#print("Moving ", id, " to ", new_pos.x, ", ", new_pos.y) #no reason to spam console so much
 	if players.keys().has(id):
 		players[id].move_to(new_pos, new_movement)
@@ -128,39 +125,8 @@ func _on_main_player_moved(position : Vector2, movement : Vector2):
 	else:
 		rpc("other_player_moved", 1, position, movement)
 
-signal clientstartgame
-#since this code can only be triggered when the server presses the start game button, we will put task assignment or role assignment here
+#since this code can only be triggered when the server presses the start game button, we will tell the FSM to change state
 func _on_startgamebutton_gamestartpressed():
 	print("game start triggered")
-	serverassign()
-	while intruders <= 2:
-		var rng = RandomNumberGenerator.new()
-		var isintruder = false
-		rng.randomize()
-		var my_random_number = rng.randi_range(0, Network.peers.size())
-		#technically should generate a 1 in 10 chance of you being an intruder
-		intruders = intruders + 1
-		rpc("startgame",my_random_number)
-		isintruder = false
 	# TODO: Looser coupling here would be nice
-	GameManager.state = GameManager.State.Normal
-
-remote func startgame(intrudernumber):
-	if intrudernumber == PlayerManager.ournumber:
-		print("we are the intruder!")
-		PlayerManager.isintruder = true
-	else:
-		print("we are not the intruder")
-	emit_signal("clientstartgame")
-
-func serverassign():
-	var rng = RandomNumberGenerator.new()
-	var isintruder = false
-	rng.randomize()
-	var my_random_number = rng.randf_range(0, Network.peers.size())
-	print(my_random_number)
-	if intruders <= 2 and my_random_number == 0:
-		print("host is the intruder!")
-		PlayerManager.isintruder = true
-	else:
-		print("we are not the intruder")
+	GameManager.transition(GameManager.State.Normal)
