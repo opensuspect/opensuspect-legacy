@@ -42,7 +42,7 @@ margin_right = 300.0
 margin_bottom = 34.0
 mouse_filter = 1
 
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer"]
+[node name="resume" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer"]
 margin_right = 300.0
 margin_bottom = 34.0
 rect_min_size = Vector2( 300, 30 )
@@ -54,7 +54,7 @@ margin_right = 300.0
 margin_bottom = 88.0
 mouse_filter = 1
 
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer2"]
+[node name="appearance" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer2"]
 margin_right = 300.0
 margin_bottom = 34.0
 rect_min_size = Vector2( 300, 30 )
@@ -66,7 +66,7 @@ margin_right = 300.0
 margin_bottom = 142.0
 mouse_filter = 1
 
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer3"]
+[node name="settings" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer3"]
 margin_right = 300.0
 margin_bottom = 34.0
 rect_min_size = Vector2( 300, 30 )
@@ -78,7 +78,7 @@ margin_right = 300.0
 margin_bottom = 196.0
 mouse_filter = 1
 
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer4"]
+[node name="language" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer4"]
 margin_right = 300.0
 margin_bottom = 34.0
 rect_min_size = Vector2( 300, 30 )
@@ -90,8 +90,14 @@ margin_right = 300.0
 margin_bottom = 250.0
 mouse_filter = 1
 
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer5"]
+[node name="quit" type="Button" parent="CenterContainer/VBoxContainer/CenterContainer5"]
 margin_right = 300.0
 margin_bottom = 34.0
 rect_min_size = Vector2( 300, 30 )
 text = "QUIT"
+[connection signal="about_to_show" from="." to="." method="_on_pausemenu_about_to_show"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CenterContainer/resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CenterContainer2/appearance" to="." method="_on_appearance_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CenterContainer3/settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CenterContainer4/language" to="." method="_on_language_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CenterContainer5/quit" to="." method="_on_quit_pressed"]

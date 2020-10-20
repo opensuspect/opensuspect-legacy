@@ -1,16 +1,28 @@
 extends Popup
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	popup()
 
+func _process(_delta):
+	margin_left = $CenterContainer.margin_left
+	margin_right = $CenterContainer.margin_right
+	margin_top = $CenterContainer.margin_top
+	margin_bottom = $CenterContainer.margin_bottom
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _on_pausemenu_about_to_show():
+	pass # Replace with function body.
+
+func _on_resume_pressed():
+	hide()
+
+func _on_appearance_pressed():
+	pass # Replace with function body.
+
+func _on_settings_pressed():
+	pass # Replace with function body.
+
+func _on_language_pressed():
+	pass # Replace with function body.
+
+func _on_quit_pressed():
+	get_tree().quit()
