@@ -21,8 +21,8 @@ func _ready():
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
 	if main_player:
-		$VisibleArea.enabled = true
-		$Dark.enabled = true
+	#	$VisibleArea.enabled = true
+	#	$Dark.enabled = true
 		setName(Network.get_player_name())
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 

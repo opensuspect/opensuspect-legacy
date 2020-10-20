@@ -11,14 +11,13 @@ var players = {}
 var version = 5
 var intruders = 0
 var newnumber
-var errdc = false
-onready var config = ConfigFile.new()
+#onready var config = ConfigFile.new()
 
 func _ready():
 	set_network_master(1)
-	var err = config.load("user://settings.cfg")
-	if err == OK:
-		$players/Player/Camera2D/CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
+	#var err = config.load("user://settings.cfg")
+	#if err == OK:
+	#	$players/Player/Camera2D/CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
 	
 
 	$players/Player.connect("main_player_moved", self, "_on_main_player_moved")
@@ -124,9 +123,3 @@ func _on_main_player_moved(position : Vector2, movement : Vector2):
 		rpc_id(1, "player_moved", position, movement)
 	else:
 		rpc("other_player_moved", 1, position, movement)
-
-#since this code can only be triggered when the server presses the start game button, we will tell the FSM to change state
-func _on_startgamebutton_gamestartpressed():
-	print("game start triggered")
-	# TODO: Looser coupling here would be nice
-	GameManager.transition(GameManager.State.Normal)
