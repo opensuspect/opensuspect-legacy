@@ -42,7 +42,7 @@ func assignRoles(players: Array):
 	if style == assignStyle.Percent:
 		for i in enabledRoles:
 			if not roles.keys().has(i) or i == "default":
-				break
+				continue
 			#rounds down to be more predictable, if percent is 1/7th, role won't be assigned until there are 7 players
 			roles[i].amount = roundDown(roles[i].percent * playerAmount, 1)
 			if roles[i].amount < 1 and roles[i].critical:
@@ -52,7 +52,7 @@ func assignRoles(players: Array):
 	var defaults = playerAmount
 	for i in enabledRoles:
 		if not roles.keys().has(i) or i == "default":
-			break
+			continue
 		defaults -= roles[i].amount
 	if defaults < 0:
 		defaults = 0
@@ -62,7 +62,7 @@ func assignRoles(players: Array):
 	#actually assign roles
 	for i in enabledRoles:
 		if not roles.keys().has(i):
-			break
+			continue
 		for x in roles[i].amount:
 			playerRoles[toAssign[0]] = i
 			toAssign.erase(toAssign[0])
