@@ -1,18 +1,8 @@
 extends Button
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	GameManager.connect("state_changed", self, "state_changed")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-func _on_Node2D_clientstartgame():
-	queue_free()
+func state_changed(old_state, new_state):
+	if new_state == GameManager.State.Normal:
+		queue_free()

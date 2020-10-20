@@ -76,7 +76,6 @@ script = ExtResource( 2 )
 
 [node name="test" parent="maps" instance=ExtResource( 6 )]
 light_mask = 2
-[connection signal="clientstartgame" from="." to="players/Player/Camera2D/CanvasLayer/Button" method="_on_Node2D_clientstartgame"]
 [connection signal="pressed" from="players/Player/Camera2D/CanvasLayer/Button" to="players/Player/Camera2D/CanvasLayer/chatbox" method="popup"]
 [connection signal="gamestartpressed" from="players/Player/Camera2D/CanvasLayer/startgamebutton" to="." method="_on_startgamebutton_gamestartpressed"]
 [connection signal="gamestartpressed" from="players/Player/Camera2D/CanvasLayer/startgamebutton" to="players/Player/Camera2D/CanvasLayer/Button" method="_on_startgamebutton_gamestartpressed"]
