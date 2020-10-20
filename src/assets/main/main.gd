@@ -112,10 +112,7 @@ remote func player_moved(new_pos, new_movement):
 			rpc_id(other_id, "other_player_moved", id, new_pos, new_movement)
 
 # Called from server when other players move
-remote func other_player_moved(id, new_pos, new_movement):
-	# Should only be run on the client
-	if get_tree().is_network_server():
-		return
+puppet func other_player_moved(id, new_pos, new_movement):
 	#print("Moving ", id, " to ", new_pos.x, ", ", new_pos.y) #no reason to spam console so much
 	if players.keys().has(id):
 		players[id].move_to(new_pos, new_movement)
