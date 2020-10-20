@@ -15,6 +15,7 @@ var errdc = false
 onready var config = ConfigFile.new()
 
 func _ready():
+	set_network_master(1)
 	var err = config.load("user://settings.cfg")
 	if err == OK:
 		$players/Player/Camera2D/CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
@@ -30,6 +31,8 @@ func _enter_tree():
 		#get_tree().network_peer = peer
 		get_tree().connect("network_peer_connected", self, "_player_connected")
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
+		Network.connect("connection_handled", self, "connection_handled")
+		players[1] = $players/Player
 		PlayerManager.ournumber = 0
 	elif Network.connection == Network.Connection.CLIENT:
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -38,52 +41,55 @@ func _enter_tree():
 		#peer.create_client(Network.host, Network.port)
 		#get_tree().network_peer = peer
 
+func connection_handled(id, playerName):
+	print("connection handled, id: ", id, " name: ", playerName)
+	if not get_tree().is_network_server():
+		return
+	rpc("checkVersion", version)
+	newnumber = Network.peers.size()
+	rpc_id(id, "receiveNumber", newnumber)
+	createPlayer(id, playerName)
+	#tell all existing players to create this player
+	for i in players.keys():
+		if i != id:
+			print("telling ", i, " to create player ", id)
+			rpc_id(i, "createPlayer", id, playerName)
+	#tell new player to create existing players
+	for i in players.keys():
+		if i != id:
+			print("telling ", id, " to create player ", i)
+			rpc_id(id, "createPlayer", i, Network.names[i])
+
+puppet func checkVersion(sversion):
+	if version != sversion:
+		print("HEY! YOU! YOU FORGOT TO UPDATE YOUR CLIENT. RE EXPORT AND TRY AGAIN!")
+
+puppet func receiveNumber(number):
+	if get_tree().get_rpc_sender_id() != 1:
+		return
+	PlayerManager.ournumber = number
+
 # Called on the server when a new client connects
 func _player_connected(id):
-	newnumber = Network.peers.size()
-	rpc_id(id,"getname",id, version, newnumber)
-	rpc_id(id,"serverinfo",Network.get_player_name(), version)
-remote func serverinfo(sname,sversion):
-	player_join(1,sname)
-remote func getname(id,sversion,assignednumber):
-	rpc_id(1,"playerjoin_proper",Network.get_player_name(),id)
-	PlayerManager.ournumber = assignednumber
-	if not version == sversion:
-		print("HEY! YOU! YOU FORGOT TO UPDATE YOUR CLIENT. RE EXPORT AND TRY AGAIN!")
-remote func playerjoin_proper(thename,id):
-	var new_player = player_scene.instance()
-	id = get_tree().get_rpc_sender_id()
-	new_player.id = id
-	new_player.ourname = thename
-	new_player.main_player = false
-	#print(thename)
-	for id in players:
-		# Sends an add_player rpc to the player that just joined
-		print("Sending add player to new player ", new_player)
-		rpc_id(new_player.id, "player_join", id, thename)
-		# Sends the add_player rpc to all other clients
-		print("Sending add player to other player ", players[id])
-		rpc_id(id, "player_join", new_player.id, thename)
-	players[id] = new_player
-	$players.add_child(new_player)
-	print("Got connection: ", id)
-	print(Network.peers.size())
+	return
+
 func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects
 	players.erase(id)
 
-# Called from server when another client connects
-remote func player_join(other_id, pname):
-	# Should only be run on the client
-	if get_tree().is_network_server():
+puppet func createPlayer(id, playerName):
+	print("creating player ", id)
+	if players.keys().has(id):
+		print("not creating player, already exists")
 		return
-	var new_player = player_scene.instance()
-	new_player.id = other_id
-	new_player.ourname = pname
-	new_player.main_player = false
-	add_child(new_player)
-	players[other_id] = new_player
-	print("New player: ", other_id)
+	var newPlayer = player_scene.instance()
+	newPlayer.id = id
+	newPlayer.ourname = playerName
+	newPlayer.main_player = false
+	players[id] = newPlayer
+	$players.add_child(newPlayer)
+	newPlayer.setName(playerName)
+	print("New player: ", id)
 
 # Called from client sides when a player moves
 remote func player_moved(new_pos, new_movement):
@@ -111,7 +117,8 @@ remote func other_player_moved(id, new_pos, new_movement):
 	if get_tree().is_network_server():
 		return
 	#print("Moving ", id, " to ", new_pos.x, ", ", new_pos.y) #no reason to spam console so much
-	players[id].move_to(new_pos, new_movement)
+	if players.keys().has(id):
+		players[id].move_to(new_pos, new_movement)
 
 func _on_main_player_moved(position : Vector2, movement : Vector2):
 	#In the beginning Godot created the heaven and the earth
@@ -145,6 +152,7 @@ remote func startgame(intrudernumber):
 	else:
 		print("we are not the intruder")
 	emit_signal("clientstartgame")
+
 func serverassign():
 	var rng = RandomNumberGenerator.new()
 	var isintruder = false
