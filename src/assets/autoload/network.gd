@@ -27,6 +27,7 @@ func client_server(port: int, playerName: String) -> void:
 	connection = Connection.CLIENT_SERVER
 	player_name = playerName
 	myID = 1
+	peers.append(1)
 	names[1] = player_name
 	print(names)
 	server = WebSocketServer.new()
@@ -115,11 +116,17 @@ func connect_signals() -> void:
 	get_tree().connect("connection_failed", self, "_connection_failed")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 
+func get_my_id() -> int:
+	return myID
+
 func get_player_name(id: int = myID) -> String:
 	if names.keys().has(id):
 		return names[id]
 	else:
 		return player_name
+
+func get_peers() -> Array:
+	return peers
 
 func on_state_changed(old_state, new_state) -> void:
 	match new_state:

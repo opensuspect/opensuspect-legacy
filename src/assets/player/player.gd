@@ -7,6 +7,7 @@ export (int) var speed = 150
 # Set by main.gd. Is the client's unique id for this player
 var id: int
 var ourname: String
+var myRole: String
 var velocity = Vector2(0,0)
 # Contains the current intended movement direction and magnitude in range 0 to 1
 var movement = Vector2(0,0)
@@ -23,10 +24,26 @@ func _ready():
 		$VisibleArea.enabled = true
 		$Dark.enabled = true
 		setName(Network.get_player_name())
+	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 
 func setName(newName):
 	ourname = newName
 	$Label.text = ourname
+
+func roles_assigned(playerRoles: Dictionary):
+	print("id: ", id)
+	if id == 0: #if id hasn't been set to anything
+		myRole = playerRoles[Network.get_my_id()]
+	else:
+		myRole = playerRoles[id]
+	changeNameColor(myRole)
+	pass
+
+func changeNameColor(role: String):
+	if role == "traitor":
+		$Label.set("custom_colors/font_color", Color(1,0,0))
+	if role == "detective":
+		$Label.set("custom_colors/font_color", Color(0,0,1))
 
 # Only called when main_player is true
 func get_input():
