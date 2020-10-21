@@ -49,7 +49,7 @@ func changeNameColor(role: String):
 func get_input():
 	var prev_velocity = velocity
 	movement = Vector2(0, 0)
-	if not PlayerManager.inMenu:
+	if not UIManager.in_menu():
 		movement.x = Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left')
 		movement.y = Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
 		movement = movement.normalized()

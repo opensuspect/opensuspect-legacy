@@ -1,6 +1,7 @@
 extends CanvasLayer
 
-var menus: Dictionary = {"pausemenu": preload("res://assets/ui/pausemenu/pausemenu.tscn")}
+var menus: Dictionary = {"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")}, 
+						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}}
 
 var instancedMenus: Dictionary = {}
 
@@ -13,6 +14,9 @@ func _ready():
 	if err == OK:
 		$ColorblindRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
 
+	#TODO: better system for auto spawning UIs
+	#UIManager.open_menu("chatbox")
+
 #menu data is data to pass to the menu, such as a task identifier
 #reInstance is whether or not to recreate the corresponding menu node if it already exists
 func open_menu(menuName: String, menuData: Dictionary = {}, reInstance: bool = false):
@@ -23,12 +27,16 @@ func open_menu(menuName: String, menuData: Dictionary = {}, reInstance: bool = f
 	if menuData != {} and instancedMenus[menuName].get("menuData") != null:
 		instancedMenus[menuName].menuData = menuData
 	instancedMenus[menuName].open()
-	UIManager.menu_opened(menuName)
+
+func close_menu(menuName: String):
+	if not instancedMenus.has(menuName):
+		return
+	instancedMenus[menuName].close()
 
 func instanceMenu(menuName: String, menuData: Dictionary = {}):
 	if not menus.keys().has(menuName):
 		return
-	var newMenu = menus[menuName].instance()
+	var newMenu = menus[menuName].scene.instance()
 	if menuData != {} and newMenu.get("menuData") != null:
 		newMenu.menuData = menuData
 	instancedMenus[menuName] = newMenu

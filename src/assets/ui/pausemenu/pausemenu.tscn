@@ -95,6 +95,7 @@ margin_bottom = 34.0
 rect_min_size = Vector2( 300, 30 )
 text = "QUIT"
 [connection signal="about_to_show" from="." to="." method="_on_pausemenu_about_to_show"]
+[connection signal="popup_hide" from="." to="." method="_on_pausemenu_popup_hide"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/CenterContainer/resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/CenterContainer2/appearance" to="." method="_on_appearance_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/CenterContainer3/settings" to="." method="_on_settings_pressed"]
