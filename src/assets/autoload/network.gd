@@ -116,6 +116,7 @@ func terminate_connection():
 	if client != null:
 		client.disconnect_from_host()
 		client = null
+	GameManager.transition(GameManager.State.Start)
 
 func kick_peer(peer: int):
 	if not get_tree().is_network_server():

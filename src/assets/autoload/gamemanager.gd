@@ -5,8 +5,8 @@ var state: int = State.Start setget transition, get_state
 
 const TRANSITIONS = {
 	State.Start: [State.Lobby],
-	State.Lobby: [State.Normal],
-	State.Normal: [State.Lobby],
+	State.Lobby: [State.Normal, State.Start],
+	State.Normal: [State.Lobby, State.Start],
 }
 
 #signals that help sync the gamestate
