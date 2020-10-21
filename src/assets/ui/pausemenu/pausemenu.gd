@@ -1,6 +1,10 @@
 extends Popup
 
 func _ready():
+	return
+	open()
+
+func open():
 	popup()
 
 func _process(_delta):
