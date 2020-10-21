@@ -8,7 +8,7 @@ polygon = PoolVector2Array( 338.558, 76.2244, 431.056, -205.476, 401.625, -428.3
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 420.733, 180.052 )
 
-[node name="test" type="Node2D"]
+[node name="test" type="YSort"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 z_index = -1
