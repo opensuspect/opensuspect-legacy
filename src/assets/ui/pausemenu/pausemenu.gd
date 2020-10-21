@@ -32,5 +32,8 @@ func _on_settings_pressed():
 func _on_language_pressed():
 	pass # Replace with function body.
 
+func _on_leave_pressed():
+	Network.terminate_connection()
+
 func _on_quit_pressed():
 	get_tree().quit()

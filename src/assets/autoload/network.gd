@@ -17,7 +17,7 @@ var myID: int = 1
 signal server_started
 signal connection_handled
 
-func ready() -> void:
+func _ready() -> void:
 	# give the server access to puppet functions and variables
 	set_network_master(1)
 	GameManager.connect('state_changed', self, '_on_state_changed')
@@ -108,6 +108,23 @@ func deny() -> void:
 
 func get_connection() -> int:
 	return connection
+
+func terminate_connection():
+	if server != null:
+		server.stop()
+		server = null
+	if client != null:
+		client.disconnect_from_host()
+		client = null
+
+func kick_peer(peer: int):
+	if not get_tree().is_network_server():
+		return
+	if server == null:
+		return
+	if not peers.has(peer):
+		return
+	server.disconnect_peer(peer)
 
 func connect_signals() -> void:
 	get_tree().connect("network_peer_connected", self, "_player_connected")

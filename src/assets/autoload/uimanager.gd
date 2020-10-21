@@ -14,23 +14,21 @@ func _ready():
 #menu data is data to pass to the menu, such as a task identifier
 #reInstance is whether or not to recreate the corresponding menu node if it already exists
 func open_menu(menuName: String, menuData: Dictionary = {}, reInstance: bool = false):
-	print("signalling to open ", menuName)
+	#print("signalling to open ", menuName)
 	emit_signal("open_menu", menuName, menuData, reInstance)
 
 func menu_opened(menuName):
 	if openMenus.has(menuName):
 		return
 	openMenus.append(menuName)
-	print(openMenus)
 
 func menu_closed(menuName):
 	openMenus.erase(menuName)
 	justClosed = menuName
-	print(openMenus)
 
 func state_changed(old_state, new_state):
 	if new_state == GameManager.State.Normal:
-		open_menu("pausemenu")
+		pass
 	if new_state == GameManager.State.Start:
 		openMenus = []
 
