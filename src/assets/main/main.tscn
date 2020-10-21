@@ -1,20 +1,15 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/main/maps.gd" type="Script" id=2]
 [ext_resource path="res://assets/main/main.gd" type="Script" id=3]
-[ext_resource path="res://assets/ui/lobbyui/chatbox/chatbox.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/common/shaders/colorblind.shader" type="Shader" id=5]
+[ext_resource path="res://assets/ui/uicontroller/uicontroller.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/maps/test/test.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/main/startgamebutton.gd" type="Script" id=7]
-[ext_resource path="res://assets/main/Button.gd" type="Script" id=8]
-
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 5 )
-shader_param/mode = 0
 
 [node name="Node2D" type="YSort"]
 script = ExtResource( 3 )
+
+[node name="uicontroller" parent="." instance=ExtResource( 4 )]
 
 [node name="players" type="Node2D" parent="."]
 
@@ -32,50 +27,8 @@ drag_margin_top = 0.65
 drag_margin_right = 0.65
 drag_margin_bottom = 0.65
 
-[node name="CanvasLayer" type="CanvasLayer" parent="players/Player/Camera2D"]
-
-[node name="ColorRect" type="ColorRect" parent="players/Player/Camera2D/CanvasLayer"]
-material = SubResource( 1 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Button" type="Button" parent="players/Player/Camera2D/CanvasLayer"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -45.0
-margin_bottom = 28.0
-text = "Chat"
-script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="chatbox" parent="players/Player/Camera2D/CanvasLayer" instance=ExtResource( 4 )]
-visible = false
-margin_left = -247.972
-margin_top = -13.1382
-margin_right = -247.972
-margin_bottom = -13.1382
-
-[node name="startgamebutton" type="Button" parent="players/Player/Camera2D/CanvasLayer"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -28.0
-margin_right = 94.0
-text = "Start Game"
-script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="maps" type="Node2D" parent="."]
 script = ExtResource( 2 )
 
 [node name="test" parent="maps" instance=ExtResource( 6 )]
 light_mask = 2
-[connection signal="pressed" from="players/Player/Camera2D/CanvasLayer/Button" to="players/Player/Camera2D/CanvasLayer/chatbox" method="popup"]
-[connection signal="gamestartpressed" from="players/Player/Camera2D/CanvasLayer/startgamebutton" to="." method="_on_startgamebutton_gamestartpressed"]
-[connection signal="gamestartpressed" from="players/Player/Camera2D/CanvasLayer/startgamebutton" to="players/Player/Camera2D/CanvasLayer/Button" method="_on_startgamebutton_gamestartpressed"]

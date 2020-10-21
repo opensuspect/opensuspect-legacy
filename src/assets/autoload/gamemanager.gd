@@ -5,8 +5,8 @@ var state: int = State.Start setget transition, get_state
 
 const TRANSITIONS = {
 	State.Start: [State.Lobby],
-	State.Lobby: [State.Normal],
-	State.Normal: [State.Lobby],
+	State.Lobby: [State.Normal, State.Start],
+	State.Normal: [State.Lobby, State.Start],
 }
 
 #signals that help sync the gamestate
@@ -24,7 +24,8 @@ func transition(new_state) -> bool:
 		var old_state: int = state
 		state = new_state
 		emit_signal('state_changed', old_state, new_state)
-		rpc("receiveTransition", new_state)
+		if get_tree().is_network_server():
+			rpc("receiveTransition", new_state)
 		print("transition successful")
 		return true
 	print("transition failed")

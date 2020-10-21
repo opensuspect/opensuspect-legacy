@@ -17,5 +17,7 @@ func _ready():
 #func _process(delta):
 #	pass
 func _pressed():
-	emit_signal("gamestartpressed")
+	print("game start triggered")
+	# TODO: Looser coupling here would be nice
+	GameManager.transition(GameManager.State.Normal)
 	queue_free()

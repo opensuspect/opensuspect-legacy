@@ -88,8 +88,10 @@ func _connection_failed() -> void:
 	print("Connection to server failed")
 	pass #here is where you would handle the fact that the connection failed
 
+#WARNING: Does not actually work
 func _server_disconnected() -> void:
 	print("server disconnected")
+	terminate_connection()
 	pass #this is called when the player is kicked, when the server crashes, or whenever the connection is severed
 
 func _process(_delta) -> void:
@@ -99,6 +101,8 @@ func _process(_delta) -> void:
 	elif client != null:
 		if client.get_connection_status() == NetworkedMultiplayerPeer.CONNECTION_CONNECTED || client.get_connection_status() == NetworkedMultiplayerPeer.CONNECTION_CONNECTING:
 			client.poll()
+		else: #connection status is disconnected
+			terminate_connection()
 
 func toss(newValue) -> void:
 	pass
@@ -108,6 +112,24 @@ func deny() -> void:
 
 func get_connection() -> int:
 	return connection
+
+func terminate_connection():
+	if server != null:
+		server.stop()
+		server = null
+	if client != null:
+		client.disconnect_from_host()
+		client = null
+	GameManager.transition(GameManager.State.Start)
+
+func kick_peer(peer: int):
+	if not get_tree().is_network_server():
+		return
+	if server == null:
+		return
+	if not peers.has(peer):
+		return
+	server.disconnect_peer(peer)
 
 func connect_signals() -> void:
 	get_tree().connect("network_peer_connected", self, "_player_connected")

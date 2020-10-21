@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui/hud/defaulthud/startgamebutton.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/hud/defaulthud/Button.gd" type="Script" id=2]
+
+[node name="defaulthud" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -45.0
+margin_bottom = 28.0
+text = "Chat"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="startgamebutton" type="Button" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -28.0
+margin_right = 94.0
+text = "Start Game"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
+[connection signal="gamestartpressed" from="startgamebutton" to="Button" method="_on_startgamebutton_gamestartpressed"]

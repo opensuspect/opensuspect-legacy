@@ -12,8 +12,13 @@ var cursorCoord: Vector2 = Vector2(0,0) #x is line, y is column
 var sentSide: String = "right" #side of chatbox sent messages are on
 var receivedSide: String = "left" #side of chatbox received messages are on
 
-func _ready():
-	pass
+func open():
+	popup()
+	UIManager.menu_opened("chatbox")
+
+func close():
+	hide()
+	UIManager.menu_closed("chatbox")
 
 func sendMessage(content, color: String = defaultColor):
 	if isEmpty(content) or hasLineBreaks(content):
@@ -92,8 +97,5 @@ func _on_TextEdit_cursor_changed():
 	cursorCoord.x = textbox.cursor_get_line()
 	cursorCoord.y = textbox.cursor_get_column()
 
-func _on_chatbox_about_to_show():
-	PlayerManager.inMenu = true
-
 func _on_chatbox_popup_hide():
-	PlayerManager.inMenu = false
+	close()
