@@ -32,14 +32,14 @@ animations = [ {
 "name": "walk-h",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
-"loop": true,
-"name": "walk-down",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk-up",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "walk-down",
 "speed": 8.0
 } ]
 
@@ -55,7 +55,7 @@ shape = SubResource( 1 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 animation = "walk-h"
-frame = 2
+frame = 3
 playing = true
 
 [node name="Label" type="Label" parent="."]
