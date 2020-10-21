@@ -88,14 +88,11 @@ func _connection_failed() -> void:
 	print("Connection to server failed")
 	pass #here is where you would handle the fact that the connection failed
 
+#WARNING: Does not actually work
 func _server_disconnected() -> void:
 	print("server disconnected")
 	terminate_connection()
 	pass #this is called when the player is kicked, when the server crashes, or whenever the connection is severed
-
-func _connection_closed(was_clean_close: bool):
-	print("connection closed")
-	terminate_connection()
 
 func _process(_delta) -> void:
 	if server != null:			#since this is a websocket connection, it must be manually polled
@@ -140,9 +137,6 @@ func connect_signals() -> void:
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
 	get_tree().connect("connection_failed", self, "_connection_failed")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
-	if client != null:
-		print("connecting only client signals")
-		client.connect("connection_closed", self, "_connection_closed")
 
 func get_my_id() -> int:
 	return myID

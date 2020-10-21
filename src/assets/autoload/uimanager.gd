@@ -36,7 +36,7 @@ func in_menu() -> bool:
 	return not openMenus.empty()
 
 func _process(_delta):
-	#if ui_cancel (most likely esc) and not in menu open pause menu
+	#if ui_cancel (most likely esc) and not in menu, open pause menu
 	if Input.is_action_just_pressed("ui_cancel") and not in_menu() and justClosed != "pausemenu":
 		open_menu("pausemenu")
 	justClosed = ""
