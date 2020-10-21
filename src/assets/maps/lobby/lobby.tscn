@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/maps/common/testdoor/testdoor.tscn" type="PackedScene" id=1]
 
 [node name="lobby" type="YSort"]
 
@@ -9,3 +11,6 @@ text = "LOBBY"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="testdoor" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0.279419, -68.7628 )
