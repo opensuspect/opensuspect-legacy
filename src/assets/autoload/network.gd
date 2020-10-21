@@ -17,7 +17,7 @@ var myID: int = 1
 signal server_started
 signal connection_handled
 
-func ready() -> void:
+func _ready() -> void:
 	# give the server access to puppet functions and variables
 	set_network_master(1)
 	GameManager.connect('state_changed', self, '_on_state_changed')
@@ -128,7 +128,7 @@ func get_player_name(id: int = myID) -> String:
 func get_peers() -> Array:
 	return peers
 
-func on_state_changed(old_state, new_state) -> void:
+func _on_state_changed(old_state, new_state) -> void:
 	match new_state:
 		GameManager.State.Normal:
 			print('Network manager refusing further connections')
