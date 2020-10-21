@@ -15,7 +15,7 @@ func _ready():
 		$ColorblindRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
 
 	#TODO: better system for auto spawning UIs
-	#UIManager.open_menu("chatbox")
+	instance_menu("chatbox")
 
 #menu data is data to pass to the menu, such as a task identifier
 #reInstance is whether or not to recreate the corresponding menu node if it already exists
@@ -23,7 +23,7 @@ func open_menu(menuName: String, menuData: Dictionary = {}, reInstance: bool = f
 	if not menus.keys().has(menuName):
 		return
 	if reInstance or not instancedMenus.keys().has(menuName):
-		instanceMenu(menuName, menuData)
+		instance_menu(menuName, menuData)
 	if menuData != {} and instancedMenus[menuName].get("menuData") != null:
 		instancedMenus[menuName].menuData = menuData
 	instancedMenus[menuName].open()
@@ -33,7 +33,7 @@ func close_menu(menuName: String):
 		return
 	instancedMenus[menuName].close()
 
-func instanceMenu(menuName: String, menuData: Dictionary = {}):
+func instance_menu(menuName: String, menuData: Dictionary = {}):
 	if not menus.keys().has(menuName):
 		return
 	var newMenu = menus[menuName].scene.instance()

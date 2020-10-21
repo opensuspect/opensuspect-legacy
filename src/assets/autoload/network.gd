@@ -90,6 +90,7 @@ func _connection_failed() -> void:
 
 func _server_disconnected() -> void:
 	print("server disconnected")
+	GameManager.transition(GameManager.State.Start)
 	pass #this is called when the player is kicked, when the server crashes, or whenever the connection is severed
 
 func _process(_delta) -> void:
