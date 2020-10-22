@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/opensuspect/opensuspect/workflows/CI/badge.svg?branch=main)
 
-# OpenSuspect!
+# OpenSuspect
 
 *One amongst us is not like the rest*
 
