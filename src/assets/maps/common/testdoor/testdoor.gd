@@ -8,11 +8,11 @@ func _ready():
 	MapManager.connect("interacted_with", self, "interacted_with")
 	GameManager.connect("state_changed", self, "state_changed")
 
-func interact():
-	if open:
-		close()
-	else:
+func toggle(newState: bool = not open):
+	if newState:
 		open()
+	else:
+		close()
 
 func open():
 	if openLeft:
@@ -29,9 +29,13 @@ func close():
 	open = false
 
 func interacted_with(interactNode: Node, from: Node = null):
-	if interactNode == self:
-		interact()
+	if interactNode != self:
+		return
+	if not from.has_method("get_state"):
+		return
+	toggle(from.get_state())
 
 func state_changed(old_state, new_state):
-	if new_state == GameManager.State.Normal:
-		MapManager.interact_with(self)
+	pass
+	#if new_state == GameManager.State.Normal:
+	#	MapManager.interact_with(self)
