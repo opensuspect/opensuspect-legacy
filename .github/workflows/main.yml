@@ -19,7 +19,7 @@ jobs:
     name: Export
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:3.2.3
+      image: monban/godot-ci:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -27,12 +27,10 @@ jobs:
           lfs: true
       - name: Setup
         run: |
+          whoami
           chown -R root:root $HOME
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-          apt-get update
-          apt-get install imagemagick wine-stable --yes
-          wget --progress=dot https://github.com/electron/rcedit/releases/download/v1.1.1/rcedit-x64.exe -O ~/rcedit.exe
       - name: Linux Build
         run: |
           mkdir -v -p $GITHUB_WORKSPACE/build/linux
