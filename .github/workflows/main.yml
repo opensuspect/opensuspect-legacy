@@ -27,10 +27,10 @@ jobs:
           lfs: true
       - name: Setup
         run: |
-          whoami
-          chown -R root:root $HOME
+          chown -R root:root $GITHUB_WORKSPACE
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+          mv /root/rcedit.exe $GITHUB_WORKSPACE/
       - name: Linux Build
         run: |
           mkdir -v -p $GITHUB_WORKSPACE/build/linux
@@ -49,7 +49,7 @@ jobs:
       - name: Convert png to ico
         run: convert $GITHUB_WORKSPACE/src/assets/common/textures/icons/icon.png -define icon:auto-resize="256,128,96,64,48,32,16" ~/icon.ico
       - name: Change exe icon
-        run: wine ~/rcedit.exe $GITHUB_WORKSPACE/build/windows-desktop/$EXPORT_NAME.exe --set-icon ~/icon.ico
+        run: wine $GITHUB_WORKSPACE/rcedit.exe $GITHUB_WORKSPACE/build/windows-desktop/$EXPORT_NAME.exe --set-icon ~/icon.ico
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v1
         with:
