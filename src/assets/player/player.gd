@@ -40,9 +40,9 @@ func roles_assigned(playerRoles: Dictionary):
 	pass
 
 func changeNameColor(role: String):
-	if role == "traitor":
+	if role == "traitor" and PlayerManager.ourrole == "traitor":
 		$Label.set("custom_colors/font_color", Color(1,0,0))
-	if role == "detective":
+	if role == "detective" and PlayerManager.ourrole == "detective":
 		$Label.set("custom_colors/font_color", Color(0,0,1))
 
 # Only called when main_player is true

@@ -4,7 +4,7 @@ extends Node
 #for instance, keeping track if they are in a menu in order to disable movement
 
 var inMenu = false
-var isintruder = false
+var ourrole
 var ournumber
 
 #vars for role assignment
@@ -68,18 +68,20 @@ func assignRoles(players: Array):
 			toAssign.erase(toAssign[0])
 	print("roles assigned: ", playerRoles)
 	rpc("receiveRoles", playerRoles)
-	emit_signal("roles_assigned", playerRoles)
-
+	setourrole()
 puppet func receiveRoles(newRoles):
 	playerRoles = newRoles
 	print("received roles: ", newRoles)
-	emit_signal("roles_assigned", playerRoles)
-
+	setourrole()
 func roundDown(num, step):
 	var normRound = stepify(num, step)
 	if normRound > num:
 		return normRound - step
 	return normRound
 
-func get_player_roles() -> Dictionary:
-	return playerRoles
+func get_player_roles(theid) -> Dictionary:
+	return playerRoles[theid]
+func setourrole():
+	ourrole = PlayerManager.get_player_roles(Network.myID)
+	print(ourrole)
+	emit_signal("roles_assigned", playerRoles)
