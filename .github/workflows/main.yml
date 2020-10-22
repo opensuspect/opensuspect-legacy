@@ -27,7 +27,8 @@ jobs:
           lfs: true
       - name: Setup
         run: |
-          chown -R root:root $GITHUB_WORKSPACE
+          env
+          chown -R root:root /github/home
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
           mv /root/rcedit.exe $GITHUB_WORKSPACE/
