@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/icon.png" type="Texture" id=1]
+[ext_resource path="res://assets/maps/common/testdoor/testdoor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/maps/common/standbutton/standbutton.tscn" type="PackedScene" id=3]
 
 [sub_resource type="OccluderPolygon2D" id=1]
 polygon = PoolVector2Array( 338.558, 76.2244, 431.056, -205.476, 401.625, -428.313, 271.286, -579.675, 52.6532, -663.764, 115.72, -705.809, -6.20956, -764.672, 77.8801, -794.103, 23.2217, -873.989, 14.8128, -937.056, -44.05, -970.692, -94.5037, -882.398, -44.05, -844.557, -6.20956, -844.557, -111.322, -756.263, -2.00516, -722.627, -90.2992, -676.378, -363.591, -512.403, -451.884, -276.952, -414.044, 8.95264, -346.772, 114.065, -519.156, 420.992, -535.974, 589.171, -414.044, 639.625, -313.137, 601.785, -334.159, 854.054, -229.047, 929.734, -77.6858, 711.101, 6.40381, 639.625, 69.471, 854.054, 124.129, 950.757, 250.264, 938.143, 321.74, 807.804, 338.558, 593.376, 380.603, 631.216, 544.577, 593.376, 527.76, 450.423 )
@@ -26,3 +28,10 @@ texture = ExtResource( 1 )
 position = Vector2( 0, 40 )
 scale = Vector2( 0.05, 0.05 )
 shape = SubResource( 2 )
+
+[node name="testdoor" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, -100 )
+
+[node name="standbutton" parent="." instance=ExtResource( 3 )]
+position = Vector2( -100, -100 )
+interact_path = NodePath("../testdoor")
