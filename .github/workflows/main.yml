@@ -6,7 +6,7 @@ name: CI
 # events but only for the main branch
 on:
   push:
-    branches: [ main ]
+    branches: [ customer-docker-build ]
   pull_request:
     branches: [ main ]
 env:
