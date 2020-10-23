@@ -120,6 +120,8 @@ func terminate_connection():
 	if client != null:
 		client.disconnect_from_host()
 		client = null
+	peers.clear()
+	names.clear()
 	GameManager.transition(GameManager.State.Start)
 
 func kick_peer(peer: int):

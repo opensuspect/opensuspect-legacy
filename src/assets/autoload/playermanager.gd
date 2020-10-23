@@ -24,8 +24,15 @@ func _ready():
 	GameManager.connect("state_changed", self, "state_changed")
 
 func state_changed(old_state, new_state):
-	if new_state == GameManager.State.Normal:
-		assignRoles(Network.get_peers())
+	match new_state:
+		GameManager.State.Normal:
+			assignRoles(Network.get_peers())
+		GameManager.State.Lobby:
+			#revoke special roles when players move to lobby
+			for i in playerRoles.keys():
+				playerRoles[i] = "default"
+			emit_signal("roles_assigned", playerRoles)
+	
 
 func assignRoles(players: Array):
 	if not get_tree().is_network_server():

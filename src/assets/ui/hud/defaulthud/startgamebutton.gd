@@ -19,5 +19,8 @@ func _ready():
 func _pressed():
 	print("game start triggered")
 	# TODO: Looser coupling here would be nice
-	GameManager.transition(GameManager.State.Normal)
-	queue_free()
+	if GameManager.get_state() == GameManager.State.Lobby:
+		GameManager.transition(GameManager.State.Normal)
+	else:
+		GameManager.transition(GameManager.State.Lobby)
+	#queue_free()
