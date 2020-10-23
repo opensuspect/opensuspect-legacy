@@ -19,20 +19,18 @@ jobs:
     name: Export
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:3.2.3
+      image: monban/godot-ci:latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           lfs: true
       - name: Setup
         run: |
-          chown -R root:root $HOME
+          chown -R root:root /github/home
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
-          apt-get update
-          apt-get install imagemagick wine-stable --yes
-          wget --progress=dot https://github.com/electron/rcedit/releases/download/v1.1.1/rcedit-x64.exe -O ~/rcedit.exe
+          mv /root/rcedit.exe $GITHUB_WORKSPACE/
       - name: Linux Build
         run: |
           mkdir -v -p $GITHUB_WORKSPACE/build/linux
@@ -51,7 +49,7 @@ jobs:
       - name: Convert png to ico
         run: convert $GITHUB_WORKSPACE/src/assets/common/textures/icons/icon.png -define icon:auto-resize="256,128,96,64,48,32,16" ~/icon.ico
       - name: Change exe icon
-        run: wine ~/rcedit.exe $GITHUB_WORKSPACE/build/windows-desktop/$EXPORT_NAME.exe --set-icon ~/icon.ico
+        run: cd $GITHUB_WORKSPACE; wine $GITHUB_WORKSPACE/rcedit.exe $GITHUB_WORKSPACE/build/windows-desktop/$EXPORT_NAME.exe --set-icon ~/icon.ico
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v1
         with:
