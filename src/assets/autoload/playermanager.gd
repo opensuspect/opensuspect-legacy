@@ -6,7 +6,8 @@ extends Node
 var inMenu = false
 var ourrole
 var ournumber
-
+var tasks = [-1]
+var localtasks
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
 enum assignStyle {Percent, Amount}
@@ -16,13 +17,19 @@ var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "critic
 						"detective": {"percent": float(1)/7, "amount": 1, "critical": false}, 
 						"default": {"percent": 0, "amount": 0, "critical": false}}
 var playerRoles: Dictionary = {}
-
+var rng = RandomNumberGenerator.new()
 signal roles_assigned
 
 func _ready():
 	set_network_master(1)
 	GameManager.connect("state_changed", self, "state_changed")
-
+func assigntasks():
+	for id in Network.peers:
+		for task in tasks:
+			if task == -1:
+				rng.randomize()
+				var taskenabled = rng.randi_range(-1,0)
+				print("task assigned")
 func state_changed(old_state, new_state):
 	if new_state == GameManager.State.Normal:
 		assignRoles(Network.get_peers())
@@ -37,7 +44,7 @@ func assignRoles(players: Array):
 	toAssign.shuffle()
 	#print(toAssign)
 	var playerAmount = toAssign.size()
-
+	assigntasks()
 	#if using percent, find how many of each role to assign
 	if style == assignStyle.Percent:
 		for i in enabledRoles:
