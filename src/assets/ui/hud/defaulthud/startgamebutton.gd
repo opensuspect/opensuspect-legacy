@@ -21,6 +21,8 @@ func _pressed():
 	# TODO: Looser coupling here would be nice
 	if GameManager.get_state() == GameManager.State.Lobby:
 		GameManager.transition(GameManager.State.Normal)
+		text = "Back to Lobby"
 	else:
 		GameManager.transition(GameManager.State.Lobby)
+		text = "Start Game"
 	#queue_free()
