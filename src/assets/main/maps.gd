@@ -11,6 +11,8 @@ func _ready() -> void:
 
 func _on_state_change(old_state, new_state) -> void:
 	match new_state:
+		GameManager.State.Lobby:
+			switchMap('lobby')
 		GameManager.State.Normal:
 			switchMap('test')
 
