@@ -13,7 +13,6 @@ extents = Vector2( 420.733, 180.052 )
 [node name="test" type="YSort"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-z_index = -1
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="StaticBody2D"]
 scale = Vector2( 0.05, 0.05 )
