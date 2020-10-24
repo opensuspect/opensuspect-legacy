@@ -14,6 +14,7 @@ var receivedSide: String = "left" #side of chatbox received messages are on
 
 func open():
 	popup()
+	textbox.grab_focus()
 	UIManager.menu_opened("chatbox")
 
 func close():
