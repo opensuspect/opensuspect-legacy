@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-10-13 14:57+0200\n"
-"PO-Revision-Date: 2020-10-24 09:33\n"
+"PO-Revision-Date: 2020-10-24 10:32\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -24,20 +24,20 @@ msgstr "튜토리얼"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:29
 msgid "JOIN GAME"
-msgstr ""
+msgstr "게임 참여"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:36
 msgid "CREATE GAME"
-msgstr ""
+msgstr "게임 생성"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:113
 #: ../../src/Scenes/UI/Title.tscn:152
 msgid "BACK"
-msgstr ""
+msgstr "뒤로"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:74
 msgid "Hostname"
-msgstr ""
+msgstr "호스트 이름"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:81
 msgid "localhost"
@@ -45,35 +45,35 @@ msgstr ""
 
 #: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
 msgid "Port"
-msgstr ""
+msgstr "포트"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:104
 msgid "CONNECT"
-msgstr ""
+msgstr "연결"
 
 #: ../../src/Scenes/UI/PlayGame.tscn:144
 msgid "CREATE"
-msgstr ""
+msgstr "생성"
 
 #: ../../src/Scenes/UI/Settings.tscn:37
 msgid "Fullscreen"
-msgstr ""
+msgstr "전체화면"
 
 #: ../../src/Scenes/UI/Settings.tscn:50
 msgid "Fullscreen Resolution: "
-msgstr ""
+msgstr "전체화면 해상도: "
 
 #: ../../src/Scenes/UI/Settings.tscn:65
 msgid "Music Volume: "
-msgstr ""
+msgstr "음악 볼륨: "
 
 #: ../../src/Scenes/UI/Settings.tscn:83
 msgid "Sound Volume: "
-msgstr ""
+msgstr "소리 볼륨: "
 
 #: ../../src/Scenes/UI/Settings.tscn:102
 msgid "Colorblind Mode: "
-msgstr ""
+msgstr "고대비 모드: "
 
 #: ../../src/Scenes/UI/Title.tscn:37
 msgid "OpenSuspect"
@@ -81,15 +81,15 @@ msgstr ""
 
 #: ../../src/Scenes/UI/Title.tscn:68
 msgid "PLAY"
-msgstr ""
+msgstr "플레이"
 
 #: ../../src/Scenes/UI/Title.tscn:75
 msgid "APPEARANCE"
-msgstr ""
+msgstr "형색"
 
 #: ../../src/Scenes/UI/Title.tscn:85
 msgid "SETTINGS"
-msgstr ""
+msgstr "설정"
 
 #: ../../src/Scenes/UI/Title.tscn:95
 msgid "LANGUAGE"
@@ -97,5 +97,5 @@ msgstr "언어"
 
 #: ../../src/Scenes/UI/Title.tscn:102
 msgid "QUIT"
-msgstr ""
+msgstr "나가기"
 
