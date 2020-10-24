@@ -3,8 +3,6 @@
 [ext_resource path="res://assets/ui/mainmenu/playgame/playgame.gd" type="Script" id=1]
 [ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=2]
 
-
-
 [node name="PlayGame" type="Container"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -187,8 +185,10 @@ margin_right = 1024.0
 margin_bottom = 160.0
 text = "BACK"
 flat = true
+[connection signal="text_entered" from="CreateGameMenu/Name/NameField" to="." method="_on_NameField_text_entered_create"]
 [connection signal="pressed" from="CreateGameMenu/Create" to="." method="_on_Create_pressed"]
 [connection signal="pressed" from="CreateGameMenu/Back" to="." method="_on_Back_pressed"]
+[connection signal="text_entered" from="JoinGameMenu/Name/NameField" to="." method="_on_NameField_text_entered_join"]
 [connection signal="pressed" from="JoinGameMenu/Connect" to="." method="_on_Connect_pressed"]
 [connection signal="pressed" from="JoinGameMenu/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="PlayGameMenu/JoinGame" to="." method="_on_JoinGame_pressed"]
