@@ -3,7 +3,6 @@ extends MarginContainer
 signal returnToMainMenu
 
 func _ready() -> void:
-	#get_node("../../../CenterContainer").margin_bottom = 208
 	default_state()
 	print("Loaded locales: ", TranslationServer.get_loaded_locales())
 
@@ -17,9 +16,6 @@ func _on_Return() -> void:
 	default_state()
 
 func default_state() -> void:
-	#print(get_node("../../../CenterContainer").margin_bottom)
-	#get_node("../../../CenterContainer").margin_bottom = 208 #fix title moving to center of screen
-	#print(get_node("../../../CenterContainer").margin_bottom)
 	show_only("MainMenu")
 
 func show_only(element_name: String) -> void:
