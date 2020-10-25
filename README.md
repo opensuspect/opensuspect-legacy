@@ -1,7 +1,5 @@
-<img alt="Little Suspect" src="https://github.com/moxvallix/opensuspect/blob/main/misc/images/icon_1.png">
-
+![opensuspect](https://socialify.git.ci/opensuspect/opensuspect/image?description=1&font=Source%20Code%20Pro&forks=1&language=1&owner=1&pattern=Floating%20Cogs&pulls=1&stargazers=1&theme=Dark)
 ![CI](https://github.com/opensuspect/opensuspect/workflows/CI/badge.svg?branch=main)
-
 # OpenSuspect
 
 *One amongst us is not like the rest*

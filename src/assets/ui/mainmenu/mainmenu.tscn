@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/ui/mainmenu/mainmenu.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/mainmenu/languages.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/common/fonts/title-font.tres" type="DynamicFont" id=5]
 [ext_resource path="res://assets/common/fonts/menufont.tres" type="DynamicFont" id=6]
 [ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=7]
+[ext_resource path="res://assets/ui/mainmenu/micenicro.png" type="Texture" id=8]
 
 [node name="TitleScreen" type="MarginContainer"]
 anchor_right = 1.0
@@ -235,6 +236,10 @@ margin_left = 293.0
 margin_right = 346.0
 margin_bottom = 34.0
 text = "BACK"
+
+[node name="micenicro" type="Sprite" parent="."]
+position = Vector2( 1394.42, 317.224 )
+texture = ExtResource( 8 )
 [connection signal="returnToMainMenu" from="VBoxContainer/MarginContainer/MenuArea" to="VBoxContainer/MarginContainer/MenuArea" method="_on_MenuArea_returnToMainMenu"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
