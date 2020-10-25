@@ -30,7 +30,10 @@ margin_bottom = 536.0
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_right = 896.0
 margin_bottom = 208.0
-size_flags_vertical = 3
+rect_min_size = Vector2( 0, 208 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Title" type="Label" parent="VBoxContainer/CenterContainer"]
 margin_left = 255.0
