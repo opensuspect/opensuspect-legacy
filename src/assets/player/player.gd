@@ -94,3 +94,4 @@ func move_to(new_pos, new_movement):
 	# Movement check here
 	position = new_pos
 	movement = new_movement
+
