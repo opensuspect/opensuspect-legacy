@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/main/maps.gd" type="Script" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://assets/ui/uicontroller/uicontroller.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=5]
 [ext_resource path="res://assets/maps/test/test.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/tasks/dev/devtask.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/main/Camera2D.gd" type="Script" id=8]
+[ext_resource path="res://assets/autoload/taskmanager.gd" type="Script" id=9]
 
 [node name="Node2D" type="YSort"]
 position = Vector2( 32, 24 )
@@ -28,6 +31,9 @@ drag_margin_left = 0.65
 drag_margin_top = 0.65
 drag_margin_right = 0.65
 drag_margin_bottom = 0.65
+script = ExtResource( 8 )
+
+[node name="Node2D" parent="players/Player/Camera2D" instance=ExtResource( 7 )]
 
 [node name="MainLight" type="Light2D" parent="players/Player"]
 position = Vector2( -7.62939e-06, 0 )
@@ -40,3 +46,7 @@ script = ExtResource( 2 )
 
 [node name="test" parent="maps" instance=ExtResource( 6 )]
 light_mask = 2
+
+[node name="taskmanager" type="Node2D" parent="."]
+script = ExtResource( 9 )
+[connection signal="gentask" from="taskmanager" to="players/Player/Camera2D" method="_on_taskmanager_gentask"]

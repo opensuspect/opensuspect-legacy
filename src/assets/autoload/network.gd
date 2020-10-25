@@ -13,7 +13,6 @@ var player_name: String setget toss, get_player_name
 puppet var peers: Array = []
 puppet var names: Dictionary = {}
 var myID: int = 1
-
 signal server_started
 signal connection_handled
 
