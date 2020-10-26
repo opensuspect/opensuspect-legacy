@@ -14,6 +14,8 @@ func update():
 		pressed = false
 		interact()
 	else:
+		if pressed:
+			return
 		pressed = true
 		interact()
 
