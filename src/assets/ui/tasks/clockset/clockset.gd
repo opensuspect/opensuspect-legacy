@@ -1,5 +1,7 @@
 extends WindowDialog
 
+var targetTime: int = 433
+
 onready var hoursNode: Node = get_node("clock/hours")
 onready var minutesNode: Node = get_node("clock/minutes")
 onready var ampmNode: Node = get_node("clock/ampm")
@@ -8,13 +10,11 @@ func _ready():
 	hoursNode.get_line_edit().connect("focus_entered", self, "_on_hours_focus_entered")
 	minutesNode.get_line_edit().connect("focus_entered", self, "_on_minutes_focus_entered")
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
+	changeWatchTime(targetTime)
 	popup()
 
-func _process(_delta):
-	if not visible:
-		return
-	#so you can't type into the spinboxes
-	grab_focus()
+func changeWatchTime(newTime):
+	$watch/watchface.showTime(newTime)
 
 func _on_hours_value_changed(value):
 	if value == 0:
@@ -52,10 +52,10 @@ func _on_ampm_value_changed(value):
 
 #so you can't type into the spinboxes
 func _on_hours_focus_entered():
-	hoursNode.release_focus()
+	grab_focus()
 
 func _on_minutes_focus_entered():
-	minutesNode.release_focus()
+	grab_focus()
 
 func _on_ampm_focus_entered():
-	ampmNode.has_focus()
+	grab_focus()

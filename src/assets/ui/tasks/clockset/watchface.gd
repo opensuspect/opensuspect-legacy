@@ -1,6 +1,6 @@
 extends Node2D
 
-var currentTime: int = 1200
+var currentTime: int = 1300
 
 func _enter_tree():
 	showTime(currentTime)

@@ -1,7 +1,6 @@
 extends CanvasLayer
 
-var menus: Dictionary = {"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")}, 
-						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}}
+var menus: Dictionary = UIManager.menus
 
 var instancedMenus: Dictionary = {}
 
