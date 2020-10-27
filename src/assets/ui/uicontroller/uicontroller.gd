@@ -12,7 +12,9 @@ func _ready():
 	UIManager.connect("open_menu", self, "open_menu")
 	var err = config.load("user://settings.cfg")
 	if err == OK:
-		$ColorblindRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
+		$ColorblindRect.material.set_shader_param(
+			"mode", config.get_value("general", "colorblind_mode")
+		)
 
 	#TODO: better system for auto spawning UIs
 	instance_menu("chatbox")
