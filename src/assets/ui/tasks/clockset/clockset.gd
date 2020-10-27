@@ -1,6 +1,7 @@
 extends WindowDialog
 
 var targetTime: int = 433
+var currentTime: int = 630
 
 onready var hoursNode: Node = get_node("clock/hours")
 onready var minutesNode: Node = get_node("clock/minutes")
@@ -10,11 +11,29 @@ func _ready():
 	hoursNode.get_line_edit().connect("focus_entered", self, "_on_hours_focus_entered")
 	minutesNode.get_line_edit().connect("focus_entered", self, "_on_minutes_focus_entered")
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
-	changeWatchTime(targetTime)
+	setWatchTime(targetTime)
+	setClockTime(currentTime)
 	popup()
 
-func changeWatchTime(newTime):
+func checkComplete():
+	if targetTime == currentTime:
+		taskComplete()
+
+func taskComplete():
+	pass
+
+func setClockTime(newTime):
+	hoursNode.value = roundDown(newTime / 100, 1)
+	minutesNode.value = newTime % 100
+
+func setWatchTime(newTime):
 	$watch/watchface.showTime(newTime)
+
+func roundDown(num, step):
+	var normRound = stepify(num, step)
+	if normRound > num:
+		return normRound - step
+	return normRound
 
 func _on_hours_value_changed(value):
 	if value == 0:
