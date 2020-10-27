@@ -23,6 +23,7 @@ signal roles_assigned
 func _ready():
 	set_network_master(1)
 	GameManager.connect("state_changed", self, "state_changed")
+
 func assigntasks():
 	for id in Network.peers:
 		for task in tasks:
@@ -30,6 +31,7 @@ func assigntasks():
 				rng.randomize()
 				var taskenabled = rng.randi_range(-1,0)
 				print("task assigned")
+
 func state_changed(old_state, new_state):
 	match new_state:
 		GameManager.State.Normal:
@@ -39,7 +41,6 @@ func state_changed(old_state, new_state):
 			for i in playerRoles.keys():
 				playerRoles[i] = "default"
 			emit_signal("roles_assigned", playerRoles)
-	
 
 func assignRoles(players: Array):
 	if not get_tree().is_network_server():
@@ -52,6 +53,7 @@ func assignRoles(players: Array):
 	#print(toAssign)
 	var playerAmount = toAssign.size()
 	assigntasks()
+
 	#if using percent, find how many of each role to assign
 	if style == assignStyle.Percent:
 		for i in enabledRoles:
@@ -83,10 +85,12 @@ func assignRoles(players: Array):
 	print("roles assigned: ", playerRoles)
 	rpc("receiveRoles", playerRoles)
 	setourrole()
+
 puppet func receiveRoles(newRoles):
 	playerRoles = newRoles
 	print("received roles: ", newRoles)
 	setourrole()
+
 func roundDown(num, step):
 	var normRound = stepify(num, step)
 	if normRound > num:
