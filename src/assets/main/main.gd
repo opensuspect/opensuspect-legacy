@@ -11,7 +11,6 @@ var players = {}
 var version = 5
 var intruders = 0
 var newnumber
-onready var config = ConfigFile.new()
 
 func _ready():
 	set_network_master(1)
