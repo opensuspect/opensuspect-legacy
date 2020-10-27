@@ -5,6 +5,9 @@ onready var minutesNode: Node = get_node("clock/minutes")
 onready var ampmNode: Node = get_node("clock/ampm")
 
 func _ready():
+	hoursNode.get_line_edit().connect("focus_entered", self, "_on_hours_focus_entered")
+	minutesNode.get_line_edit().connect("focus_entered", self, "_on_minutes_focus_entered")
+	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
 	popup()
 
 func _process(_delta):
@@ -47,8 +50,8 @@ func _on_ampm_value_changed(value):
 		#added spaces so the number doesn't show up in spinbox
 		ampmNode.prefix = "PM" + "     "
 
+#so you can't type into the spinboxes
 func _on_hours_focus_entered():
-	print("hours focused")
 	hoursNode.release_focus()
 
 func _on_minutes_focus_entered():
@@ -56,7 +59,3 @@ func _on_minutes_focus_entered():
 
 func _on_ampm_focus_entered():
 	ampmNode.has_focus()
-
-
-func _on_hours_focus_exited():
-	print("hours unfocused")

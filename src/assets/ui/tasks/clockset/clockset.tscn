@@ -273,7 +273,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="focus_entered" from="clock/hours" to="." method="_on_hours_focus_entered"]
-[connection signal="focus_exited" from="clock/hours" to="." method="_on_hours_focus_exited"]
 [connection signal="value_changed" from="clock/hours" to="." method="_on_hours_value_changed"]
 [connection signal="focus_entered" from="clock/minutes" to="." method="_on_minutes_focus_entered"]
 [connection signal="value_changed" from="clock/minutes" to="." method="_on_minutes_value_changed"]
