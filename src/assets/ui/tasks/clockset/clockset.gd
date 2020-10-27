@@ -4,14 +4,14 @@ onready var hoursNode: Node = get_node("clock/hours")
 onready var minutesNode: Node = get_node("clock/minutes")
 onready var ampmNode: Node = get_node("clock/ampm")
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	popup()
+
+func _process(_delta):
+	if not visible:
+		return
+	#so you can't type into the spinboxes
+	grab_focus()
 
 func _on_hours_value_changed(value):
 	if value == 0:
@@ -46,3 +46,17 @@ func _on_ampm_value_changed(value):
 	else:
 		#added spaces so the number doesn't show up in spinbox
 		ampmNode.prefix = "PM" + "     "
+
+func _on_hours_focus_entered():
+	print("hours focused")
+	hoursNode.release_focus()
+
+func _on_minutes_focus_entered():
+	minutesNode.release_focus()
+
+func _on_ampm_focus_entered():
+	ampmNode.has_focus()
+
+
+func _on_hours_focus_exited():
+	print("hours unfocused")

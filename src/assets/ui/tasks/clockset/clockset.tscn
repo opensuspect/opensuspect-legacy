@@ -9,6 +9,7 @@ anchor_left = 0.3
 anchor_top = 0.2
 anchor_right = 0.7
 anchor_bottom = 0.7
+focus_mode = 2
 window_title = "Set the clock to the right time!"
 script = ExtResource( 1 )
 __meta__ = {
@@ -28,6 +29,7 @@ __meta__ = {
 margin_left = 124.0
 margin_right = 198.0
 margin_bottom = 35.0
+focus_mode = 1
 size_flags_horizontal = 0
 max_value = 13.0
 value = 6.0
@@ -44,6 +46,7 @@ text = ":"
 margin_left = 211.0
 margin_right = 285.0
 margin_bottom = 35.0
+focus_mode = 1
 min_value = -1.0
 max_value = 60.0
 value = 30.0
@@ -53,6 +56,7 @@ visible = false
 margin_left = 250.0
 margin_right = 324.0
 margin_bottom = 35.0
+focus_mode = 1
 min_value = -1.0
 max_value = 2.0
 prefix = "AM     "
@@ -268,6 +272,10 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="focus_entered" from="clock/hours" to="." method="_on_hours_focus_entered"]
+[connection signal="focus_exited" from="clock/hours" to="." method="_on_hours_focus_exited"]
 [connection signal="value_changed" from="clock/hours" to="." method="_on_hours_value_changed"]
+[connection signal="focus_entered" from="clock/minutes" to="." method="_on_minutes_focus_entered"]
 [connection signal="value_changed" from="clock/minutes" to="." method="_on_minutes_value_changed"]
+[connection signal="focus_entered" from="clock/ampm" to="." method="_on_ampm_focus_entered"]
 [connection signal="value_changed" from="clock/ampm" to="." method="_on_ampm_value_changed"]
