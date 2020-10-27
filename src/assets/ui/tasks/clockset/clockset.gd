@@ -14,6 +14,13 @@ func _ready():
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
 
 func open():
+	if menuData.has("currentTime"):
+		currentTime = menuData["currentTime"]
+	targetTime = round(rand_range(100, 1259))
+	setClockTime(currentTime)
+	setWatchTime(targetTime)
+	#print("current time: ", currentTime)
+	#print("target time: ", targetTime)
 	popup()
 	UIManager.menu_opened("clockset")
 
@@ -22,13 +29,16 @@ func close():
 	UIManager.menu_closed("clockset")
 
 func checkComplete():
+	updateCurrentTime()
 	if targetTime == currentTime:
 		taskComplete()
 
 func taskComplete():
 	#theoretically this is where it would hook into the task manager
+	print("clockset task complete")
 	if menuData.keys().has("linkedNode"):
 		MapManager.interact_with(menuData["linkedNode"], self, {"newText": str(currentTime)})
+	close()
 
 func setClockTime(newTime):
 	hoursNode.value = roundDown(newTime / 100, 1)
@@ -39,7 +49,6 @@ func setWatchTime(newTime):
 
 func updateCurrentTime():
 	currentTime = (hoursNode.value * 100) + minutesNode.value
-	print(currentTime)
 
 func roundDown(num, step):
 	var normRound = stepify(num, step)
@@ -62,7 +71,7 @@ func _on_hours_value_changed(value):
 		hoursNode.value = 12
 	if value == 13:
 		hoursNode.value = 1
-	updateCurrentTime()
+	checkComplete()
 
 func _on_minutes_value_changed(value):
 	if value == -1:
@@ -75,7 +84,7 @@ func _on_minutes_value_changed(value):
 		minutesNode.prefix = "0" + str(value) + "       "
 	else:
 		minutesNode.prefix = ""
-	updateCurrentTime()
+	checkComplete()
 
 func _on_ampm_value_changed(value):
 	#allowing rollover
@@ -92,7 +101,7 @@ func _on_ampm_value_changed(value):
 	else:
 		#added spaces so the number doesn't show up in spinbox
 		ampmNode.prefix = "PM" + "     "
-	updateCurrentTime()
+	checkComplete()
 
 #so you can't type into the spinboxes
 func _on_hours_focus_entered():

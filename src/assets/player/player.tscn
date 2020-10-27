@@ -75,7 +75,6 @@ shape = SubResource( 3 )
 material = SubResource( 4 )
 frames = SubResource( 5 )
 animation = "walk-h"
-frame = 3
 playing = true
 
 [node name="Label" type="Label" parent="."]
