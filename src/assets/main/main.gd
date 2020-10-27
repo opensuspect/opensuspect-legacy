@@ -11,14 +11,11 @@ var players = {}
 var version = 5
 var intruders = 0
 var newnumber
-#onready var config = ConfigFile.new()
+onready var config = ConfigFile.new()
 
 func _ready():
 	set_network_master(1)
-	#var err = config.load("user://settings.cfg")
-	#if err == OK:
-	#	$players/Player/Camera2D/CanvasLayer/ColorRect.material.set_shader_param("mode", int(config.get_value("general", "colorblind_mode")))
-	
+
 
 	$players/Player.connect("main_player_moved", self, "_on_main_player_moved")
 # Gets called when the title scene sets this scene as the main scene
