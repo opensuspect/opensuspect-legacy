@@ -12,7 +12,14 @@ func _ready():
 	hoursNode.get_line_edit().connect("focus_entered", self, "_on_hours_focus_entered")
 	minutesNode.get_line_edit().connect("focus_entered", self, "_on_minutes_focus_entered")
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
+
+func open():
 	popup()
+	UIManager.menu_opened("clockset")
+
+func close():
+	hide()
+	UIManager.menu_closed("clockset")
 
 func checkComplete():
 	if targetTime == currentTime:
@@ -46,6 +53,9 @@ func _on_clockset_about_to_show():
 	targetTime = round(rand_range(100, 1259))
 	setClockTime(currentTime)
 	setWatchTime(targetTime)
+
+func _on_clockset_popup_hide():
+	UIManager.menu_closed("clockset")
 
 func _on_hours_value_changed(value):
 	if value == 0:

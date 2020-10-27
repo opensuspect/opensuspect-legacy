@@ -22,6 +22,7 @@ func _ready():
 		main_player = false
 	if main_player:
 		setName(Network.get_player_name())
+		id = Network.get_my_id()
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 
 func setName(newName):

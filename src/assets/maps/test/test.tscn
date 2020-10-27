@@ -34,7 +34,14 @@ position = Vector2( 0, -100 )
 
 [node name="standbutton" parent="." instance=ExtResource( 3 )]
 position = Vector2( -100, -100 )
-interact_path = NodePath("../testdoor")
+node_path = NodePath("../testdoor")
+
+[node name="standbutton2" parent="." instance=ExtResource( 3 )]
+position = Vector2( -104.882, 12.7356 )
+node_or_ui = 1
+ui_name = "clockset"
+only_main_player = true
+interact_on_exit = false
 
 [node name="clocksettempbutton" type="Button" parent="."]
 margin_left = -150.0
