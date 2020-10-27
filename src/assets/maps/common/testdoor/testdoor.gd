@@ -28,7 +28,7 @@ func close():
 		position.x -= 40
 	open = false
 
-func interacted_with(interactNode: Node, from: Node = null):
+func interacted_with(interactNode: Node, from: Node, interact_data: Dictionary):
 	if interactNode != self:
 		return
 	if not from.has_method("get_state"):

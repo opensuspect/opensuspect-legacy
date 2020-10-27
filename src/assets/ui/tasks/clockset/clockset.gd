@@ -1,5 +1,6 @@
 extends WindowDialog
 
+var menuData: Dictionary = {}
 var targetTime: int = 433
 var currentTime: int = 630
 
@@ -11,8 +12,6 @@ func _ready():
 	hoursNode.get_line_edit().connect("focus_entered", self, "_on_hours_focus_entered")
 	minutesNode.get_line_edit().connect("focus_entered", self, "_on_minutes_focus_entered")
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
-	setWatchTime(targetTime)
-	setClockTime(currentTime)
 	popup()
 
 func checkComplete():
@@ -20,7 +19,9 @@ func checkComplete():
 		taskComplete()
 
 func taskComplete():
-	pass
+	#theoretically this is where it would hook into the task manager
+	if menuData.keys().has("linkedNode"):
+		MapManager.interact_with(menuData["linkedNode"], self, {"newText": str(currentTime)})
 
 func setClockTime(newTime):
 	hoursNode.value = roundDown(newTime / 100, 1)
@@ -29,17 +30,29 @@ func setClockTime(newTime):
 func setWatchTime(newTime):
 	$watch/watchface.showTime(newTime)
 
+func updateCurrentTime():
+	currentTime = (hoursNode.value * 100) + minutesNode.value
+	print(currentTime)
+
 func roundDown(num, step):
 	var normRound = stepify(num, step)
 	if normRound > num:
 		return normRound - step
 	return normRound
 
+func _on_clockset_about_to_show():
+	if menuData.has("currentTime"):
+		currentTime = menuData["currentTime"]
+	targetTime = round(rand_range(100, 1259))
+	setClockTime(currentTime)
+	setWatchTime(targetTime)
+
 func _on_hours_value_changed(value):
 	if value == 0:
 		hoursNode.value = 12
 	if value == 13:
 		hoursNode.value = 1
+	updateCurrentTime()
 
 func _on_minutes_value_changed(value):
 	if value == -1:
@@ -52,6 +65,7 @@ func _on_minutes_value_changed(value):
 		minutesNode.prefix = "0" + str(value) + "       "
 	else:
 		minutesNode.prefix = ""
+	updateCurrentTime()
 
 func _on_ampm_value_changed(value):
 	#allowing rollover
@@ -68,6 +82,7 @@ func _on_ampm_value_changed(value):
 	else:
 		#added spaces so the number doesn't show up in spinbox
 		ampmNode.prefix = "PM" + "     "
+	updateCurrentTime()
 
 #so you can't type into the spinboxes
 func _on_hours_focus_entered():
