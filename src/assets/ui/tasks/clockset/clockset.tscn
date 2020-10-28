@@ -1,0 +1,280 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui/tasks/clockset/clockset.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/tasks/clockset/watchface.gd" type="Script" id=2]
+
+[node name="clockset" type="WindowDialog"]
+anchor_left = 0.3
+anchor_top = 0.2
+anchor_right = 0.7
+anchor_bottom = 0.7
+focus_mode = 2
+window_title = "Set the clock to the right time!"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="clock" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.15
+margin_top = 10.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hours" type="SpinBox" parent="clock"]
+margin_left = 124.0
+margin_right = 198.0
+margin_bottom = 35.0
+focus_mode = 1
+size_flags_horizontal = 0
+max_value = 13.0
+value = 6.0
+align = 2
+
+[node name="colon" type="Label" parent="clock"]
+margin_left = 202.0
+margin_top = 6.0
+margin_right = 207.0
+margin_bottom = 28.0
+text = ":"
+
+[node name="minutes" type="SpinBox" parent="clock"]
+margin_left = 211.0
+margin_right = 285.0
+margin_bottom = 35.0
+focus_mode = 1
+min_value = -1.0
+max_value = 60.0
+value = 30.0
+
+[node name="ampm" type="SpinBox" parent="clock"]
+visible = false
+margin_left = 250.0
+margin_right = 324.0
+margin_bottom = 35.0
+focus_mode = 1
+min_value = -1.0
+max_value = 2.0
+prefix = "AM     "
+
+[node name="watch" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.575
+anchor_right = 0.5
+anchor_bottom = 0.575
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="watchface" type="Node2D" parent="watch"]
+script = ExtResource( 2 )
+
+[node name="minuteHand" type="Polygon2D" parent="watch/watchface"]
+rotation = 4.71239
+polygon = PoolVector2Array( -5, -5, -5, 5, 80, 5, 80, -5 )
+
+[node name="hourHand" type="Polygon2D" parent="watch/watchface"]
+color = Color( 1, 0.72549, 0, 1 )
+polygon = PoolVector2Array( -5, -5, -5, 5, 50, 5, 50, -5 )
+
+[node name="Position1" type="Position2D" parent="watch/watchface"]
+position = Vector2( 50.0001, -86.6026 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position1"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position2" type="Position2D" parent="watch/watchface"]
+position = Vector2( 86.6026, -50 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position2"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position3" type="Position2D" parent="watch/watchface"]
+position = Vector2( 100, 0 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position3"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "3"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position4" type="Position2D" parent="watch/watchface"]
+position = Vector2( 86.6026, 50 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position4"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "4"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position5" type="Position2D" parent="watch/watchface"]
+position = Vector2( 50, 86.6026 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position5"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "5"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position6" type="Position2D" parent="watch/watchface"]
+position = Vector2( 0, 100 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position6"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "6"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position7" type="Position2D" parent="watch/watchface"]
+position = Vector2( -50, 86.6026 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position7"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "7"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position8" type="Position2D" parent="watch/watchface"]
+position = Vector2( -86.6026, 50 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position8"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "8"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position9" type="Position2D" parent="watch/watchface"]
+position = Vector2( -100, 0 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position9"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "9"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position10" type="Position2D" parent="watch/watchface"]
+position = Vector2( -86.6026, -50 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position10"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "10"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position11" type="Position2D" parent="watch/watchface"]
+position = Vector2( -50, -86.6026 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position11"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "11"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position12" type="Position2D" parent="watch/watchface"]
+position = Vector2( 0, -100 )
+
+[node name="Label" type="Label" parent="watch/watchface/Position12"]
+margin_left = -25.0
+margin_top = -25.0
+margin_right = 25.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 25, 25 )
+text = "12"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="popup_hide" from="." to="." method="_on_clockset_popup_hide"]
+[connection signal="focus_entered" from="clock/hours" to="." method="_on_hours_focus_entered"]
+[connection signal="value_changed" from="clock/hours" to="." method="_on_hours_value_changed"]
+[connection signal="focus_entered" from="clock/minutes" to="." method="_on_minutes_focus_entered"]
+[connection signal="value_changed" from="clock/minutes" to="." method="_on_minutes_value_changed"]
+[connection signal="focus_entered" from="clock/ampm" to="." method="_on_ampm_focus_entered"]
+[connection signal="value_changed" from="clock/ampm" to="." method="_on_ampm_value_changed"]

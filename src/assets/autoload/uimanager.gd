@@ -1,6 +1,13 @@
 extends Node
 
-var menus: Dictionary = {"pausemenu": {}}
+var menus: Dictionary = {
+						#common UI
+						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}, 
+						"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")}, 
+						
+						#task UI
+						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")}
+						}
 
 var openMenus: Array = []
 

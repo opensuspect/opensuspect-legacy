@@ -52,13 +52,15 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[sub_resource type="CanvasItemMaterial" id=7]
-light_mode = 2
-
 [sub_resource type="CanvasItemMaterial" id=6]
 light_mode = 2
 
-[node name="Player" type="KinematicBody2D"]
+[sub_resource type="CanvasItemMaterial" id=7]
+light_mode = 2
+
+[node name="Player" type="KinematicBody2D" groups=[
+"players",
+]]
 material = SubResource( 1 )
 collision_layer = 2
 script = ExtResource( 1 )
@@ -73,11 +75,10 @@ shape = SubResource( 3 )
 material = SubResource( 4 )
 frames = SubResource( 5 )
 animation = "walk-h"
-frame = 2
 playing = true
 
 [node name="Label" type="Label" parent="."]
-material = SubResource( 7 )
+material = SubResource( 6 )
 margin_left = -250.0
 margin_top = -55.0
 margin_right = 250.0
@@ -89,7 +90,7 @@ __meta__ = {
 }
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-material = SubResource( 6 )
+material = SubResource( 7 )
 color = Color( 0.188235, 0.164706, 0.164706, 1 )
 
 [node name="temporaryLight" type="Light2D" parent="."]
