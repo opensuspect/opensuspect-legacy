@@ -1,11 +1,15 @@
 extends Control
 
+const SLIDER_SIZE = 100
+
+# Node to put settings
+export var scroll_cont: NodePath
+
 # Supported nodes
-enum SettingType { SWITCH, OPTION }
+enum SettingType { SWITCH, OPTION, SLIDER }
 
 # Init config
 onready var config = ConfigFile.new()
-
 
 # Setting class
 class Setting:
@@ -32,14 +36,11 @@ class Setting:
 
 
 # Wrapper function to save and update setting
-func _save_state(id, node, setting):
-	match setting.type:
-		SettingType.SWITCH:
-			setting.value = node.pressed
-		SettingType.OPTION:
-			setting.value = id
-			print(id)
-
+func _save_state(value, node, setting):
+	if setting.type == SettingType.SWITCH:
+		value = node.pressed
+	
+	setting.value = value
 	config.set_value("general", setting.config_name, setting.value)
 
 	config.save("user://settings.cfg")
@@ -55,6 +56,7 @@ var settings = [
 	Setting.new(
 		0, SettingType.OPTION, tr("Colorblind mode"), "dummy_function", ["RGB", "GBR", "BRG", "BGR"]
 	),
+	Setting.new(30, SettingType.SLIDER, tr("Sound"), "dummy_function"),
 ]
 
 
@@ -71,7 +73,7 @@ func _ready():
 
 	# Init settings view
 	var vbox = VBoxContainer.new()
-	add_child(vbox)
+	get_node(scroll_cont).add_child(vbox)
 
 	# Mapping settings
 	for setting in settings:
@@ -89,6 +91,7 @@ func _ready():
 		hbox.add_child(new_label)
 
 		call(setting.function, setting)
+
 		# Add action (Button, CheckBox...)
 		match setting.type:
 			SettingType.SWITCH:
@@ -96,9 +99,9 @@ func _ready():
 				check_button.pressed = setting.value
 				check_button.connect("pressed", self, "_save_state", [null, check_button, setting])
 				hbox.add_child(check_button)
+
 			SettingType.OPTION:
 				var option_button = OptionButton.new()
-				print(setting.value)
 				option_button.connect(
 					"item_selected", self, "_save_state", [option_button, setting]
 				)
@@ -106,8 +109,14 @@ func _ready():
 					option_button.add_item(str(option))
 
 				option_button.select(setting.value)
-
 				hbox.add_child(option_button)
+
+			SettingType.SLIDER:
+				var slider = HSlider.new()
+				slider.connect("value_changed", self, "_save_state", [slider, setting])
+				slider.value = setting.value
+				slider.set_h_size_flags(SIZE_EXPAND_FILL)
+				hbox.add_child(slider)
 
 		vbox.add_child(hbox)
 	vbox.add_child(back_button)
