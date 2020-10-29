@@ -72,8 +72,7 @@ func _ready():
 	back_button.connect("pressed", get_node(".."), "_on_Return")
 
 	# Init settings view
-	var vbox = VBoxContainer.new()
-	get_node(scroll_cont).add_child(vbox)
+	var vbox = $Settings/VBoxContainer
 
 	# Mapping settings
 	for setting in settings:
@@ -88,6 +87,8 @@ func _ready():
 		# Init label with text
 		var new_label = Label.new()
 		new_label.text = setting.text
+		new_label.size_flags_horizontal = Control.SIZE_EXPAND
+		new_label.align = Label.ALIGN_CENTER
 		hbox.add_child(new_label)
 
 		call(setting.function, setting)
