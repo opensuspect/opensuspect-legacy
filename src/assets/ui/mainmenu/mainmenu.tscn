@@ -200,6 +200,9 @@ margin_top = 15.0
 margin_right = 704.0
 margin_bottom = 215.0
 
+[node name="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/Settings/Settings" index="0"]
+margin_right = 640.0
+
 [node name="PlayGame" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 4 )]
 visible = false
 anchor_right = 0.0
