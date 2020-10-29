@@ -42,7 +42,6 @@ class Setting:
 		# Make this more reliable
 		self.config_name = text.to_lower().replace(" ", "_")
 
-
 # Wrapper function to save and update setting
 func _save_state(value, node, setting):
 	if setting.type == SettingType.SWITCH:
@@ -65,6 +64,7 @@ var settings = [
 		0, SettingType.OPTION, tr("Video/Colorblind mode"), "dummy_function", ["RGB", "GBR", "BRG", "BGR"]
 	),
 	Setting.new(30, SettingType.SLIDER, tr("Sound/Volume"), "dummy_function"),
+	Setting.new(0, SettingType.OPTION, tr("Locale/Language"), "set_language", get_languages())
 ]
 
 
@@ -76,7 +76,7 @@ func _ready():
 
 	# Init back button
 	var back_button = Button.new()
-	back_button.text = "Back"
+	back_button.text = tr("Back")
 	back_button.connect("pressed", get_node(".."), "_on_Return")
 
 	# Init settings view
@@ -133,3 +133,17 @@ func _ready():
 
 func toggle_fullscreen(setting):
 	OS.window_fullscreen = setting.value
+
+
+# Settings part
+class LanguageSorter:
+	static func sort_ascending(foo, bar) -> bool:
+		return TranslationServer.get_locale_name(foo) < TranslationServer.get_locale_name(bar)
+
+func get_languages() -> Array:
+	var languages = TranslationServer.get_loaded_locales()
+	languages.sort_custom(LanguageSorter, "sort_ascending")
+	return languages
+
+func set_language(setting):
+	TranslationServer.set_locale(setting.available[setting.value])
