@@ -1,6 +1,67 @@
-NiceMicro:
-Started the project. Game design and programming.
-Moxvallix:
-Coordinated the chat. Art and game design.
-evolve2k:
-pending
+The following is a list of contributors to this project:
+
+Project coordinators
+--------------------
+Moxvallix
+NiceMicro
+w4e
+
+Team leaders
+------------
+Programming: Monban
+Art: Luke_Connor
+Game Design: Gobbel
+Branding: TheRyeGuyWhoWillNowDie
+Translations: GrbavaCigla
+
+Programming
+-----------
+Monban
+Moxvallix
+TheSecondReal0
+TheRyeGuyWhoWillNowDie
+Darshadi
+GrbavaCigla
+Macmv
+NiceMicro
+Vainiovano
+tooManyArguments
+Evolve2k
+Wandang
+Daniel071
+MGThePro
+Random2Nothing
+Timparktimpark
+Gobbel2000
+Zapzoop0099
+Orangemn6
+TheEvilSkeleton
+Dleboulanger
+DimiKrik
+DanielKinsman
+1eldiego
+
+Art
+---
+Luke_Connor
+Moxvallix
+Zughy
+rand_0moide
+PRIME
+Gai_
+Orangemn6
+
+Game design
+-----------
+Gobbel
+TheRyeGuyWhoWillNowDie
+Moxvallix
+NiceMicro
+TheSecondReal0
+Gai_
+Wandang
+1diego
+Daniel071
+Botatokde
+Darshadi
+w4e
