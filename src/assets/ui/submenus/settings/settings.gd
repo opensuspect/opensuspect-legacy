@@ -18,6 +18,7 @@ class Setting:
 	var text: String
 	var type: int
 	var function: String
+	var section: String
 	var config_name: String
 	var available: Array
 
@@ -25,8 +26,15 @@ class Setting:
 		self.default = default
 		self.value = default
 		self.type = type
-		self.text = text
 		self.function = function
+		
+		if '/' in text:
+			var raw_label = text.rsplit('/', true, 1)
+			self.section = raw_label[0]
+			self.text = raw_label[1]
+		else:
+			self.text = text
+			self.section = "general"
 
 		if type == SettingType.OPTION:
 			self.available = available
@@ -34,14 +42,13 @@ class Setting:
 		# Make this more reliable
 		self.config_name = text.to_lower().replace(" ", "_")
 
-
 # Wrapper function to save and update setting
 func _save_state(value, node, setting):
 	if setting.type == SettingType.SWITCH:
 		value = node.pressed
 	
 	setting.value = value
-	config.set_value("general", setting.config_name, setting.value)
+	config.set_value(setting.section, setting.config_name, setting.value)
 
 	config.save("user://settings.cfg")
 	call(setting.function, setting)
@@ -52,11 +59,12 @@ func dummy_function(setting):
 
 
 var settings = [
-	Setting.new(true, SettingType.SWITCH, tr("Fullscreen"), "toggle_fullscreen"),
+	Setting.new(true, SettingType.SWITCH, tr("Video/Fullscreen"), "toggle_fullscreen"),
 	Setting.new(
-		0, SettingType.OPTION, tr("Colorblind mode"), "dummy_function", ["RGB", "GBR", "BRG", "BGR"]
+		0, SettingType.OPTION, tr("Video/Colorblind mode"), "dummy_function", ["RGB", "GBR", "BRG", "BGR"]
 	),
-	Setting.new(30, SettingType.SLIDER, tr("Sound"), "dummy_function"),
+	Setting.new(30, SettingType.SLIDER, tr("Sound/Volume"), "dummy_function"),
+	Setting.new(0, SettingType.OPTION, tr("Locale/Language"), "set_language", get_languages())
 ]
 
 
@@ -68,7 +76,7 @@ func _ready():
 
 	# Init back button
 	var back_button = Button.new()
-	back_button.text = "Back"
+	back_button.text = tr("Back")
 	back_button.connect("pressed", get_node(".."), "_on_Return")
 
 	# Init settings view
@@ -76,10 +84,10 @@ func _ready():
 
 	# Mapping settings
 	for setting in settings:
-		if config.has_section_key("general", setting.config_name):
-			setting.value = config.get_value("general", setting.config_name)
+		if config.has_section_key(setting.section, setting.config_name):
+			setting.value = config.get_value(setting.section, setting.config_name)
 		else:
-			config.set_value("general", setting.config_name, setting.value)
+			config.set_value(setting.section, setting.config_name, setting.value)
 
 		# Init row
 		var hbox = HBoxContainer.new()
@@ -125,3 +133,17 @@ func _ready():
 
 func toggle_fullscreen(setting):
 	OS.window_fullscreen = setting.value
+
+
+# Settings part
+class LanguageSorter:
+	static func sort_ascending(foo, bar) -> bool:
+		return TranslationServer.get_locale_name(foo) < TranslationServer.get_locale_name(bar)
+
+func get_languages() -> Array:
+	var languages = TranslationServer.get_loaded_locales()
+	languages.sort_custom(LanguageSorter, "sort_ascending")
+	return languages
+
+func set_language(setting):
+	TranslationServer.set_locale(setting.available[setting.value])
