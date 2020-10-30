@@ -20,7 +20,6 @@ func open():
 	setClockTime(currentTime)
 	setWatchTime(targetTime)
 	#print("current time: ", currentTime)
-	#print("target time: ", targetTime)
 	popup()
 	UIManager.menu_opened("clockset")
 
@@ -30,11 +29,13 @@ func close():
 
 func checkComplete():
 	updateCurrentTime()
-	if targetTime == currentTime:
+	if currentTime == targetTime:
 		taskComplete()
 
 func taskComplete():
 	#theoretically this is where it would hook into the task manager
+	#gotcha!
+	PlayerManager.assignedtasks[0] = 1
 	print("clockset task complete")
 	if menuData.keys().has("linkedNode"):
 		MapManager.interact_with(menuData["linkedNode"], self, {"newText": str(currentTime)})
@@ -49,7 +50,6 @@ func setWatchTime(newTime):
 
 func updateCurrentTime():
 	currentTime = (hoursNode.value * 100) + minutesNode.value
-
 func roundDown(num, step):
 	var normRound = stepify(num, step)
 	if normRound > num:
