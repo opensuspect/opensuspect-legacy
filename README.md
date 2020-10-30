@@ -52,14 +52,17 @@ The main aims of the game:
 
 ### Implementation of our goals
 The exact way the abovementioned goals would be reached is part of the ongoing discussion in the community. Some points have been finalized, some are still being debated.
+
 Before contributing to the discussion, please, make sure you read through our quickly evolving documentation to see which topics are still up for debate.
 
 ## Requirements for contributors
 After cloning the repository, you need git-lfs to handle asset storage and other large binary files.
+
 Please join our [`NextCloud instance`](https://nextcloud.opensuspect.com) under the same username, you use on Matrix, where most of the coordination will happen.
+
 Important Matrix (Element) rooms for contributors:
-[`Main discussion room for contributing`](https://matrix.to/#/#opensuspect:matrix.org)
-[`Important announcements with list of rooms`](https://matrix.to/#/!qpcAgDbArKnMphhMFm:matrix.org?via=matrix.org&via=madek.allaboutlbc.com&via=matrix.leander.media), please read back on this chatroom before contributing!
-[`Troubleshooting`](https://matrix.to/#/!OuHmTdwKPGMJCYeyZH:matrix.org?via=matrix.org&via=privacytools.io)
-[`Follow the discussion of the leaders' group here`](https://matrix.to/#/!iknjKWVUzTsLtMtsZN:matrix.org?via=matrix.org)
-[`Chat used in parallel with voice call meetings`](https://matrix.to/#/!kFCSiUiVIysdSVtRzh:matrix.org?via=matrix.org&via=matrix.leander.media)
+* [`Main discussion room for contributing`](https://matrix.to/#/#opensuspect:matrix.org)
+* [`Important announcements with list of rooms`](https://matrix.to/#/!qpcAgDbArKnMphhMFm:matrix.org?via=matrix.org&via=madek.allaboutlbc.com&via=matrix.leander.media), please read back on this chatroom before contributing!
+* [`Troubleshooting`](https://matrix.to/#/!OuHmTdwKPGMJCYeyZH:matrix.org?via=matrix.org&via=privacytools.io)
+* [`Follow the discussion of the leaders' group here`](https://matrix.to/#/!iknjKWVUzTsLtMtsZN:matrix.org?via=matrix.org)
+* [`Chat used in parallel with voice call meetings`](https://matrix.to/#/!kFCSiUiVIysdSVtRzh:matrix.org?via=matrix.org&via=matrix.leander.media)
