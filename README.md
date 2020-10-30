@@ -11,6 +11,7 @@ OpenSuspect aims to be easily modifiable, however, our first maps are going to b
 This project is in *very early stage* development.
 Interested to get involved? We'd love to hear from you.
 Join us at [`#opensuspect:matrix.org`](https://matrix.to/#/#opensuspect:matrix.org) on a Matrix client (element.io).
+If you need tech support, use our [`troubleshooting channel`](https://matrix.to/#/!OuHmTdwKPGMJCYeyZH:matrix.org?via=matrix.org&via=privacytools.io).
 
 OpenSuspect is licensed under the GNU GPL v3 (see LICENSE.txt)
 
@@ -30,6 +31,35 @@ The main aims of the game:
 * Chat integration and flexible chat rules to fit various needs
 * Free Software, Open Source, as all things should be
 
+### Our goals for the alpha release
+* At least one working map, based on a spy story from the 1960s cold war era,
+* working lobby for players to customize their characters,
+* multiplayer up to 15 players,
+* in game text chat,
+* role assignment,
+* tasks to perform for a clean victory of the "home team",
+* sabotage system for a clean victory of the "traitor team",
+* kill system,
+* mechanics for meetings,
+* unique miscellaneous map features (e.g. intercom system, environmental kills),
+* meeting system and vote system.
 
-## Requirements
-Currently you need git-lfs, which we are using to handle asset storage
+### Our plans for further releases
+* Integrated voice chat with optional location-based chat,
+* multiple maps,
+* highly customizable characters
+* official server with match making.
+
+### Implementation of our goals
+The exact way the abovementioned goals would be reached is part of the ongoing discussion in the community. Some points have been finalized, some are still being debated.
+Before contributing to the discussion, please, make sure you read through our quickly evolving documentation to see which topics are still up for debate.
+
+## Requirements for contributors
+After cloning the repository, you need git-lfs to handle asset storage and other large binary files.
+Please join our [`NextCloud instance`](https://nextcloud.opensuspect.com) under the same username, you use on Matrix, where most of the coordination will happen.
+Important Matrix (Element) rooms for contributors:
+[`Main discussion room for contributing`](https://matrix.to/#/#opensuspect:matrix.org)
+[`Important announcements with list of rooms`](https://matrix.to/#/!qpcAgDbArKnMphhMFm:matrix.org?via=matrix.org&via=madek.allaboutlbc.com&via=matrix.leander.media), please read back on this chatroom before contributing!
+[`Troubleshooting`](https://matrix.to/#/!OuHmTdwKPGMJCYeyZH:matrix.org?via=matrix.org&via=privacytools.io)
+[`Follow the discussion of the leaders' group here`](https://matrix.to/#/!iknjKWVUzTsLtMtsZN:matrix.org?via=matrix.org)
+[`Chat used in parallel with voice call meetings`](https://matrix.to/#/!kFCSiUiVIysdSVtRzh:matrix.org?via=matrix.org&via=matrix.leander.media)
