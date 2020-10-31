@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/textures/characters/black/walk-h/black-r-walk-4-4.png" type="Texture" id=2]
@@ -15,7 +15,6 @@
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-4-4.png" type="Texture" id=13]
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-3-4.png" type="Texture" id=14]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
-[ext_resource path="res://assets/player/temporaryLight.gd" type="Script" id=16]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 light_mode = 2
@@ -76,7 +75,6 @@ light_mask = -2147483647
 material = SubResource( 4 )
 frames = SubResource( 5 )
 animation = "walk-h"
-frame = 3
 playing = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
@@ -100,4 +98,3 @@ position = Vector2( 0, 18 )
 editor_only = true
 texture = ExtResource( 15 )
 mode = 2
-script = ExtResource( 16 )
