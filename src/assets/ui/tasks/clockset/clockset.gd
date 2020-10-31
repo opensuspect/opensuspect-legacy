@@ -17,6 +17,7 @@ func open():
 	if menuData.has("currentTime"):
 		currentTime = menuData["currentTime"]
 	targetTime = round(rand_range(100, 1259))
+	targetTime = roundDown(targetTime, 100) + (targetTime % 100) % 60
 	setClockTime(currentTime)
 	setWatchTime(targetTime)
 	#print("current time: ", currentTime)
@@ -60,6 +61,9 @@ func _on_clockset_about_to_show():
 	if menuData.has("currentTime"):
 		currentTime = menuData["currentTime"]
 	targetTime = round(rand_range(100, 1259))
+	print(targetTime)
+	targetTime = roundDown(targetTime, 100) + (targetTime % 100) % 60
+	print(targetTime)
 	setClockTime(currentTime)
 	setWatchTime(targetTime)
 
