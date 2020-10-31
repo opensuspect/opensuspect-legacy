@@ -27,7 +27,6 @@ drag_margin_right = 0.65
 drag_margin_bottom = 0.65
 
 [node name="MainLight" type="Light2D" parent="players/Player"]
-position = Vector2( 0, 11 )
 texture = ExtResource( 5 )
 texture_scale = 2.0
 mode = 2
