@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/textures/characters/black/walk-h/black-r-walk-4-4.png" type="Texture" id=2]
@@ -51,9 +51,6 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[sub_resource type="CanvasItemMaterial" id=6]
-light_mode = 2
-
 [sub_resource type="CanvasItemMaterial" id=7]
 light_mode = 2
 
@@ -75,12 +72,8 @@ light_mask = -2147483647
 material = SubResource( 4 )
 frames = SubResource( 5 )
 animation = "walk-h"
-frame = 2
+frame = 3
 playing = true
-
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-material = SubResource( 6 )
-color = Color( 0.188235, 0.164706, 0.164706, 1 )
 
 [node name="Label" type="Label" parent="."]
 material = SubResource( 7 )

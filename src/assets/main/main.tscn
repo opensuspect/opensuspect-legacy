@@ -9,6 +9,9 @@
 [node name="Node2D" type="YSort"]
 script = ExtResource( 3 )
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.188235, 0.164706, 0.164706, 1 )
+
 [node name="uicontroller" parent="." instance=ExtResource( 4 )]
 
 [node name="players" type="YSort" parent="."]
