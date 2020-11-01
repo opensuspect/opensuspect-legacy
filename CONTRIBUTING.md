@@ -13,3 +13,5 @@ The requirements of the programming team are very different than that of the art
 7. Wait for a review
 8. If the review is successfull, **merge**! Congratulations and thank you for contributing!
 9. If any issues are identified, correct them and return to step 7.
+
+Please join us in the [OpenSuspect programming chatroom](https://matrix.to/#/#open_sus_programming:matrix.org) if you have any questions, get stuck, or just to hang out and talk about the project.
