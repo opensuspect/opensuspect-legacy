@@ -7,7 +7,8 @@ var inMenu = false
 var ourrole
 var ournumber
 var tasks = [-1]
-var localtasks
+var taskstoassign
+var assignedtasks
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
 enum assignStyle {Percent, Amount}
@@ -26,12 +27,21 @@ func _ready():
 
 func assigntasks():
 	for id in Network.peers:
-		for task in tasks:
+		taskstoassign = tasks
+		for task in taskstoassign:
 			if task == -1:
 				rng.randomize()
-				var taskenabled = rng.randi_range(-1,0)
-				print("task assigned")
-
+				taskstoassign[task] = rng.randi_range(-1,0)
+				print("task assigned,",taskstoassign[task])
+		if id == 1:
+			assignedtasks = taskstoassign
+			print("host tasks assigned",taskstoassign)
+		else:
+			rpc_id(id,"gettasks",taskstoassign)
+			print("client tasks assigned",taskstoassign)
+remote func gettasks(tasksget):
+	assignedtasks = tasksget
+	print("we got our tasks!")
 func state_changed(old_state, new_state):
 	match new_state:
 		GameManager.State.Normal:
