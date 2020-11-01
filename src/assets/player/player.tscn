@@ -40,21 +40,21 @@ animations = [ {
 "name": "walk-h",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
-"loop": true,
-"name": "walk-up",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk-down",
 "speed": 8.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "walk-up",
+"speed": 8.0
 } ]
 
-[sub_resource type="CanvasItemMaterial" id=7]
+[sub_resource type="CanvasItemMaterial" id=6]
 light_mode = 2
 
-[sub_resource type="CanvasItemMaterial" id=6]
+[sub_resource type="CanvasItemMaterial" id=7]
 light_mode = 2
 
 [node name="Player" type="KinematicBody2D" groups=[
@@ -75,14 +75,15 @@ light_mask = -2147483647
 material = SubResource( 4 )
 frames = SubResource( 5 )
 animation = "walk-h"
+frame = 2
 playing = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-material = SubResource( 7 )
+material = SubResource( 6 )
 color = Color( 0.188235, 0.164706, 0.164706, 1 )
 
 [node name="Label" type="Label" parent="."]
-material = SubResource( 6 )
+material = SubResource( 7 )
 margin_left = -250.0
 margin_top = -55.0
 margin_right = 250.0

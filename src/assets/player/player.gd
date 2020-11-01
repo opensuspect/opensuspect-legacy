@@ -24,8 +24,8 @@ func _ready():
 		setName(Network.get_player_name())
 		id = Network.get_my_id()
 		#so light occluders don't hide your own sprite
-		$Sprite.material.set_light_mode(1)
-		$Label.material.set_light_mode(1)
+		#$Sprite.material.set_light_mode(1)
+		#$Label.material.set_light_mode(1)
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 
 func setName(newName):
