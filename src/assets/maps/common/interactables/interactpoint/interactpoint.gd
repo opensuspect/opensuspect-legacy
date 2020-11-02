@@ -14,3 +14,4 @@ func interact():
 			MapManager.interact_with(get_node(node_path), self, interact_info)
 		type.ui:
 			UIManager.open_menu(ui_name, interact_info)
+
