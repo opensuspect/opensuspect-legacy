@@ -7,9 +7,10 @@ export(NodePath) var node_path
 export(String) var ui_name
 export(Dictionary) var interact_info = {"linkedNode": get_node(node_path)}
 
-var interact_data: Dictionary = {"display_text": display_text}
+var interact_data: Dictionary = {}
 
 func _ready():
+	interact_data["display_text"] = display_text
 	match node_or_ui:
 		type.node:
 			interact_data["interact"] = get_node(node_path)

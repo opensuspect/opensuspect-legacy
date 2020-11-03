@@ -72,6 +72,9 @@ __meta__ = {
 
 [node name="interactpoint" parent="." instance=ExtResource( 5 )]
 position = Vector2( -200, -100 )
+display_text = "Interact chat"
+node_or_ui = 1
+ui_name = "chatbox"
 
 [node name="Polygon2D" type="Polygon2D" parent="interactpoint"]
 polygon = PoolVector2Array( -5, -10, 5, -10, 0, 0 )

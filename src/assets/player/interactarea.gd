@@ -2,8 +2,14 @@ extends Area2D
 
 var overlappingPoints: Array = []
 
+var pointsData: Dictionary = {}
+
 func updateInteraction():
-	print("overlapping bodies: ", overlappingPoints)
+	#print("overlapping bodies: ", overlappingPoints)
+	#print(pointsData)
+	if UIManager.interactUINode == null:
+		return
+	UIManager.interactUINode.receiveInteractData(pointsData)
 
 func raycast(to: Vector2):
 	$RayCast2D.cast_to = $RayCast2D.to_local(to)
@@ -12,12 +18,15 @@ func raycast(to: Vector2):
 	return result
 
 func _on_interactarea_body_entered(_body):
-	print(_body, " entered")
+	#print(_body, " entered")
 	if _body.is_in_group("interactpoints") and raycast(_body.global_position) == _body:
 		overlappingPoints.append(_body)
+		#using node path to make sure each interact point has a unique key
+		pointsData[str(_body.get_path()).replace("/", "")] = _body.get_interact_data()
 	updateInteraction()
 
 func _on_interactarea_body_exited(_body):
-	print(_body, " exited")
+	#print(_body, " exited")
 	overlappingPoints.erase(_body)
+	pointsData.erase(str(_body.get_path()).replace("/", ""))
 	updateInteraction()
