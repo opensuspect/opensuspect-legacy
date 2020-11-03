@@ -17,6 +17,7 @@ func _ready():
 
 	#TODO: better system for auto spawning UIs
 	instance_menu("chatbox")
+	instance_menu("interactui")
 
 #menu data is data to pass to the menu, such as a task identifier
 #reInstance is whether or not to recreate the corresponding menu node if it already exists

@@ -1,6 +1,9 @@
 extends Node
 
 var menus: Dictionary = {
+						#HUD
+						"interactui": {"scene": preload("res://assets/ui/hud/interactui/interactui.tscn")}, 
+						
 						#common UI
 						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}, 
 						"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")}, 
@@ -12,6 +15,8 @@ var menus: Dictionary = {
 var openMenus: Array = []
 
 var justClosed: String = ""
+
+var interactUINode: Node
 
 signal open_menu
 
@@ -41,6 +46,9 @@ func state_changed(old_state, new_state):
 
 func in_menu() -> bool:
 	return not openMenus.empty()
+
+func get_interact_ui_node():
+	return interactUINode
 
 func _process(_delta):
 	#if ui_cancel (most likely esc) and not in menu, open pause menu
