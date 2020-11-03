@@ -7,9 +7,9 @@ var pointsData: Dictionary = {}
 func updateInteraction():
 	#print("overlapping bodies: ", overlappingPoints)
 	#print(pointsData)
-	if UIManager.interactUINode == null:
+	if UIManager.get_interact_ui_node() == null:
 		return
-	UIManager.interactUINode.receiveInteractData(pointsData)
+	UIManager.get_interact_ui_node().receiveInteractData(pointsData)
 
 func raycast(to: Vector2):
 	$RayCast2D.cast_to = $RayCast2D.to_local(to)

@@ -47,6 +47,9 @@ func state_changed(old_state, new_state):
 func in_menu() -> bool:
 	return not openMenus.empty()
 
+func get_interact_ui_node():
+	return interactUINode
+
 func _process(_delta):
 	#if ui_cancel (most likely esc) and not in menu, open pause menu
 	if Input.is_action_just_pressed("ui_cancel") and not in_menu() and justClosed != "pausemenu":
