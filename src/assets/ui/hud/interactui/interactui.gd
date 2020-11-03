@@ -8,6 +8,9 @@ func _ready():
 	UIManager.interactUINode = self
 	createButton("hello testing button creation", "chatbox")
 
+func receiveInteractArray(interactArray: Array):
+	pass
+
 func createButton(interactText, interactWith):
 	var newButton = Button.new()
 	newButton.name = generateName(interactText)
