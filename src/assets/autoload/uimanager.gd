@@ -1,6 +1,9 @@
 extends Node
 
 var menus: Dictionary = {
+						#HUD
+						"interactui": {"scene": preload("res://assets/ui/hud/interactui/interactui.tscn")}, 
+						
 						#common UI
 						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}, 
 						"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")}, 
