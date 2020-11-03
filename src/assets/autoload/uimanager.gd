@@ -16,6 +16,8 @@ var openMenus: Array = []
 
 var justClosed: String = ""
 
+var interactUINode: Node
+
 signal open_menu
 
 func _ready():
