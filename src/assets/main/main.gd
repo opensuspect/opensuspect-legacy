@@ -118,3 +118,12 @@ puppet func update_positions(positions_dict):
 func _on_main_player_moved(movement : Vector2):
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", movement)
+
+
+func _on_maps_spawn(position):
+	# move players to spawn point
+	for i in players:
+		players[i].move_to(Vector2(position.x+((i+1)*10),position.y),5)
+		rpc("other_player_moved", i,Vector2(position.x+((i+1)*10),position.y),5)
+	# for some reason move_to doesn't work on player one
+		rpc_id(1, "player_moved", movement)
