@@ -2,6 +2,8 @@ extends Node2D
 
 var maps: Dictionary = {"lobby": {"dir": preload("res://assets/maps/lobby/lobby.tscn")}, "test": {"dir": preload("res://assets/maps/test/test.tscn")}}
 
+signal spawn(position)
+
 var currentMap: String = "lobby"
 
 func _ready() -> void:
@@ -26,3 +28,7 @@ func switchMap(newMap: String) -> void:
 	currentMap = newMap
 	var mapClone = maps[newMap].dir.instance()
 	add_child(mapClone)
+	# announce spawn point
+	var newSpawn = get_node(newMap).get_node_or_null("spawn")
+	print(newSpawn.position)
+	emit_signal("spawn",newSpawn.position)
