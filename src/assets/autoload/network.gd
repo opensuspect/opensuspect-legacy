@@ -138,6 +138,10 @@ func kick_peer(peer: int):
 	server.disconnect_peer(peer)
 
 func connect_signals() -> void:
+	print(get_tree().get_signal_connection_list("network_peer_connected"))
+	for i in get_tree().get_signal_connection_list("network_peer_connected"):
+		if i.target == self:
+			return
 # warning-ignore:return_value_discarded
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 # warning-ignore:return_value_discarded

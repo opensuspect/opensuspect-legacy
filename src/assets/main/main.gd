@@ -26,8 +26,6 @@ func _enter_tree():
 		#peer.create_server(Network.port, MAX_PLAYERS)
 		#get_tree().network_peer = peer
 # warning-ignore:return_value_discarded
-		get_tree().connect("network_peer_connected", self, "_player_connected")
-# warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 # warning-ignore:return_value_discarded
 		Network.connect("connection_handled", self, "connection_handled")
@@ -81,7 +79,7 @@ func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects
 	players.erase(id)
 
-puppet func createPlayer(id, playerName):
+puppetsync func createPlayer(id, playerName):
 	print("creating player ", id)
 	if players.keys().has(id):
 		print("not creating player, already exists")
