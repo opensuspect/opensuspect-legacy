@@ -13,6 +13,7 @@ var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
 var recentmap = ""
+var notlobby = false
 func _ready():
 	set_network_master(1)
 
@@ -126,8 +127,12 @@ func _on_maps_spawn(position,frommap):
 	# move players to spawn point
 	spawn_pos = position
 	recentmap = frommap
+	if frommap != "lobby":
+		notlobby = true
 	var arrpos = 0
 	for i in players.keys().size():
+		if notlobby and frommap == "lobby":
+			players[players.keys()[i]].spawned = []
 		if not frommap in players[players.keys()[i]].spawned:
 			players[players.keys()[i]].move_to(Vector2(position.x+((arrpos)*80),position.y),5)
 			players[players.keys()[i]].spawned.append(frommap)
