@@ -16,6 +16,7 @@ func _ready():
 	set_network_master(1)
 
 
+# warning-ignore:return_value_discarded
 	$players/Player.connect("main_player_moved", self, "_on_main_player_moved")
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
@@ -24,11 +25,15 @@ func _enter_tree():
 		#var peer = NetworkedMultiplayerENet.new()
 		#peer.create_server(Network.port, MAX_PLAYERS)
 		#get_tree().network_peer = peer
+# warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_connected", self, "_player_connected")
+# warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
+# warning-ignore:return_value_discarded
 		Network.connect("connection_handled", self, "connection_handled")
 		PlayerManager.ournumber = 0
 	elif Network.connection == Network.Connection.CLIENT:
+# warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 		#print("Connecting to ", Network.host, " on port ", Network.port)
 		#var peer = NetworkedMultiplayerENet.new()
@@ -37,7 +42,7 @@ func _enter_tree():
 	players[get_tree().get_network_unique_id()] = $players/Player
 
 # Keep the clients' player positions updated
-func _physics_process(delta):
+func _physics_process(_delta):
 	if get_tree().is_network_server():
 		var positions_dict = {}
 		for id in players.keys():
@@ -71,10 +76,6 @@ puppet func receiveNumber(number):
 	if get_tree().get_rpc_sender_id() != 1:
 		return
 	PlayerManager.ournumber = number
-
-# Called on the server when a new client connects
-func _player_connected(id):
-	return
 
 func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects

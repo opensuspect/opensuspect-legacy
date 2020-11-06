@@ -23,6 +23,7 @@ signal roles_assigned
 
 func _ready():
 	set_network_master(1)
+# warning-ignore:return_value_discarded
 	GameManager.connect("state_changed", self, "state_changed")
 
 func assigntasks():
@@ -39,9 +40,12 @@ func assigntasks():
 		else:
 			rpc_id(id,"gettasks",taskstoassign)
 			print("client tasks assigned",taskstoassign)
+
 remote func gettasks(tasksget):
 	assignedtasks = tasksget
 	print("we got our tasks!")
+
+# warning-ignore:unused_argument
 func state_changed(old_state, new_state):
 	match new_state:
 		GameManager.State.Normal:

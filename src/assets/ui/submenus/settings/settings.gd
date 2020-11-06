@@ -22,6 +22,11 @@ class Setting:
 	var config_name: String
 	var available: Array
 
+# warning-ignore:shadowed_variable
+# warning-ignore:shadowed_variable
+# warning-ignore:shadowed_variable
+# warning-ignore:shadowed_variable
+# warning-ignore:shadowed_variable
 	func _init(default, type, text, function, available = null):
 		self.default = default
 		self.value = default
@@ -54,6 +59,7 @@ func _save_state(value, node, setting):
 	call(setting.function, setting)
 
 
+# warning-ignore:unused_argument
 func dummy_function(setting):
 	pass
 

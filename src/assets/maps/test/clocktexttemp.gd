@@ -1,6 +1,7 @@
 extends Label
 
 func _ready():
+# warning-ignore:return_value_discarded
 	MapManager.connect("interacted_with", self, "interacted_with")
 
 func interacted_with(interactNode, from, interact_data):
