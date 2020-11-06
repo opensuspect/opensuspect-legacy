@@ -32,7 +32,8 @@ func client_server(port: int, playerName: String) -> void:
 	names[1] = player_name
 	print(names)
 	server = WebSocketServer.new()
-	var _err = server.listen(port, PoolStringArray(), true) #3rd input must be true to use Godot's high level networking API
+# warning-ignore:return_value_discarded
+	server.listen(port, PoolStringArray(), true) #3rd input must be true to use Godot's high level networking API
 	get_tree().set_network_peer(server)
 	connect_signals()
 	emit_signal("server_started")
