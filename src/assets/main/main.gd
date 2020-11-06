@@ -11,7 +11,7 @@ var players = {}
 var version = 9
 var intruders = 0
 var newnumber
-
+var spawn_pos = Vector2(0,0)
 func _ready():
 	set_network_master(1)
 
@@ -93,6 +93,7 @@ puppet func createPlayer(id, playerName):
 	$players.add_child(newPlayer)
 	newPlayer.setName(playerName)
 	print("New player: ", id)
+	_on_maps_spawn(spawn_pos)
 
 # Called from client side to tell the server about the player's actions
 remote func player_moved(new_movement):
@@ -122,10 +123,12 @@ func _on_main_player_moved(movement : Vector2):
 
 func _on_maps_spawn(position):
 	# move players to spawn point
+	spawn_pos = position
 	var arrpos = 0
-	for i in players:
-		players[i].move_to(Vector2(position.x+((arrpos)*100),position.y),5)
-		rpc("other_player_moved", i,Vector2(position.x+((arrpos)*100),position.y),5)
+	for i in players.keys().size():
+		if not players[players.keys()[i]].spawned:
+			players[players.keys()[i]].move_to(Vector2(position.x+((arrpos)*80),position.y),5)
+		players[players.keys()[i]].spawned = true
 		arrpos += 1
 	# for some reason move_to doesn't work on player one
 	# now it only works on player one
