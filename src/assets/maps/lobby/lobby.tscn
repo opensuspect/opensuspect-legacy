@@ -42,4 +42,4 @@ __meta__ = {
 }
 
 [node name="spawn" type="Position2D" parent="."]
-position = Vector2( -137.488, -77.4207 )
+position = Vector2( 168.19, 109.457 )

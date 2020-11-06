@@ -122,9 +122,11 @@ func _on_main_player_moved(movement : Vector2):
 
 func _on_maps_spawn(position):
 	# move players to spawn point
+	var arrpos = 0
 	for i in players:
-		players[i].move_to(Vector2(position.x+((i+1)*10),position.y),5)
-		rpc("other_player_moved", i,Vector2(position.x+((i+1)*10),position.y),5)
+		players[i].move_to(Vector2(position.x+((arrpos)*100),position.y),5)
+		rpc("other_player_moved", i,Vector2(position.x+((arrpos)*100),position.y),5)
+		arrpos += 1
 	# for some reason move_to doesn't work on player one
 	# now it only works on player one
 	# wack
