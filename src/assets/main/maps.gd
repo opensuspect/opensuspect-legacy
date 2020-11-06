@@ -2,7 +2,7 @@ extends Node2D
 
 var maps: Dictionary = {"lobby": {"dir": preload("res://assets/maps/lobby/lobby.tscn")}, "test": {"dir": preload("res://assets/maps/test/test.tscn")}}
 
-signal spawn(position)
+signal spawn(position,frommap)
 
 var currentMap: String = "lobby"
 
@@ -31,4 +31,4 @@ func switchMap(newMap: String) -> void:
 	# announce spawn point
 	var newSpawn = get_node(newMap).get_node_or_null("spawn")
 	print(newSpawn.position)
-	emit_signal("spawn",newSpawn.position)
+	emit_signal("spawn",newSpawn.position,newMap)

@@ -12,6 +12,7 @@ var version = 9
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
+var recentmap = ""
 func _ready():
 	set_network_master(1)
 
@@ -93,7 +94,7 @@ puppet func createPlayer(id, playerName):
 	$players.add_child(newPlayer)
 	newPlayer.setName(playerName)
 	print("New player: ", id)
-	_on_maps_spawn(spawn_pos)
+	_on_maps_spawn(spawn_pos, recentmap)
 
 # Called from client side to tell the server about the player's actions
 remote func player_moved(new_movement):
@@ -121,12 +122,13 @@ func _on_main_player_moved(movement : Vector2):
 		rpc_id(1, "player_moved", movement)
 
 
-func _on_maps_spawn(position):
+func _on_maps_spawn(position,frommap):
 	# move players to spawn point
 	spawn_pos = position
+	recentmap = frommap
 	var arrpos = 0
 	for i in players.keys().size():
-		if not players[players.keys()[i]].spawned:
+		if not frommap in players[players.keys()[i]].spawned:
 			players[players.keys()[i]].move_to(Vector2(position.x+((arrpos)*80),position.y),5)
-		players[players.keys()[i]].spawned = true
+			players[players.keys()[i]].spawned.append(frommap)
 		arrpos += 1

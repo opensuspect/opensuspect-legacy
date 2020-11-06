@@ -9,7 +9,7 @@ var id: int
 var ourname: String
 var myRole: String
 var velocity = Vector2(0,0)
-var spawned = false
+var spawned = []
 # Contains the current intended movement direction and magnitude in range 0 to 1
 var movement = Vector2(0,0)
 # Only true when this is the player being controlled
