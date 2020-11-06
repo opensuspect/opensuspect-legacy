@@ -40,3 +40,6 @@ text = "LOBBY"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="spawn" type="Position2D" parent="."]
+position = Vector2( -137.488, -77.4207 )

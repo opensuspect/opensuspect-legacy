@@ -126,4 +126,5 @@ func _on_maps_spawn(position):
 		players[i].move_to(Vector2(position.x+((i+1)*10),position.y),5)
 		rpc("other_player_moved", i,Vector2(position.x+((i+1)*10),position.y),5)
 	# for some reason move_to doesn't work on player one
-		rpc_id(1, "player_moved", movement)
+	# now it only works on player one
+	# wack
