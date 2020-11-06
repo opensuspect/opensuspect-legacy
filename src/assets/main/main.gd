@@ -130,6 +130,3 @@ func _on_maps_spawn(position):
 			players[players.keys()[i]].move_to(Vector2(position.x+((arrpos)*80),position.y),5)
 		players[players.keys()[i]].spawned = true
 		arrpos += 1
-	# for some reason move_to doesn't work on player one
-	# now it only works on player one
-	# wack
