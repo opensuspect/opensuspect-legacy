@@ -7,8 +7,10 @@ var currentMap: String = "lobby"
 func _ready() -> void:
 	set_network_master(1)
 	switchMap(currentMap)
+# warning-ignore:return_value_discarded
 	GameManager.connect('state_changed', self, '_on_state_change')
 
+# warning-ignore:unused_argument
 func _on_state_change(old_state, new_state) -> void:
 	match new_state:
 		GameManager.State.Lobby:

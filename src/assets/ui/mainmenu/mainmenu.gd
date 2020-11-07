@@ -1,7 +1,5 @@
 extends MarginContainer
 
-signal returnToMainMenu
-
 func _ready() -> void:
 	default_state()
 	print("Loaded locales: ", TranslationServer.get_loaded_locales())

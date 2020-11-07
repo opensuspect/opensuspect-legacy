@@ -8,6 +8,7 @@ onready var config = ConfigFile.new()
 
 func _ready():
 	set_network_master(1)
+# warning-ignore:return_value_discarded
 	UIManager.connect("open_menu", self, "open_menu")
 	var err = config.load("user://settings.cfg")
 	if err == OK:

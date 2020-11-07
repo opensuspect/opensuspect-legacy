@@ -1,4 +1,5 @@
 extends Button
+# warning-ignore:unused_signal
 signal gamestartpressed
 
 # Declare member variables here. Examples:
@@ -20,9 +21,11 @@ func _pressed():
 	print("game start triggered")
 	# TODO: Looser coupling here would be nice
 	if GameManager.get_state() == GameManager.State.Lobby:
+# warning-ignore:return_value_discarded
 		GameManager.transition(GameManager.State.Normal)
 		text = "Back to Lobby"
 	else:
+# warning-ignore:return_value_discarded
 		GameManager.transition(GameManager.State.Lobby)
 		text = "Start Game"
 	#queue_free()

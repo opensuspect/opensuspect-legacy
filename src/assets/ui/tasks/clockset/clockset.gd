@@ -16,6 +16,7 @@ func _ready():
 func open():
 	if menuData.has("currentTime"):
 		currentTime = menuData["currentTime"]
+# warning-ignore:narrowing_conversion
 	targetTime = round(rand_range(100, 1259))
 	targetTime = roundDown(targetTime, 100) + (targetTime % 100) % 60
 	setClockTime(currentTime)
@@ -60,6 +61,7 @@ func roundDown(num, step):
 func _on_clockset_about_to_show():
 	if menuData.has("currentTime"):
 		currentTime = menuData["currentTime"]
+# warning-ignore:narrowing_conversion
 	targetTime = round(rand_range(100, 1259))
 	print(targetTime)
 	targetTime = roundDown(targetTime, 100) + (targetTime % 100) % 60

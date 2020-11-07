@@ -21,6 +21,7 @@ var interactUINode: Node
 signal open_menu
 
 func _ready():
+# warning-ignore:return_value_discarded
 	GameManager.connect("state_changed", self, "state_changed")
 
 #menu data is data to pass to the menu, such as a task identifier
@@ -38,6 +39,7 @@ func menu_closed(menuName):
 	openMenus.erase(menuName)
 	justClosed = menuName
 
+# warning-ignore:unused_argument
 func state_changed(old_state, new_state):
 	if new_state == GameManager.State.Normal:
 		pass

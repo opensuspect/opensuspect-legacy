@@ -28,5 +28,6 @@ func _on_interactarea_body_entered(_body):
 func _on_interactarea_body_exited(_body):
 	#print(_body, " exited")
 	overlappingPoints.erase(_body)
+# warning-ignore:return_value_discarded
 	pointsData.erase(str(_body.get_path()).replace("/", ""))
 	updateInteraction()

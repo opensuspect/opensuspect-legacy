@@ -17,6 +17,9 @@ func _process(_delta):
 	margin_top = $CenterContainer.margin_top
 	margin_bottom = $CenterContainer.margin_bottom
 
+func _on_pausemenu_about_to_show():
+	pass
+
 func _on_pausemenu_popup_hide():
 	close()
 
