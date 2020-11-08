@@ -22,11 +22,6 @@ class Setting:
 	var config_name: String
 	var available: Array
 
-# warning-ignore:shadowed_variable
-# warning-ignore:shadowed_variable
-# warning-ignore:shadowed_variable
-# warning-ignore:shadowed_variable
-# warning-ignore:shadowed_variable
 	func _init(default, type, text, function, available = null):
 		self.default = default
 		self.value = default
@@ -59,7 +54,6 @@ func _save_state(value, node, setting):
 	call(setting.function, setting)
 
 
-# warning-ignore:unused_argument
 func dummy_function(setting):
 	pass
 
@@ -84,6 +78,11 @@ func _ready():
 	var back_button = Button.new()
 	back_button.text = tr("Back")
 	back_button.connect("pressed", get_node(".."), "_on_Return")
+	
+	var button = Button.new()
+	button.text = tr("Keybinds")
+	button.connect("pressed", self, "_on_Button_pressed")
+	
 
 	# Init settings view
 	var vbox = $Settings/VBoxContainer
@@ -132,8 +131,11 @@ func _ready():
 				slider.value = setting.value
 				slider.set_h_size_flags(SIZE_EXPAND_FILL)
 				hbox.add_child(slider)
+				
+
 
 		vbox.add_child(hbox)
+	vbox.add_child(button)
 	vbox.add_child(back_button)
 
 
@@ -153,3 +155,6 @@ func get_languages() -> Array:
 
 func set_language(setting):
 	TranslationServer.set_locale(setting.available[setting.value])
+	
+func _on_Button_pressed():
+	get_tree().change_scene("res://assets/ui/submenus/settings/Keybind/KeyBind.tscn")
