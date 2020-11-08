@@ -6,10 +6,10 @@
 [node name="lobby" type="YSort"]
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -2048.0
-margin_top = -2048.0
-margin_right = 2048.0
-margin_bottom = 2048.0
+margin_left = -2174.0
+margin_top = -1927.0
+margin_right = 1922.0
+margin_bottom = 2169.0
 color = Color( 0.239216, 0.239216, 0.239216, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -40,3 +40,6 @@ text = "LOBBY"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="spawn" type="Position2D" parent="."]
+position = Vector2( -146.715, 106.616 )
