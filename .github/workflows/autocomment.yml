@@ -10,10 +10,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: "HOW TO REVIEW:
-- Test multiplayer (Client and Host)
+          msg: "HOW TO REVIEW:\n
+- Test multiplayer (Client and Host)\n
 - Check build status\n
 - Check UI\n
-- Check the code
+- Check the code\n
+- Check artifacts $PR_URI/checks
 - <del>Is it working with translations?</del>"
-          check_for_duplicate_msg: false  # OPTIONAL 
+          check_for_duplicate_msg: true  # OPTIONAL 
