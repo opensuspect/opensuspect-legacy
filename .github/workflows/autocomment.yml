@@ -15,6 +15,7 @@ jobs:
 - Check build status\n
 - Check UI\n
 - Check the code\n
-- Check artifacts $PR_URI/checks
-- <del>Is it working with translations?</del>"
+- Check artifacts $PR_URI/checks\n
+- <del>Is it working with translations?</del>
+\"$GITHUB_EVENT_PATH\""
           check_for_duplicate_msg: false  # Will change this after debugging 
