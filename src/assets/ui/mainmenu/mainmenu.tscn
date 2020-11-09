@@ -137,15 +137,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control4" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+[node name="Control5" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
 margin_top = 150.0
 margin_right = 640.0
 margin_bottom = 150.0
-
-[node name="Control5" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
-margin_top = 200.0
-margin_right = 640.0
-margin_bottom = 200.0
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5"]
 anchor_right = 1.0
