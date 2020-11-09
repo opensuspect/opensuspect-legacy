@@ -1,0 +1,19 @@
+name: comment-on-pr example
+on: pull_request
+jobs:
+  example:
+    name: how to review
+    runs-on: ubuntu-latest
+    steps:
+      - name: comment PR
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: "HOW TO REVIEW:
+- Test multiplayer (Client and Host)
+- Check build status\n
+- Check UI\n
+- Check the code
+- <del>Is it working with translations?</del>"
+          check_for_duplicate_msg: false  # OPTIONAL 
