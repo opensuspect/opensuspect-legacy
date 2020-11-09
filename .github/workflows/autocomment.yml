@@ -5,8 +5,9 @@ jobs:
     name: how to review
     runs-on: ubuntu-latest
     steps:
-      - name: Pull number
-        run:   echo ::set-env name=PULL_NUMBER::$(echo "$GITHUB_REF" | awk -F / '{print $3}')
+      # Fix deprecation issue
+      #- name: Pull number
+      #  run:   echo ::set-env name=PULL_NUMBER::$(echo "$GITHUB_REF" | awk -F / '{print $3}')
       - name: comment PR
         uses: unsplash/comment-on-pr@master
         env:
@@ -17,7 +18,6 @@ jobs:
 - Check build status\n
 - Check UI\n
 - Check the code\n
-- Check artifacts $PR_URI/checks\n
-- <del>Is it working with translations?</del>\n
-${PULL_NUMBER}"
-          check_for_duplicate_msg: false  # Will change this after debugging 
+- Check build artifacts\n
+- <del>Is it working with translations?</del>\n" # Use PULL_NUMBER when I figure out how
+          check_for_duplicate_msg: true  # Set to true, false only for testing 
