@@ -9,6 +9,8 @@ func updateInteraction():
 	#print(pointsData)
 	if UIManager.get_interact_ui_node() == null:
 		return
+	if not get_parent().main_player:
+		return
 	UIManager.get_interact_ui_node().receiveInteractData(pointsData)
 
 func raycast(to: Vector2):
