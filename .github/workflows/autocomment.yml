@@ -21,3 +21,5 @@ jobs:
 - Check build artifacts\n
 - <del>Is it working with translations?</del>\n" # Use PULL_NUMBER when I figure out how
           check_for_duplicate_msg: true  # Set to true, false only for testing 
+          
+# TODO: Add a little bit of markdown
