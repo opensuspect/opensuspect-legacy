@@ -9,6 +9,7 @@ var id: int
 var ourname: String
 var myRole: String
 var velocity = Vector2(0,0)
+var spawned = []
 # Contains the current intended movement direction and magnitude in range 0 to 1
 var movement = Vector2(0,0)
 # Only true when this is the player being controlled
@@ -26,6 +27,7 @@ func _ready():
 		#so light occluders don't hide your own sprite
 		#$Sprite.material.set_light_mode(1)
 		#$Label.material.set_light_mode(1)
+# warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 
 func setName(newName):
@@ -57,6 +59,7 @@ func setNameColor(newColor: Color):
 
 # Only called when main_player is true
 func get_input():
+# warning-ignore:unused_variable
 	var prev_velocity = velocity
 	movement = Vector2(0, 0)
 	if not UIManager.in_menu():
@@ -64,7 +67,7 @@ func get_input():
 		movement.y = Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
 		movement = movement.normalized()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if main_player:
 		get_input()
 		emit_signal("main_player_moved", movement)

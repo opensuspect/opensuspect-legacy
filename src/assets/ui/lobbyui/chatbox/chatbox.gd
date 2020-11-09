@@ -98,5 +98,8 @@ func _on_TextEdit_cursor_changed():
 	cursorCoord.x = textbox.cursor_get_line()
 	cursorCoord.y = textbox.cursor_get_column()
 
+func _on_chatbox_about_to_show():
+	pass
+
 func _on_chatbox_popup_hide():
 	close()

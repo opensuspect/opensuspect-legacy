@@ -89,3 +89,6 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="spawn" type="Position2D" parent="."]
+position = Vector2( 145.146, 20.1298 )

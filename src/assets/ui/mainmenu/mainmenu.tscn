@@ -137,15 +137,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control4" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
+[node name="Control5" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
 margin_top = 150.0
 margin_right = 640.0
 margin_bottom = 150.0
-
-[node name="Control5" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
-margin_top = 200.0
-margin_right = 640.0
-margin_bottom = 200.0
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5"]
 anchor_right = 1.0
@@ -192,7 +187,6 @@ margin_left = 64.0
 margin_top = 15.0
 margin_right = 704.0
 margin_bottom = 215.0
-[connection signal="returnToMainMenu" from="VBoxContainer/MarginContainer/MenuArea" to="VBoxContainer/MarginContainer/MenuArea" method="_on_MenuArea_returnToMainMenu"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/CenterContainer/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]

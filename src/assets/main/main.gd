@@ -11,11 +11,14 @@ var players = {}
 var version = 9
 var intruders = 0
 var newnumber
-
+var spawn_pos = Vector2(0,0)
+var recentmap = ""
+var notlobby = false
 func _ready():
 	set_network_master(1)
 
 
+# warning-ignore:return_value_discarded
 	$players/Player.connect("main_player_moved", self, "_on_main_player_moved")
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
@@ -24,11 +27,13 @@ func _enter_tree():
 		#var peer = NetworkedMultiplayerENet.new()
 		#peer.create_server(Network.port, MAX_PLAYERS)
 		#get_tree().network_peer = peer
-		get_tree().connect("network_peer_connected", self, "_player_connected")
+# warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
+# warning-ignore:return_value_discarded
 		Network.connect("connection_handled", self, "connection_handled")
 		PlayerManager.ournumber = 0
 	elif Network.connection == Network.Connection.CLIENT:
+# warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 		#print("Connecting to ", Network.host, " on port ", Network.port)
 		#var peer = NetworkedMultiplayerENet.new()
@@ -37,7 +42,7 @@ func _enter_tree():
 	players[get_tree().get_network_unique_id()] = $players/Player
 
 # Keep the clients' player positions updated
-func _physics_process(delta):
+func _physics_process(_delta):
 	if get_tree().is_network_server():
 		var positions_dict = {}
 		for id in players.keys():
@@ -72,15 +77,11 @@ puppet func receiveNumber(number):
 		return
 	PlayerManager.ournumber = number
 
-# Called on the server when a new client connects
-func _player_connected(id):
-	return
-
 func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects
 	players.erase(id)
 
-puppet func createPlayer(id, playerName):
+puppetsync func createPlayer(id, playerName):
 	print("creating player ", id)
 	if players.keys().has(id):
 		print("not creating player, already exists")
@@ -93,6 +94,7 @@ puppet func createPlayer(id, playerName):
 	$players.add_child(newPlayer)
 	newPlayer.setName(playerName)
 	print("New player: ", id)
+	_on_maps_spawn(spawn_pos, recentmap)
 
 # Called from client side to tell the server about the player's actions
 remote func player_moved(new_movement):
@@ -118,3 +120,19 @@ puppet func update_positions(positions_dict):
 func _on_main_player_moved(movement : Vector2):
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", movement)
+
+
+func _on_maps_spawn(position,frommap):
+	# move players to spawn point
+	spawn_pos = position
+	recentmap = frommap
+	if frommap != "lobby":
+		notlobby = true
+	var arrpos = 0
+	for i in players.keys().size():
+		if notlobby and frommap == "lobby":
+			players[players.keys()[i]].spawned = []
+		if not frommap in players[players.keys()[i]].spawned:
+			players[players.keys()[i]].move_to(Vector2(position.x+((arrpos)*80),position.y),5)
+			players[players.keys()[i]].spawned.append(frommap)
+		arrpos += 1
