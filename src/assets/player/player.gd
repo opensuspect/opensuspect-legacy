@@ -9,6 +9,7 @@ var id: int
 var ourname: String
 var myRole: String
 var velocity = Vector2(0,0)
+var spawned = []
 # Contains the current intended movement direction and magnitude in range 0 to 1
 var movement = Vector2(0,0)
 # Only true when this is the player being controlled
@@ -23,6 +24,10 @@ func _ready():
 	if main_player:
 		setName(Network.get_player_name())
 		id = Network.get_my_id()
+		#so light occluders don't hide your own sprite
+		#$Sprite.material.set_light_mode(1)
+		#$Label.material.set_light_mode(1)
+# warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 
 func setName(newName):
@@ -54,29 +59,27 @@ func setNameColor(newColor: Color):
 
 # Only called when main_player is true
 func get_input():
+# warning-ignore:unused_variable
 	var prev_velocity = velocity
 	movement = Vector2(0, 0)
 	if not UIManager.in_menu():
 		movement.x = Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left')
 		movement.y = Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
 		movement = movement.normalized()
-		#we did it boys, micheal jackson is no more
-#		$Sprite.play("walk-up") for some reason having this makes it not work
 
-	velocity = movement * speed
-
-	#interpolate velocity:
-	if velocity.x == 0:
-		velocity.x = lerp(prev_velocity.x, 0, 0.17)
-	if velocity.y == 0:
-		velocity.y = lerp(prev_velocity.y, 0, 0.17)
-
-func _physics_process(delta):
+func _physics_process(_delta):
 	if main_player:
 		get_input()
+		emit_signal("main_player_moved", movement)
+	if get_tree().is_network_server():
+		var prev_velocity = velocity
+		velocity = movement * speed
+		#interpolate velocity:
+		if velocity.x == 0:
+			velocity.x = lerp(prev_velocity.x, 0, 0.17)
+		if velocity.y == 0:
+			velocity.y = lerp(prev_velocity.y, 0, 0.17)
 		velocity = move_and_slide(velocity)
-		emit_signal("main_player_moved", position, movement)
-
 	# We handle animations and stuff here
 	if movement.x > x_anim_margin:
 		$Sprite.play("walk-h")
@@ -92,6 +95,5 @@ func _physics_process(delta):
 		$Sprite.play("idle")
 
 func move_to(new_pos, new_movement):
-	# Movement check here
 	position = new_pos
 	movement = new_movement

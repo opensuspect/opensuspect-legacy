@@ -1,6 +1,7 @@
 extends Label
 
 func _ready():
+# warning-ignore:return_value_discarded
 	MapManager.connect("interacted_with", self, "interacted_with")
 
 func interacted_with(interactNode, from, interact_data):
@@ -9,4 +10,6 @@ func interacted_with(interactNode, from, interact_data):
 	if from.name == "clockset" and interact_data.has("newText"):
 		text = interact_data["newText"]
 		return
-	UIManager.open_menu("clockset", {"linkedNode": self, "currentTime": int(text)})
+	if PlayerManager.assignedtasks[0] == 0:
+		UIManager.open_menu("clockset", {"linkedNode": self, "currentTime": int(text)})
+#test if client has correct assigned task

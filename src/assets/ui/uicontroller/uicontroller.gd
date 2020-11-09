@@ -8,6 +8,7 @@ onready var config = ConfigFile.new()
 
 func _ready():
 	set_network_master(1)
+# warning-ignore:return_value_discarded
 	UIManager.connect("open_menu", self, "open_menu")
 	var err = config.load("user://settings.cfg")
 	if err == OK:
@@ -17,6 +18,7 @@ func _ready():
 
 	#TODO: better system for auto spawning UIs
 	instance_menu("chatbox")
+	instance_menu("interactui")
 
 #menu data is data to pass to the menu, such as a task identifier
 #reInstance is whether or not to recreate the corresponding menu node if it already exists

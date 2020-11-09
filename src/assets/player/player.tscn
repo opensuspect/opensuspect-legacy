@@ -15,16 +15,19 @@
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-4-4.png" type="Texture" id=13]
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-3-4.png" type="Texture" id=14]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
-[ext_resource path="res://assets/player/temporaryLight.gd" type="Script" id=16]
+[ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 light_mode = 2
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 100.0
 
 [sub_resource type="CanvasItemMaterial" id=2]
 light_mode = 2
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 15.0
+radius = 12.0
 
 [sub_resource type="CanvasItemMaterial" id=4]
 light_mode = 2
@@ -36,26 +39,23 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
 "loop": true,
-"name": "walk-h",
-"speed": 5.0
+"name": "walk-down",
+"speed": 8.0
 }, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk-up",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
-"name": "walk-down",
-"speed": 8.0
+"name": "walk-h",
+"speed": 5.0
 } ]
 
 [sub_resource type="CanvasItemMaterial" id=6]
-light_mode = 2
-
-[sub_resource type="CanvasItemMaterial" id=7]
 light_mode = 2
 
 [node name="Player" type="KinematicBody2D" groups=[
@@ -65,35 +65,52 @@ material = SubResource( 1 )
 collision_layer = 2
 script = ExtResource( 1 )
 
+[node name="interactarea" type="Area2D" parent="."]
+position = Vector2( 0, -20 )
+gravity_vec = Vector2( 0, 0 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+collision_layer = 0
+collision_mask = 16
+script = ExtResource( 16 )
+
+[node name="RayCast2D" type="RayCast2D" parent="interactarea"]
+enabled = true
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interactarea"]
+shape = SubResource( 7 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 material = SubResource( 2 )
-position = Vector2( 0, 20 )
 rotation = 1.5708
 shape = SubResource( 3 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
+light_mask = -2147483647
 material = SubResource( 4 )
+position = Vector2( 0, -18 )
 frames = SubResource( 5 )
 animation = "walk-h"
+frame = 1
 playing = true
 
 [node name="Label" type="Label" parent="."]
 material = SubResource( 6 )
 margin_left = -250.0
-margin_top = -55.0
+margin_top = -75.0
 margin_right = 250.0
-margin_bottom = -61.0
+margin_bottom = -53.0
 text = "Pog"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-material = SubResource( 7 )
-color = Color( 0.188235, 0.164706, 0.164706, 1 )
-
 [node name="temporaryLight" type="Light2D" parent="."]
+editor_only = true
 texture = ExtResource( 15 )
 mode = 2
-script = ExtResource( 16 )
+[connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
+[connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]

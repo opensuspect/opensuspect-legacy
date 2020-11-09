@@ -1,6 +1,37 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/maps/common/elements/walls/wallhorizontal/wallhorizontal.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/maps/common/elements/walls/wallvertical/wallvertical.tscn" type="PackedScene" id=2]
 
 [node name="lobby" type="YSort"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -2174.0
+margin_top = -1927.0
+margin_right = 1922.0
+margin_bottom = 2169.0
+color = Color( 0.239216, 0.239216, 0.239216, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="walls" type="YSort" parent="."]
+
+[node name="wallhorizontal1" parent="walls" instance=ExtResource( 1 )]
+position = Vector2( 0, -200 )
+scale = Vector2( 33, 3 )
+
+[node name="wallhorizontal2" parent="walls" instance=ExtResource( 1 )]
+position = Vector2( 0, 200 )
+scale = Vector2( 33, 3 )
+
+[node name="wallvertical" parent="walls" instance=ExtResource( 2 )]
+position = Vector2( -300, 0 )
+scale = Vector2( 3, 23 )
+
+[node name="wallvertical2" parent="walls" instance=ExtResource( 2 )]
+position = Vector2( 300, 0 )
+scale = Vector2( 3, 23 )
 
 [node name="Label" type="Label" parent="."]
 margin_right = 40.0
@@ -9,3 +40,6 @@ text = "LOBBY"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="spawn" type="Position2D" parent="."]
+position = Vector2( -146.715, 106.616 )

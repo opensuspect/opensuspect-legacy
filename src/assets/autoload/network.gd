@@ -20,6 +20,7 @@ signal connection_handled
 func _ready() -> void:
 	# give the server access to puppet functions and variables
 	set_network_master(1)
+# warning-ignore:return_value_discarded
 	GameManager.connect('state_changed', self, '_on_state_changed')
 
 func client_server(port: int, playerName: String) -> void:
@@ -31,11 +32,13 @@ func client_server(port: int, playerName: String) -> void:
 	names[1] = player_name
 	print(names)
 	server = WebSocketServer.new()
+# warning-ignore:return_value_discarded
 	server.listen(port, PoolStringArray(), true) #3rd input must be true to use Godot's high level networking API
 	get_tree().set_network_peer(server)
 	connect_signals()
 	emit_signal("server_started")
 
+# warning-ignore:function_conflicts_variable
 func client(hostName: String, port: int, playerName: String) -> void:
 	print("Connecting to server ", hostName, " on port ", port, " with host player name ", playerName)
 	connection = Connection.CLIENT
@@ -104,7 +107,7 @@ func _process(_delta) -> void:
 		else: #connection status is disconnected
 			terminate_connection()
 
-func toss(newValue) -> void:
+func toss(_newValue) -> void:
 	pass
 	
 func deny() -> void:
@@ -122,6 +125,7 @@ func terminate_connection():
 		client = null
 	peers.clear()
 	names.clear()
+# warning-ignore:return_value_discarded
 	GameManager.transition(GameManager.State.Start)
 
 func kick_peer(peer: int):
@@ -134,10 +138,19 @@ func kick_peer(peer: int):
 	server.disconnect_peer(peer)
 
 func connect_signals() -> void:
+	print(get_tree().get_signal_connection_list("network_peer_connected"))
+	for i in get_tree().get_signal_connection_list("network_peer_connected"):
+		if i.target == self:
+			return
+# warning-ignore:return_value_discarded
 	get_tree().connect("network_peer_connected", self, "_player_connected")
+# warning-ignore:return_value_discarded
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
+# warning-ignore:return_value_discarded
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
+# warning-ignore:return_value_discarded
 	get_tree().connect("connection_failed", self, "_connection_failed")
+# warning-ignore:return_value_discarded
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 
 func get_my_id() -> int:
@@ -152,6 +165,7 @@ func get_player_name(id: int = myID) -> String:
 func get_peers() -> Array:
 	return peers
 
+# warning-ignore:unused_argument
 func _on_state_changed(old_state, new_state) -> void:
 	match new_state:
 		GameManager.State.Normal:
