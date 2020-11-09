@@ -17,4 +17,4 @@ jobs:
 - Check the code\n
 - Check artifacts $PR_URI/checks
 - <del>Is it working with translations?</del>"
-          check_for_duplicate_msg: true  # OPTIONAL 
+          check_for_duplicate_msg: false  # Will change this after debugging 
