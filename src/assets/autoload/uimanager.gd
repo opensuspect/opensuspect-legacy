@@ -1,6 +1,6 @@
 extends Node
 
-var filepath = "res://assets/ui/submenus/settings/Keybind/keybinds.ini"
+var filepath = ("user://settings.cfg")
 var configfile
 var keybinds = {}
 
@@ -27,15 +27,14 @@ signal open_menu
 func _ready():
 	configfile = ConfigFile.new()
 	if configfile.load(filepath) == OK:
-		for key in configfile.get_section_keys("keybinds"):
-			var key_value = configfile.get_value("keybinds", key)
+		for key in configfile.get_section_keys("Keybinds"):
+			var key_value = configfile.get_value("Keybinds", key)
 			#print(key, ":" ,OS.get_scancode_string(key_value))
 			#keybinds[key] = key_value
 			if str(key_value) != "":
 				keybinds[key] = key_value
 			else:
 				keybinds[key] = null
-			
 	set_game_binds()
 	GameManager.connect("state_changed", self, "state_changed")
 
@@ -87,12 +86,11 @@ func set_game_binds():#Set new binds
 		
 	#print(keybinds)
 
-
 func write_config():
 	for key in keybinds.keys():
 		var key_value = keybinds[key]
 		if key_value != null:
-			configfile.set_value("keybinds", key, key_value)
+			configfile.set_value("Keybinds", key, key_value)
 		else:
-			configfile.set_value("keybinds", key, "")
+			configfile.set_value("Keybinds", key, "")
 	configfile.save(filepath)
