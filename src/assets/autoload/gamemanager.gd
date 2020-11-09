@@ -15,7 +15,9 @@ signal state_changed
 
 func _ready():
 	set_network_master(1)
+# warning-ignore:return_value_discarded
 	get_tree().connect("connected_to_server", self, "_on_connected")
+# warning-ignore:return_value_discarded
 	Network.connect("server_started", self, "_on_connected")
 
 func transition(new_state) -> bool:
@@ -24,7 +26,7 @@ func transition(new_state) -> bool:
 		var old_state: int = state
 		state = new_state
 		emit_signal('state_changed', old_state, new_state)
-		if get_tree().is_network_server():
+		if get_tree().is_network_server() and true:
 			rpc("receiveTransition", new_state)
 		print("transition successful")
 		return true
@@ -51,4 +53,5 @@ func ingame() -> bool:
 	return [State.Normal].has(state)
 
 func _on_connected() -> void:
+# warning-ignore:return_value_discarded
 	transition(State.Lobby)
