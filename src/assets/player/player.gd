@@ -27,6 +27,7 @@ func _ready():
 	else:
 		$MainLight.queue_free()
 		$Camera2D.queue_free()
+	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
