@@ -12,8 +12,6 @@ var version = 10
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
-var recentmap = ""
-var notlobby = false
 func _ready():
 	set_network_master(1)
 
@@ -29,7 +27,6 @@ func _enter_tree():
 	elif Network.connection == Network.Connection.CLIENT:
 # warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-	#players[get_tree().get_network_unique_id()] = $players/Player
 
 # Keep the clients' player positions updated
 func _physics_process(_delta):
@@ -54,10 +51,6 @@ func connection_handled(id, playerName):
 	#tell new player to create existing players
 	print("telling ", id, " to create players")
 	rpc_id(id, "createPlayers", Network.get_player_names())
-#	for i in players.keys():
-#		if i != id:
-#			print("telling ", id, " to create player ", i)
-#			rpc_id(id, "createPlayer", i, Network.names[i])
 
 puppet func checkVersion(sversion):
 	if version != sversion:
@@ -131,7 +124,7 @@ func _on_main_player_moved(movement : Vector2):
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", movement)
 
-master func _on_maps_spawn(spawnPos,frommap):
+master func _on_maps_spawn(spawnPos, _frommap):
 	#print("spawnPos: ", spawnPos)
 	if not get_tree().is_network_server():
 		return
@@ -142,18 +135,3 @@ master func _on_maps_spawn(spawnPos,frommap):
 		spawnPointDict[players.keys()[i]] = Vector2(spawnPos.x+(i*80), spawnPos.y)
 	#spawn players
 	rpc("createPlayers", Network.get_player_names(), spawnPointDict)
-	return #ANYTHING BELOW THIS WILL NOT BE RUN
-#-----------------------------------------------------------------------------------------
-	# move players to spawn point
-# warning-ignore:unreachable_code
-	recentmap = frommap
-	if frommap != "lobby":
-		notlobby = true
-	var arrpos = 0
-	for i in players.keys().size():
-		if notlobby and frommap == "lobby":
-			players[players.keys()[i]].spawned = []
-		if not frommap in players[players.keys()[i]].spawned:
-			players[players.keys()[i]].move_to(Vector2(spawnPos.x+((arrpos)*80),spawnPos.y), Vector2(0,0))
-			players[players.keys()[i]].spawned.append(frommap)
-		#arrpos += 1
