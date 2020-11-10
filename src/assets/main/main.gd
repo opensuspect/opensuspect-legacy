@@ -124,14 +124,17 @@ func _on_main_player_moved(movement : Vector2):
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", movement)
 
-master func _on_maps_spawn(spawnPos, _frommap):
+master func _on_maps_spawn(spawnPositions: Array):
 	#print("spawnPos: ", spawnPos)
 	if not get_tree().is_network_server():
 		return
-	spawn_pos = spawnPos
+	spawn_pos = spawnPositions[0]
 	#generate spawn point dict
 	var spawnPointDict: Dictionary = {}
 	for i in players.keys().size():
-		spawnPointDict[players.keys()[i]] = Vector2(spawnPos.x+(i*80), spawnPos.y)
+		#spawnPointDict[players.keys()[i]] = Vector2(spawnPos.x+(i*80), spawnPos.y)
+		spawnPointDict[players.keys()[i]] = spawnPositions[i]
+		if spawnPointDict[players.keys()[i]] == null:
+			spawnPointDict[players.keys()[i]] = spawn_pos
 	#spawn players
 	rpc("createPlayers", Network.get_player_names(), spawnPointDict)

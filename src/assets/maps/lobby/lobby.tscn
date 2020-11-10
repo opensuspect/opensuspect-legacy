@@ -41,5 +41,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="spawn" type="Position2D" parent="."]
-position = Vector2( -146.715, 106.616 )
+[node name="spawnpoints" type="Node2D" parent="."]
+
+[node name="Position2D" type="Position2D" parent="spawnpoints"]
+position = Vector2( -200, -100 )
+
+[node name="Position2D2" type="Position2D" parent="spawnpoints"]
+position = Vector2( -100, -100 )
+
+[node name="Position2D3" type="Position2D" parent="spawnpoints"]
+position = Vector2( 0, -100 )
+
+[node name="Position2D4" type="Position2D" parent="spawnpoints"]
+position = Vector2( 100, -100 )
+
+[node name="Position2D5" type="Position2D" parent="spawnpoints"]
+position = Vector2( 200, -100 )
+
+[node name="Position2D6" type="Position2D" parent="spawnpoints"]
+position = Vector2( -200, 100 )
+
+[node name="Position2D7" type="Position2D" parent="spawnpoints"]
+position = Vector2( -100, 100 )
+
+[node name="Position2D8" type="Position2D" parent="spawnpoints"]
+position = Vector2( 0, 100 )
+
+[node name="Position2D9" type="Position2D" parent="spawnpoints"]
+position = Vector2( 100, 100 )
+
+[node name="Position2D10" type="Position2D" parent="spawnpoints"]
+position = Vector2( 200, 100 )

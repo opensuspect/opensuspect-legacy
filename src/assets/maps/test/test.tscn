@@ -32,12 +32,12 @@ texture = ExtResource( 1 )
 scale = Vector2( 0.05, 0.05 )
 shape = SubResource( 2 )
 
-[node name="testdoor" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, -100 )
-
 [node name="standbutton" parent="." instance=ExtResource( 3 )]
-position = Vector2( -100, -100 )
+position = Vector2( -100, -150 )
 node_path = NodePath("../testdoor")
+
+[node name="testdoor" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, -150 )
 
 [node name="standbutton2" parent="." instance=ExtResource( 3 )]
 position = Vector2( -149.082, 83.9052 )
@@ -92,3 +92,17 @@ __meta__ = {
 
 [node name="spawn" type="Position2D" parent="."]
 position = Vector2( 145.146, 20.1298 )
+
+[node name="spawnpoints" type="Node2D" parent="."]
+
+[node name="Position2D1" type="Position2D" parent="spawnpoints"]
+position = Vector2( -100, 0 )
+
+[node name="Position2D2" type="Position2D" parent="spawnpoints"]
+position = Vector2( 0, -100 )
+
+[node name="Position2D3" type="Position2D" parent="spawnpoints"]
+position = Vector2( 100, 0 )
+
+[node name="Position2D4" type="Position2D" parent="spawnpoints"]
+position = Vector2( 0, 100 )
