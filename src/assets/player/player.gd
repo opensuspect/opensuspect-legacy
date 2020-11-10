@@ -24,9 +24,9 @@ func _ready():
 	if main_player:
 		setName(Network.get_player_name())
 		id = Network.get_my_id()
-		#so light occluders don't hide your own sprite
-		#$Sprite.material.set_light_mode(1)
-		#$Label.material.set_light_mode(1)
+	else:
+		$MainLight.queue_free()
+		$Camera2D.queue_free()
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 

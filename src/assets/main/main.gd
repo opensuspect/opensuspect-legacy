@@ -23,23 +23,16 @@ func _ready():
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
 	if Network.connection == Network.Connection.CLIENT_SERVER:
-		#print("Starting server")
-		#var peer = NetworkedMultiplayerENet.new()
-		#peer.create_server(Network.port, MAX_PLAYERS)
-		#get_tree().network_peer = peer
 # warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 # warning-ignore:return_value_discarded
 		Network.connect("connection_handled", self, "connection_handled")
 		PlayerManager.ournumber = 0
+		createPlayer(Network.get_my_id(), Network.get_player_name())
 	elif Network.connection == Network.Connection.CLIENT:
 # warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-		#print("Connecting to ", Network.host, " on port ", Network.port)
-		#var peer = NetworkedMultiplayerENet.new()
-		#peer.create_client(Network.host, Network.port)
-		#get_tree().network_peer = peer
-	players[get_tree().get_network_unique_id()] = $players/Player
+	#players[get_tree().get_network_unique_id()] = $players/Player
 
 # Keep the clients' player positions updated
 func _physics_process(_delta):
@@ -63,10 +56,12 @@ func connection_handled(id, playerName):
 			print("telling ", i, " to create player ", id)
 			rpc_id(i, "createPlayer", id, playerName)
 	#tell new player to create existing players
-	for i in players.keys():
-		if i != id:
-			print("telling ", id, " to create player ", i)
-			rpc_id(id, "createPlayer", i, Network.names[i])
+	print("telling ", id, " to create players")
+	rpc_id(id, "createPlayers", Network.get_player_names())
+#	for i in players.keys():
+#		if i != id:
+#			print("telling ", id, " to create player ", i)
+#			rpc_id(id, "createPlayer", i, Network.names[i])
 
 puppet func checkVersion(sversion):
 	if version != sversion:
@@ -81,6 +76,12 @@ func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects
 	players.erase(id)
 
+#idNameDict should look like {<network ID>: <player name>}
+puppetsync func createPlayers(idNameDict: Dictionary):
+	players.clear()
+	for i in idNameDict.keys():
+		createPlayer(i, idNameDict[i])
+
 puppetsync func createPlayer(id, playerName):
 	print("creating player ", id)
 	if players.keys().has(id):
@@ -88,11 +89,12 @@ puppetsync func createPlayer(id, playerName):
 		return
 	var newPlayer = player_scene.instance()
 	newPlayer.id = id
-	newPlayer.ourname = playerName
-	newPlayer.main_player = false
+	newPlayer.setName(playerName)
+	newPlayer.set_network_master(id)
+	if id == Network.get_my_id():
+		newPlayer.main_player = true
 	players[id] = newPlayer
 	$players.add_child(newPlayer)
-	newPlayer.setName(playerName)
 	print("New player: ", id)
 	_on_maps_spawn(spawn_pos, recentmap)
 
@@ -133,6 +135,6 @@ func _on_maps_spawn(position,frommap):
 		if notlobby and frommap == "lobby":
 			players[players.keys()[i]].spawned = []
 		if not frommap in players[players.keys()[i]].spawned:
-			players[players.keys()[i]].move_to(Vector2(position.x+((arrpos)*80),position.y),5)
+			players[players.keys()[i]].move_to(Vector2(position.x+((arrpos)*80),position.y), Vector2(0,0))
 			players[players.keys()[i]].spawned.append(frommap)
 		arrpos += 1

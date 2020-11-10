@@ -1,10 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/main/maps.gd" type="Script" id=2]
 [ext_resource path="res://assets/main/main.gd" type="Script" id=3]
 [ext_resource path="res://assets/ui/uicontroller/uicontroller.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/player/textures/light.png" type="Texture" id=5]
 
 [node name="Node2D" type="YSort"]
 script = ExtResource( 3 )
@@ -15,25 +13,6 @@ color = Color( 0.188235, 0.164706, 0.164706, 1 )
 [node name="uicontroller" parent="." instance=ExtResource( 4 )]
 
 [node name="players" type="YSort" parent="."]
-
-[node name="Player" parent="players" instance=ExtResource( 1 )]
-main_player = true
-
-[node name="Camera2D" type="Camera2D" parent="players/Player"]
-current = true
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-smoothing_enabled = true
-drag_margin_left = 0.65
-drag_margin_top = 0.65
-drag_margin_right = 0.65
-drag_margin_bottom = 0.65
-
-[node name="MainLight" type="Light2D" parent="players/Player"]
-texture = ExtResource( 5 )
-texture_scale = 2.0
-mode = 2
-shadow_enabled = true
 
 [node name="maps" type="YSort" parent="."]
 script = ExtResource( 2 )
