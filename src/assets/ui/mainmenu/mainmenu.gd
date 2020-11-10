@@ -1,5 +1,6 @@
 extends MarginContainer
 
+# warning-ignore:unused_signal
 signal returnToMainMenu
 
 func _ready() -> void:

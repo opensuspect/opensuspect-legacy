@@ -8,7 +8,7 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 9
+var version = 10
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
@@ -132,7 +132,7 @@ func _on_main_player_moved(movement : Vector2):
 		rpc_id(1, "player_moved", movement)
 
 master func _on_maps_spawn(spawnPos,frommap):
-	print("spawnPos: ", spawnPos)
+	#print("spawnPos: ", spawnPos)
 	if not get_tree().is_network_server():
 		return
 	spawn_pos = spawnPos
