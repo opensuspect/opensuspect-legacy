@@ -73,6 +73,7 @@ func _ready():
 	var err = config.load("user://settings.cfg")
 	if err != OK:
 		raise()
+	
 
 	# Init back button
 	var back_button = Button.new()

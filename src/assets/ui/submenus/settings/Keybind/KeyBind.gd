@@ -17,21 +17,14 @@ func _ready():
 		label.set_h_size_flags(Control.SIZE_EXPAND_FILL)
 		button.set_h_size_flags(Control.SIZE_EXPAND_FILL)
 		
-		if key == "ui_up":
-			label.text = "UP"
-		elif key == "ui_down":
-			label.text = "DOWN"
-		elif key == "ui_left":
-			label.text = "Left"
-		elif key == "ui_right":
-			label.text = "Right"
-			
+
 		var button_value = keybinds[key]
 		if button_value != null:
 			button.text = OS.get_scancode_string(button_value)
 		else:
 			button.text = "Unassigned"
 		
+		label_text(key, label)
 		
 		button.set_script(buttonscript)
 		button.key = key 
@@ -67,3 +60,16 @@ func save():
 	UIManager.set_game_binds()
 	UIManager.write_config()
 	get_tree().change_scene("res://assets/ui/mainmenu/mainmenu.tscn")
+
+func label_text(key, label):
+	if key == "ui_up":
+		label.text = "UP"
+	elif key == "ui_down":
+		label.text = "DOWN"
+	elif key == "ui_left":
+		label.text = "Left"
+	elif key == "ui_right":
+		label.text = "Right"
+	else:
+		label.text = key
+		
