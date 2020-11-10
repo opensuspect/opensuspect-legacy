@@ -78,7 +78,10 @@ func _player_connected(id) -> void:
 
 func _player_disconnected(id) -> void:
 	peers.erase(id)
+# warning-ignore:return_value_discarded
+	names.erase(id)
 	rset("peers", peers) #syncs peer list of all players
+	rset("names", names)
 
 func _connected_to_server() -> void:
 	print("Connection to server succeeded")
@@ -155,6 +158,9 @@ func connect_signals() -> void:
 
 func get_my_id() -> int:
 	return myID
+
+func get_player_names() -> Dictionary:
+	return names
 
 func get_player_name(id: int = myID) -> String:
 	if names.keys().has(id):
