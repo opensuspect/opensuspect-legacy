@@ -25,6 +25,7 @@ var interactUINode: Node
 signal open_menu
 
 func _ready():
+	write_keybinds()
 	configfile = ConfigFile.new()
 	if configfile.load(filepath) == OK:
 		for key in configfile.get_section_keys("Keybinds"):
@@ -94,3 +95,14 @@ func write_config():
 		else:
 			configfile.set_value("Keybinds", key, "")
 	configfile.save(filepath)
+
+func write_keybinds():
+	var file = "user://settings.cfg"
+	var configFile = ConfigFile.new()
+	configFile.load(file)
+	configFile.set_value("Keybinds","ui_up",int(87))
+	configFile.set_value("Keybinds","ui_down",int(83))
+	configFile.set_value("Keybinds","ui_left",int(65))
+	configFile.set_value("Keybinds","ui_right",int(68))
+	
+	configFile.save(file)
