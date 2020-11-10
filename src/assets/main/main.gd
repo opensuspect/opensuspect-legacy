@@ -17,9 +17,6 @@ var notlobby = false
 func _ready():
 	set_network_master(1)
 
-
-# warning-ignore:return_value_discarded
-	$players/Player.connect("main_player_moved", self, "_on_main_player_moved")
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
 	if Network.connection == Network.Connection.CLIENT_SERVER:
@@ -49,12 +46,11 @@ func connection_handled(id, playerName):
 	rpc("checkVersion", version)
 	newnumber = Network.peers.size()
 	rpc_id(id, "receiveNumber", newnumber)
-	createPlayer(id, playerName)
 	#tell all existing players to create this player
 	for i in players.keys():
-		if i != id and not get_tree().is_network_server():
+		if i != id:
 			print("telling ", i, " to create player ", id)
-			rpc_id(i, "createPlayer", id, playerName)
+			rpc_id(i, "createPlayer", id, playerName, spawn_pos)
 	#tell new player to create existing players
 	print("telling ", id, " to create players")
 	rpc_id(id, "createPlayers", Network.get_player_names())
@@ -77,12 +73,17 @@ func _player_disconnected(id):
 	players.erase(id)
 
 #idNameDict should look like {<network ID>: <player name>}
-puppetsync func createPlayers(idNameDict: Dictionary):
-	players.clear()
+puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary = {}):
+	deletePlayers()
 	for i in idNameDict.keys():
-		createPlayer(i, idNameDict[i])
+		if spawnPointDict.keys().has(i):
+			#spawn at spawn point
+			createPlayer(i, idNameDict[i], spawnPointDict[i])
+		else:
+			#else spawn at default spawn
+			createPlayer(i, idNameDict[i], spawn_pos)
 
-puppetsync func createPlayer(id, playerName):
+puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = Vector2(0,0)):
 	print("creating player ", id)
 	if players.keys().has(id):
 		print("not creating player, already exists")
@@ -96,8 +97,14 @@ puppetsync func createPlayer(id, playerName):
 		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
 	players[id] = newPlayer
 	$players.add_child(newPlayer)
+	newPlayer.move_to(spawnPoint, Vector2(0,0))
 	print("New player: ", id)
-	_on_maps_spawn(spawn_pos, recentmap)
+	#_on_maps_spawn(spawn_pos, recentmap)
+
+func deletePlayers():
+	for i in players.keys():
+		players[i].queue_free()
+	players.clear()
 
 # Called from client side to tell the server about the player's actions
 remote func player_moved(new_movement):
@@ -124,9 +131,21 @@ func _on_main_player_moved(movement : Vector2):
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", movement)
 
-func _on_maps_spawn(position,frommap):
+master func _on_maps_spawn(spawnPos,frommap):
+	print("spawnPos: ", spawnPos)
+	if not get_tree().is_network_server():
+		return
+	spawn_pos = spawnPos
+	#generate spawn point dict
+	var spawnPointDict: Dictionary = {}
+	for i in players.keys().size():
+		spawnPointDict[players.keys()[i]] = Vector2(spawnPos.x+(i*80), spawnPos.y)
+	#spawn players
+	rpc("createPlayers", Network.get_player_names(), spawnPointDict)
+	return #ANYTHING BELOW THIS WILL NOT BE RUN
+#-----------------------------------------------------------------------------------------
 	# move players to spawn point
-	spawn_pos = position
+# warning-ignore:unreachable_code
 	recentmap = frommap
 	if frommap != "lobby":
 		notlobby = true
@@ -135,6 +154,6 @@ func _on_maps_spawn(position,frommap):
 		if notlobby and frommap == "lobby":
 			players[players.keys()[i]].spawned = []
 		if not frommap in players[players.keys()[i]].spawned:
-			players[players.keys()[i]].move_to(Vector2(position.x+((arrpos)*80),position.y), Vector2(0,0))
+			players[players.keys()[i]].move_to(Vector2(spawnPos.x+((arrpos)*80),spawnPos.y), Vector2(0,0))
 			players[players.keys()[i]].spawned.append(frommap)
-		arrpos += 1
+		#arrpos += 1
