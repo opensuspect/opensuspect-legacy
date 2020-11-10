@@ -27,6 +27,7 @@ func _ready():
 	else:
 		$MainLight.queue_free()
 		$Camera2D.queue_free()
+	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 
@@ -35,13 +36,11 @@ func setName(newName):
 	$Label.text = ourname
 
 func roles_assigned(playerRoles: Dictionary):
-	print("id: ", id)
-	if id == 0: #if id hasn't been set to anything
-		myRole = playerRoles[Network.get_my_id()]
-	else:
-		myRole = playerRoles[id]
+	#print("id: ", id)
+	if not playerRoles.keys().has(id):
+		return
+	myRole = playerRoles[id]
 	changeNameColor(myRole)
-	pass
 
 func changeNameColor(role: String):
 	match role:
