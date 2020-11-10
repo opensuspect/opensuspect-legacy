@@ -52,7 +52,7 @@ func connection_handled(id, playerName):
 	createPlayer(id, playerName)
 	#tell all existing players to create this player
 	for i in players.keys():
-		if i != id:
+		if i != id and not get_tree().is_network_server():
 			print("telling ", i, " to create player ", id)
 			rpc_id(i, "createPlayer", id, playerName)
 	#tell new player to create existing players
@@ -90,9 +90,10 @@ puppetsync func createPlayer(id, playerName):
 	var newPlayer = player_scene.instance()
 	newPlayer.id = id
 	newPlayer.setName(playerName)
-	newPlayer.set_network_master(id)
+	#newPlayer.set_network_master(id)
 	if id == Network.get_my_id():
 		newPlayer.main_player = true
+		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
 	players[id] = newPlayer
 	$players.add_child(newPlayer)
 	print("New player: ", id)
@@ -122,7 +123,6 @@ puppet func update_positions(positions_dict):
 func _on_main_player_moved(movement : Vector2):
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", movement)
-
 
 func _on_maps_spawn(position,frommap):
 	# move players to spawn point
