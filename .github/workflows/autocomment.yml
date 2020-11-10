@@ -8,9 +8,9 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pullRequestOpened: "__HOW TO REVIEW__:\n
-          - Test *multiplayer* (Client and Host)\n
-          - Check *build status*\n
-          - Check *UI*\n
-          - Check the *code*\n
-          - Check build *artifacts* at @{{ pullRequestOpened }}/checks \n
+          - Test __multiplayer__ (client and host)\n
+          - Check __build status__\n
+          - Check __UI__\n
+          - Check the __code__\n
+          - Check build __artifacts__\n
           - <del>Is it working with translations?</del>\n"
