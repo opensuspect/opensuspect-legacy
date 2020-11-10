@@ -108,7 +108,21 @@ __meta__ = {
 }
 
 [node name="spawn" type="Position2D" parent="."]
-position = Vector2( 145.146, 20.1298 )
+position = Vector2( -75, -75 )
+
+[node name="spawnpoints" type="Node2D" parent="."]
+
+[node name="Position2D" type="Position2D" parent="spawnpoints"]
+position = Vector2( -100, 0 )
+
+[node name="Position2D2" type="Position2D" parent="spawnpoints"]
+position = Vector2( 0, -100 )
+
+[node name="Position2D3" type="Position2D" parent="spawnpoints"]
+position = Vector2( 100, 0 )
+
+[node name="Position2D4" type="Position2D" parent="spawnpoints"]
+position = Vector2( 0, 100 )
 
 [node name="walls" type="YSort" parent="."]
 
