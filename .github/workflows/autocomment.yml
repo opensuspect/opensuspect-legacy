@@ -1,25 +1,16 @@
-name: comment-on-pr example
+name: Auto Comment
 on: pull_request
 jobs:
-  example:
-    name: how to review
+  run:
     runs-on: ubuntu-latest
     steps:
-      # Fix deprecation issue
-      #- name: Pull number
-      #  run:   echo ::set-env name=PULL_NUMBER::$(echo "$GITHUB_REF" | awk -F / '{print $3}')
-      - name: comment PR
-        uses: unsplash/comment-on-pr@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: bubkoo/auto-comment@v1
         with:
-          msg: "HOW TO REVIEW:\n
-- Test multiplayer (Client and Host)\n
-- Check build status\n
-- Check UI\n
-- Check the code\n
-- Check build artifacts\n
-- <del>Is it working with translations?</del>\n" # Use PULL_NUMBER when I figure out how
-          check_for_duplicate_msg: true  # Set to true, false only for testing 
-          
-# TODO: Add a little bit of markdown
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pullRequestOpened: "__HOW TO REVIEW__:\n
+          - Test __multiplayer__ (client and host)\n
+          - Check __build status__\n
+          - Check __UI__\n
+          - Check the __code__\n
+          - Check build __artifacts__\n
+          - <del>Is it working with translations?</del>\n"
