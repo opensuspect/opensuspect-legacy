@@ -158,4 +158,4 @@ func set_language(setting):
 	TranslationServer.set_locale(setting.available[setting.value])
 	
 func _on_Button_pressed():
-	get_tree().change_scene("res://assets/ui/submenus/settings/Keybind/KeyBind.tscn")
+	get_tree().change_scene("res://assets/ui/submenus/settings/keybind/keybind.tscn")

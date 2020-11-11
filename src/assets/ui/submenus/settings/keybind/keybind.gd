@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 onready var buttoncontainer = get_node("Panel/VBoxContainer")
-onready var buttonscript = load("res://assets/ui/submenus/settings/Keybind/Keybutton.gd")
+onready var buttonscript = load("res://assets/ui/submenus/settings/keybind/keybutton.gd")
 
 var keybinds
 var buttons = {}
