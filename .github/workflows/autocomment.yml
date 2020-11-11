@@ -1,20 +1,20 @@
-name: Auto Comment
 on:
-  pull_request_target:
-    type: [opened, synchronize]
+  pull_request:
+
 jobs:
-  example:
-    name: how to review
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: comment PR
-        uses: unsplash/comment-on-pr@master
+      - uses: mshick/add-pr-comment@v1
         with:
-          msg: "HOW TO REVIEW:\n
-- Test multiplayer (Client and Host)\n
-- Check build status\n
-- Check UI\n
-- Check the code\n
-- Check build artifacts\n
-- <del>Is it working with translations?</del>\n" # Use PULL_NUMBER when I figure out how
-          check_for_duplicate_msg: false  # Set to true, false only for testing 
+          message: |
+            HOW TO REVIEW:
+            - Test multiplayer (Client and Host)
+            - Check build status
+            - Check UI
+            - Check the code
+            - Check build artifacts
+            - <del>Is it working with translations?</del>
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
+          allow-repeats: false # This is the default
