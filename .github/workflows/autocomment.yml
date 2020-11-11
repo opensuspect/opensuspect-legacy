@@ -4,13 +4,19 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: bubkoo/auto-comment@v1
+      - uses: actions/github-script@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          pullRequestOpened: "__HOW TO REVIEW__:\n
-          - Test __multiplayer__ (client and host)\n
-          - Check __build status__\n
-          - Check __UI__\n
-          - Check the __code__\n
-          - Check build __artifacts__\n
-          - <del>Is it working with translations?</del>\n"
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "__HOW TO REVIEW__:\n
+              - Test __multiplayer__ (client and host)\n
+              - Check __build status__\n
+              - Check __UI__\n
+              - Check the __code__\n
+              - Check build __artifacts__\n
+              - <del>Is it working with translations?</del>\n"
+            })
