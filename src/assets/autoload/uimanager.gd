@@ -1,6 +1,9 @@
 extends Node
 
 var menus: Dictionary = {
+						#HUD
+						"interactui": {"scene": preload("res://assets/ui/hud/interactui/interactui.tscn")}, 
+						
 						#common UI
 						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}, 
 						"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")}, 
@@ -13,9 +16,12 @@ var openMenus: Array = []
 
 var justClosed: String = ""
 
+var interactUINode: Node
+
 signal open_menu
 
 func _ready():
+# warning-ignore:return_value_discarded
 	GameManager.connect("state_changed", self, "state_changed")
 
 #menu data is data to pass to the menu, such as a task identifier
@@ -33,6 +39,7 @@ func menu_closed(menuName):
 	openMenus.erase(menuName)
 	justClosed = menuName
 
+# warning-ignore:unused_argument
 func state_changed(old_state, new_state):
 	if new_state == GameManager.State.Normal:
 		pass
@@ -41,6 +48,9 @@ func state_changed(old_state, new_state):
 
 func in_menu() -> bool:
 	return not openMenus.empty()
+
+func get_interact_ui_node():
+	return interactUINode
 
 func _process(_delta):
 	#if ui_cancel (most likely esc) and not in menu, open pause menu

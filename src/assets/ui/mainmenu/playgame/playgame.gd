@@ -17,12 +17,14 @@ func create_game() -> void:
 func _on_Connect_pressed() -> void:
 	connect_game()
 
+# warning-ignore:unused_argument
 func _on_NameField_text_entered_join(new_text):
 	connect_game()
 
 func _on_Create_pressed() -> void:
 	create_game()
 
+# warning-ignore:unused_argument
 func _on_NameField_text_entered_create(new_text):
 	create_game()
 

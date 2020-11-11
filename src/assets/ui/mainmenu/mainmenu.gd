@@ -1,5 +1,6 @@
 extends MarginContainer
 
+# warning-ignore:unused_signal
 signal returnToMainMenu
 
 func _ready() -> void:
@@ -28,9 +29,6 @@ func _on_Quit_pressed() -> void:
 
 func _on_Back_pressed() -> void:
 	default_state()
-
-func _on_Language_pressed() -> void:
-	show_only("LanguageMenu")
 
 func _on_MenuArea_returnToMainMenu():
 	default_state()

@@ -7,7 +7,8 @@ var inMenu = false
 var ourrole
 var ournumber
 var tasks = [-1]
-var localtasks
+var taskstoassign
+var assignedtasks
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
 enum assignStyle {Percent, Amount}
@@ -22,16 +23,29 @@ signal roles_assigned
 
 func _ready():
 	set_network_master(1)
+# warning-ignore:return_value_discarded
 	GameManager.connect("state_changed", self, "state_changed")
 
 func assigntasks():
 	for id in Network.peers:
-		for task in tasks:
+		taskstoassign = tasks
+		for task in taskstoassign:
 			if task == -1:
 				rng.randomize()
-				var taskenabled = rng.randi_range(-1,0)
-				print("task assigned")
+				taskstoassign[task] = rng.randi_range(-1,0)
+				print("task assigned,",taskstoassign[task])
+		if id == 1:
+			assignedtasks = taskstoassign
+			print("host tasks assigned",taskstoassign)
+		else:
+			rpc_id(id,"gettasks",taskstoassign)
+			print("client tasks assigned",taskstoassign)
 
+remote func gettasks(tasksget):
+	assignedtasks = tasksget
+	print("we got our tasks!")
+
+# warning-ignore:unused_argument
 func state_changed(old_state, new_state):
 	match new_state:
 		GameManager.State.Normal:
@@ -97,9 +111,13 @@ func roundDown(num, step):
 		return normRound - step
 	return normRound
 
-func get_player_roles(theid) -> Dictionary:
-	return playerRoles[theid]
+func get_player_roles() -> Dictionary:
+	return playerRoles
+
+func get_player_role(id) -> String:
+	return playerRoles[id]
+
 func setourrole():
-	ourrole = PlayerManager.get_player_roles(Network.myID)
+	ourrole = PlayerManager.get_player_role(Network.myID)
 	print(ourrole)
 	emit_signal("roles_assigned", playerRoles)

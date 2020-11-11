@@ -23,6 +23,12 @@ func _ready():
 	if main_player:
 		setName(Network.get_player_name())
 		id = Network.get_my_id()
+	else:
+		$MainLight.queue_free()
+		$Camera2D.queue_free()
+	#TODO: tell the player node their role upon creation in main.gd
+	roles_assigned(PlayerManager.get_player_roles())
+# warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 
 func setName(newName):
@@ -30,13 +36,11 @@ func setName(newName):
 	$Label.text = ourname
 
 func roles_assigned(playerRoles: Dictionary):
-	print("id: ", id)
-	if id == 0: #if id hasn't been set to anything
-		myRole = playerRoles[Network.get_my_id()]
-	else:
-		myRole = playerRoles[id]
+	#print("id: ", id)
+	if not playerRoles.keys().has(id):
+		return
+	myRole = playerRoles[id]
 	changeNameColor(myRole)
-	pass
 
 func changeNameColor(role: String):
 	match role:
@@ -54,29 +58,27 @@ func setNameColor(newColor: Color):
 
 # Only called when main_player is true
 func get_input():
+# warning-ignore:unused_variable
 	var prev_velocity = velocity
 	movement = Vector2(0, 0)
 	if not UIManager.in_menu():
 		movement.x = Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left')
 		movement.y = Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
 		movement = movement.normalized()
-		#we did it boys, micheal jackson is no more
-#		$Sprite.play("walk-up") for some reason having this makes it not work
 
-	velocity = movement * speed
-
-	#interpolate velocity:
-	if velocity.x == 0:
-		velocity.x = lerp(prev_velocity.x, 0, 0.17)
-	if velocity.y == 0:
-		velocity.y = lerp(prev_velocity.y, 0, 0.17)
-
-func _physics_process(delta):
+func _physics_process(_delta):
 	if main_player:
 		get_input()
+		emit_signal("main_player_moved", movement)
+	if get_tree().is_network_server():
+		var prev_velocity = velocity
+		velocity = movement * speed
+		#interpolate velocity:
+		if velocity.x == 0:
+			velocity.x = lerp(prev_velocity.x, 0, 0.17)
+		if velocity.y == 0:
+			velocity.y = lerp(prev_velocity.y, 0, 0.17)
 		velocity = move_and_slide(velocity)
-		emit_signal("main_player_moved", position, movement)
-
 	# We handle animations and stuff here
 	if movement.x > x_anim_margin:
 		$Sprite.play("walk-h")
@@ -92,6 +94,5 @@ func _physics_process(delta):
 		$Sprite.play("idle")
 
 func move_to(new_pos, new_movement):
-	# Movement check here
 	position = new_pos
 	movement = new_movement

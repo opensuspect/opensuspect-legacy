@@ -5,6 +5,7 @@ extends Node
 signal interacted_with
 
 func _ready():
+# warning-ignore:return_value_discarded
 	GameManager.connect("state_changed", self, "state_changed")
 
 #each interactable node will store info about what should happen when it is
@@ -18,3 +19,8 @@ func interact_with(interactNode: Node, from: Node, interact_data: Dictionary = {
 		print("failed to interact, trying to interact with a null instance")
 		return
 	emit_signal("interacted_with", interactNode, from, interact_data)
+
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+func state_changed(old_state, new_state):
+	pass
