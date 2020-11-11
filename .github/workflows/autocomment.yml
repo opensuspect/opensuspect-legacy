@@ -13,5 +13,10 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
+              body: '__HOW TO REVIEW__:\n
+              - Test __multiplayer__ (client and host)\n
+              - Check __build status__\n
+              - Check __UI__\n
+              - Check the __code__\n
+              - Check build __artifacts__\n'
             })
