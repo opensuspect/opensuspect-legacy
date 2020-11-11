@@ -6,12 +6,16 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v3
-        with:
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '__HOW TO REVIEW__:\n- Test __multiplayer__ (client and host)\n- Check __build status__\n- Check __UI__\n- Check the __code__\n- Check build __artifacts__'
-            })
+      uses: actions/checkout@v2
+      with:
+        ref: ${{github.event.pull_request.head.ref}}
+        repository: ${{github.event.pull_request.head.repo.full_name}}
+      uses: actions/github-script@v3
+      with:
+        script: |
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '__HOW TO REVIEW__:\n- Test __multiplayer__ (client and host)\n- Check __build status__\n- Check __UI__\n- Check the __code__\n- Check build __artifacts__'
+          })
