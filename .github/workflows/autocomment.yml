@@ -1,6 +1,6 @@
 name: Auto Comment
 on:
-  pull_request
+  pull_request_target
 jobs:
   example:
     name: how to review
