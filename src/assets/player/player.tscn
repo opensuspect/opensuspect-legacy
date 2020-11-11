@@ -20,19 +20,19 @@
 [sub_resource type="CanvasItemMaterial" id=1]
 light_mode = 2
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=2]
 radius = 100.0
 
-[sub_resource type="CanvasItemMaterial" id=2]
+[sub_resource type="CanvasItemMaterial" id=3]
 light_mode = 2
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=4]
 radius = 12.0
 
-[sub_resource type="CanvasItemMaterial" id=4]
+[sub_resource type="CanvasItemMaterial" id=5]
 light_mode = 2
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
@@ -44,18 +44,18 @@ animations = [ {
 "name": "walk-down",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
-"loop": true,
-"name": "walk-up",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "walk-h",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
+"loop": true,
+"name": "walk-up",
+"speed": 8.0
 } ]
 
-[sub_resource type="CanvasItemMaterial" id=6]
+[sub_resource type="CanvasItemMaterial" id=7]
 light_mode = 2
 
 [node name="Player" type="KinematicBody2D" groups=[
@@ -80,24 +80,39 @@ enabled = true
 collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="interactarea"]
-shape = SubResource( 7 )
+shape = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-material = SubResource( 2 )
+material = SubResource( 3 )
 rotation = 1.5708
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 light_mask = -2147483647
-material = SubResource( 4 )
+material = SubResource( 5 )
 position = Vector2( 0, -18 )
-frames = SubResource( 5 )
+frames = SubResource( 6 )
 animation = "walk-h"
-frame = 1
 playing = true
 
+[node name="MainLight" type="Light2D" parent="."]
+texture = ExtResource( 15 )
+texture_scale = 2.0
+mode = 2
+shadow_enabled = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.65
+drag_margin_top = 0.65
+drag_margin_right = 0.65
+drag_margin_bottom = 0.65
+
 [node name="Label" type="Label" parent="."]
-material = SubResource( 6 )
+material = SubResource( 7 )
 margin_left = -250.0
 margin_top = -75.0
 margin_right = 250.0
@@ -107,10 +122,5 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="temporaryLight" type="Light2D" parent="."]
-editor_only = true
-texture = ExtResource( 15 )
-mode = 2
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]

@@ -111,9 +111,13 @@ func roundDown(num, step):
 		return normRound - step
 	return normRound
 
-func get_player_roles(theid) -> Dictionary:
-	return playerRoles[theid]
+func get_player_roles() -> Dictionary:
+	return playerRoles
+
+func get_player_role(id) -> String:
+	return playerRoles[id]
+
 func setourrole():
-	ourrole = PlayerManager.get_player_roles(Network.myID)
+	ourrole = PlayerManager.get_player_role(Network.myID)
 	print(ourrole)
 	emit_signal("roles_assigned", playerRoles)
