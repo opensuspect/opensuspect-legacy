@@ -1,19 +1,16 @@
 name: Auto Comment
-on:
-  pull_request_target
-    types: [opened]
-
+on: pull_request_target
 jobs:
-  comment:
+  run:
     runs-on: ubuntu-latest
     steps:
-      - name: Add comment to PR
-        env:
-          URL: ${{ github.event.pull_request.comments_url }}
+      - uses: bubkoo/auto-comment@v1
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl \
-            -X POST \
-            $URL \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            --data '{ "body": "__HOW TO REVIEW__:\n- Test __multiplayer__ (client and host)\n- Check __build status__\n- Check __UI__\n- Check the __code__\n- Check build __artifacts__" }'
+          pullRequestOpened: "__HOW TO REVIEW__:\n
+          - Test __multiplayer__ (client and host)\n
+          - Check __build status__\n
+          - Check __UI__\n
+          - Check the __code__\n
+          - Check build __artifacts__\n
+          - <del>Is it working with translations?</del>\n"
