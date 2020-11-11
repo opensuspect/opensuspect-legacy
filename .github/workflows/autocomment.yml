@@ -1,9 +1,6 @@
 name: Auto Comment
-
 on:
-  pull_request#_target
-    #types: [opened, synchronize]
-
+  pull_request
 jobs:
   example:
     name: how to review
