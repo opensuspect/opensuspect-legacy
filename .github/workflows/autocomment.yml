@@ -1,24 +1,22 @@
 name: Auto Comment
 
-on:
-  pull_request_target
+on: pull_request
 
 jobs:
-  comment:
+  example:
+    name: how to review
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        ref: ${{github.event.pull_request.head.ref}}
-        repository: ${{github.event.pull_request.head.repo.full_name}}
-    - name: Add comment
-      uses: actions/github-script@v3
-      with:
-        script: |
-          github.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '__HOW TO REVIEW__:\n- Test __multiplayer__ (client and host)\n- Check __build status__\n- Check __UI__\n- Check the __code__\n- Check build __artifacts__'
-          })
+      - name: comment PR
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: "HOW TO REVIEW:\n
+- Test multiplayer (Client and Host)\n
+- Check build status\n
+- Check UI\n
+- Check the code\n
+- Check build artifacts\n
+- <del>Is it working with translations?</del>\n" # Use PULL_NUMBER when I figure out how
+          check_for_duplicate_msg: false  # Set to true, false only for testing 
