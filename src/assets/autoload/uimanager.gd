@@ -28,6 +28,7 @@ signal open_menu
 
 func _ready():
 	configfile = ConfigFile.new()
+	configfile.load(filepath)
 	check_keybinds(configfile)
 	if configfile.load(filepath) == OK:
 		for key in configfile.get_section_keys("Keybinds"):
