@@ -13,4 +13,5 @@ jobs:
           curl \
             -X POST \
             $URL \
+            -H "Authorization: token $GITHUB_TOKEN" \
             --data '{ "body": "__HOW TO REVIEW__:\n- Test __multiplayer__ (client and host)\n- Check __build status__\n- Check __UI__\n- Check the __code__\n- Check build __artifacts__" }'
