@@ -9,7 +9,6 @@ var id: int
 var ourname: String
 var myRole: String
 var velocity = Vector2(0,0)
-var spawned = []
 # Contains the current intended movement direction and magnitude in range 0 to 1
 var movement = Vector2(0,0)
 # Only true when this is the player being controlled
@@ -24,9 +23,11 @@ func _ready():
 	if main_player:
 		setName(Network.get_player_name())
 		id = Network.get_my_id()
-		#so light occluders don't hide your own sprite
-		#$Sprite.material.set_light_mode(1)
-		#$Label.material.set_light_mode(1)
+	else:
+		$MainLight.queue_free()
+		$Camera2D.queue_free()
+	#TODO: tell the player node their role upon creation in main.gd
+	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 
@@ -35,13 +36,11 @@ func setName(newName):
 	$Label.text = ourname
 
 func roles_assigned(playerRoles: Dictionary):
-	print("id: ", id)
-	if id == 0: #if id hasn't been set to anything
-		myRole = playerRoles[Network.get_my_id()]
-	else:
-		myRole = playerRoles[id]
+	#print("id: ", id)
+	if not playerRoles.keys().has(id):
+		return
+	myRole = playerRoles[id]
 	changeNameColor(myRole)
-	pass
 
 func changeNameColor(role: String):
 	match role:
