@@ -1,5 +1,8 @@
+name: Auto Comment
+
 on:
-  pull_request_target
+  pull_request_target:
+    type: [opened]
 
 jobs:
   comment:
