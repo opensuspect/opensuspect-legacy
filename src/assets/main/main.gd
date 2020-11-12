@@ -8,7 +8,7 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 10
+var version = 12
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
@@ -92,7 +92,6 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 	$players.add_child(newPlayer)
 	newPlayer.move_to(spawnPoint, Vector2(0,0))
 	print("New player: ", id)
-	#_on_maps_spawn(spawn_pos, recentmap)
 
 func deletePlayers():
 	for i in players.keys():
@@ -105,8 +104,6 @@ remote func player_moved(new_movement):
 	if !get_tree().is_network_server():
 		return
 	var id = get_tree().get_rpc_sender_id()
-	#print(id)
-	#print("Got player move from ", id) #no reason to spam console so much
 	if not players.keys().has(id):
 		return
 	# Check movement validity
@@ -124,14 +121,15 @@ func _on_main_player_moved(movement : Vector2):
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", movement)
 
-master func _on_maps_spawn(spawnPos, _frommap):
-	#print("spawnPos: ", spawnPos)
+master func _on_maps_spawn(spawnPositions: Array):
 	if not get_tree().is_network_server():
 		return
-	spawn_pos = spawnPos
+	spawn_pos = spawnPositions[0]
 	#generate spawn point dict
 	var spawnPointDict: Dictionary = {}
 	for i in players.keys().size():
-		spawnPointDict[players.keys()[i]] = Vector2(spawnPos.x+(i*80), spawnPos.y)
+		spawnPointDict[players.keys()[i]] = spawnPositions[i]
+		if spawnPointDict[players.keys()[i]] == null:
+			spawnPointDict[players.keys()[i]] = spawn_pos
 	#spawn players
 	rpc("createPlayers", Network.get_player_names(), spawnPointDict)

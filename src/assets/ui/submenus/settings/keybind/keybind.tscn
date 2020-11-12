@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/ui/submenus/settings/keybind/keybind.gd" type="Script" id=1]
+
+[node name="KeyBind" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+margin_left = 8.0
+margin_right = 1032.0
+margin_bottom = 480.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="back" type="Button" parent="Panel"]
+margin_left = 128.0
+margin_top = 480.0
+margin_right = 288.0
+margin_bottom = 584.0
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="save" type="Button" parent="Panel"]
+margin_left = 576.0
+margin_top = 480.0
+margin_right = 736.0
+margin_bottom = 584.0
+text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Panel/back" to="." method="back"]
+[connection signal="pressed" from="Panel/save" to="." method="save"]

@@ -30,7 +30,13 @@ func switchMap(newMap: String) -> void:
 	currentMap = newMap
 	var mapClone = maps[newMap].dir.instance()
 	add_child(mapClone)
-	# announce spawn point
-	var newSpawn = get_node(newMap).get_node_or_null("spawn")
-	print(newSpawn.position)
-	emit_signal("spawn",newSpawn.position,newMap)
+	emit_signal("spawn", getSpawnPoints())
+
+func getSpawnPoints() -> Array:
+	var spawnPointArray: Array = []
+	if not get_node(str(currentMap + "/spawnpoints")):
+		return [Vector2(0,0)]
+	for i in get_node(str(currentMap + "/spawnpoints")).get_children():
+		spawnPointArray.append(i.global_position)
+	#print(spawnPointArray)
+	return spawnPointArray
