@@ -1,20 +1,16 @@
 on:
-  pull_request:
+  pull_request_target
 
 jobs:
-  test:
+  comment:
     runs-on: ubuntu-latest
     steps:
-      - uses: mshick/add-pr-comment@v1
+      - uses: actions/github-script@v3
         with:
-          message: |
-            HOW TO REVIEW:
-            - Test multiplayer (Client and Host)
-            - Check build status
-            - Check UI
-            - Check the code
-            - Check build artifacts
-            - <del>Is it working with translations?</del>
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
-          allow-repeats: false # This is the default
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '__HOW TO REVIEW__:\n- Test __multiplayer__ (client and host)\n- Check __build status__\n- Check __UI__\n- Check the __code__\n- Check build __artifacts__'
+            })
