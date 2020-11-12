@@ -42,9 +42,6 @@ position = Vector2( 0, -200 )
 scale = Vector2( 3, 6 )
 node_path = NodePath("../testdoor")
 
-[node name="testdoor" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, -150 )
-
 [node name="standbutton2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -350 )
 node_path = NodePath("clocktext")
@@ -109,9 +106,6 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="spawn" type="Position2D" parent="."]
-position = Vector2( -75, -75 )
 
 [node name="spawnpoints" type="Node2D" parent="."]
 
