@@ -59,12 +59,13 @@ func dummy_function(setting):
 
 
 var settings = [
-	Setting.new(true, SettingType.SWITCH, tr("Video/Fullscreen"), "toggle_fullscreen"),
+	Setting.new(true, SettingType.SWITCH, tr("Video")+"/"+tr("Fullscreen"), "toggle_fullscreen"),
 	Setting.new(
-		0, SettingType.OPTION, tr("Video/Colorblind mode"), "dummy_function", ["RGB", "GBR", "BRG", "BGR"]
+		0, SettingType.OPTION, tr("Video")+"/"+tr("Colorblind mode"), "dummy_function", ["RGB", "GBR", "BRG", "BGR"]
 	),
-	Setting.new(30, SettingType.SLIDER, tr("Sound/Volume"), "dummy_function"),
-	Setting.new(0, SettingType.OPTION, tr("Locale/Language"), "set_language", get_languages())
+	Setting.new(30, SettingType.SLIDER, tr("Sound")+"/"+("Volume"), "dummy_function"),
+	Setting.new(0, SettingType.OPTION, tr("Locale")+"/"+tr("Language"), "set_language", get_languages())
+
 ]
 
 
