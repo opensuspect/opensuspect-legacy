@@ -38,9 +38,6 @@ position = Vector2( 0, -200 )
 scale = Vector2( 3, 6 )
 node_path = NodePath("../testdoor")
 
-[node name="testdoor" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, -150 )
-
 [node name="standbutton2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -350 )
 node_path = NodePath("clocktext")
