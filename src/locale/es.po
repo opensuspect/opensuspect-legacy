@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-11-13 20:23+0100\n"
-"PO-Revision-Date: 2020-10-13 16:34\n"
+"PO-Revision-Date: 2020-11-14 14:32\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -227,3 +227,4 @@ msgstr ""
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:268
 msgid "12"
 msgstr ""
+
