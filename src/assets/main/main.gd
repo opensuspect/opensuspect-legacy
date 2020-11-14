@@ -8,10 +8,13 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 12
+var version = 13
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
+
+signal positions_updated(last_received_input)
+
 func _ready():
 	set_network_master(1)
 
@@ -34,7 +37,9 @@ func _physics_process(_delta):
 		var positions_dict = {}
 		for id in players.keys():
 			positions_dict[id] = [players[id].position, players[id].movement]
-		rpc("update_positions", positions_dict)
+		for id in players.keys():
+			if id != 1:
+				rpc_id(id, "update_positions", positions_dict, players[id].input_number)
 
 func connection_handled(id, playerName):
 	print("connection handled, id: ", id, " name: ", playerName)
@@ -88,6 +93,7 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 	if id == Network.get_my_id():
 		newPlayer.main_player = true
 		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
+		self.connect("positions_updated", newPlayer, "_on_positions_updated")
 	players[id] = newPlayer
 	$players.add_child(newPlayer)
 	newPlayer.move_to(spawnPoint, Vector2(0,0))
@@ -99,7 +105,7 @@ func deletePlayers():
 	players.clear()
 
 # Called from client side to tell the server about the player's actions
-remote func player_moved(new_movement):
+remote func player_moved(new_movement, last_input):
 	# Should only be run on the server
 	if !get_tree().is_network_server():
 		return
@@ -110,16 +116,18 @@ remote func player_moved(new_movement):
 	if new_movement.length() > 1:
 		new_movement = new_movement.normalized()
 	players[id].movement = new_movement
+	players[id].input_number = last_input
 
 # Called from server when the server's players move
-puppet func update_positions(positions_dict):
+puppet func update_positions(positions_dict, last_received_input):
 	for id in positions_dict.keys():
 		if players.keys().has(id):
 			players[id].move_to(positions_dict[id][0], positions_dict[id][1])
+	emit_signal("positions_updated", last_received_input)
 
-func _on_main_player_moved(movement : Vector2):
+func _on_main_player_moved(movement : Vector2, last_input : int):
 	if not get_tree().is_network_server():
-		rpc_id(1, "player_moved", movement)
+		rpc_id(1, "player_moved", movement, last_input)
 
 master func _on_maps_spawn(spawnPositions: Array):
 	if not get_tree().is_network_server():
