@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-11-13 20:23+0100\n"
-"PO-Revision-Date: 2020-11-14 14:32\n"
+"PO-Revision-Date: 2020-11-15 02:41\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -20,23 +20,23 @@ msgstr ""
 
 #: ../../src/assets/maps/lobby/lobby.tscn:39
 msgid "LOBBY"
-msgstr ""
+msgstr "ELŐSZOBA"
 
 #: ../../src/assets/maps/test/test.tscn:57
 msgid "clockset task"
-msgstr ""
+msgstr "feladat: óraállítás"
 
 #: ../../src/assets/maps/test/test.tscn:69
 msgid "735"
-msgstr ""
+msgstr "753"
 
 #: ../../src/assets/maps/test/test.tscn:89
 msgid "Interact chat"
-msgstr ""
+msgstr "Közelségi chat"
 
 #: ../../src/assets/maps/test/test.tscn:101
 msgid "spooky empty room "
-msgstr ""
+msgstr "ijesztő üres szoba "
 
 #: ../../src/assets/player/player.tscn:120
 msgid "Pog"
@@ -44,15 +44,15 @@ msgstr ""
 
 #: ../../src/assets/ui/hud/defaulthud/defaulthud.tscn:18
 msgid "Chat"
-msgstr ""
+msgstr "Csevegő"
 
 #: ../../src/assets/ui/hud/defaulthud/defaulthud.tscn:29
 msgid "Start Game"
-msgstr ""
+msgstr "Játék indítása"
 
 #: ../../src/assets/ui/lobbyui/chatbox/chatbox.tscn:64
 msgid "Send"
-msgstr ""
+msgstr "Küldés"
 
 #: ../../src/assets/ui/mainmenu/mainmenu.tscn:42
 msgid "OpenSuspect"
@@ -85,12 +85,12 @@ msgstr "Portszám"
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:40
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:121
 msgid "42420"
-msgstr ""
+msgstr "42420"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:55
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:134
 msgid "Name"
-msgstr ""
+msgstr "Név"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:67
 msgid "CREATE"
@@ -128,7 +128,7 @@ msgstr "ÚJ JÁTÉK LÉTREHOZÁS"
 
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:48
 msgid "RESUME"
-msgstr ""
+msgstr "FOLYTATÁS"
 
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:84
 msgid "LANGUAGE"
@@ -136,12 +136,12 @@ msgstr "NYELV"
 
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:96
 msgid "LEAVE"
-msgstr ""
+msgstr "KILÉPÉS"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:62
 #: ../../src/assets/ui/submenus/settings/settings.gd:64
 msgid "Video"
-msgstr ""
+msgstr "Videó"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:62
 msgid "Fullscreen"
@@ -149,32 +149,32 @@ msgstr "Teljes képernyő"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:64
 msgid "Colorblind mode"
-msgstr ""
+msgstr "Színtévesztő üzemmód"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:66
 msgid "Sound"
-msgstr ""
+msgstr "Hang"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:67
 msgid "Locale"
-msgstr ""
+msgstr "Területi beállítás"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:67
 msgid "Language"
-msgstr ""
+msgstr "Nyelv"
 
 #: ../../src/assets/ui/submenus/settings/keybind/keybind.tscn:28
 #: ../../src/assets/ui/submenus/settings/settings.gd:81
 msgid "Back"
-msgstr ""
+msgstr "Vissza"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:85
 msgid "Keybinds"
-msgstr ""
+msgstr "Billentyűbeállítás"
 
 #: ../../src/assets/ui/submenus/settings/keybind/keybind.tscn:38
 msgid "Save"
-msgstr ""
+msgstr "Mentés"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:42
 msgid ":"
