@@ -18,7 +18,7 @@ var enabled_tasks: Array = ["clockset"]
 #dictionary that stores the task IDs corresponding to the tasks assigned to the player
 var player_tasks: Dictionary = {}
 #stores task info corresponding to task IDs
-#format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, player: <ID of player task is assigned to>}
+#format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, player: <network ID of player task is assigned to>}
 var task_dict: Dictionary = {}
 
 func _ready():
