@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "WindowDialog",
+"class": "WindowDialogMenu",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/menuui/windowdialogmenu.gd"
+}, {
+"base": "WindowDialogMenu",
+"class": "WindowDialogTask",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/taskui/windowdialogtask.gd"
+} ]
 _global_script_class_icons={
-
+"WindowDialogMenu": "",
+"WindowDialogTask": ""
 }
 
 [application]
@@ -30,6 +41,7 @@ PlayerManager="*res://assets/autoload/playermanager.gd"
 SceneManager="*res://assets/autoload/scenemanager.gd"
 UIManager="*res://assets/autoload/uimanager.gd"
 MapManager="*res://assets/autoload/mapmanager.gd"
+TaskManager="*res://assets/autoload/taskmanager.gd"
 
 [display]
 

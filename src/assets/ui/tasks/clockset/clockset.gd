@@ -1,4 +1,4 @@
-extends WindowDialog
+extends WindowDialogTask
 
 var menuData: Dictionary = {}
 var targetTime: int = 433
