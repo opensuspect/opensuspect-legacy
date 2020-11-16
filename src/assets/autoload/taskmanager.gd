@@ -25,8 +25,22 @@ func _ready():
 	randomize()
 	print(gen_unique_id())
 
-func advance_task(task_id: int, new_state: int):
-	pass
+#can't declare new_state as an int, otherwise it would need to default to an int which could cause later problems
+func advance_task(task_id: int, new_state = null) -> bool:
+	if not get_tree().is_network_server():
+		return false
+	var task_type: int = task_dict[task_id].type
+	var current_state: int = task_dict[task_id].state
+
+	#transition if allowed
+	if task_transitions[task_type][current_state].empty():
+		#if there are no transitions allowed, ex. a completed task
+		return false
+	if new_state.typeof() == TYPE_INT and task_state.values().has(new_state):
+		#if new_state is a state and the state exists
+		return transition_task(task_id, new_state)
+	#transition task to the first transition listed for that task type in task_transitions
+	return transition_task(task_id, task_transitions[task_type][current_state][0])
 
 func transition_task(task_id: int, new_state: int) -> bool:
 	if not get_tree().is_network_server():
