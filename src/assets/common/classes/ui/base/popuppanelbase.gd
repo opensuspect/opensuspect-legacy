@@ -1,6 +1,6 @@
-extends WindowDialog
+extends PopupPanel
 
-class_name WindowDialogBase
+class_name PopupPanelBase
 
 export (String) var menu_name
 

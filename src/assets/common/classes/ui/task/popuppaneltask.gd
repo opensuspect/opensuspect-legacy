@@ -1,6 +1,6 @@
-extends PopupBase
+extends PopupPanelBase
 
-class_name PopupTask
+class_name PopupPanelTask
 
 #called by ui system
 func base_open():

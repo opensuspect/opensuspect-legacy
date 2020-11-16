@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/common/classes/ui/base/popupbase.gd"
 }, {
+"base": "PopupPanel",
+"class": "PopupPanelBase",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/base/popuppanelbase.gd"
+}, {
+"base": "PopupPanelBase",
+"class": "PopupPanelTask",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/task/popuppaneltask.gd"
+}, {
 "base": "PopupBase",
 "class": "PopupTask",
 "language": "GDScript",
@@ -31,6 +41,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "PopupBase": "",
+"PopupPanelBase": "",
+"PopupPanelTask": "",
 "PopupTask": "",
 "WindowDialogBase": "",
 "WindowDialogTask": ""

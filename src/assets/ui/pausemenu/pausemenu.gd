@@ -3,14 +3,6 @@ extends PopupBase
 func _ready():
 	pass
 
-#func open():
-#	popup()
-#	UIManager.menu_opened("pausemenu")
-
-#func close():
-#	hide()
-#	UIManager.menu_closed("pausemenu")
-
 func _process(_delta):
 	margin_left = $menu.margin_left
 	margin_right = $menu.margin_right

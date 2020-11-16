@@ -22,13 +22,9 @@ func open():
 	setClockTime(currentTime)
 	setWatchTime(targetTime)
 	#print("current time: ", currentTime)
-	#popup()
-	#UIManager.menu_opened("clockset")
 
-func close():
-	pass
-	#hide()
-	#UIManager.menu_closed("clockset")
+#func close():
+#	pass
 
 func checkComplete():
 	updateCurrentTime()
@@ -42,7 +38,7 @@ func taskComplete():
 	print("clockset task complete")
 	if menuData.keys().has("linkedNode"):
 		MapManager.interact_with(menuData["linkedNode"], self, {"newText": str(currentTime)})
-	close()
+	hide()
 
 func setClockTime(newTime):
 	hoursNode.value = roundDown(newTime / 100, 1)
@@ -59,21 +55,6 @@ func roundDown(num, step):
 	if normRound > num:
 		return normRound - step
 	return normRound
-
-func _on_clockset_about_to_show():
-	if menuData.has("currentTime"):
-		currentTime = menuData["currentTime"]
-# warning-ignore:narrowing_conversion
-	targetTime = round(rand_range(100, 1259))
-	print(targetTime)
-	targetTime = roundDown(targetTime, 100) + (targetTime % 100) % 60
-	print(targetTime)
-	setClockTime(currentTime)
-	setWatchTime(targetTime)
-
-func _on_clockset_popup_hide():
-	pass
-	#UIManager.menu_closed("clockset")
 
 func _on_hours_value_changed(value):
 	if value == 0:

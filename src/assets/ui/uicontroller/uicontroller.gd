@@ -30,21 +30,21 @@ func open_menu(menuName: String, menuData: Dictionary = {}, reInstance: bool = f
 	if menuData != {} and instancedMenus[menuName].get("menuData") != null:
 		instancedMenus[menuName].menuData = menuData
 	var current_menu = instancedMenus[menuName]
+	#call open on a lower class, handles ui system integration
+	current_menu.base_open()
 	#call open on the inherited class, most likely the script attached to a given task or menu
 	if current_menu.has_method("open"):
 		current_menu.open()
-	#call open on a lower class, handles ui system integration
-	current_menu.base_open()
 
 func close_menu(menuName: String):
 	if not instancedMenus.has(menuName):
 		return
 	var current_menu = instancedMenus[menuName]
+	#call close on a lower class, handles ui system integration
+	current_menu.base_close()
 	#call close on the inherited class, most likely the script attached to a given task or menu
 	if current_menu.has_method("close"):
 		current_menu.close()
-	#call close on a lower class, handles ui system integration
-	current_menu.base_close()
 
 func instance_menu(menuName: String, menuData: Dictionary = {}):
 	if not menus.keys().has(menuName):
