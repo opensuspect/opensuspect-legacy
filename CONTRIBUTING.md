@@ -10,8 +10,8 @@ The requirements of the programming team are very different than that of the art
 4. If possible, link in the issue to the branch / location where the work will take place (this is optional, and should be skipped for smaller tasks)
 5. Include the rough time you think the implementation will take (just a ballpark is fine! are we talking hours, days, weeks?)
 6. Once you think you've met the requirements to close the issue, [submit a new Pull Request](https://github.com/opensuspect/opensuspect/compare)
-7. Wait for a review
-8. If the review is successfull, **merge**! Congratulations and thank you for contributing!
+7. Wait for a review _patiently_
+8. If the review is successful, **merge**! Congratulations and thank you for contributing!
 9. If any issues are identified, correct them and return to step 7.
 
 Please join us in the [OpenSuspect programming chatroom](https://matrix.to/#/#open_sus_programming:matrix.org) if you have any questions, get stuck, or just to hang out and talk about the project.

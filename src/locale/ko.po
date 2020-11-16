@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-10-13 14:57+0200\n"
-"PO-Revision-Date: 2020-10-24 10:32\n"
+"POT-Creation-Date: 2020-11-13 20:23+0100\n"
+"PO-Revision-Date: 2020-11-14 14:32\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -18,84 +18,213 @@ msgstr ""
 "X-Crowdin-File: /main/src/locale/en.po\n"
 "X-Crowdin-File-ID: 8\n"
 
-#: ../../src/Scenes/UI/PlayGame.tscn:22
-msgid "TUTORIAL"
-msgstr "튜토리얼"
-
-#: ../../src/Scenes/UI/PlayGame.tscn:29
-msgid "JOIN GAME"
-msgstr "게임 참여"
-
-#: ../../src/Scenes/UI/PlayGame.tscn:36
-msgid "CREATE GAME"
-msgstr "게임 생성"
-
-#: ../../src/Scenes/UI/PlayGame.tscn:43 ../../src/Scenes/UI/Settings.tscn:113
-#: ../../src/Scenes/UI/Title.tscn:152
-msgid "BACK"
-msgstr "뒤로"
-
-#: ../../src/Scenes/UI/PlayGame.tscn:74
-msgid "Hostname"
-msgstr "호스트 이름"
-
-#: ../../src/Scenes/UI/PlayGame.tscn:81
-msgid "localhost"
+#: ../../src/assets/maps/lobby/lobby.tscn:39
+msgid "LOBBY"
 msgstr ""
 
-#: ../../src/Scenes/UI/PlayGame.tscn:92 ../../src/Scenes/UI/PlayGame.tscn:132
-msgid "Port"
-msgstr "포트"
+#: ../../src/assets/maps/test/test.tscn:57
+msgid "clockset task"
+msgstr ""
 
-#: ../../src/Scenes/UI/PlayGame.tscn:104
-msgid "CONNECT"
-msgstr "연결"
+#: ../../src/assets/maps/test/test.tscn:69
+msgid "735"
+msgstr ""
 
-#: ../../src/Scenes/UI/PlayGame.tscn:144
-msgid "CREATE"
-msgstr "생성"
+#: ../../src/assets/maps/test/test.tscn:89
+msgid "Interact chat"
+msgstr ""
 
-#: ../../src/Scenes/UI/Settings.tscn:37
-msgid "Fullscreen"
-msgstr "전체화면"
+#: ../../src/assets/maps/test/test.tscn:101
+msgid "spooky empty room "
+msgstr ""
 
-#: ../../src/Scenes/UI/Settings.tscn:50
-msgid "Fullscreen Resolution: "
-msgstr "전체화면 해상도: "
+#: ../../src/assets/player/player.tscn:120
+msgid "Pog"
+msgstr ""
 
-#: ../../src/Scenes/UI/Settings.tscn:65
-msgid "Music Volume: "
-msgstr "음악 볼륨: "
+#: ../../src/assets/ui/hud/defaulthud/defaulthud.tscn:18
+msgid "Chat"
+msgstr ""
 
-#: ../../src/Scenes/UI/Settings.tscn:83
-msgid "Sound Volume: "
-msgstr "소리 볼륨: "
+#: ../../src/assets/ui/hud/defaulthud/defaulthud.tscn:29
+msgid "Start Game"
+msgstr ""
 
-#: ../../src/Scenes/UI/Settings.tscn:102
-msgid "Colorblind Mode: "
-msgstr "고대비 모드: "
+#: ../../src/assets/ui/lobbyui/chatbox/chatbox.tscn:64
+msgid "Send"
+msgstr ""
 
-#: ../../src/Scenes/UI/Title.tscn:37
+#: ../../src/assets/ui/mainmenu/mainmenu.tscn:42
 msgid "OpenSuspect"
 msgstr ""
 
-#: ../../src/Scenes/UI/Title.tscn:68
+#: ../../src/assets/ui/mainmenu/mainmenu.tscn:90
 msgid "PLAY"
 msgstr "플레이"
 
-#: ../../src/Scenes/UI/Title.tscn:75
+#: ../../src/assets/ui/mainmenu/mainmenu.tscn:112
+#: ../../src/assets/ui/pausemenu/pausemenu.tscn:60
 msgid "APPEARANCE"
 msgstr "형색"
 
-#: ../../src/Scenes/UI/Title.tscn:85
+#: ../../src/assets/ui/mainmenu/mainmenu.tscn:134
+#: ../../src/assets/ui/pausemenu/pausemenu.tscn:72
 msgid "SETTINGS"
 msgstr "설정"
 
-#: ../../src/Scenes/UI/Title.tscn:95
+#: ../../src/assets/ui/mainmenu/mainmenu.tscn:157
+#: ../../src/assets/ui/pausemenu/pausemenu.tscn:108
+msgid "QUIT"
+msgstr "나가기"
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:33
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:114
+msgid "Port"
+msgstr "포트"
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:40
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:121
+msgid "42420"
+msgstr ""
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:55
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:134
+msgid "Name"
+msgstr ""
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:67
+msgid "CREATE"
+msgstr "생성"
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:73
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:152
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:186
+msgid "BACK"
+msgstr "뒤로"
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:94
+msgid "Hostname"
+msgstr "호스트 이름"
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:101
+msgid "localhost"
+msgstr ""
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:146
+msgid "CONNECT"
+msgstr "연결"
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:165
+msgid "TUTORIAL"
+msgstr "튜토리얼"
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:172
+msgid "JOIN GAME"
+msgstr "게임 참여"
+
+#: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:179
+msgid "CREATE GAME"
+msgstr "게임 생성"
+
+#: ../../src/assets/ui/pausemenu/pausemenu.tscn:48
+msgid "RESUME"
+msgstr ""
+
+#: ../../src/assets/ui/pausemenu/pausemenu.tscn:84
 msgid "LANGUAGE"
 msgstr "언어"
 
-#: ../../src/Scenes/UI/Title.tscn:102
-msgid "QUIT"
-msgstr "나가기"
+#: ../../src/assets/ui/pausemenu/pausemenu.tscn:96
+msgid "LEAVE"
+msgstr ""
+
+#: ../../src/assets/ui/submenus/settings/settings.gd:62
+#: ../../src/assets/ui/submenus/settings/settings.gd:64
+msgid "Video"
+msgstr ""
+
+#: ../../src/assets/ui/submenus/settings/settings.gd:62
+msgid "Fullscreen"
+msgstr "전체화면"
+
+#: ../../src/assets/ui/submenus/settings/settings.gd:64
+msgid "Colorblind mode"
+msgstr ""
+
+#: ../../src/assets/ui/submenus/settings/settings.gd:66
+msgid "Sound"
+msgstr ""
+
+#: ../../src/assets/ui/submenus/settings/settings.gd:67
+msgid "Locale"
+msgstr ""
+
+#: ../../src/assets/ui/submenus/settings/settings.gd:67
+msgid "Language"
+msgstr ""
+
+#: ../../src/assets/ui/submenus/settings/keybind/keybind.tscn:28
+#: ../../src/assets/ui/submenus/settings/settings.gd:81
+msgid "Back"
+msgstr ""
+
+#: ../../src/assets/ui/submenus/settings/settings.gd:85
+msgid "Keybinds"
+msgstr ""
+
+#: ../../src/assets/ui/submenus/settings/keybind/keybind.tscn:38
+msgid "Save"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:42
+msgid ":"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:92
+msgid "1"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:108
+msgid "2"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:124
+msgid "3"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:140
+msgid "4"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:156
+msgid "5"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:172
+msgid "6"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:188
+msgid "7"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:204
+msgid "8"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:220
+msgid "9"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:236
+msgid "10"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:252
+msgid "11"
+msgstr ""
+
+#: ../../src/assets/ui/tasks/clockset/clockset.tscn:268
+msgid "12"
+msgstr ""
 

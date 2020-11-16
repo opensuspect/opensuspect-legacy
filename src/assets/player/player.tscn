@@ -93,7 +93,6 @@ material = SubResource( 5 )
 position = Vector2( 0, -18 )
 frames = SubResource( 6 )
 animation = "walk-h"
-frame = 2
 playing = true
 
 [node name="MainLight" type="Light2D" parent="."]

@@ -19,16 +19,16 @@ func toggle(newState: bool = not open):
 # warning-ignore:function_conflicts_variable
 func open():
 	if openLeft:
-		position.x -= 40
+		position.x -= $CollisionShape2D.shape.extents.x * 2 * scale.x
 	else:
-		position.x += 40
+		position.x += $CollisionShape2D.shape.extents.x * 2 * scale.x
 	open = true
 
 func close():
 	if openLeft:
-		position.x += 40
+		position.x += $CollisionShape2D.shape.extents.x * 2 * scale.x
 	else:
-		position.x -= 40
+		position.x -= $CollisionShape2D.shape.extents.x * 2 * scale.x
 	open = false
 
 # warning-ignore:unused_argument
