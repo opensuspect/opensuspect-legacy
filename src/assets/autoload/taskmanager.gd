@@ -25,13 +25,13 @@ func _ready():
 	randomize()
 	print(gen_unique_id())
 
-func register_task(player_id: int, task_name: String):
+func register_task(player_id: int, task_name: String) -> void:
 	var new_task_id: int = gen_unique_id()
 	var new_task_dict: Dictionary = {"name": task_name, "type": tasks[task_name].type, "state": task_state.NOT_STARTED, "player": player_id}
 	task_dict[new_task_id] = new_task_dict
 	assign_task(player_id, new_task_id)
 
-func assign_task(player_id: int, task_id: int):
+func assign_task(player_id: int, task_id: int) -> void:
 	if not player_tasks.keys().has(player_id):
 		player_tasks[player_id] = []
 	player_tasks[player_id].append(task_id)
