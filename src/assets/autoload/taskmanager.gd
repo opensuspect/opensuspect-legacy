@@ -25,6 +25,21 @@ func _ready():
 	randomize()
 	print(gen_unique_id())
 
+func advance_task(task_id: int, new_state: int):
+	pass
+
+func transition_task(task_id: int, new_state: int) -> bool:
+	if not get_tree().is_network_server():
+		return false
+	var task_type: int = task_dict[task_id].type
+	var current_state: int = task_dict[task_id].state
+	#if that task type can't transition from current state to new state
+	if not task_transitions[task_type][current_state].has(new_state):
+		return false
+	#transition task
+	task_dict[task_id].state = new_state
+	return false
+
 func register_task(player_id: int, task_name: String) -> void:
 	var new_task_id: int = gen_unique_id()
 	var new_task_dict: Dictionary = {"name": task_name, "type": tasks[task_name].type, "state": task_state.NOT_STARTED, "player": player_id}
