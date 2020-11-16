@@ -46,6 +46,8 @@ func _ready():
 #reInstance is whether or not to recreate the corresponding menu node if it already exists
 func open_menu(menuName: String, menuData: Dictionary = {}, reInstance: bool = false):
 	#print("signalling to open ", menuName)
+	if not menus.keys().has(menuName):
+		push_error("open_menu() called with invalid menu name " + menuName)
 	emit_signal("open_menu", menuName, menuData, reInstance)
 
 func menu_opened(menuName):

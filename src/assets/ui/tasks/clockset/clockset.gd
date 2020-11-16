@@ -22,12 +22,13 @@ func open():
 	setClockTime(currentTime)
 	setWatchTime(targetTime)
 	#print("current time: ", currentTime)
-	popup()
-	UIManager.menu_opened("clockset")
+	#popup()
+	#UIManager.menu_opened("clockset")
 
 func close():
-	hide()
-	UIManager.menu_closed("clockset")
+	pass
+	#hide()
+	#UIManager.menu_closed("clockset")
 
 func checkComplete():
 	updateCurrentTime()
@@ -52,6 +53,7 @@ func setWatchTime(newTime):
 
 func updateCurrentTime():
 	currentTime = (hoursNode.value * 100) + minutesNode.value
+
 func roundDown(num, step):
 	var normRound = stepify(num, step)
 	if normRound > num:
@@ -70,7 +72,8 @@ func _on_clockset_about_to_show():
 	setWatchTime(targetTime)
 
 func _on_clockset_popup_hide():
-	UIManager.menu_closed("clockset")
+	pass
+	#UIManager.menu_closed("clockset")
 
 func _on_hours_value_changed(value):
 	if value == 0:

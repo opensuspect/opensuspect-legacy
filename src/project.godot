@@ -9,18 +9,30 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "WindowDialog",
-"class": "WindowDialogMenu",
+"base": "Popup",
+"class": "PopupBase",
 "language": "GDScript",
-"path": "res://assets/common/classes/ui/menuui/windowdialogmenu.gd"
+"path": "res://assets/common/classes/ui/base/popupbase.gd"
 }, {
-"base": "WindowDialogMenu",
+"base": "PopupBase",
+"class": "PopupTask",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/task/popuptask.gd"
+}, {
+"base": "WindowDialog",
+"class": "WindowDialogBase",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/base/windowdialogbase.gd"
+}, {
+"base": "WindowDialogBase",
 "class": "WindowDialogTask",
 "language": "GDScript",
-"path": "res://assets/common/classes/ui/taskui/windowdialogtask.gd"
+"path": "res://assets/common/classes/ui/task/windowdialogtask.gd"
 } ]
 _global_script_class_icons={
-"WindowDialogMenu": "",
+"PopupBase": "",
+"PopupTask": "",
+"WindowDialogBase": "",
 "WindowDialogTask": ""
 }
 

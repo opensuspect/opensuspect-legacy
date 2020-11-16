@@ -1,15 +1,15 @@
-extends Popup
+extends PopupBase
 
 func _ready():
 	pass
 
-func open():
-	popup()
-	UIManager.menu_opened("pausemenu")
+#func open():
+#	popup()
+#	UIManager.menu_opened("pausemenu")
 
-func close():
-	hide()
-	UIManager.menu_closed("pausemenu")
+#func close():
+#	hide()
+#	UIManager.menu_closed("pausemenu")
 
 func _process(_delta):
 	margin_left = $menu.margin_left
@@ -28,10 +28,11 @@ func _on_pausemenu_about_to_show():
 	pass
 
 func _on_pausemenu_popup_hide():
-	close()
+	pass
+#	close()
 
 func _on_resume_pressed():
-	close()
+	hide()
 
 func _on_appearance_pressed():
 	pass # Replace with function body.
