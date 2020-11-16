@@ -3,12 +3,11 @@ extends Node
 #The task manager is going to assign each task a unique ID, and then assign the ID to a player
 #each player will only be sent their task IDs and the info related to their task IDs
 
-enum task_type {BINARY, WIN, ITEM_OUTPUT, ITEM_INPUT, MAP_OUTPUT}
+enum task_type {BINARY, WIN, ITEM_OUTPUT, ITEM_INPUT, ITEM_INPUT_OUTPUT, MAP_OUTPUT}
 
 enum task_state {NOT_STARTED, IN_PROGRESS, COMPLETED}
 
-var task_transitions: Dictionary = {task_type.BINARY: {task_state.NOT_STARTED: [task_state.IN_PROGRESS, task_state.COMPLETED], 
-														task_state.IN_PROGRESS: [task_state.COMPLETED], 
+var task_transitions: Dictionary = {task_type.BINARY: {task_state.NOT_STARTED: [task_state.COMPLETED], 
 														task_state.COMPLETED: []}
 									}
 
@@ -19,14 +18,18 @@ var enabled_tasks: Array = ["clockset"]
 #dictionary that stores the task IDs corresponding to the tasks assigned to the player
 var player_tasks: Dictionary = {}
 #stores task info corresponding to task IDs
+#format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, player: <ID of player task is assigned to>}
 var task_dict: Dictionary = {}
 
 func _ready():
 	randomize()
 	print(gen_unique_id())
 
-func register_task():
-	pass
+func register_task(player_id: int, task_name: String):
+	var new_task_id: int = gen_unique_id()
+	var new_task_dict: Dictionary = {"name": task_name, "type": tasks[task_name].type, "state": task_state.NOT_STARTED, "player": player_id}
+	task_dict[new_task_id] = new_task_dict
+	assign_task(player_id, new_task_id)
 
 func assign_task(player_id: int, task_id: int):
 	if not player_tasks.keys().has(player_id):
@@ -40,3 +43,7 @@ func gen_unique_id() -> int:
 	while used_ids.has(new_id):
 		new_id = randi()
 	return new_id
+
+func reset_tasks() -> void:
+	player_tasks = {}
+	task_dict = {}
