@@ -5,6 +5,13 @@ extends Node
 
 enum task_type {BINARY, WIN, ITEM_OUTPUT, ITEM_INPUT, MAP_OUTPUT}
 
+enum task_state {NOT_STARTED, IN_PROGRESS, COMPLETED}
+
+var task_transitions: Dictionary = {task_type.BINARY: {task_state.NOT_STARTED: [task_state.IN_PROGRESS, task_state.COMPLETED], 
+														task_state.IN_PROGRESS: [task_state.COMPLETED], 
+														task_state.COMPLETED: []}
+									}
+
 #stores info of each task, for instance it's type (see task_type)
 var tasks: Dictionary = {"clockset": {"type": task_type.BINARY}}
 #array with all names of tasks that can be assigned, most likely used for map specific tasks
