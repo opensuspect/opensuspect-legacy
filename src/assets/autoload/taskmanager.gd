@@ -54,16 +54,33 @@ func transition_task(task_id: int, new_state: int) -> bool:
 	task_dict[task_id].state = new_state
 	return false
 
-func register_task(player_id: int, task_name: String) -> void:
+func new_task(task_name: String, players: Array, task_info: Dictionary):
+	#register task
+	var new_task_id = register_task(task_name, task_info)
+	
+	#assign task to players
+	for i in players:
+		assign_task(i, new_task_id)
+
+func register_task(task_name: String, task_info: Dictionary) -> int:
 	var new_task_id: int = gen_unique_id()
-	var new_task_dict: Dictionary = {"name": task_name, "type": tasks[task_name].type, "state": task_state.NOT_STARTED, "player": player_id}
+	var new_task_dict: Dictionary = {"name": task_name, "type": tasks[task_name].type, "state": task_state.NOT_STARTED, "assigned_to": []}
+	for i in task_info.keys():
+		#do stuff with task info
+		pass
 	task_dict[new_task_id] = new_task_dict
-	assign_task(player_id, new_task_id)
+	return new_task_id
 
 func assign_task(player_id: int, task_id: int) -> void:
+	#create task array for player_id if it doesn't exist
 	if not player_tasks.keys().has(player_id):
 		player_tasks[player_id] = []
-	player_tasks[player_id].append(task_id)
+	#add task to list of tasks assigned to player_id
+	if not player_tasks[player_id].has(task_id):
+		player_tasks[player_id].append(task_id)
+	#add player_id to list of players task is assigned to
+	if not task_dict[task_id].assigned_to.has(player_id):
+		task_dict[task_id].assigned_to.append(player_id)
 
 func gen_unique_id() -> int:
 	#task IDs only need to be somewhat random, they MUST be unique
