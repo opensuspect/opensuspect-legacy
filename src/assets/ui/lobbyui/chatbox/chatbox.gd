@@ -1,4 +1,4 @@
-extends WindowDialog
+extends WindowDialogBase
 
 onready var chatbox = get_node("Control/chatboxText")
 onready var textbox = get_node("Control/HBoxContainer/TextEdit")
@@ -13,13 +13,8 @@ var sentSide: String = "right" #side of chatbox sent messages are on
 var receivedSide: String = "left" #side of chatbox received messages are on
 
 func open():
-	popup()
+	
 	textbox.grab_focus()
-	UIManager.menu_opened("chatbox")
-
-func close():
-	hide()
-	UIManager.menu_closed("chatbox")
 
 func sendMessage(content, color: String = defaultColor):
 	if isEmpty(content) or hasLineBreaks(content):
@@ -102,4 +97,4 @@ func _on_chatbox_about_to_show():
 	pass
 
 func _on_chatbox_popup_hide():
-	close()
+	pass

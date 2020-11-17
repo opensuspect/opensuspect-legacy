@@ -8,9 +8,44 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Popup",
+"class": "PopupBase",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/base/popupbase.gd"
+}, {
+"base": "PopupPanel",
+"class": "PopupPanelBase",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/base/popuppanelbase.gd"
+}, {
+"base": "PopupPanelBase",
+"class": "PopupPanelTask",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/task/popuppaneltask.gd"
+}, {
+"base": "PopupBase",
+"class": "PopupTask",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/task/popuptask.gd"
+}, {
+"base": "WindowDialog",
+"class": "WindowDialogBase",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/base/windowdialogbase.gd"
+}, {
+"base": "WindowDialogBase",
+"class": "WindowDialogTask",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/task/windowdialogtask.gd"
+} ]
 _global_script_class_icons={
-
+"PopupBase": "",
+"PopupPanelBase": "",
+"PopupPanelTask": "",
+"PopupTask": "",
+"WindowDialogBase": "",
+"WindowDialogTask": ""
 }
 
 [application]
@@ -30,6 +65,7 @@ PlayerManager="*res://assets/autoload/playermanager.gd"
 SceneManager="*res://assets/autoload/scenemanager.gd"
 UIManager="*res://assets/autoload/uimanager.gd"
 MapManager="*res://assets/autoload/mapmanager.gd"
+TaskManager="*res://assets/autoload/taskmanager.gd"
 
 [display]
 
