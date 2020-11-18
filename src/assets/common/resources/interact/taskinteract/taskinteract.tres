@@ -6,8 +6,9 @@
 resource_local_to_scene = true
 resource_name = "Task"
 script = ExtResource( 1 )
-task_name = ""
+task_name = "sdgf"
 inputs/toggle_items = false
 outputs/toggle_items = false
+outputs/toggle_tasks = false
 group/list_abc = true
 group/subgroup/abc = "InteractTaskScript"

@@ -1,4 +1,4 @@
-#tool
+tool
 extends Resource
 
 #SHOULD NOT BE USED

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/maps/common/interactables/interactpoint/interactpoint.gd" type="Script" id=1]
 [ext_resource path="res://assets/common/resources/interact/taskinteract/taskinteract.gd" type="Script" id=2]
@@ -7,9 +7,19 @@
 resource_local_to_scene = true
 script = ExtResource( 2 )
 task_name = ""
-inputs/toggle_items = true
-inputs/input_items = PoolStringArray(  )
+inputs/toggle_items = false
 outputs/toggle_items = false
+outputs/toggle_tasks = false
+group/list_abc = true
+group/subgroup/abc = "InteractTaskScript"
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+script = ExtResource( 2 )
+task_name = ""
+inputs/toggle_items = false
+outputs/toggle_items = false
+outputs/toggle_tasks = false
 group/list_abc = true
 group/subgroup/abc = "InteractTaskScript"
 
@@ -23,6 +33,7 @@ collision_layer = 2147483664
 collision_mask = 0
 script = ExtResource( 1 )
 test_resource = SubResource( 1 )
+test_array = [ SubResource( 3 ) ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
