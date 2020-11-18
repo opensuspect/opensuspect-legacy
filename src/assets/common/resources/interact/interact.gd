@@ -1,28 +1,37 @@
-tool
+#tool
 extends Resource
+
+#SHOULD NOT BE USED
 
 class_name Interact
 
-var interact_type: Resource = load("res://assets/common/resources/taskresources/task/task.tres")
+enum type {task, ui, map}
+export(type) var interact_type = type.task
+var interact_res: Resource# = load("res://assets/common/resources/interact/taskinteract/taskinteract.tres")
 
 var list_abc = true
-var abc = "Script"
+var abc = "InteractScript"
 
 func init_task():
-	print(abc)
+	pass
+#	print(abc)
 
 func set_interact(resdir: String):
 #	for i in 100:
-	interact_type = load(resdir)
+	interact_res = load(resdir)
 
 func _init():
+	#print(str(ClassDB.get_class_list()).replace("[", "").replace("]", "").replace(" ", ""))
+	resource_local_to_scene = true
 	pass
 	#if Engine.editor_hint:
 	#	return
-	#interact_type = load("res://assets/common/resources/taskresources/task/task.tres")
+	#interact_type = load("res://assets/common/resources/interact/taskinteract/taskinteract.tres")
 
 #overrides get, allows for export var groups
 func _get(property):
+	if not Engine.editor_hint:
+		return []
 	match property:
 		"group/subgroup/abc":
 			return abc 
@@ -31,9 +40,12 @@ func _get(property):
 
 #overrides set, allows for export var groups
 func _set(property, value): # overridden
-	#set_interact("res://assets/common/resources/taskresources/task/task.tres")
-	#interact_type = load("res://assets/common/resources/taskresources/task/task.tres")
+	#set_interact("res://assets/common/resources/interact/taskinteract/taskinteract.tres")
+	interact_res = load("res://assets/common/resources/interact/taskinteract/taskinteract.tres")
+	if not Engine.editor_hint:
+		return []
 	match property:
+		
 		"group/subgroup/abc":
 			abc = value
 		"group/list_abc":
@@ -44,13 +56,18 @@ func _set(property, value): # overridden
 
 #overrides _get_property_list, tells editor to show more vars in inspector
 func _get_property_list():
+	if not Engine.editor_hint:
+		return []
+	var class_list = str(ClassDB.get_class_list()).replace("[", "").replace("]", "").replace(" ", "")
 	var property_list = []
+	var load_TaskInteract_class: String = TaskInteract.resource_path
 	property_list.append({
 		"name": "interact_type",
 		"type": TYPE_OBJECT,
 		"usage": PROPERTY_USAGE_DEFAULT,
 		"hint": PROPERTY_HINT_RESOURCE_TYPE,
-		"hint_string": "TaskInteract",
+		#don't how to have it not spit "Cannot get class 'TaskInteract'.
+		"hint_string": "TaskInteract",# if ClassDB.class_exists("TaskInteract") else class_list,
 		})
 
 	property_list.append({

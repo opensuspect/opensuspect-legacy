@@ -10,4 +10,4 @@ task_name = ""
 inputs/toggle_items = false
 outputs/toggle_items = false
 group/list_abc = true
-group/subgroup/abc = "Script"
+group/subgroup/abc = "InteractTaskScript"

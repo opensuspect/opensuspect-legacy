@@ -15,6 +15,7 @@ func _enter_tree():
 		interact_info["linkedNode"] = get_node(node_path)
 
 func _ready():
+	
 	interact_data["display_text"] = display_text
 	match node_or_ui:
 		type.node:
@@ -26,6 +27,8 @@ func get_interact_data():
 	return interact_data
 
 func interact():
+	print(test_resource.abc)
+	print(test_resource.interact_type.abc)
 	match node_or_ui:
 		type.node:
 			if not get_node(node_path):

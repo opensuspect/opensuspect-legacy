@@ -6,5 +6,4 @@
 resource_local_to_scene = true
 resource_name = "Interact"
 script = ExtResource( 1 )
-group/list_abc = true
-group/subgroup/abc = "Script"
+interact_type = 0

@@ -12,16 +12,17 @@ var item_outputs_on: bool
 var item_outputs: PoolStringArray
 
 var list_abc = true
-var abc = "Script"
+var abc = "InteractTaskScript"
 
 func init_task():
-	print(abc)
+	pass
+	#print(abc)
 
 func _init():
+	resource_local_to_scene = true
 	if Engine.editor_hint:
-		
 		return
-	print(abc)
+	#print(abc)
 
 #overrides get, allows for export var groups
 func _get(property):
@@ -65,6 +66,8 @@ func _set(property, value): # overridden
 
 #overrides _get_property_list, tells editor to show more vars in inspector
 func _get_property_list():
+	if not Engine.editor_hint:
+		return []
 	var property_list = []
 	property_list.append({
 		"name": "inputs/toggle_items",
