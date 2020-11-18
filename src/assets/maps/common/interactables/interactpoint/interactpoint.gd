@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 enum type {node, ui}
+export(Resource) var test_resource
 export(String) var display_text
 export(type) var node_or_ui
 export(NodePath) var node_path

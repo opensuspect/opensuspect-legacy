@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://assets/common/resources/interact/interact.gd" type="Script" id=1]
+[ext_resource path="res://assets/common/resources/interact/taskinteract/taskinteract.gd" type="Script" id=2]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+task_name = ""
+item_inputs = PoolStringArray(  )
+outputs = {
+
+}
+group/list_abc = true
+group/subgroup/abc = "Script"
+
+[resource]
+resource_local_to_scene = true
+resource_name = "Interact"
+script = ExtResource( 1 )
+interact_type = SubResource( 1 )
