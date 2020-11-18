@@ -52,18 +52,19 @@ func _get_property_list():
 		"hint": PROPERTY_HINT_RESOURCE_TYPE,
 		"hint_string": "TaskInteract",
 		})
-#	property_list.append({
-#		"name": "group/list_abc",
-#		"type": TYPE_BOOL,
-#		"usage": PROPERTY_USAGE_DEFAULT,
-#		"hint": PROPERTY_HINT_NONE,
-#		})
-#	if list_abc == true:
-#		property_list.append({
-#		"name": "group/subgroup/abc",
-#		"type": TYPE_STRING,
-#		"usage": PROPERTY_USAGE_DEFAULT,
-#		"hint": PROPERTY_HINT_NONE,
-#		"hint_string": "one,two,three",
-#		})
+
+	property_list.append({
+		"name": "group/list_abc",
+		"type": TYPE_BOOL,
+		"usage": PROPERTY_USAGE_DEFAULT,
+		"hint": PROPERTY_HINT_NONE,
+		})
+	if list_abc == true:
+		property_list.append({
+		"name": "group/subgroup/abc",
+		"type": TYPE_STRING,
+		"usage": PROPERTY_USAGE_DEFAULT,
+		"hint": PROPERTY_HINT_NONE,
+		"hint_string": "one,two,three",
+		})
 	return property_list
