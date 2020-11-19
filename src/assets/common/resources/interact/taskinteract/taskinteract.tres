@@ -6,7 +6,7 @@
 resource_local_to_scene = true
 resource_name = "Task"
 script = ExtResource( 1 )
-task_name = "sdgf"
+task_name = "asdsad"
 inputs/toggle_items = false
 outputs/toggle_items = false
 outputs/toggle_tasks = false
