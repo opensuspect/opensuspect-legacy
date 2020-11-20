@@ -16,13 +16,17 @@ func _enter_tree():
 		interact_info["linkedNode"] = get_node(node_path)
 
 func _ready():
-	
-	interact_data["display_text"] = display_text
-	match node_or_ui:
-		type.node:
-			interact_data["interact"] = get_node(node_path)
-		type.ui:
-			interact_data["interact"] = ui_name
+	pass
+#	test_resource.init_task()
+#	interact_data["display_text"] = test_resource.task_name
+#	interact_data["interact"] = test_resource.ui_name
+#	print(interact_data)
+#	interact_data["display_text"] = display_text
+#	match node_or_ui:
+#		type.node:
+#			interact_data["interact"] = get_node(node_path)
+#		type.ui:
+#			interact_data["interact"] = ui_name
 
 func get_interact_data():
 	return interact_data
@@ -38,3 +42,6 @@ func interact():
 		type.ui:
 			UIManager.open_menu(ui_name, interact_info)
 
+func _notification(what):
+	if what == NOTIFICATION_POSTINITIALIZE:
+		print("post init")

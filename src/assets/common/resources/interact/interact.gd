@@ -1,9 +1,9 @@
-tool
+#tool
 extends Resource
 
 #SHOULD NOT BE USED
 
-class_name Interact
+#class_name Interact
 
 enum type {task = 0, ui = 1, map = 2}
 #export(type) var interact_type
@@ -15,16 +15,16 @@ var task_resource: Resource = base_task_interact.duplicate(true)
 var ui_resource: Resource = null
 var map_resource: Resource = null
 
-
-
 var list_abc = true
 var abc = "InteractScript"
 
 func init_task():
+	print(TaskManager.gen_unique_id())
 	pass
 #	print(abc)
 
 func _init():
+	print(TaskManager.gen_unique_id())
 	resource_local_to_scene = true
 	pass
 	#if Engine.editor_hint:
@@ -90,7 +90,7 @@ func _get_property_list():
 		"type": TYPE_OBJECT,
 		"usage": PROPERTY_USAGE_DEFAULT,
 		"hint": PROPERTY_HINT_RESOURCE_TYPE,
-		"hint_string": "",
+		"hint_string": "Task",
 		})
 
 	return property_list

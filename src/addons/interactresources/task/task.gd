@@ -1,9 +1,9 @@
-#tool
+tool
 extends Resource
 
-#class_name TaskInteract
-
 export(String) var task_name
+
+export(String) var ui_name
 
 var item_inputs_on: bool
 var item_inputs: PoolStringArray
@@ -12,7 +12,7 @@ var item_outputs_on: bool
 var item_outputs: PoolStringArray
 
 #needed to instance new unique task resources in editor
-var base_task_interact: Resource = ResourceLoader.load("res://assets/common/resources/interact/taskinteract/taskinteract.tres")
+var base_task_resource: Resource = load("res://addons/interactresources/task/task.tres")
 var task_outputs_on: bool
 var task_outputs: Array
 
@@ -20,14 +20,47 @@ var list_abc = true
 var abc = "InteractTaskScript"
 
 func init_task():
+	TaskManager.add_task_resource(self)
 	pass
 	#print(abc)
 
+func get_task_info() -> Dictionary:
+	return gen_task_info()
+
+func gen_task_info() -> Dictionary:
+	var info:Dictionary = {}
+	info["task_name"] = task_name
+	info["ui_name"] = ui_name
+	info["item_inputs"] = item_inputs
+	info["item_outputs"] = item_outputs
+	info["task_outputs"] = task_outputs
+	return info
+
+func _enter_tree():
+	print("task enter tree")
+
+func _ready():
+	print("task ready")
+
 func _init():
+	print("task init 1")
+	#if resource_name == "":
+	#	resource_name = "Task"
 	resource_local_to_scene = true
 	if Engine.editor_hint:
 		return
 	#print(abc)
+
+var process = false
+func _process(_delta):
+	if not process:
+		print("process")
+		process = true
+
+func _notification(what):
+	pass
+	if what == NOTIFICATION_POSTINITIALIZE:
+		print("post init")
 
 #EDITOR STUFF BELOW THIS POINT, DO NOT TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 #---------------------------------------------------------------------------------------------------
@@ -76,7 +109,7 @@ func _set(property, value): # overridden
 			task_outputs = value
 			if task_outputs.size() > 0 and task_outputs[-1] == null:
 				print("null last task")
-				task_outputs[-1] = base_task_interact.duplicate()
+				task_outputs[-1] = base_task_resource.duplicate()#load("res://addons/interactresources/task/task.tres").duplicate(true)
 
 		"group/subgroup/abc":
 			abc = value

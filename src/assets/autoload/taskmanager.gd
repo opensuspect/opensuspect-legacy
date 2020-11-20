@@ -16,6 +16,7 @@ var tasks: Dictionary = {"clockset": {"type": task_type.BINARY}}
 #array with all names of tasks that can be assigned, most likely used for map specific tasks
 var enabled_tasks: Array = ["clockset"]
 #dictionary that stores the task IDs corresponding to the tasks assigned to the player
+var task_resources: Array = []
 var player_tasks: Dictionary = {}
 #stores task info corresponding to task IDs
 #format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, assigned_to: [<network IDs of players task is assigned to>]}
@@ -24,6 +25,10 @@ var task_dict: Dictionary = {}
 func _ready():
 	randomize()
 	print(gen_unique_id())
+
+func add_task_resource(resource):
+	task_resources.append(resource)
+	print(resource, " ", resource.task_name)
 
 #can't declare new_state as an int, otherwise it would need to default to an int which could cause later problems
 func advance_task(task_id: int, new_state = null) -> bool:

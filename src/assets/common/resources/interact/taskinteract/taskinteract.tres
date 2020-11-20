@@ -4,11 +4,6 @@
 
 [resource]
 resource_local_to_scene = true
-resource_name = "Task"
+resource_name = "Taskf"
 script = ExtResource( 1 )
 task_name = "asdsad"
-inputs/toggle_items = false
-outputs/toggle_items = false
-outputs/toggle_tasks = false
-group/list_abc = true
-group/subgroup/abc = "InteractTaskScript"

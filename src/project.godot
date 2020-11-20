@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Resource",
-"class": "Interact",
-"language": "GDScript",
-"path": "res://assets/common/resources/interact/interact.gd"
-}, {
 "base": "Popup",
 "class": "PopupBase",
 "language": "GDScript",
@@ -34,11 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/common/classes/ui/task/popuptask.gd"
 }, {
-"base": "Resource",
-"class": "TaskInteract",
-"language": "GDScript",
-"path": "res://assets/common/resources/interact/taskinteract/taskinteract.gd"
-}, {
 "base": "WindowDialog",
 "class": "WindowDialogBase",
 "language": "GDScript",
@@ -50,12 +40,10 @@ _global_script_classes=[ {
 "path": "res://assets/common/classes/ui/task/windowdialogtask.gd"
 } ]
 _global_script_class_icons={
-"Interact": "",
 "PopupBase": "",
 "PopupPanelBase": "",
 "PopupPanelTask": "",
 "PopupTask": "",
-"TaskInteract": "",
 "WindowDialogBase": "",
 "WindowDialogTask": ""
 }
@@ -83,6 +71,10 @@ TaskManager="*res://assets/autoload/taskmanager.gd"
 
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "interactresources" )
 
 [gui]
 

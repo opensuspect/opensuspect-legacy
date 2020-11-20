@@ -7,14 +7,19 @@
 [ext_resource path="res://assets/maps/common/interactables/interactpoint/interactpoint.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/maps/common/elements/walls/wallhorizontal/wallhorizontal.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/maps/common/elements/walls/wallvertical/wallvertical.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/common/resources/interact/interact.gd" type="Script" id=8]
+[ext_resource path="res://addons/interactresources/task/task.gd" type="Script" id=8]
+
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
 script = ExtResource( 8 )
-interact_type = 0
+task_name = "Fix clock"
+ui_name = "clockset"
+inputs/toggle_items = false
+outputs/toggle_items = false
+outputs/toggle_tasks = false
 group/list_abc = true
-group/subgroup/abc = "InteractScript"
+group/subgroup/abc = "InteractTaskScript"
 
 [node name="test" type="YSort"]
 
