@@ -1,5 +1,8 @@
 extends KinematicBody2D
 
+onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
+onready var sprite: AnimatedSprite = $Sprite
+
 signal main_player_moved(position)
 
 export (int) var speed = 150
@@ -28,6 +31,10 @@ var last_reveived_input: int = 0
 var input_queue: Array = []
 
 func _ready():
+	# Set the sprite material for every player to be a duplicate of their
+	# initial material so that outlines may be modified independently.
+	sprite.set_material(sprite.material.duplicate())
+	
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
 	if main_player:
@@ -40,6 +47,7 @@ func _ready():
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
+	_checkRole(myRole)
 
 func setName(newName):
 	ourname = newName
@@ -51,6 +59,19 @@ func roles_assigned(playerRoles: Dictionary):
 		return
 	myRole = playerRoles[id]
 	changeNameColor(myRole)
+
+func _checkRole(role: String) -> void:
+	"""
+	Performs certain functions depending on the passed in role parameter.
+	"""
+	match role:
+		"traitor":
+			add_child(infiltrator_scene.instance())
+			set_collision_layer_bit(3, true)
+		"detective":
+			pass
+		"default":
+			set_collision_layer_bit(2, true)
 
 func changeNameColor(role: String):
 	match role:
