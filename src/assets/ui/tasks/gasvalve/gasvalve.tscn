@@ -1,0 +1,114 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui/tasks/gasvalve/gasvalve.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/tasks/gasvalve/pressuregauge.gd" type="Script" id=2]
+
+[node name="gasvalve" type="WindowDialog"]
+anchor_left = 0.3
+anchor_top = 0.2
+anchor_right = 0.7
+anchor_bottom = 0.7
+focus_mode = 2
+window_title = "Adjust the gas pressure!"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="inputrange" type="ColorRect" parent="."]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 70.0
+margin_bottom = 250.0
+color = Color( 0.662745, 0.662745, 0.662745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="inputpressure" type="Polygon2D" parent="inputrange"]
+color = Color( 0.0352941, 0.0352941, 0.0352941, 1 )
+polygon = PoolVector2Array( 1.35919, 0.494644, 1.35919, 21.3058, 39.4138, 10.6029 )
+script = ExtResource( 2 )
+
+[node name="valveset" type="ColorRect" parent="."]
+margin_left = 180.0
+margin_top = 30.0
+margin_right = 220.0
+margin_bottom = 250.0
+color = Color( 0.662745, 0.662745, 0.662745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="valvepos" type="Polygon2D" parent="valveset"]
+color = Color( 0.0352941, 0.0352941, 0.0352941, 1 )
+polygon = PoolVector2Array( 1.35919, 0.494644, 1.35919, 21.3058, 39.4138, 10.6029 )
+script = ExtResource( 2 )
+
+[node name="outputrange" type="ColorRect" parent="."]
+margin_left = 330.0
+margin_top = 30.0
+margin_right = 370.0
+margin_bottom = 250.0
+color = Color( 0.662745, 0.662745, 0.662745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="outputpressure" type="Polygon2D" parent="outputrange"]
+color = Color( 0.0352941, 0.0352941, 0.0352941, 1 )
+polygon = PoolVector2Array( 1.35919, 0.494644, 1.35919, 21.3058, 39.4138, 10.6029 )
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 27.7496
+margin_top = 4.2045
+margin_right = 67.7496
+margin_bottom = 26.2045
+text = "Input"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 327.432
+margin_top = 4.204
+margin_right = 375.432
+margin_bottom = 26.204
+text = "Output"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 167.442
+margin_top = 4.204
+margin_right = 233.442
+margin_bottom = 26.204
+text = "Valve set"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="decrease" type="Button" parent="."]
+margin_left = 150.52
+margin_top = 118.566
+margin_right = 168.52
+margin_bottom = 146.566
+text = "-"
+
+[node name="increase" type="Button" parent="."]
+margin_left = 232.928
+margin_top = 119.407
+margin_right = 253.928
+margin_bottom = 147.407
+text = "+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="popup_hide" from="." to="." method="_on_gasvalve_popup_hide"]
+[connection signal="updateDial" from="." to="valveset/valvepos" method="_on_gasvalve_updateGauge"]
+[connection signal="updateInputGauge" from="." to="inputrange/inputpressure" method="_on_gasvalve_updateGauge"]
+[connection signal="updateOutputGauge" from="." to="outputrange/outputpressure" method="_on_gasvalve_updateGauge"]
+[connection signal="pressed" from="decrease" to="." method="_on_decrease_pressed"]
+[connection signal="pressed" from="increase" to="." method="_on_increase_pressed"]

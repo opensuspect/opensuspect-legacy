@@ -13,7 +13,8 @@ var menus: Dictionary = {
 						"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")}, 
 						
 						#task UI
-						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")}
+						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")},
+						"gasvalve": {"scene": preload("res://assets/ui/tasks/gasvalve/gasvalve.tscn")}
 						}
 
 var openMenus: Array = []
