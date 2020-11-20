@@ -11,11 +11,10 @@ ui_name = ""
 inputs/toggle_items = false
 outputs/toggle_items = false
 outputs/toggle_tasks = false
-group/list_abc = true
-group/subgroup/abc = "InteractTaskScript"
+group/list_abc = false
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource( 1 )
-interact_type = "Ui"
+interact_type = 0
 task = SubResource( 1 )

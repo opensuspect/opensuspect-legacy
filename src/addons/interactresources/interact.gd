@@ -2,7 +2,8 @@ tool
 extends Resource
 
 enum type {task = 0, ui = 1, map = 2}
-export(type) var interact_type
+export(type) var interact_type = 1
+var test_type = type.map
 #var interact_type: String
 
 #needed to instance new unique task resources in editor
@@ -49,7 +50,7 @@ func _set(property, value): # overridden
 	match property:
 #		"interact_type":
 #			interact_type = value
-#			property_list_changed_notify()
+#			#property_list_changed_notify()
 		"task":
 			#if new resource is a task resource
 			if value is preload("res://addons/interactresources/task/task.gd"):
@@ -61,6 +62,7 @@ func _set(property, value): # overridden
 			ui_resource = value
 		"map":
 			map_resource = value
+	property_list_changed_notify()
 	return true
 
 #overrides _get_property_list, tells editor to show more vars in inspector
@@ -88,6 +90,3 @@ func _get_property_list():
 #				"hint_string": "Task",
 				})
 	return property_list
-
-func equal(a, b):
-	return a == b
