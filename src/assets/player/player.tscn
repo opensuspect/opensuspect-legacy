@@ -16,7 +16,7 @@
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-3-4.png" type="Texture" id=14]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
 [ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
-[ext_resource path="res://assets/common/shaders/outline.shader" type="Shader" id=17]
+[ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=17]
 
 [sub_resource type="ShaderMaterial" id=1]
 render_priority = 1
@@ -39,7 +39,7 @@ radius = 12.0
 
 [sub_resource type="ShaderMaterial" id=6]
 shader = ExtResource( 17 )
-shader_param/line_color = Color( 1, 0, 0, 0 )
+shader_param/line_color = Color( 0, 0, 0, 0 )
 shader_param/line_thickness = 1.5
 
 [sub_resource type="SpriteFrames" id=7]
@@ -49,15 +49,15 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "walk-h",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk-up",
 "speed": 8.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "walk-h",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
 "loop": true,
@@ -103,7 +103,7 @@ material = SubResource( 6 )
 position = Vector2( 0, -18 )
 frames = SubResource( 7 )
 animation = "walk-h"
-frame = 1
+frame = 2
 playing = true
 
 [node name="MainLight" type="Light2D" parent="."]

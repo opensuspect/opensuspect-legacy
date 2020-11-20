@@ -65,10 +65,8 @@ func _instantiate_kill_gui() -> void:
 	"""
 	Add kill UI to the infiltrator's HUD
 	"""
-	var killui: Control = killui_scene.instance()
-	killui.infiltrator = self
-	killui.rect_position = Vector2(850, 500)
-	ui_controller.add_child(killui)
+#	ui_controller.instance_menu("killui")
+	ui_controller.open_menu("killui", {"linked_node": self, "rect_position": Vector2(850, 500)})
 
 func _reload() -> void:
 	"""
