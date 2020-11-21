@@ -6,6 +6,8 @@
 [node name="defaulthud" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -1.49829
+margin_right = -1.49829
 __meta__ = {
 "_edit_use_anchors_": false
 }
