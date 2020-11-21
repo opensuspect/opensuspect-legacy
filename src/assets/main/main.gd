@@ -37,7 +37,7 @@ func _enter_tree() -> void:
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 
 # Keep the clients' player positions updated
-func _physics_process(_delta: float) -> void:
+func _on_NetworkUpdateTimer_timeout() -> void:
 	if get_tree().is_network_server():
 		var positions_dict = {}
 		for id in players.keys():
