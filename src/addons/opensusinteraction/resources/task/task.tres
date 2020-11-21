@@ -1,13 +1,15 @@
 [gd_resource type="Resource" load_steps=2 format=2]
 
-[ext_resource path="res://addons/interactresources/task/task.gd" type="Script" id=1]
+[ext_resource path="res://addons/opensusinteraction/resources/task/task.gd" type="Script" id=1]
 
 [resource]
 resource_local_to_scene = true
+resource_name = "Task"
 script = ExtResource( 1 )
 task_name = ""
 ui_name = ""
 inputs/toggle_items = false
 outputs/toggle_items = false
 outputs/toggle_tasks = false
-group/list_abc = false
+group/list_abc = true
+group/subgroup/abc = "InteractTaskScript"

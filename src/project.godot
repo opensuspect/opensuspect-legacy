@@ -74,7 +74,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "interactresources" )
+enabled=PoolStringArray( "opensusinteraction" )
 
 [gui]
 

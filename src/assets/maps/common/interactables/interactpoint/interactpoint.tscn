@@ -3,12 +3,12 @@
 [ext_resource path="res://assets/maps/common/interactables/interactpoint/interactpoint.gd" type="Script" id=1]
 [ext_resource path="res://assets/common/resources/interact/taskinteract/taskinteract.gd" type="Script" id=2]
 
-[sub_resource type="Resource" id=2]
+[sub_resource type="Resource" id=1]
 resource_local_to_scene = true
 script = ExtResource( 2 )
 task_name = ""
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 1, 1 )
 
 [node name="interactpoint" type="StaticBody2D" groups=[
@@ -17,7 +17,10 @@ extents = Vector2( 1, 1 )
 collision_layer = 2147483664
 collision_mask = 0
 script = ExtResource( 1 )
-test_array = [ SubResource( 2 ) ]
+__meta__ = {
+"_editor_description_": ""
+}
+test_array = [ SubResource( 1 ) ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 3 )
+shape = SubResource( 2 )

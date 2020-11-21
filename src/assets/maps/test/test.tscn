@@ -7,7 +7,10 @@
 [ext_resource path="res://assets/maps/common/interactables/interactpoint/interactpoint.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/maps/common/elements/walls/wallhorizontal/wallhorizontal.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/maps/common/elements/walls/wallvertical/wallvertical.tscn" type="PackedScene" id=7]
-[ext_resource path="res://addons/interactresources/task/task.gd" type="Script" id=8]
+[ext_resource path="res://addons/opensusinteraction/resources/task/task.gd" type="Script" id=8]
+
+
+
 
 
 [sub_resource type="Resource" id=1]

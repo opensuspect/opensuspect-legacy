@@ -1,6 +1,8 @@
 tool
 extends Resource
 
+#class_name Task
+
 export(String) var task_name
 
 export(String) var ui_name
@@ -12,7 +14,7 @@ var item_outputs_on: bool
 var item_outputs: PoolStringArray
 
 #needed to instance new unique task resources in editor
-var base_task_resource: Resource = load("res://addons/interactresources/task/task.tres")
+var base_task_resource: Resource = ResourceLoader.load("res://addons/opensusinteraction/resources/task/task.tres")#.duplicate()
 var task_outputs_on: bool
 var task_outputs: Array
 
