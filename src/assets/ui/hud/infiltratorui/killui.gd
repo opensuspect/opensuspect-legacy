@@ -8,8 +8,6 @@ onready var kill_cooldown_timer: Timer
 onready var infiltrator: Node2D
 # The sprite that will indicate how much time is left in the reload animation
 onready var sprite: AnimatedSprite = $KillSprite
-# The node responsible for instancing, opening, and closing this GUI
-onready var ui_controller: CanvasLayer = get_tree().get_root().find_node("uicontroller", true, false) 
 
 # Loaded with data from call to open_menu function in UIManager
 var menuData: Dictionary = {}
@@ -17,6 +15,7 @@ var menuData: Dictionary = {}
 func _ready() -> void:
 	if menuData.keys().has("linked_node"):
 		infiltrator = menuData["linked_node"]
+		infiltrator.connect("tree_exited", self, "_on_Infiltrator_tree_exited")
 		animator = infiltrator.get_node("Animator")
 		kill_cooldown_timer = infiltrator.get_node("KillCooldownTimer")
 	if menuData.keys().has("rect_position"):
@@ -34,15 +33,7 @@ func _process(_delta: float) -> void:
 			progress = 0.0
 		elif infiltrator.is_reloaded():
 			progress = 1.0
-	elif infiltrator == null:
-		queue_free()
 	sprite.material.set_shader_param("progress", progress)
-
-func base_close() -> void:
-	"""
-	For sake of compliance with close_menu.
-	"""
-	pass
 
 func base_open() -> void:
 	"""
@@ -50,8 +41,8 @@ func base_open() -> void:
 	"""
 	pass
 
-func close() -> void:
-	hide()
-
-func open() -> void:
-	show()
+func _on_Infiltrator_tree_exited() -> void:
+	"""
+	Remove the kill icon when infiltrator node is removed from the player.
+	"""
+	queue_free()

@@ -13,20 +13,29 @@ length = 10.0
 "infiltrators",
 ]]
 script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": "Node that gets instantiated as a child of a player when they are assigned the role of \"traitor\"."
+}
 
 [node name="KillCooldownTimer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
+__meta__ = {
+"_editor_description_": "Cooldown between kills (unused for now)."
+}
 
 [node name="KillArea" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 4
 __meta__ = {
-"_editor_description_": ""
+"_editor_description_": "The area in which another player may be killed by the infiltrator."
 }
 
 [node name="KillCollision" type="CollisionShape2D" parent="KillArea"]
 shape = SubResource( 1 )
+__meta__ = {
+"_editor_description_": "The collision of the area where a player may be killed."
+}
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/Reload = SubResource( 2 )
