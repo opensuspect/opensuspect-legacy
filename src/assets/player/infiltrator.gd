@@ -60,9 +60,15 @@ func enable_killing(enable: bool = true) -> void:
 	_killing_enabled = enable
 
 func is_reloaded() -> bool:
+	"""
+	Check whether the infiltrator has reloaded.
+	"""
 	return _reloaded
 
 func set_reloaded(reloaded: bool) -> void:
+	"""
+	Set whether the infiltrator has reloaded.
+	"""
 	_reloaded = reloaded
 
 func _kill_player(player: KinematicBody2D) -> void:
@@ -96,7 +102,7 @@ func _instantiate_kill_gui() -> void:
 	"""
 	Add kill UI to the infiltrator's HUD
 	"""
-	ui_controller.open_menu("killui", {"linked_node": self, "rect_position": Vector2(850, 500)})
+	ui_controller.open_menu("killui", {"linked_node": self, "rect_position": Vector2(850, 500)}, true)
 
 func _reload() -> void:
 	"""

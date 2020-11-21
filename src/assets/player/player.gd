@@ -49,7 +49,6 @@ func _ready():
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
-	_checkRole(myRole)
 
 func setName(newName):
 	ourname = newName
@@ -61,6 +60,7 @@ func roles_assigned(playerRoles: Dictionary):
 		return
 	myRole = playerRoles[id]
 	changeNameColor(myRole)
+	_checkRole(myRole)
 
 func _checkRole(role: String) -> void:
 	"""
@@ -68,12 +68,16 @@ func _checkRole(role: String) -> void:
 	"""
 	match role:
 		"traitor":
-			add_child(infiltrator_scene.instance())
 			set_collision_layer_bit(3, true)
+			if not has_node("Infiltrator"):
+				add_child(infiltrator_scene.instance())
 		"detective":
-			pass
+			if has_node("Infiltrator"):
+				get_node("Infiltrator").queue_free()
 		"default":
 			set_collision_layer_bit(2, true)
+			if has_node("Infiltrator"):
+				get_node("Infiltrator").queue_free()
 
 func changeNameColor(role: String):
 	match role:

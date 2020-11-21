@@ -8,6 +8,8 @@ onready var kill_cooldown_timer: Timer
 onready var infiltrator: Node2D
 # The sprite that will indicate how much time is left in the reload animation
 onready var sprite: AnimatedSprite = $KillSprite
+# The node responsible for instancing, opening, and closing this GUI
+onready var ui_controller: CanvasLayer = get_tree().get_root().find_node("uicontroller", true, false) 
 
 # Loaded with data from call to open_menu function in UIManager
 var menuData: Dictionary = {}
@@ -27,14 +29,29 @@ func _process(_delta: float) -> void:
 	var progress: float = 0.0
 	if animator != null and animator.current_animation == "Reload":
 		progress = animator.current_animation_position / animator.current_animation_length
-	elif not infiltrator.is_reloaded():
-		progress = 0.0
-	elif infiltrator.is_reloaded():
-		progress = 1.0
+	elif infiltrator != null:
+		if not infiltrator.is_reloaded():
+			progress = 0.0
+		elif infiltrator.is_reloaded():
+			progress = 1.0
+	elif infiltrator == null:
+		queue_free()
 	sprite.material.set_shader_param("progress", progress)
+
+func base_close() -> void:
+	"""
+	For sake of compliance with close_menu.
+	"""
+	pass
 
 func base_open() -> void:
 	"""
 	For sake of compliance with open_menu.
 	"""
 	pass
+
+func close() -> void:
+	hide()
+
+func open() -> void:
+	show()
