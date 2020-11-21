@@ -9,8 +9,9 @@ resource_name = "Task"
 script = ExtResource( 2 )
 task_name = ""
 ui_name = ""
-number = 0.0
-inputs/toggle_items = false
+number = 106.0
+inputs/toggle_items = true
+inputs/input_items = PoolStringArray( "", "", "" )
 outputs/toggle_items = false
 outputs/toggle_tasks = false
 

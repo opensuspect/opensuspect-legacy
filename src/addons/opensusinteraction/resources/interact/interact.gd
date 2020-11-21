@@ -39,6 +39,9 @@ func _get(property):
 #overrides set, allows for export var groups and display properties that don't
 #match actual var names
 func _set(property, value):
+	#add custom stuff to inspector and use this to figure out what the fuck it's trying to do
+	#so you can actually handle it
+	print("setting ", property, " to ", value)
 	match property:
 		"task":
 			#if new resource is a task resource
