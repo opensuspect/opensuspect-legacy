@@ -17,6 +17,13 @@ export var main_player = false
 var x_anim_margin = 0.1
 var y_anim_margin = 0.1
 
+
+
+onready var reach = $Reach
+onready var item_position = $Reach/item_positon
+onready var item0 = preload("res://assets/maps/common/item/item.tscn")
+var item_to_hold
+var item_to_drop
 # The input number is incremented on each _physics_process call. GDScript's int
 # type is int64_t which is enough for thousands of years of gameplay
 var input_number: int = 0
@@ -129,3 +136,38 @@ func _on_positions_updated(new_last_received_input: int):
 func move_to(new_pos, new_movement):
 	position = new_pos
 	movement = new_movement
+
+func _process(delta):
+	if reach.is_colliding():
+		if reach.get_collider().get_name() == "item":
+			item_to_hold = item0.instance()
+		else:
+			item_to_hold = null
+	else:
+		item_to_hold = null
+	
+	if item_position.get_child(0) != null:
+		if item_position.get_child(0).get_name() == "item":
+			item_to_drop = item0.instance()
+		else:
+			item_to_drop = null
+			
+	if Input.is_action_pressed("ui_pick"):
+		if item_to_hold !=null:
+			if item_position.get_child(0) != null:
+				get_parent().add_child(item_to_drop)
+				item_to_drop.global_transform = item_position.global_transform
+				item_to_drop.pick = false
+				item_position.get_child(0).queue_free()
+			reach.get_collider().queue_free()
+			item_to_hold.pick = true
+			item_position.add_child(item_to_hold)
+	if Input.is_action_pressed("ui_drop"):
+		if item_to_drop != null:
+			if item_position.get_child(0) != null:
+				get_parent().add_child(item_to_drop)
+				item_to_drop.global_transform = item_position.global_transform
+				item_to_drop.pick = false
+				item_position.get_child(0).queue_free()
+			#reach.get_collider().add_child()
+

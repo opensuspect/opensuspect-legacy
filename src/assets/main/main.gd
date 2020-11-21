@@ -3,6 +3,9 @@ extends Node2D
 export (int) var MAX_PLAYERS = 10
 export (String, FILE, "*.tscn") var player_s = "res://assets/player/player.tscn"
 var player_scene = load(player_s)
+export (String, FILE, "*.tscn") var item_s = "res://assets/maps/common/item/item.tscn"
+var item_scene = load(item_s)
+
 #onready var player_scene = preload(player_s)
 # Used on both sides, to keep track of all players.
 var players = {}
@@ -17,6 +20,7 @@ signal positions_updated(last_received_input)
 
 func _ready():
 	set_network_master(1)
+
 
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
@@ -141,3 +145,4 @@ master func _on_maps_spawn(spawnPositions: Array):
 			spawnPointDict[players.keys()[i]] = spawn_pos
 	#spawn players
 	rpc("createPlayers", Network.get_player_names(), spawnPointDict)
+

@@ -39,20 +39,20 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
-"name": "walk-down",
-"speed": 8.0
+"name": "walk-h",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk-up",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
 "loop": true,
-"name": "walk-h",
-"speed": 5.0
+"name": "walk-down",
+"speed": 8.0
 } ]
 
 [sub_resource type="CanvasItemMaterial" id=7]
@@ -93,6 +93,7 @@ material = SubResource( 5 )
 position = Vector2( 0, -18 )
 frames = SubResource( 6 )
 animation = "walk-h"
+frame = 1
 playing = true
 
 [node name="MainLight" type="Light2D" parent="."]
@@ -122,5 +123,13 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Reach" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 50, 50 )
+collision_mask = 1025
+
+[node name="item_positon" type="Position2D" parent="Reach"]
+position = Vector2( -16, -16 )
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]

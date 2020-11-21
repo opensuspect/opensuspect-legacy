@@ -16,4 +16,6 @@ color = Color( 0.188235, 0.164706, 0.164706, 1 )
 
 [node name="maps" type="YSort" parent="."]
 script = ExtResource( 2 )
+
+[node name="items" type="YSort" parent="."]
 [connection signal="spawn" from="maps" to="." method="_on_maps_spawn"]
