@@ -5,7 +5,6 @@
 [ext_resource path="res://assets/ui/submenus/settings/settings.tscn" type="PackedScene" id=3]
 
 [node name="pausemenu" type="Popup"]
-visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -32,9 +31,9 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="menu"]
-margin_top = 27.0
+margin_top = 54.0
 margin_right = 300.0
-margin_bottom = 277.0
+margin_bottom = 250.0
 custom_constants/separation = 20
 __meta__ = {
 "_edit_use_anchors_": false
@@ -50,18 +49,6 @@ margin_right = 300.0
 margin_bottom = 34.0
 rect_min_size = Vector2( 300, 30 )
 text = "RESUME"
-
-[node name="CenterContainer2" type="CenterContainer" parent="menu/VBoxContainer"]
-margin_top = 54.0
-margin_right = 300.0
-margin_bottom = 88.0
-mouse_filter = 1
-
-[node name="appearance" type="Button" parent="menu/VBoxContainer/CenterContainer2"]
-margin_right = 300.0
-margin_bottom = 34.0
-rect_min_size = Vector2( 300, 30 )
-text = "APPEARANCE"
 
 [node name="CenterContainer3" type="CenterContainer" parent="menu/VBoxContainer"]
 margin_top = 108.0
@@ -118,7 +105,6 @@ scroll_cont = NodePath("../Settings/Settings")
 [connection signal="about_to_show" from="." to="." method="_on_pausemenu_about_to_show"]
 [connection signal="popup_hide" from="." to="." method="_on_pausemenu_popup_hide"]
 [connection signal="pressed" from="menu/VBoxContainer/CenterContainer/resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="menu/VBoxContainer/CenterContainer2/appearance" to="." method="_on_appearance_pressed"]
 [connection signal="pressed" from="menu/VBoxContainer/CenterContainer3/settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="menu/VBoxContainer/CenterContainer4/language" to="." method="_on_language_pressed"]
 [connection signal="pressed" from="menu/VBoxContainer/CenterContainer6/leave" to="." method="_on_leave_pressed"]

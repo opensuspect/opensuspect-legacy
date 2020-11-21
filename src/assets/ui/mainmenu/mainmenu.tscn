@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/ui/mainmenu/mainmenu.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/submenus/appearance/appearance.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ui/submenus/settings/settings.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/ui/mainmenu/playgame/playgame.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/common/fonts/title-font.tres" type="DynamicFont" id=5]
@@ -160,13 +161,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AppearenceEditor" type="HBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea"]
-visible = false
-margin_left = 64.0
-margin_top = 15.0
-margin_right = 704.0
-margin_bottom = 215.0
-
 [node name="Settings" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 3 )]
 visible = false
 anchor_right = 0.0
@@ -179,6 +173,15 @@ margin_bottom = 215.0
 [node name="VBoxContainer" parent="VBoxContainer/MarginContainer/MenuArea/Settings/Settings" index="0"]
 margin_right = 640.0
 
+[node name="Appearance" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 2 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 64.0
+margin_top = 15.0
+margin_right = 704.0
+margin_bottom = 215.0
+
 [node name="PlayGame" parent="VBoxContainer/MarginContainer/MenuArea" instance=ExtResource( 4 )]
 visible = false
 anchor_right = 0.0
@@ -189,6 +192,7 @@ margin_right = 704.0
 margin_bottom = 215.0
 [connection signal="returnToMainMenu" from="VBoxContainer/MarginContainer/MenuArea" to="VBoxContainer/MarginContainer/MenuArea" method="_on_MenuArea_returnToMainMenu"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2/CenterContainer/Appearence" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Appearence_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/CenterContainer/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
 

@@ -26,9 +26,6 @@ func _on_pausemenu_popup_hide():
 func _on_resume_pressed():
 	hide()
 
-func _on_appearance_pressed():
-	pass # Replace with function body.
-
 func _on_settings_pressed():
 	show_only("settings")
 

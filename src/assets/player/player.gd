@@ -27,6 +27,8 @@ var last_reveived_input: int = 0
 # movement and previous velocity.
 var input_queue: Array = []
 
+onready var appearance = ConfigFile.new()
+
 func _ready():
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
@@ -38,8 +40,14 @@ func _ready():
 		$Camera2D.queue_free()
 	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
+	
+	# Load appearance config
+	var err = appearance.load("user://appearance.cfg")
+	if err == OK:
+		self.change_body_color(appearance.get_value("appearance", "color", Color(1, 1, 1)))
+
 
 func setName(newName):
 	ourname = newName
@@ -129,3 +137,7 @@ func _on_positions_updated(new_last_received_input: int):
 func move_to(new_pos, new_movement):
 	position = new_pos
 	movement = new_movement
+
+func change_body_color(color : Color):
+	# @todo design team: change sprite colors (modulation is used for test purposes)
+	$Sprite.modulate = color;
