@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/player/infiltrator.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 60.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "Reload"
+length = 10.0
 
 [node name="Infiltrator" type="Node2D" groups=[
 "infiltrators",
@@ -17,8 +21,18 @@ one_shot = true
 [node name="KillArea" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 4
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="KillCollision" type="CollisionShape2D" parent="KillArea"]
 shape = SubResource( 1 )
+
+[node name="Animator" type="AnimationPlayer" parent="."]
+anims/Reload = SubResource( 2 )
+__meta__ = {
+"_editor_description_": "AnimationPlayer responsible for controller Infiltrator specific animations."
+}
 [connection signal="timeout" from="KillCooldownTimer" to="." method="_on_KillCooldownTimer_timeout"]
 [connection signal="body_exited" from="KillArea" to="." method="_on_KillArea_body_exited"]
+[connection signal="animation_finished" from="Animator" to="." method="_on_Animator_animation_finished"]

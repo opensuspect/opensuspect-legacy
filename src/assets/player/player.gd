@@ -7,6 +7,8 @@ signal main_player_moved(position)
 
 export (int) var speed = 150
 
+# Whether the player's controls are frozen
+var _movement_disabled: bool setget set_movement_disabled, is_movement_disabled
 # Set by main.gd. Is the client's unique id for this player
 var id: int
 var ourname: String
@@ -87,10 +89,22 @@ func changeNameColor(role: String):
 func setNameColor(newColor: Color):
 	$Label.set("custom_colors/font_color", newColor)
 
+func is_movement_disabled() -> bool:
+	"""
+	Returns whether player movement is disabled or not.
+	"""
+	return _movement_disabled
+
+func set_movement_disabled(movement_disabled: bool) -> void:
+	"""
+	Set whether player movement should be disabled.
+	"""
+	_movement_disabled = movement_disabled
+
 # Only called when main_player is true
 func get_input():
 	movement = Vector2(0, 0)
-	if not UIManager.in_menu():
+	if not UIManager.in_menu() and not is_movement_disabled():
 		movement.x = Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left')
 		movement.y = Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
 		movement = movement.normalized()

@@ -3,6 +3,7 @@ extends Node2D
 # Scene containing UI element for kill indicator
 onready var killui_scene: PackedScene = load("res://assets/ui/hud/infiltratorui/killui.tscn")
 
+onready var animator: AnimationPlayer = $Animator
 # UI Controller for the player
 onready var ui_controller: CanvasLayer = get_tree().get_root().find_node("uicontroller", true, false)
 # Area within which a player may be killed
@@ -15,8 +16,14 @@ onready var player: KinematicBody2D = get_parent()
 # Emitted when the infiltrator kills a player
 signal kill(player)
 
+# Whether reloading may be cancelled or not
+export (bool) var can_cancel_reload := true
 # Whether the infiltrator may kill or not
-var _killing_enabled: bool = true setget enable_killing
+var _killing_enabled: bool = true setget enable_killing, is_killing_enabled
+# If the infiltrator has executed a kill and has not reloaded yet; separate from
+# _killing_enabled as an infiltrator may be reloaded but an event may prevent
+# them from killing
+var _reloaded: bool = true setget set_reloaded, is_reloaded
 # The highlighted target if the infiltrator decides to kill
 var _target_player: KinematicBody2D
 
@@ -25,15 +32,38 @@ func _ready() -> void:
 		_instantiate_kill_gui()
 
 func _process(delta: float) -> void:
-	if _killing_enabled and player.main_player:
+	if is_killing_enabled() and player.main_player:
 		_get_target()
 
 func _input(event: InputEvent) -> void:
 	if player.main_player:
-		if _killing_enabled and event.is_action_pressed("kill") and len(kill_area.get_overlapping_bodies()) > 0:
+		if is_reloaded() and is_killing_enabled() and event.is_action_pressed("kill") and \
+		   len(kill_area.get_overlapping_bodies()) > 0:
 			_kill_player(_target_player)
 		elif event.is_action_pressed("reload"):
-			_reload()
+			if animator.current_animation == "Reload":
+				if can_cancel_reload:
+					_cancel_reload()
+			elif not is_reloaded():
+				_reload()
+
+func is_killing_enabled() -> bool:
+	"""
+	Returns whether killing is enabled for the infiltrator.
+	"""
+	return _killing_enabled
+
+func enable_killing(enable: bool = true) -> void:
+	"""
+	Enable or disable killing; may be used from outside of script.
+	"""
+	_killing_enabled = enable
+
+func is_reloaded() -> bool:
+	return _reloaded
+
+func set_reloaded(reloaded: bool) -> void:
+	_reloaded = reloaded
 
 func _kill_player(player: KinematicBody2D) -> void:
 	"""
@@ -42,8 +72,9 @@ func _kill_player(player: KinematicBody2D) -> void:
 	var target_sprite: AnimatedSprite = _target_player.get_node("Sprite")
 	target_sprite.material.set_shader_param("line_color", Color.transparent)
 	emit_signal("kill", _target_player)
+	set_reloaded(false)
 	enable_killing(false)
-	kill_cooldown_timer.start()
+#	kill_cooldown_timer.start()
 
 func _get_target() -> void:
 	"""
@@ -65,22 +96,21 @@ func _instantiate_kill_gui() -> void:
 	"""
 	Add kill UI to the infiltrator's HUD
 	"""
-#	ui_controller.instance_menu("killui")
 	ui_controller.open_menu("killui", {"linked_node": self, "rect_position": Vector2(850, 500)})
 
 func _reload() -> void:
 	"""
-	Reload the infiltrator's weapon.
+	Reload the infiltrator's weapon and freeze the parent player node.
 	"""
-	# TODO: Play animation for reloading, ideally using an added AnimationPlayer
-	#       so that animation_finished signal and anim_name parameter may be used.
-	pass
+	animator.play("Reload")
+	player.set_movement_disabled(true)
 
-func enable_killing(enable: bool = true) -> void:
+func _cancel_reload() -> void:
 	"""
-	Enable or disable killing; may be used from outside of script.
+	Stop reload animation, returning control to the player.
 	"""
-	_killing_enabled = enable
+	animator.stop()
+	player.set_movement_disabled(false)
 
 func _on_KillArea_body_exited(body: Node) -> void:
 	"""
@@ -95,3 +125,13 @@ func _on_KillCooldownTimer_timeout() -> void:
 	Re-enable killing mechanic after cooldown ends.
 	"""
 	enable_killing()
+
+func _on_Animator_animation_finished(anim_name: String) -> void:
+	"""
+	Re-enable killing mechanic and player movement after reload animation is finished.
+	"""
+	match anim_name:
+		"Reload":
+			set_reloaded(true)
+			enable_killing()
+			player.set_movement_disabled(false)
