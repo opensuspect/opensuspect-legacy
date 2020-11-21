@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "Interact",
+"language": "GDScript",
+"path": "res://addons/opensusinteraction/resources/interact/interact.gd"
+}, {
 "base": "Popup",
 "class": "PopupBase",
 "language": "GDScript",
@@ -29,6 +34,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/common/classes/ui/task/popuptask.gd"
 }, {
+"base": "Resource",
+"class": "Task",
+"language": "GDScript",
+"path": "res://addons/opensusinteraction/resources/task/task.gd"
+}, {
+"base": "EditorProperty",
+"class": "TaskEditor",
+"language": "GDScript",
+"path": "res://addons/opensusinteraction/inspectors/task/taskeditor.gd"
+}, {
 "base": "WindowDialog",
 "class": "WindowDialogBase",
 "language": "GDScript",
@@ -40,10 +55,13 @@ _global_script_classes=[ {
 "path": "res://assets/common/classes/ui/task/windowdialogtask.gd"
 } ]
 _global_script_class_icons={
+"Interact": "",
 "PopupBase": "",
 "PopupPanelBase": "",
 "PopupPanelTask": "",
 "PopupTask": "",
+"Task": "",
+"TaskEditor": "",
 "WindowDialogBase": "",
 "WindowDialogTask": ""
 }

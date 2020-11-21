@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-#class_name Interact
+class_name Interact
 
 enum type {task = 0, ui = 1, map = 2}
 export(type) var interact_type
@@ -9,9 +9,7 @@ export(type) var interact_type
 #needed to instance new unique task resources in editor
 var base_task_interact: Resource = ResourceLoader.load("res://addons/opensusinteraction/resources/task/task.tres")
 
-#depending on which interact type is selected, one of these will be shown in the
-#editor as "resource"
-var task_resource: Resource = base_task_interact.duplicate()#load("res://addons/interactresources/task/task.tres").duplicate(true)
+var task_resource: Resource = base_task_interact.duplicate()
 var ui_resource: Resource = null
 var map_resource: Resource = null
 
@@ -20,18 +18,13 @@ var abc = "InteractScript"
 
 func init_task():
 	pass
-#	print(abc)
 
 func _init():
-	#resource_local_to_scene = true
-	print("interact init1")
-	#print(get_local_scene())
-	#print(base_task_interact.get_class())
-	pass
-	#if Engine.editor_hint:
-	#	return
+	resource_local_to_scene = true
+	#print("interact init1")
 
-#overrides get, allows for export var groups
+#overrides get, allows for export var groups and display properties that don't
+#match actual var names
 func _get(property):
 	if not Engine.editor_hint:
 		return []
@@ -42,26 +35,18 @@ func _get(property):
 			return ui_resource
 		"map":
 			return map_resource
-		"group/subgroup/abc":
-			return abc
-		"group/list_abc":
-			return list_abc
 
-#overrides set, allows for export var groups
-func _set(property, value): # overridden
-	print(value)
+#overrides set, allows for export var groups and display properties that don't
+#match actual var names
+func _set(property, value):
 	match property:
-#		"interact_type":
-#			print(value)
-#			interact_type = value
-#			#property_list_changed_notify()
 		"task":
 			#if new resource is a task resource
-#			if value is preload("res://addons/opensusinteraction/resources/task/task.gd"):
+			if value is preload("res://addons/opensusinteraction/resources/task/task.gd"):
 				task_resource = value
-#			else:
+			else:
 				#create new task resource
-#				task_resource = base_task_interact.duplicate()
+				task_resource = base_task_interact.duplicate()
 		"ui":
 			ui_resource = value
 		"map":
@@ -74,14 +59,6 @@ func _get_property_list():
 	#if not Engine.editor_hint:
 	#	return []
 	var property_list = []
-	
-#	property_list.append({"name": "interact_type",
-#		"type": TYPE_STRING,
-#		"usage": PROPERTY_USAGE_DEFAULT,
-#		"hint": PROPERTY_HINT_ENUM,
-#		"hint_string": "task,ui,map"
-#		})
-	
 	property_list.append({"name": "task",
 		"type": TYPE_OBJECT,
 		"usage": PROPERTY_USAGE_DEFAULT,

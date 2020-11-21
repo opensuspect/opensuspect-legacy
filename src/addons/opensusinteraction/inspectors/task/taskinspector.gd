@@ -1,15 +1,13 @@
 extends EditorInspectorPlugin
 
+
 func can_handle(object):
-	
-	
-	
-	return true
+	return object is Task
+
 
 func parse_property(object, type, path, hint, hint_text, usage):
 	if type == TYPE_INT:
-		#add_property_editor(path, MyIntEditor.new())
-		
-		#return true to notify inspector that this script is handling the property
+		add_property_editor(path, TaskEditor.new())
 		return true
-	return false
+	else:
+		return false

@@ -9,15 +9,14 @@ resource_name = "Task"
 script = ExtResource( 2 )
 task_name = ""
 ui_name = ""
+number = 0.0
 inputs/toggle_items = false
 outputs/toggle_items = false
 outputs/toggle_tasks = false
-group/list_abc = true
-group/subgroup/abc = "InteractTaskScript"
 
 [resource]
 resource_local_to_scene = true
 resource_name = "Interact"
 script = ExtResource( 1 )
-interact_type = 0
+interact_type = 665.0
 task = SubResource( 1 )

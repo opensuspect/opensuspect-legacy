@@ -3,6 +3,7 @@ extends StaticBody2D
 enum type {node, ui}
 export(Resource) var test_resource
 export(Array, Resource) var test_array# = [load("res://assets/common/resources/interact/taskinteract/taskinteract.tres")]
+export var number = 5
 export(String) var display_text
 export(type) var node_or_ui
 export(NodePath) var node_path

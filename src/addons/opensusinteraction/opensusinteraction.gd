@@ -14,14 +14,14 @@ var object_icon
 
 func _enter_tree():
 	#instance inspector plugins
-	task_inspector_plugin = load("res://addons/opensusinteraction/inspectors/task/taskinspector.gd").new()
+	task_inspector_plugin = preload("res://addons/opensusinteraction/inspectors/task/taskinspector.gd").new()
 	
 	#load custom resources
-	interact_resource_script = load("res://addons/opensusinteraction/resources/interact/interact.gd")
-	task_resource_script = load("res://addons/opensusinteraction/resources/task/task.gd")
+	interact_resource_script = preload("res://addons/opensusinteraction/resources/interact/interact.gd")
+	task_resource_script = preload("res://addons/opensusinteraction/resources/task/task.gd")
 	
 	#load icons
-	object_icon = load("res://addons/opensusinteraction/icons/object.svg")
+	object_icon = preload("res://addons/opensusinteraction/icons/object.svg")
 	
 	#add inspector plugins
 	add_inspector_plugin(task_inspector_plugin)
