@@ -39,7 +39,7 @@ func _on_roles_assigned(player_roles : Dictionary):
 		player_info = _generate_info(player_roles, only_traitor_dict)
 		
 		$Label.text = "Traitor"
-		$Label.set("custom_colors/font_color", Color(1,0,0))
+		$Label.set("custom_colors/font_color", PlayerManager.playerColors["traitor"])
 	else:
 		# _generate_info will return everyone's PlayerInfo
 		var everyone_dict: Dictionary = {
@@ -47,8 +47,8 @@ func _on_roles_assigned(player_roles : Dictionary):
 			"default": PlayerManager.playerColors["default"], 
 			"detective": PlayerManager.playerColors["detective"]}
 		player_info = _generate_info(player_roles, everyone_dict)
-		$Label.text = "Good duys"
-		$Label.set("custom_colors/font_color", Color(0,0,1))
+		$Label.text = "Good guys"
+		$Label.set("custom_colors/font_color", PlayerManager.playerColors["detective"])
 	for info in self.player_info:
 		self.add_child(info.name_label)
 		self.add_child(info.sprite)
