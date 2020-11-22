@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/common/textures/icons/icon.png" type="Texture" id=1]
+[ext_resource path="res://assets/ui/hud/infiltratorui/killui.gd" type="Script" id=2]
+[ext_resource path="res://assets/common/shaders/killui.shader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 3 )
+shader_param/tint = Color( 0, 0, 0, 0 )
+shader_param/progress = 1.0
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+} ]
+
+[node name="KillUI" type="Control"]
+mouse_filter = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "GUI that indicates whether a kill is ready to be executed."
+}
+
+[node name="KillSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 1 )
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 2 )
+animation = "Idle"
+__meta__ = {
+"_editor_description_": "Communicates the amount of progress in the reload animation/kill cooldown through a shader."
+}
+
+[node name="ButtonArea" type="Area2D" parent="."]
+__meta__ = {
+"_editor_description_": "May be used to activate the kill feature in the future, e.g. for mobile devices."
+}
+
+[node name="ButtonCollision" type="CollisionPolygon2D" parent="ButtonArea"]
+polygon = PoolVector2Array( -1.68841, -64.5938, 28.2414, -55.7208, 43.8685, -22.2153, 32.7441, 7.71456, 54.728, 54.1985, 33.8037, 63.7336, 29.8307, 91.8094, 12.8793, 93.0013, 3.21166, 62.2769, -6.85323, 63.2039, -14.5343, 92.3391, -33.0749, 88.2337, -33.3398, 64.2634, -54.5291, 58.039, -30.029, 10.8929, -45.1263, -25.6585, -32.5451, -52.9397 )
+__meta__ = {
+"_editor_description_": "The kill button's collision."
+}

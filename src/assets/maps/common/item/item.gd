@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 var pick = false
-
+export(String) var item_name = "item"
 var texture = "item1"
 var prop
 var for_tra=Vector2(0, 0)

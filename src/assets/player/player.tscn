@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/textures/characters/black/walk-h/black-r-walk-4-4.png" type="Texture" id=2]
@@ -16,32 +16,37 @@
 [ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-3-4.png" type="Texture" id=14]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
 [ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
+[ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=17]
 
-[sub_resource type="CanvasItemMaterial" id=1]
+[sub_resource type="ShaderMaterial" id=1]
+render_priority = 1
+shader = ExtResource( 17 )
+shader_param/line_color = Color( 1, 1, 1, 1 )
+shader_param/line_thickness = 1.0
+
+[sub_resource type="CanvasItemMaterial" id=2]
+next_pass = SubResource( 1 )
 light_mode = 2
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=3]
 radius = 100.0
 
-[sub_resource type="CanvasItemMaterial" id=3]
+[sub_resource type="CanvasItemMaterial" id=4]
 light_mode = 2
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id=5]
 radius = 12.0
 
-[sub_resource type="CanvasItemMaterial" id=5]
-light_mode = 2
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 17 )
+shader_param/line_color = Color( 0, 0, 0, 0 )
+shader_param/line_thickness = 1.5
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=7]
 animations = [ {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
 "name": "idle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "walk-h",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
@@ -49,19 +54,24 @@ animations = [ {
 "name": "walk-up",
 "speed": 8.0
 }, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "walk-h",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk-down",
 "speed": 8.0
 } ]
 
-[sub_resource type="CanvasItemMaterial" id=7]
+[sub_resource type="CanvasItemMaterial" id=8]
 light_mode = 2
 
 [node name="Player" type="KinematicBody2D" groups=[
 "players",
 ]]
-material = SubResource( 1 )
+material = SubResource( 2 )
 collision_layer = 2
 script = ExtResource( 1 )
 
@@ -80,23 +90,24 @@ enabled = true
 collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="interactarea"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-material = SubResource( 3 )
+material = SubResource( 4 )
 rotation = 1.5708
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 light_mask = -2147483647
-material = SubResource( 5 )
+material = SubResource( 6 )
 position = Vector2( 0, -18 )
-frames = SubResource( 6 )
+frames = SubResource( 7 )
 animation = "walk-h"
-frame = 1
+frame = 2
 playing = true
 
 [node name="MainLight" type="Light2D" parent="."]
+position = Vector2( 0, -0.198425 )
 texture = ExtResource( 15 )
 texture_scale = 2.0
 mode = 2
@@ -113,7 +124,7 @@ drag_margin_right = 0.65
 drag_margin_bottom = 0.65
 
 [node name="Label" type="Label" parent="."]
-material = SubResource( 7 )
+material = SubResource( 8 )
 margin_left = -250.0
 margin_top = -75.0
 margin_right = 250.0
