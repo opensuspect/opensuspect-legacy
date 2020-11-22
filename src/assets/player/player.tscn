@@ -54,7 +54,7 @@ animations = [ {
 "name": "walk-h",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
+"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk-up",
 "speed": 8.0
@@ -103,7 +103,7 @@ material = SubResource( 6 )
 position = Vector2( 0, -18 )
 frames = SubResource( 7 )
 animation = "walk-h"
-frame = 1
+frame = 3
 playing = true
 
 [node name="MainLight" type="Light2D" parent="."]
