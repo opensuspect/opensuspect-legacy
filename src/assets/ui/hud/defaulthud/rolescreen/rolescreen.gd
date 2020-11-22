@@ -13,6 +13,7 @@ var player_info : Array
 
 func _clean_up():
 	self.hide()
+	PlayerManager.inMenu = false
 	if self.player_info == null:
 		return
 	
@@ -29,7 +30,7 @@ func _on_roles_assigned(player_roles : Dictionary):
 	
 	
 	$Timer.start()
-	
+	PlayerManager.inMenu = true
 	var we_are_traitor = PlayerManager.ourrole == "traitor"
 	if we_are_traitor:
 		# makes _generate_info return only traitor PlayerInfo
