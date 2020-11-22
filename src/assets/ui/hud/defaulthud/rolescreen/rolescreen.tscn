@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/ui/hud/defaulthud/rolescreen/rolescreen.gd" type="Script" id=2]
 
 [node name="Node2D" type="Node2D"]
-visible = false
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -13,5 +12,17 @@ scale = Vector2( 0.9, 0.3 )
 texture = ExtResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 20.0
+wait_time = 2.0
 one_shot = true
+
+[node name="Label" type="Label" parent="."]
+margin_right = 42.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Team"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -34,5 +34,6 @@ __meta__ = {
 }
 
 [node name="Node2D" parent="." instance=ExtResource( 3 )]
+visible = false
 [connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
 [connection signal="gamestartpressed" from="startgamebutton" to="Button" method="_on_startgamebutton_gamestartpressed"]

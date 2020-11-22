@@ -5,6 +5,9 @@ func _ready():
 	PlayerManager.connect("roles_assigned", self, "_on_roles_assigned")
 	# warning-ignore:return_value_discarded
 	$Timer.connect("timeout", self, "_clean_up")
+	
+	$Label.set_size(get_viewport().size)
+	PlayerInfo._set_label_outline($Label)
 
 var player_info : Array
 
@@ -19,27 +22,33 @@ func _clean_up():
 	self.player_info.clear()
 
 func _on_roles_assigned(player_roles : Dictionary):
+	# just in case the timer didn't fire
+	_clean_up()
 	if GameManager.state != GameManager.State.Normal:
 		return
 	
-	# just in case the timer didn't fire
-	_clean_up()
 	
 	$Timer.start()
 	
-	var we_are_traitor = player_roles[Network.myID] == "traitor"
+	var we_are_traitor = PlayerManager.ourrole == "traitor"
 	if we_are_traitor:
 		# makes _generate_info return only traitor PlayerInfo
-		var only_traitor_dict: Dictionary = {"traitor": Color(1,0,0)}
+		var only_traitor_dict: Dictionary = {
+			"traitor": PlayerManager.playerColors["traitor"]}
+			
 		player_info = _generate_info(player_roles, only_traitor_dict)
+		
+		$Label.text = "Traitor"
+		$Label.set("custom_colors/font_color", Color(1,0,0))
 	else:
 		# _generate_info will return everyone's PlayerInfo
 		var everyone_dict: Dictionary = {
-			"traitor": Color(1,1,1), # we are camouflaging the traitors
-			"default": Color(1,1,1), 
-			"detective": Color(0,0,1)}
+			"traitor": PlayerManager.playerColors["default"], # we are camouflaging the traitors
+			"default": PlayerManager.playerColors["default"], 
+			"detective": PlayerManager.playerColors["detective"]}
 		player_info = _generate_info(player_roles, everyone_dict)
-		
+		$Label.text = "Good duys"
+		$Label.set("custom_colors/font_color", Color(0,0,1))
 	for info in self.player_info:
 		self.add_child(info.name_label)
 		self.add_child(info.sprite)
@@ -89,8 +98,16 @@ func _generate_info(player_roles: Dictionary, role_colors: Dictionary):
 		player_count += 1
 	
 	return p_info
-	
+
 class PlayerInfo:
+	# this is here as I don't know how to reference it when it's outside of the class
+	static func _set_label_outline(label: Label):
+	# set the text outline color to black(useful when there are colorful backgrounds)
+		label.set("custom_colors/font_color_shadow", Color(0,0,0,1))
+		label.set("custom_constants/shadow_as_outline", true)
+		
+		
+	
 	var player_texture : Texture = preload("res://assets/player/textures/characters/black/black-proto-1.png")
 	
 	var name_label : Label
@@ -104,9 +121,7 @@ class PlayerInfo:
 		self.name_label.text = player_name
 		self.name_label.set("custom_colors/font_color", player_name_color)
 		
-		# set the text outline color to black(useful when there are colorful backgrounds)
-		self.name_label.set("custom_colors/font_color_shadow", Color(0,0,0,1))
-		self.name_label.set("custom_constants/shadow_as_outline", true)
+		_set_label_outline(self.name_label)
 		
 		
 		self.sprite = Sprite.new()
