@@ -25,9 +25,9 @@ func transition(new_state) -> bool:
 	if (TRANSITIONS[state].has(new_state)):
 		var old_state: int = state
 		state = new_state
-		emit_signal('state_changed', old_state, new_state)
 		if get_tree().is_network_server():
 			rpc("receiveTransition", new_state)
+		emit_signal('state_changed', old_state, new_state)
 		print("transition successful")
 		return true
 	print("transition failed")
