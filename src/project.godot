@@ -44,16 +44,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/common/classes/ui/task/popuptask.gd"
 }, {
-"base": "Resource",
-"class": "Task",
-"language": "GDScript",
-"path": "res://addons/opensusinteraction/resources/task/task.gd"
-}, {
-"base": "EditorProperty",
-"class": "TaskEditor",
-"language": "GDScript",
-"path": "res://addons/opensusinteraction/inspectors/task/taskeditor.gd"
-}, {
 "base": "WindowDialog",
 "class": "WindowDialogBase",
 "language": "GDScript",
@@ -72,8 +62,6 @@ _global_script_class_icons={
 "PopupPanelBase": "",
 "PopupPanelTask": "",
 "PopupTask": "",
-"Task": "",
-"TaskEditor": "",
 "WindowDialogBase": "",
 "WindowDialogTask": ""
 }

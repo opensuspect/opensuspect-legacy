@@ -1,8 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=2]
-
-[ext_resource path="res://assets/common/resources/interact/interact.gd" type="Script" id=1]
-
-[resource]
-resource_local_to_scene = true
-resource_name = "Interact"
-script = ExtResource( 1 )
