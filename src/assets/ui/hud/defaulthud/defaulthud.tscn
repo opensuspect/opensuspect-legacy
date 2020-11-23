@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/ui/hud/defaulthud/startgamebutton.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/hud/defaulthud/Button.gd" type="Script" id=2]
+[ext_resource path="res://assets/ui/hud/defaulthud/rolescreen/rolescreen.tscn" type="PackedScene" id=3]
 
 [node name="defaulthud" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -1.49829
+margin_right = -1.49829
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -31,5 +34,8 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Node2D" parent="." instance=ExtResource( 3 )]
+visible = false
 [connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]
 [connection signal="gamestartpressed" from="startgamebutton" to="Button" method="_on_startgamebutton_gamestartpressed"]
