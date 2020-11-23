@@ -136,7 +136,7 @@ master func _on_maps_spawn(spawnPositions: Array):
 	#generate spawn point dict
 	var spawnPointDict: Dictionary = {}
 	for i in players.keys().size():
-		spawnPointDict[players.keys()[i]] = spawnPositions[i % spawnPositions.size()]
+		spawnPointDict[players.keys()[i]] = spawnPositions[i]
 		if spawnPointDict[players.keys()[i]] == null:
 			spawnPointDict[players.keys()[i]] = spawn_pos
 	#spawn players

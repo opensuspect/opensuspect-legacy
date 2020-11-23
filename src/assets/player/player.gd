@@ -1,14 +1,9 @@
 extends KinematicBody2D
 
-onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
-onready var sprite: AnimatedSprite = $Sprite
-
 signal main_player_moved(position)
 
 export (int) var speed = 150
 
-# Whether the player's controls are frozen
-var _movement_disabled: bool setget set_movement_disabled, is_movement_disabled
 # Set by main.gd. Is the client's unique id for this player
 var id: int
 var ourname: String
@@ -33,10 +28,6 @@ var last_reveived_input: int = 0
 var input_queue: Array = []
 
 func _ready():
-	# Set the sprite material for every player to be a duplicate of their
-	# initial material so that outlines may be modified independently.
-	sprite.set_material(sprite.material.duplicate())
-	
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
 	if main_player:
@@ -60,55 +51,25 @@ func roles_assigned(playerRoles: Dictionary):
 		return
 	myRole = playerRoles[id]
 	changeNameColor(myRole)
-	_checkRole(myRole)
-
-func _checkRole(role: String) -> void:
-	"""
-	Performs certain functions depending on the passed in role parameter.
-	"""
-	match role:
-		"traitor":
-			set_collision_layer_bit(3, true)
-			if not has_node("Infiltrator"):
-				add_child(infiltrator_scene.instance())
-		"detective":
-			if has_node("Infiltrator"):
-				get_node("Infiltrator").queue_free()
-		"default":
-			set_collision_layer_bit(2, true)
-			if has_node("Infiltrator"):
-				get_node("Infiltrator").queue_free()
 
 func changeNameColor(role: String):
 	match role:
 		"traitor":
 			if PlayerManager.ourrole == "traitor":
-				setNameColor(PlayerManager.playerColors["traitor"])
+				setNameColor(Color(1,0,0))
 		"detective":
 			#not checking if our role is detective because everyone should see detectives
-			setNameColor(PlayerManager.playerColors["detective"])
+			setNameColor(Color(0,0,1))
 		"default":
-			setNameColor(PlayerManager.playerColors["default"])
+			setNameColor(Color(1,1,1))
 
 func setNameColor(newColor: Color):
 	$Label.set("custom_colors/font_color", newColor)
 
-func is_movement_disabled() -> bool:
-	"""
-	Returns whether player movement is disabled or not.
-	"""
-	return _movement_disabled
-
-func set_movement_disabled(movement_disabled: bool) -> void:
-	"""
-	Set whether player movement should be disabled.
-	"""
-	_movement_disabled = movement_disabled
-
 # Only called when main_player is true
 func get_input():
 	movement = Vector2(0, 0)
-	if not UIManager.in_menu() and not is_movement_disabled():
+	if not UIManager.in_menu():
 		movement.x = Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left')
 		movement.y = Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
 		movement = movement.normalized()

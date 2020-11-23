@@ -21,7 +21,5 @@ __meta__ = {
 }
 
 [node name="defaulthud" parent="." instance=ExtResource( 1 )]
-margin_left = 1.0
-margin_right = 1.0
 
 [node name="pausemenu" parent="." instance=ExtResource( 4 )]
