@@ -18,7 +18,7 @@ interact_data = {
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 6 )
-ui_name = "chatbox"
+ui_name = ""
 ui_data = {
 
 }
