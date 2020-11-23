@@ -1,28 +1,30 @@
 extends Area2D
 
-enum type {node, ui}
-export(type) var node_or_ui
-export(NodePath) var node_path
-export(String) var ui_name
-export(Dictionary) var interact_info
+export(Resource) var interact
+#enum type {node, ui}
+#export(type) var node_or_ui
+#export(NodePath) var node_path
+#export(String) var ui_name
+#export(Dictionary) var interact_info
 export(bool) var only_main_player = false
 export(int, 1, 10000) var players_to_activate = 1
 export(bool) var interact_on_exit = true
 var overlappingBodies: Array = []
 var pressed: bool = false
 
-func _enter_tree():
-	if node_or_ui == type.node:
-		interact_info["linkedNode"] = get_node(node_path)
+#func _enter_tree():
+#	if node_or_ui == type.node:
+#		interact_info["linkedNode"] = get_node(node_path)
 
 func interact():
-	match node_or_ui:
-		type.node:
-			if not get_node(node_path):
-				return
-			MapManager.interact_with(get_node(node_path), self, interact_info)
-		type.ui:
-			UIManager.open_menu(ui_name, interact_info)
+	interact.interact(self)
+#	match node_or_ui:
+#		type.node:
+#			if not get_node(node_path):
+#				return
+#			MapManager.interact_with(get_node(node_path), self, interact_info)
+#		type.ui:
+#			UIManager.open_menu(ui_name, interact_info)
 
 func update():
 	if overlappingBodies.size() < players_to_activate:

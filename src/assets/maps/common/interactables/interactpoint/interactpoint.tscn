@@ -6,17 +6,16 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=5]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=6]
 
-[sub_resource type="Resource" id=7]
+[sub_resource type="Resource" id=2]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 5 )
 interact_with = NodePath("")
-this_node = NodePath("")
 interact_data = {
 
 }
 
-[sub_resource type="Resource" id=4]
+[sub_resource type="Resource" id=3]
 resource_local_to_scene = true
 resource_name = "Task"
 script = ExtResource( 3 )
@@ -27,25 +26,25 @@ inputs/toggle_items = false
 outputs/toggle_items = false
 outputs/toggle_tasks = false
 
-[sub_resource type="Resource" id=8]
+[sub_resource type="Resource" id=4]
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 6 )
-ui_name = ""
+ui_name = "chatbox"
 ui_data = {
 
 }
 advanced/reinstance = false
 
-[sub_resource type="Resource" id=6]
+[sub_resource type="Resource" id=5]
 resource_local_to_scene = true
 script = ExtResource( 4 )
 interact_type = 0
-task = SubResource( 4 )
-ui = SubResource( 8 )
-map = SubResource( 7 )
+task_resource = SubResource( 3 )
+ui_resource = SubResource( 4 )
+map_resource = SubResource( 2 )
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1, 1 )
 
 [node name="interactpoint" type="StaticBody2D" groups=[
@@ -57,7 +56,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_editor_description_": ""
 }
-interact = SubResource( 6 )
+interact = SubResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 1 )

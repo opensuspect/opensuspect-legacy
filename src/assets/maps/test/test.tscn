@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -12,12 +12,87 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=10]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=11]
 
+[sub_resource type="Resource" id=9]
+resource_local_to_scene = true
+resource_name = "InteractMap"
+script = ExtResource( 10 )
+interact_with = NodePath("../testdoor")
+interact_data = {
+
+}
+
+[sub_resource type="Resource" id=10]
+resource_local_to_scene = true
+resource_name = "Task"
+script = ExtResource( 8 )
+task_name = ""
+ui_name = ""
+number = 0.0
+inputs/toggle_items = false
+outputs/toggle_items = false
+outputs/toggle_tasks = false
+
+[sub_resource type="Resource" id=11]
+resource_local_to_scene = true
+resource_name = "InteractUI"
+script = ExtResource( 11 )
+ui_name = ""
+ui_data = {
+
+}
+advanced/reinstance = false
+
+[sub_resource type="Resource" id=12]
+resource_local_to_scene = true
+script = ExtResource( 9 )
+interact_type = 2
+task_resource = SubResource( 10 )
+ui_resource = SubResource( 11 )
+map_resource = SubResource( 9 )
+
+[sub_resource type="Resource" id=5]
+resource_local_to_scene = true
+resource_name = "InteractMap"
+script = ExtResource( 10 )
+interact_with = NodePath("clocktext")
+interact_data = {
+
+}
+
+[sub_resource type="Resource" id=6]
+resource_local_to_scene = true
+resource_name = "Task"
+script = ExtResource( 8 )
+task_name = ""
+ui_name = ""
+number = 0.0
+inputs/toggle_items = false
+outputs/toggle_items = false
+outputs/toggle_tasks = false
+
+[sub_resource type="Resource" id=7]
+resource_local_to_scene = true
+resource_name = "InteractUI"
+script = ExtResource( 11 )
+ui_name = ""
+ui_data = {
+
+}
+advanced/reinstance = false
+
+[sub_resource type="Resource" id=8]
+resource_local_to_scene = true
+script = ExtResource( 9 )
+interact_type = 2
+task_resource = SubResource( 6 )
+ui_resource = SubResource( 7 )
+map_resource = SubResource( 5 )
+
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 10 )
-interact_with = NodePath("")
-this_node = NodePath("")
+interact_with = NodePath("../testdoor")
 interact_data = {
 
 }
@@ -47,9 +122,9 @@ advanced/reinstance = false
 resource_local_to_scene = true
 script = ExtResource( 9 )
 interact_type = 1
-task = SubResource( 2 )
-ui = SubResource( 3 )
-map = SubResource( 1 )
+task_resource = SubResource( 2 )
+ui_resource = SubResource( 3 )
+map_resource = SubResource( 1 )
 
 [node name="test" type="YSort"]
 
@@ -79,12 +154,11 @@ scale = Vector2( 1.5, 3 )
 [node name="standbutton" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -200 )
 scale = Vector2( 3, 6 )
-node_path = NodePath("../testdoor")
+interact = SubResource( 12 )
 
 [node name="standbutton2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -350 )
-node_path = NodePath("clocktext")
-ui_name = "clockset"
+interact = SubResource( 8 )
 only_main_player = true
 interact_on_exit = false
 

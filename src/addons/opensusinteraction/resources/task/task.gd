@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-#class_name Task
+class_name Task
 
 export(String) var task_name
 
@@ -42,7 +42,8 @@ func gen_task_info() -> Dictionary:
 
 func _init():
 	#ensures customizing this resource won't change other resources
-	resource_local_to_scene = true
+	if Engine.editor_hint:
+		resource_local_to_scene = true
 
 #EDITOR STUFF BELOW THIS POINT, DO NOT TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 #---------------------------------------------------------------------------------------------------
