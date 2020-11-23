@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-class_name Task
+#class_name Task
 
 export(String) var task_name
 
@@ -41,36 +41,12 @@ func gen_task_info() -> Dictionary:
 	return info
 
 func _init():
+	#ensures customizing this resource won't change other resources
 	resource_local_to_scene = true
-	#print("task init 1")
 
 #EDITOR STUFF BELOW THIS POINT, DO NOT TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 #---------------------------------------------------------------------------------------------------
-#overrides get, allows for export var groups and display properties that don't
-#match actual var names
-func _get(property):
-	match property:
-		"inputs/toggle_items":
-			return item_inputs_on
-		"inputs/input_items":
-			return item_inputs
-
-		"outputs/toggle_items":
-			return item_outputs_on
-		"outputs/output_items":
-			return item_outputs
-
-		"outputs/toggle_tasks":
-			return task_outputs_on
-		"outputs/output_tasks":
-			return task_outputs
-
-		"group/subgroup/abc":
-			return abc 
-		"group/list_abc":
-			return list_abc
-
-#overrides set, allows for export var groups and display properties that don't
+#overrides set(), allows for export var groups and display properties that don't
 #match actual var names
 func _set(property, value):
 	match property:
@@ -100,11 +76,30 @@ func _set(property, value):
 			property_list_changed_notify()
 	return true
 
-#overrides _get_property_list, tells editor to show more properties in inspector
+#overrides get(), allows for export var groups and display properties that don't
+#match actual var names
+func _get(property):
+	match property:
+		"inputs/toggle_items":
+			return item_inputs_on
+		"inputs/input_items":
+			return item_inputs
+
+		"outputs/toggle_items":
+			return item_outputs_on
+		"outputs/output_items":
+			return item_outputs
+
+		"outputs/toggle_tasks":
+			return task_outputs_on
+		"outputs/output_tasks":
+			return task_outputs
+
+#overrides get_property_list(), tells editor to show more properties in inspector
 func _get_property_list():
-	if not Engine.editor_hint:
-		return []
-	var property_list = []
+#	if not Engine.editor_hint:
+#		return []
+	var property_list: Array = []
 
 	#item input toggle
 	property_list.append({

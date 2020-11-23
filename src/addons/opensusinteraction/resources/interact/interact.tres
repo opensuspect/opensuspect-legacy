@@ -1,7 +1,18 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://addons/opensusinteraction/resources/interact/interact.gd" type="Script" id=1]
 [ext_resource path="res://addons/opensusinteraction/resources/task/task.gd" type="Script" id=2]
+[ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=3]
+[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=4]
+
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+script = ExtResource( 3 )
+interact_with = NodePath("")
+this_node = NodePath("")
+interact_data = {
+
+}
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
@@ -9,15 +20,26 @@ resource_name = "Task"
 script = ExtResource( 2 )
 task_name = ""
 ui_name = ""
-number = 106.0
+number = 27.0
 inputs/toggle_items = true
 inputs/input_items = PoolStringArray( "", "", "" )
 outputs/toggle_items = false
 outputs/toggle_tasks = false
 
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+script = ExtResource( 4 )
+ui_name = ""
+ui_data = {
+
+}
+advanced/reinstance = false
+
 [resource]
 resource_local_to_scene = true
 resource_name = "Interact"
 script = ExtResource( 1 )
-interact_type = 665.0
+interact_type = 2
 task = SubResource( 1 )
+ui = SubResource( 3 )
+map = SubResource( 2 )

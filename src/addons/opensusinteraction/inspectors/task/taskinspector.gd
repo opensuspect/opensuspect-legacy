@@ -2,7 +2,7 @@ extends EditorInspectorPlugin
 
 
 func can_handle(object):
-	return object is Task
+	return object is preload("res://addons/opensusinteraction/resources/task/task.gd")
 
 
 func parse_property(object, type, path, hint, hint_text, usage):
