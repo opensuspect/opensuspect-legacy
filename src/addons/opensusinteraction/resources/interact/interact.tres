@@ -15,7 +15,6 @@ interact_data = {
 
 [sub_resource type="Resource" id=2]
 resource_local_to_scene = true
-resource_name = "InteractUI"
 script = ExtResource( 2 )
 ui_name = ""
 ui_data = {
@@ -25,6 +24,7 @@ advanced/reinstance = false
 
 [resource]
 resource_local_to_scene = true
+resource_name = "Interact"
 script = ExtResource( 3 )
 interact_type = 1
 ui_resource = SubResource( 2 )

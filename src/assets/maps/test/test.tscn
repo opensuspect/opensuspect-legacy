@@ -11,7 +11,7 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=10]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=11]
 
-[sub_resource type="Resource" id=1]
+[sub_resource type="Resource" id=10]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 10 )
@@ -20,9 +20,8 @@ interact_data = {
 
 }
 
-[sub_resource type="Resource" id=2]
+[sub_resource type="Resource" id=11]
 resource_local_to_scene = true
-resource_name = "InteractUI"
 script = ExtResource( 11 )
 ui_name = ""
 ui_data = {
@@ -34,10 +33,10 @@ advanced/reinstance = false
 resource_local_to_scene = true
 script = ExtResource( 9 )
 interact_type = 2
-ui_resource = SubResource( 2 )
-map_resource = SubResource( 1 )
+ui_resource = SubResource( 11 )
+map_resource = SubResource( 10 )
 
-[sub_resource type="Resource" id=4]
+[sub_resource type="Resource" id=12]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 10 )
@@ -46,9 +45,8 @@ interact_data = {
 
 }
 
-[sub_resource type="Resource" id=5]
+[sub_resource type="Resource" id=13]
 resource_local_to_scene = true
-resource_name = "InteractUI"
 script = ExtResource( 11 )
 ui_name = ""
 ui_data = {
@@ -60,18 +58,19 @@ advanced/reinstance = false
 resource_local_to_scene = true
 script = ExtResource( 9 )
 interact_type = 2
-ui_resource = SubResource( 5 )
-map_resource = SubResource( 4 )
+ui_resource = SubResource( 13 )
+map_resource = SubResource( 12 )
 
-[sub_resource type="Resource" id=7]
+[sub_resource type="Resource" id=14]
 resource_local_to_scene = true
+resource_name = "InteractMap"
 script = ExtResource( 10 )
-interact_with = NodePath("../testdoor")
+interact_with = NodePath("")
 interact_data = {
 
 }
 
-[sub_resource type="Resource" id=8]
+[sub_resource type="Resource" id=15]
 resource_local_to_scene = true
 script = ExtResource( 11 )
 ui_name = "chatbox"
@@ -84,8 +83,8 @@ advanced/reinstance = false
 resource_local_to_scene = true
 script = ExtResource( 9 )
 interact_type = 1
-ui_resource = SubResource( 8 )
-map_resource = SubResource( 7 )
+ui_resource = SubResource( 15 )
+map_resource = SubResource( 14 )
 
 [node name="test" type="YSort"]
 

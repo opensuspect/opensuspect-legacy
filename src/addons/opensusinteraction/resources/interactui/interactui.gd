@@ -30,6 +30,7 @@ func get_interact_data(_from: Node = null) -> Dictionary:
 func _init():
 	#ensures customizing this resource won't change other resources
 	if Engine.editor_hint:
+		#print("interactUI init")
 		resource_local_to_scene = true
 
 #EDITOR STUFF BELOW THIS POINT, DO NOT TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
