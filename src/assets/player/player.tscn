@@ -49,6 +49,11 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "walk-h",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "walk-up",
@@ -58,11 +63,6 @@ animations = [ {
 "loop": true,
 "name": "walk-down",
 "speed": 8.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "walk-h",
-"speed": 5.0
 } ]
 
 [sub_resource type="CanvasItemMaterial" id=8]
@@ -103,7 +103,7 @@ material = SubResource( 6 )
 position = Vector2( 0, -18 )
 frames = SubResource( 7 )
 animation = "walk-h"
-frame = 1
+frame = 3
 playing = true
 
 [node name="MainLight" type="Light2D" parent="."]
