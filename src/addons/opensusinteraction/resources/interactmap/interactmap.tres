@@ -4,6 +4,7 @@
 
 [resource]
 resource_local_to_scene = true
+resource_name = "InteractMap"
 script = ExtResource( 1 )
 interact_with = NodePath("")
 this_node = NodePath("")

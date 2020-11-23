@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -7,6 +7,49 @@
 [ext_resource path="res://assets/maps/common/interactables/interactpoint/interactpoint.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/maps/common/elements/walls/wallhorizontal/wallhorizontal.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/maps/common/elements/walls/wallvertical/wallvertical.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/opensusinteraction/resources/task/task.gd" type="Script" id=8]
+[ext_resource path="res://addons/opensusinteraction/resources/interact/interact.gd" type="Script" id=9]
+[ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=10]
+[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=11]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+resource_name = "InteractMap"
+script = ExtResource( 10 )
+interact_with = NodePath("")
+this_node = NodePath("")
+interact_data = {
+
+}
+
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+resource_name = "Task"
+script = ExtResource( 8 )
+task_name = ""
+ui_name = ""
+number = 0.0
+inputs/toggle_items = false
+outputs/toggle_items = false
+outputs/toggle_tasks = false
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+resource_name = "InteractUI"
+script = ExtResource( 11 )
+ui_name = "chatbox"
+ui_data = {
+
+}
+advanced/reinstance = false
+
+[sub_resource type="Resource" id=4]
+resource_local_to_scene = true
+script = ExtResource( 9 )
+interact_type = 1
+task = SubResource( 2 )
+ui = SubResource( 3 )
+map = SubResource( 1 )
 
 [node name="test" type="YSort"]
 
@@ -71,9 +114,8 @@ __meta__ = {
 
 [node name="interactpoint" parent="." instance=ExtResource( 5 )]
 position = Vector2( -450, -1.26 )
+interact = SubResource( 4 )
 display_text = "Interact chat"
-node_or_ui = 1
-ui_name = "chatbox"
 
 [node name="Polygon2D" type="Polygon2D" parent="interactpoint"]
 polygon = PoolVector2Array( -5, -10, 5, -10, 0, 0 )

@@ -10,9 +10,20 @@ export(NodePath) var this_node
 #data to pass to the UI node
 export(Dictionary) var interact_data
 
+var reported_interact_data: Dictionary = {}
+
 #called to execute the interaction this resource is customized for
 func interact():
 	MapManager.interact_with(interact_with, this_node, interact_data)
+
+func get_interact_data():
+	for i in interact_data.keys():
+		reported_interact_data[i] = interact_data[i]
+	#map interact type is 2
+	reported_interact_data["interact_type"] = 2
+	reported_interact_data["interact"] = interact_with
+	reported_interact_data["from_node"] = this_node
+	return reported_interact_data
 
 func _init():
 	#ensures customizing this resource won't change other resources

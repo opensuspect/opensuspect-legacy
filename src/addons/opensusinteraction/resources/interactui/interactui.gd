@@ -12,9 +12,18 @@ export(Dictionary) var ui_data
 #whether or not to delete and recreate the UI node before opening
 var reinstance: bool = false
 
+var reported_interact_data: Dictionary = {}
+
 #called to execute the interaction this resource is customized for
 func interact():
 	UIManager.open_menu(ui_name, ui_data, reinstance)
+
+func get_interact_data():
+	for i in ui_data.keys():
+		reported_interact_data[i] = ui_data[i]
+	#ui interact type is 1
+	reported_interact_data["interact_type"] = 1
+	reported_interact_data["interact"] = ui_name
 
 func _init():
 	#ensures customizing this resource won't change other resources

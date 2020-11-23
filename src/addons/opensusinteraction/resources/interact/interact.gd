@@ -26,6 +26,22 @@ func interact():
 		type.map:
 			map_resource.interact()
 
+func get_interact_data():
+	var interact_data: Dictionary = {}
+	var res_interact_data: Dictionary
+	match interact_type:
+		type.task:
+			res_interact_data = task_resource.get_interact_data()
+		type.ui:
+			res_interact_data = ui_resource.get_interact_data()
+		type.map:
+			res_interact_data = map_resource.get_interact_data()
+	for i in res_interact_data.keys():
+		interact_data[i] = res_interact_data[i]
+	if not interact_data.keys().has("interact_type"):
+		interact_data["interact_type"] = interact_type
+	return interact_data
+
 func _init():
 	#ensures customizing this resource won't change other resources
 	resource_local_to_scene = true
