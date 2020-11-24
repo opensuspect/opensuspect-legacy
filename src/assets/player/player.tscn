@@ -154,7 +154,7 @@ __meta__ = {
 
 [node name="spritecollection" type="Node2D" parent="."]
 position = Vector2( 0, -26 )
-scale = Vector2( 0.07, 0.07 )
+scale = Vector2( -0.07, 0.07 )
 
 [node name="01-l-arm" type="Sprite" parent="spritecollection"]
 position = Vector2( 110, 120 )
