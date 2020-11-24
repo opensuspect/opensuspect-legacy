@@ -12,8 +12,6 @@ func _ready():
 func distribute():
 	var map = File.new()
 	map.open("user://maps/servermap.tscn", File.READ)
-	if not map.file_exists():
-		pass
 	mapdata = map.get_as_text()
 	rpc("recieve",mapdata)
 	recieve(mapdata)

@@ -79,10 +79,8 @@ func _checkRole(role: String) -> void:
 			if has_node("Infiltrator"):
 				get_node("Infiltrator").queue_free()
 func on_host_kill():
-	if not get_tree().is_network_server():
-		return
-	elif get_tree().is_network_server():
-		pass
+	if id == 1:
+		self.position = Vector2(500,500)
 func changeNameColor(role: String):
 	match role:
 		"traitor":
