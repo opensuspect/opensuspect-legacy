@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-class_name Interact
+#class_name Interact
 
 enum type {ui = 1, map = 2}
 export(type) var interact_type = 1
@@ -47,8 +47,7 @@ func _init():
 
 #EDITOR STUFF BELOW THIS POINT, DO NOT TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 #---------------------------------------------------------------------------------------------------
-#overrides set(), allows for export var groups and display properties that don't
-#match actual var names
+#overrides set(), for property groups and to display custom/fake properties/vars
 func _set(property, value):
 #	#add custom stuff to inspector and use this to see what it's trying to do
 #	#so you can figure out how to handle it
@@ -71,8 +70,7 @@ func _set(property, value):
 	property_list_changed_notify()
 	return true
 
-#overrides get(), allows for export var groups and display properties that don't
-#match actual var names
+#overrides get(), for property groups and to display custom/fake properties/vars
 func _get(property):
 	match property:
 		"ui_resource":
@@ -80,7 +78,7 @@ func _get(property):
 		"map_resource":
 			return map_res
 
-#overrides get_property_list(), tells editor to show more vars in inspector
+#overrides get_property_list(), tells editor to show custom/fake properties/vars in inspector
 func _get_property_list():
 #	#if not Engine.editor_hint:
 #	#	return []

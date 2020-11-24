@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-class_name InteractMap
+#class_name InteractMap
 
 #name of the UI to open
 export(NodePath) var interact_with
