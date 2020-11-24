@@ -1,6 +1,6 @@
 extends Node2D
 
-var maps: Dictionary = {"lobby": {"dir": preload("res://assets/maps/lobby/lobby.tscn")}, "test": {"dir": preload("res://assets/maps/test/test.tscn")}}
+var maps: Dictionary = {"lobby": {"dir": preload("res://assets/maps/lobby/lobby.tscn")}, "test": {"dir": load("user://maps/currentmap.tscn")}}
 
 signal spawn(position,frommap)
 
