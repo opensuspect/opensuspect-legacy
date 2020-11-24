@@ -35,8 +35,8 @@ var input_queue: Array = []
 func _ready():
 	# Set the sprite material for every player to be a duplicate of their
 	# initial material so that outlines may be modified independently.
-	sprite.set_material(sprite.material.duplicate())
-	
+	#sprite.set_material(sprite.material.duplicate())
+	#TEMPORARIALLY DISABLED FOR GLASSES GUY
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
 	if main_player:
@@ -49,7 +49,31 @@ func _ready():
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
-
+func flip(state):
+	if state == true:
+		$"spritecollection/01-l-arm".flip_h = true
+		$"spritecollection/02-body".flip_h = true
+		$"spritecollection/03-mouth".flip_h = true
+		$"spritecollection/04-l-leg".flip_h = true
+		$"spritecollection/05-pants".flip_h = true
+		$"spritecollection/06-r-leg".flip_h = true
+		$"spritecollection/07-clothes".flip_h = true
+		$"spritecollection/08-r-arm".flip_h = true
+		$"spritecollection/09-r-facial-hair".flip_h = true
+		$"spritecollection/10-face-wear".flip_h = true
+		$"spritecollection/11-hat-hair".flip_h = true
+	if state == false:
+		$"spritecollection/01-l-arm".flip_h = false
+		$"spritecollection/02-body".flip_h = false
+		$"spritecollection/03-mouth".flip_h = false
+		$"spritecollection/04-l-leg".flip_h = false
+		$"spritecollection/05-pants".flip_h = false
+		$"spritecollection/06-r-leg".flip_h = false
+		$"spritecollection/07-clothes".flip_h = false
+		$"spritecollection/08-r-arm".flip_h = false
+		$"spritecollection/09-r-facial-hair".flip_h = false
+		$"spritecollection/10-face-wear".flip_h = false
+		$"spritecollection/11-hat-hair".flip_h = false
 func setName(newName):
 	ourname = newName
 	$Label.text = ourname
@@ -136,17 +160,17 @@ func _physics_process(_delta):
 
 	# We handle animations and stuff here
 	if movement.x > x_anim_margin:
-		$Sprite.play("walk-h")
-		$Sprite.flip_h = false
+		$spritecollection/AnimationPlayer.play("h_move")
+		flip(false)
 	elif movement.x < -x_anim_margin:
-		$Sprite.play("walk-h")
-		$Sprite.flip_h = true
+		$spritecollection/AnimationPlayer.play_backwards("h_move")
+		flip(true)
 	elif movement.y > y_anim_margin:
-		$Sprite.play("walk-down")
+		$spritecollection/AnimationPlayer.play("h_move")
 	elif movement.y < -y_anim_margin:
-		$Sprite.play("walk-up")
+		$spritecollection/AnimationPlayer.play("h_move")
 	else:
-		$Sprite.play("idle")
+		$spritecollection/AnimationPlayer.play("Idle")
 
 # Only called on the main player. Rerolls the player's unreceived inputs on top
 # of the server's player position

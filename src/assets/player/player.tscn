@@ -158,7 +158,7 @@ scale = Vector2( 0.07, 0.07 )
 
 [node name="01-l-arm" type="Sprite" parent="spritecollection"]
 position = Vector2( 110, 120 )
-rotation = 0.523386
+rotation = -0.345342
 texture = ExtResource( 4 )
 offset = Vector2( -110, -120 )
 
@@ -170,7 +170,7 @@ texture = ExtResource( 8 )
 
 [node name="04-l-leg" type="Sprite" parent="spritecollection"]
 position = Vector2( 80, 280 )
-rotation = 0.0872311
+rotation = -0.230228
 texture = ExtResource( 5 )
 offset = Vector2( -80, -280 )
 
@@ -179,7 +179,7 @@ texture = ExtResource( 2 )
 
 [node name="06-r-leg" type="Sprite" parent="spritecollection"]
 position = Vector2( -60, 280 )
-rotation = -0.348924
+rotation = 0.0575571
 texture = ExtResource( 9 )
 offset = Vector2( 60, -280 )
 
@@ -188,7 +188,7 @@ texture = ExtResource( 10 )
 
 [node name="08-r-arm" type="Sprite" parent="spritecollection"]
 position = Vector2( -90, 120 )
-rotation = -0.523386
+rotation = 0.345342
 texture = ExtResource( 11 )
 offset = Vector2( 90, -120 )
 
