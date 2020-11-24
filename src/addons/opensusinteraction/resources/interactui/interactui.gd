@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-class_name InteractUI
+#class_name InteractUI
 
 #name of the UI to open
 export(String) var ui_name

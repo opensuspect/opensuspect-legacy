@@ -4,6 +4,7 @@
 
 [resource]
 resource_local_to_scene = true
+resource_name = "InteractUI"
 script = ExtResource( 1 )
 ui_name = ""
 ui_data = {
