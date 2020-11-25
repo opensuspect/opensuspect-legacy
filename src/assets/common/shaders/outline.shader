@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
-uniform vec4 line_color : hint_color = vec4(1);
-uniform float line_thickness : hint_range(0, 10) = 1.0;
+uniform vec4 line_color: hint_color = vec4(1);
+uniform float line_thickness: hint_range(0, 25) = 10;
 
 void fragment()
 {
@@ -27,6 +27,6 @@ void fragment()
 	}
 	else
 	{
-		COLOR = vec4(texture(TEXTURE, UV).rgb, 0.0)
+		COLOR.a = 0.0;
 	}
 }

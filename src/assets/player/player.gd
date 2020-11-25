@@ -1,7 +1,10 @@
 extends KinematicBody2D
 
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
-onready var sprite: AnimatedSprite = $Sprite
+onready var sprites_viewport_container: ViewportContainer = $SpritesViewportContainer
+onready var sprites_viewport: Viewport = sprites_viewport_container.get_node("SpritesViewport")
+onready var sprite_collection: Node2D = $spritecollection
+onready var animator: AnimationPlayer = sprite_collection.get_node("AnimationPlayer")
 
 signal main_player_moved(position)
 
@@ -33,6 +36,10 @@ var last_reveived_input: int = 0
 var input_queue: Array = []
 
 func _ready():
+	# Parent spritecollection to SpritesViewport
+	remove_child(sprite_collection)
+	sprites_viewport.add_child(sprite_collection)
+	
 	# Set the sprite material for every player to be a duplicate of their
 	# initial material so that outlines may be modified independently.
 	#sprite.set_material(sprite.material.duplicate())
@@ -49,31 +56,12 @@ func _ready():
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
+
 func flip(state):
-	if state == true:
-		$"spritecollection/01-l-arm".flip_h = true
-		$"spritecollection/02-body".flip_h = true
-		$"spritecollection/03-mouth".flip_h = true
-		$"spritecollection/04-l-leg".flip_h = true
-		$"spritecollection/05-pants".flip_h = true
-		$"spritecollection/06-r-leg".flip_h = true
-		$"spritecollection/07-clothes".flip_h = true
-		$"spritecollection/08-r-arm".flip_h = true
-		$"spritecollection/09-r-facial-hair".flip_h = true
-		$"spritecollection/10-face-wear".flip_h = true
-		$"spritecollection/11-hat-hair".flip_h = true
-	if state == false:
-		$"spritecollection/01-l-arm".flip_h = false
-		$"spritecollection/02-body".flip_h = false
-		$"spritecollection/03-mouth".flip_h = false
-		$"spritecollection/04-l-leg".flip_h = false
-		$"spritecollection/05-pants".flip_h = false
-		$"spritecollection/06-r-leg".flip_h = false
-		$"spritecollection/07-clothes".flip_h = false
-		$"spritecollection/08-r-arm".flip_h = false
-		$"spritecollection/09-r-facial-hair".flip_h = false
-		$"spritecollection/10-face-wear".flip_h = false
-		$"spritecollection/11-hat-hair".flip_h = false
+	for sprite in sprite_collection.get_children():
+		if sprite is Sprite:
+			sprite.flip_h = true
+
 func setName(newName):
 	ourname = newName
 	$Label.text = ourname
@@ -160,17 +148,17 @@ func _physics_process(_delta):
 
 	# We handle animations and stuff here
 	if movement.x > x_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
-		$spritecollection.scale.x = 0.07
+		animator.play("h_move")
+		sprite_collection.scale.x = 1
 	elif movement.x < -x_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
-		$spritecollection.scale.x = -0.07
+		animator.play("h_move")
+		sprite_collection.scale.x = -1
 	elif movement.y > y_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
+		animator.play("h_move")
 	elif movement.y < -y_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
+		animator.play("h_move")
 	else:
-		$spritecollection/AnimationPlayer.play("Idle")
+		animator.play("Idle")
 
 # Only called on the main player. Rerolls the player's unreceived inputs on top
 # of the server's player position
