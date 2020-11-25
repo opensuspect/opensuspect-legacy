@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=1]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource( 1 )
+ui_name = ""
+ui_data = {
+
+}
+advanced/reinstance = false

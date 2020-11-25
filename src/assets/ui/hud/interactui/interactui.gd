@@ -15,6 +15,7 @@ func receiveInteractData(interactData: Dictionary):
 		createButton(i)
 
 func createButton(interactKey):
+	print(buttonInteractDict)
 	var newButton = Button.new()
 	newButton.name = interactKey
 	#print(newButton.name)

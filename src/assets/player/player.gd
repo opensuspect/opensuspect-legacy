@@ -90,12 +90,12 @@ func changeNameColor(role: String):
 	match role:
 		"traitor":
 			if PlayerManager.ourrole == "traitor":
-				setNameColor(Color(1,0,0))
+				setNameColor(PlayerManager.playerColors["traitor"])
 		"detective":
 			#not checking if our role is detective because everyone should see detectives
-			setNameColor(Color(0,0,1))
+			setNameColor(PlayerManager.playerColors["detective"])
 		"default":
-			setNameColor(Color(1,1,1))
+			setNameColor(PlayerManager.playerColors["default"])
 
 func setNameColor(newColor: Color):
 	$Label.set("custom_colors/font_color", newColor)
@@ -175,7 +175,7 @@ func _on_positions_updated(new_last_received_input: int):
 func move_to(new_pos, new_movement):
 	position = new_pos
 	movement = new_movement
-
+	
 func _process(delta):
 	if reach.is_colliding():
 		if reach.get_collider().item_name == "item":
@@ -211,4 +211,3 @@ func _process(delta):
 				item_to_drop.pick = false
 				item_position.get_child(0).queue_free()
 			#reach.get_collider().add_child()
-
