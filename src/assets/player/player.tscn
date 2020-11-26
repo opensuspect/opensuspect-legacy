@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/textures/characters/glasses-guy/005-pants.png" type="Texture" id=2]
@@ -12,19 +12,10 @@
 [ext_resource path="res://assets/player/textures/characters/glasses-guy/007-clothes.png" type="Texture" id=10]
 [ext_resource path="res://assets/player/textures/characters/glasses-guy/008-right-hand.png" type="Texture" id=11]
 [ext_resource path="res://assets/player/textures/characters/glasses-guy/009-facial-hair.png" type="Texture" id=12]
+[ext_resource path="res://assets/common/shaders/outline.shader" type="Shader" id=13]
+[ext_resource path="res://assets/player/viewport_render_target.gd" type="Script" id=14]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
 [ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
-[ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=17]
-
-[sub_resource type="ShaderMaterial" id=1]
-render_priority = 1
-shader = ExtResource( 17 )
-shader_param/line_color = Color( 1, 1, 1, 1 )
-shader_param/line_thickness = 1.0
-
-[sub_resource type="CanvasItemMaterial" id=2]
-next_pass = SubResource( 1 )
-light_mode = 2
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 100.0
@@ -94,10 +85,17 @@ tracks/3/keys = {
 "values": [ 0.0, -30.0, 0.0, 30.0 ]
 }
 
+[sub_resource type="ShaderMaterial" id=12]
+shader = ExtResource( 13 )
+shader_param/line_color = Color( 1, 0, 0, 0 )
+shader_param/line_thickness = 15.0
+
+[sub_resource type="ViewportTexture" id=11]
+viewport_path = NodePath("SpritesViewportContainer/SpritesViewport")
+
 [node name="Player" type="KinematicBody2D" groups=[
 "players",
 ]]
-material = SubResource( 2 )
 collision_layer = 2
 script = ExtResource( 1 )
 
@@ -152,13 +150,49 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SpritesViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Container for SpritesViewport, stretched to fit screen dimensions."
+}
+
+[node name="SpritesViewport" type="Viewport" parent="SpritesViewportContainer"]
+size = Vector2( 3840, 2160 )
+transparent_bg = true
+handle_input_locally = false
+msaa = 4
+disable_3d = true
+usage = 0
+render_target_v_flip = true
+render_target_update_mode = 3
+__meta__ = {
+"_editor_description_": "Viewport where player sprites will be drawn and then rendered to ViewportRenderTarget.
+
+Size is 4K so that large sprites fit within the viewport and are drawn entirely."
+}
+
+[node name="ViewportCamera" type="Camera2D" parent="SpritesViewportContainer/SpritesViewport"]
+position = Vector2( -3.24713e-05, 371.429 )
+rotation = -3.14159
+scale = Vector2( 14.2857, -14.2857 )
+current = true
+__meta__ = {
+"_editor_description_": "A camera is necessary for the viewport to be drawn."
+}
+
 [node name="spritecollection" type="Node2D" parent="."]
-position = Vector2( 0, -26 )
-scale = Vector2( -0.07, 0.07 )
+__meta__ = {
+"_editor_description_": "Sprites must be large or result of render target will be pixelated."
+}
 
 [node name="01-l-arm" type="Sprite" parent="spritecollection"]
 position = Vector2( 110, 120 )
-rotation = -0.345342
 texture = ExtResource( 4 )
 offset = Vector2( -110, -120 )
 
@@ -170,7 +204,6 @@ texture = ExtResource( 8 )
 
 [node name="04-l-leg" type="Sprite" parent="spritecollection"]
 position = Vector2( 80, 280 )
-rotation = -0.230228
 texture = ExtResource( 5 )
 offset = Vector2( -80, -280 )
 
@@ -179,7 +212,6 @@ texture = ExtResource( 2 )
 
 [node name="06-r-leg" type="Sprite" parent="spritecollection"]
 position = Vector2( -60, 280 )
-rotation = 0.0575571
 texture = ExtResource( 9 )
 offset = Vector2( 60, -280 )
 
@@ -188,7 +220,6 @@ texture = ExtResource( 10 )
 
 [node name="08-r-arm" type="Sprite" parent="spritecollection"]
 position = Vector2( -90, 120 )
-rotation = 0.345342
 texture = ExtResource( 11 )
 offset = Vector2( 90, -120 )
 
@@ -204,5 +235,14 @@ texture = ExtResource( 3 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="spritecollection"]
 anims/Idle = SubResource( 7 )
 anims/h_move = SubResource( 8 )
+
+[node name="ViewportRenderTarget" type="Sprite" parent="."]
+material = SubResource( 12 )
+scale = Vector2( 0.07, 0.07 )
+texture = SubResource( 11 )
+script = ExtResource( 14 )
+__meta__ = {
+"_editor_description_": "The target of SpritesViewport's render texture."
+}
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]
