@@ -19,8 +19,10 @@ var movement = Vector2(0,0)
 # Only true when this is the player being controlled
 export var main_player = false
 #anim margin controls how big the player movement must be before animations are played
-var x_anim_margin = 0.1
-var y_anim_margin = 0.1
+var x_anim_margin = 0.00
+var y_anim_margin = 0.00
+#whether the character faces in the right direction
+var face_right = true
 
 # The input number is incremented on each _physics_process call. GDScript's int
 # type is int64_t which is enough for thousands of years of gameplay
@@ -49,31 +51,7 @@ func _ready():
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
-func flip(state):
-	if state == true:
-		$"spritecollection/01-l-arm".flip_h = true
-		$"spritecollection/02-body".flip_h = true
-		$"spritecollection/03-mouth".flip_h = true
-		$"spritecollection/04-l-leg".flip_h = true
-		$"spritecollection/05-pants".flip_h = true
-		$"spritecollection/06-r-leg".flip_h = true
-		$"spritecollection/07-clothes".flip_h = true
-		$"spritecollection/08-r-arm".flip_h = true
-		$"spritecollection/09-r-facial-hair".flip_h = true
-		$"spritecollection/10-face-wear".flip_h = true
-		$"spritecollection/11-hat-hair".flip_h = true
-	if state == false:
-		$"spritecollection/01-l-arm".flip_h = false
-		$"spritecollection/02-body".flip_h = false
-		$"spritecollection/03-mouth".flip_h = false
-		$"spritecollection/04-l-leg".flip_h = false
-		$"spritecollection/05-pants".flip_h = false
-		$"spritecollection/06-r-leg".flip_h = false
-		$"spritecollection/07-clothes".flip_h = false
-		$"spritecollection/08-r-arm".flip_h = false
-		$"spritecollection/09-r-facial-hair".flip_h = false
-		$"spritecollection/10-face-wear".flip_h = false
-		$"spritecollection/11-hat-hair".flip_h = false
+
 func setName(newName):
 	ourname = newName
 	$Label.text = ourname
@@ -161,16 +139,20 @@ func _physics_process(_delta):
 	# We handle animations and stuff here
 	if movement.x > x_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
-		$spritecollection.scale.x = 0.07
+		if face_right:
+			face_right = false
+			$spritecollection.scale.x = -$spritecollection.scale.x
 	elif movement.x < -x_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
-		$spritecollection.scale.x = -0.07
+		if not face_right:
+			face_right = true
+			$spritecollection.scale.x = -$spritecollection.scale.x
 	elif movement.y > y_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
 	elif movement.y < -y_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
 	else:
-		$spritecollection/AnimationPlayer.play("Idle")
+		$spritecollection/AnimationPlayer.play("idle", 0.2)
 
 # Only called on the main player. Rerolls the player's unreceived inputs on top
 # of the server's player position
