@@ -1,10 +1,25 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://addons/opensusinteraction/resources/interacttask/interacttask.gd" type="Script" id=1]
+[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=2]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+resource_name = "InteractUI"
+script = ExtResource( 2 )
+ui_name = ""
+ui_data = {
+
+}
+advanced/reinstance = false
 
 [resource]
 resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 1 )
 task_name = ""
-ui_name = ""
+ui_resource = SubResource( 1 )
+inputs/toggle_items = false
+outputs/toggle_items = false
+outputs/toggle_map_interactions = false
+outputs/toggle_tasks = false
