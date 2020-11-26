@@ -3,18 +3,19 @@ extends Node
 #The task manager is going to assign each task a unique ID, and then assign the ID to a player
 #each player will only be sent their task IDs and the info related to their task IDs
 
-enum task_type {BINARY, WIN, ITEM_OUTPUT, ITEM_INPUT, ITEM_INPUT_OUTPUT, MAP_OUTPUT}
+#enum task_type {BINARY, WIN, ITEM_OUTPUT, ITEM_INPUT, ITEM_INPUT_OUTPUT, MAP_OUTPUT}
 
-enum task_state {NOT_STARTED, IN_PROGRESS, COMPLETED}
+enum task_state {HIDDEN, NOT_STARTED, IN_PROGRESS, COMPLETED}
 
-var task_transitions: Dictionary = {task_type.BINARY: {task_state.NOT_STARTED: [task_state.COMPLETED], 
-														task_state.COMPLETED: []}
+var task_transitions: Dictionary = {task_state.HIDDEN: [task_state.NOT_STARTED], 
+									task_state.NOT_STARTED: [task_state.COMPLETED], 
+									task_state.COMPLETED: []
 									}
 
 #stores info of each task, for instance it's type (see task_type)
-var tasks: Dictionary = {"clockset": {"type": task_type.BINARY}}
+#var tasks: Dictionary = {"clockset": {"type": task_type.BINARY}}
 #array with all names of tasks that can be assigned, most likely used for map specific tasks
-var enabled_tasks: Array = ["clockset"]
+#var enabled_tasks: Array = ["clockset"]
 #dictionary that stores the task IDs corresponding to the tasks assigned to the player
 var player_tasks: Dictionary = {}
 #stores task info corresponding to task IDs
@@ -23,7 +24,7 @@ var task_dict: Dictionary = {}
 
 func _ready():
 	randomize()
-	print(gen_unique_id())
+	#print(gen_unique_id())
 
 #can't declare new_state as an int, otherwise it would need to default to an int which could cause later problems
 func advance_task(task_id: int, new_state = null) -> bool:
@@ -33,7 +34,7 @@ func advance_task(task_id: int, new_state = null) -> bool:
 	var current_state: int = task_dict[task_id].state
 
 	#transition if allowed
-	if task_transitions[task_type][current_state].empty():
+	if task_transitions[current_state].empty():
 		#if there are no transitions allowed, ex. a completed task
 		return false
 	if new_state.typeof() == TYPE_INT and task_state.values().has(new_state):
@@ -45,26 +46,25 @@ func advance_task(task_id: int, new_state = null) -> bool:
 func transition_task(task_id: int, new_state: int) -> bool:
 	if not get_tree().is_network_server():
 		return false
-	var task_type: int = task_dict[task_id].type
 	var current_state: int = task_dict[task_id].state
 	#if that task type can't transition from current state to new state
-	if not task_transitions[task_type][current_state].has(new_state):
+	if not task_transitions[current_state].has(new_state):
 		return false
 	#transition task
 	task_dict[task_id].state = new_state
-	return false
+	return true
 
-func new_task(task_name: String, players: Array, task_info: Dictionary):
+func new_task(players: Array, task_info: Dictionary):
 	#register task
-	var new_task_id = register_task(task_name, task_info)
+	var new_task_id = register_task(task_info)
 	
 	#assign task to players
 	for i in players:
 		assign_task(i, new_task_id)
 
-func register_task(task_name: String, task_info: Dictionary) -> int:
+func register_task(task_info: Dictionary) -> int:
 	var new_task_id: int = gen_unique_id()
-	var new_task_dict: Dictionary = {"name": task_name, "type": tasks[task_name].type, "state": task_state.NOT_STARTED, "assigned_to": []}
+	var new_task_dict: Dictionary = {"state": task_state.NOT_STARTED, "assigned_to": []}
 	for i in task_info.keys():
 		#do stuff with task info
 		pass
