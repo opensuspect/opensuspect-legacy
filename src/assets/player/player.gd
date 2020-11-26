@@ -139,13 +139,13 @@ func _physics_process(_delta):
 	# We handle animations and stuff here
 	if movement.x > x_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
-		if face_right:
-			face_right = false
+		if not face_right:
+			face_right = true
 			$spritecollection.scale.x = -$spritecollection.scale.x
 	elif movement.x < -x_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
-		if not face_right:
-			face_right = true
+		if face_right:
+			face_right = false
 			$spritecollection.scale.x = -$spritecollection.scale.x
 	elif movement.y > y_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
