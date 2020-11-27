@@ -5,7 +5,6 @@ extends Node
 # var a = 2
 # var b = "text"
 var mapdata
-var http
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_network_master(1)

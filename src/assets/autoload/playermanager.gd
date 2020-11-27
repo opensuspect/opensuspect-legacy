@@ -28,16 +28,6 @@ func _ready():
 	set_network_master(1)
 # warning-ignore:return_value_discarded
 	GameManager.connect("state_changed", self, "state_changed")
-func kill(kid):
-	if get_tree().is_network_server():
-		Network.kick_peer(kid)
-	else:
-		rpc_id(1,"killhandle",kid)
-remote func killhandle(kid):
-	if get_tree().is_network_server():
-		Network.kick_peer(kid)
-		if kid == 1:
-			emit_signal("host_kill")
 func assigntasks():
 	for id in Network.peers:
 		taskstoassign = tasks

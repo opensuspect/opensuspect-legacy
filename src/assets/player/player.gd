@@ -78,9 +78,6 @@ func _checkRole(role: String) -> void:
 			set_collision_layer_bit(2, true)
 			if has_node("Infiltrator"):
 				get_node("Infiltrator").queue_free()
-func on_host_kill():
-	if id == 1:
-		self.position = Vector2(500,500)
 func changeNameColor(role: String):
 	match role:
 		"traitor":
