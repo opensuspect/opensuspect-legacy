@@ -1,19 +1,17 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
-[ext_resource path="res://assets/player/textures/characters/black/walk-h/black-r-walk-4-4.png" type="Texture" id=2]
-[ext_resource path="res://assets/player/textures/characters/black/walk-h/black-r-walk-3-4.png" type="Texture" id=3]
-[ext_resource path="res://assets/player/textures/characters/black/walk-h/black-r-walk-2-4.png" type="Texture" id=4]
-[ext_resource path="res://assets/player/textures/characters/black/walk-h/black-r-walk-1-4.png" type="Texture" id=5]
-[ext_resource path="res://assets/player/textures/characters/black/black-proto-1.png" type="Texture" id=6]
-[ext_resource path="res://assets/player/textures/characters/black/walk-v/black-down-2-4.png" type="Texture" id=7]
-[ext_resource path="res://assets/player/textures/characters/black/walk-v/black-down-3-4.png" type="Texture" id=8]
-[ext_resource path="res://assets/player/textures/characters/black/walk-v/black-down-1-4.png" type="Texture" id=9]
-[ext_resource path="res://assets/player/textures/characters/black/walk-v/black-down-4-4.png" type="Texture" id=10]
-[ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-2-4.png" type="Texture" id=11]
-[ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-1-4.png" type="Texture" id=12]
-[ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-4-4.png" type="Texture" id=13]
-[ext_resource path="res://assets/player/textures/characters/black/walk-v/black-up2-3-4.png" type="Texture" id=14]
+[ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/brown-suit.png" type="Texture" id=2]
+[ext_resource path="res://assets/player/textures/characters/customizable/03-mouth/mouth-concerned.png" type="Texture" id=3]
+[ext_resource path="res://assets/player/textures/characters/customizable/02-body/body01.png" type="Texture" id=4]
+[ext_resource path="res://assets/player/textures/characters/customizable/04-left-leg/brown-suit.png" type="Texture" id=5]
+[ext_resource path="res://assets/player/textures/characters/customizable/11-hat-hair/brown-hat.png" type="Texture" id=6]
+[ext_resource path="res://assets/player/textures/characters/customizable/01-left-arm/brown-suit.png" type="Texture" id=7]
+[ext_resource path="res://assets/player/textures/characters/customizable/09-facial-hair/brown-eyebrows-sideburns.png" type="Texture" id=8]
+[ext_resource path="res://assets/player/textures/characters/customizable/10-face-wear/sunglasses.png" type="Texture" id=9]
+[ext_resource path="res://assets/player/textures/characters/customizable/08-right-arm/brown-suit.png" type="Texture" id=10]
+[ext_resource path="res://assets/player/textures/characters/customizable/07-clothes/brown-suit.png" type="Texture" id=11]
+[ext_resource path="res://assets/player/textures/characters/customizable/05-pants/brown-suit.png" type="Texture" id=12]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
 [ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
 [ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=17]
@@ -37,36 +35,113 @@ light_mode = 2
 [sub_resource type="CapsuleShape2D" id=5]
 radius = 12.0
 
-[sub_resource type="ShaderMaterial" id=6]
-shader = ExtResource( 17 )
-shader_param/line_color = Color( 0, 0, 0, 0 )
-shader_param/line_thickness = 1.5
-
-[sub_resource type="SpriteFrames" id=7]
-animations = [ {
-"frames": [ ExtResource( 6 ) ],
-"loop": true,
-"name": "idle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ) ],
-"loop": true,
-"name": "walk-up",
-"speed": 8.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
-"loop": true,
-"name": "walk-h",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ) ],
-"loop": true,
-"name": "walk-down",
-"speed": 8.0
-} ]
-
-[sub_resource type="CanvasItemMaterial" id=8]
+[sub_resource type="CanvasItemMaterial" id=6]
 light_mode = 2
+
+[sub_resource type="Animation" id=8]
+resource_name = "h_move"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("04-l-leg:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 0.5, 2, 0.5, 2 ),
+"update": 0,
+"values": [ 0.0, -20.0, 0.0, 5.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("06-r-leg:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 0.5, 2, 0.5, 2 ),
+"update": 0,
+"values": [ 0.0, 5.0, 0.0, -20.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("08-r-arm:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 0.5, 2, 0.5, 2 ),
+"update": 0,
+"values": [ 0.0, 30.0, 0.0, -30.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("01-l-arm:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 0.5, 2, 0.5, 2 ),
+"update": 0,
+"values": [ 0.0, -30.0, 0.0, 30.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "idle"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("01-l-arm:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("04-l-leg:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("06-r-leg:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("08-r-arm:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [node name="Player" type="KinematicBody2D" groups=[
 "players",
@@ -97,14 +172,6 @@ material = SubResource( 4 )
 rotation = 1.5708
 shape = SubResource( 5 )
 
-[node name="Sprite" type="AnimatedSprite" parent="."]
-light_mask = -2147483647
-material = SubResource( 6 )
-position = Vector2( 0, -18 )
-frames = SubResource( 7 )
-animation = "walk-h"
-playing = true
-
 [node name="MainLight" type="Light2D" parent="."]
 position = Vector2( 0, -0.198425 )
 texture = ExtResource( 15 )
@@ -123,7 +190,7 @@ drag_margin_right = 0.65
 drag_margin_bottom = 0.65
 
 [node name="Label" type="Label" parent="."]
-material = SubResource( 8 )
+material = SubResource( 6 )
 margin_left = -250.0
 margin_top = -75.0
 margin_right = 250.0
@@ -133,5 +200,54 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="spritecollection" type="Node2D" parent="."]
+position = Vector2( 0, -26 )
+scale = Vector2( 0.05, 0.05 )
+
+[node name="01-l-arm" type="Sprite" parent="spritecollection"]
+position = Vector2( 140, 180 )
+texture = ExtResource( 7 )
+offset = Vector2( -140, -180 )
+
+[node name="02-body" type="Sprite" parent="spritecollection"]
+texture = ExtResource( 4 )
+
+[node name="03-mouth" type="Sprite" parent="spritecollection"]
+texture = ExtResource( 3 )
+
+[node name="04-l-leg" type="Sprite" parent="spritecollection"]
+position = Vector2( 110, 390 )
+texture = ExtResource( 5 )
+offset = Vector2( -110, -390 )
+
+[node name="05-pants" type="Sprite" parent="spritecollection"]
+texture = ExtResource( 12 )
+
+[node name="06-r-leg" type="Sprite" parent="spritecollection"]
+position = Vector2( -90, 390 )
+texture = ExtResource( 2 )
+offset = Vector2( 90, -390 )
+
+[node name="07-clothes" type="Sprite" parent="spritecollection"]
+texture = ExtResource( 11 )
+
+[node name="08-r-arm" type="Sprite" parent="spritecollection"]
+position = Vector2( -120, 180 )
+texture = ExtResource( 10 )
+offset = Vector2( 120, -180 )
+
+[node name="09-r-facial-hair" type="Sprite" parent="spritecollection"]
+texture = ExtResource( 8 )
+
+[node name="10-face-wear" type="Sprite" parent="spritecollection"]
+texture = ExtResource( 9 )
+
+[node name="11-hat-hair" type="Sprite" parent="spritecollection"]
+texture = ExtResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="spritecollection"]
+anims/h_move = SubResource( 8 )
+anims/idle = SubResource( 7 )
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]
