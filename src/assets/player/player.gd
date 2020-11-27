@@ -19,8 +19,10 @@ var movement = Vector2(0,0)
 # Only true when this is the player being controlled
 export var main_player = false
 #anim margin controls how big the player movement must be before animations are played
-var x_anim_margin = 0.1
-var y_anim_margin = 0.1
+var x_anim_margin = 0.00
+var y_anim_margin = 0.00
+#whether the character faces in the right direction
+var face_right = true
 
 # The input number is incremented on each _physics_process call. GDScript's int
 # type is int64_t which is enough for thousands of years of gameplay
@@ -35,8 +37,10 @@ var input_queue: Array = []
 func _ready():
 	# Set the sprite material for every player to be a duplicate of their
 	# initial material so that outlines may be modified independently.
+
 	sprite.set_material(sprite.material.duplicate())
 	PlayerManager.connect("host_kill",self,"on_host_kill")
+
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
 	if main_player:
@@ -135,17 +139,21 @@ func _physics_process(_delta):
 
 	# We handle animations and stuff here
 	if movement.x > x_anim_margin:
-		$Sprite.play("walk-h")
-		$Sprite.flip_h = false
+		$spritecollection/AnimationPlayer.play("h_move")
+		if not face_right:
+			face_right = true
+			$spritecollection.scale.x = -$spritecollection.scale.x
 	elif movement.x < -x_anim_margin:
-		$Sprite.play("walk-h")
-		$Sprite.flip_h = true
+		$spritecollection/AnimationPlayer.play("h_move")
+		if face_right:
+			face_right = false
+			$spritecollection.scale.x = -$spritecollection.scale.x
 	elif movement.y > y_anim_margin:
-		$Sprite.play("walk-down")
+		$spritecollection/AnimationPlayer.play("h_move")
 	elif movement.y < -y_anim_margin:
-		$Sprite.play("walk-up")
+		$spritecollection/AnimationPlayer.play("h_move")
 	else:
-		$Sprite.play("idle")
+		$spritecollection/AnimationPlayer.play("idle", 0.2)
 
 # Only called on the main player. Rerolls the player's unreceived inputs on top
 # of the server's player position

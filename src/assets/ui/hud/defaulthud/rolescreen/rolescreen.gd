@@ -19,7 +19,7 @@ func _clean_up():
 	
 	for info in self.player_info:
 		info.name_label.queue_free()
-		info.sprite.queue_free()
+		info.sprite_collection.queue_free()
 	self.player_info.clear()
 
 func _on_roles_assigned(player_roles : Dictionary):
@@ -52,7 +52,7 @@ func _on_roles_assigned(player_roles : Dictionary):
 		$Label.set("custom_colors/font_color", PlayerManager.playerColors["detective"])
 	for info in self.player_info:
 		self.add_child(info.name_label)
-		self.add_child(info.sprite)
+		self.add_child(info.sprite_collection)
 	
 	self.show()
 
@@ -83,8 +83,27 @@ func _generate_info(player_roles: Dictionary, role_colors: Dictionary):
 	if x_pos_start < 0:
 		# there are too many players to fit in one row.. need to wrap to the next row
 		pass
-	# assists with lowering every other player info
+		
+	var black_spacesuit_texture : Texture = preload("res://assets/player/textures/characters/black/black-proto-1.png")
+	
+	# assists with positioning player info
 	var player_count = 0
+	
+	# gets the player sprites to be displayed
+	# or, displays the black spacesuit character,
+	# if the "spritecollection" node wasn't found
+	var player_group_members = get_tree().get_nodes_in_group("players")
+	var player_sprite_collection = Dictionary()
+	for player in player_group_members:
+		if player_roles.has(player.id):
+			var node = player.get_node(NodePath("spritecollection"))
+			if node != null:
+				player_sprite_collection[player.id] = node.duplicate(0)
+			else:
+				var sprite = Sprite.new()
+				sprite.texture = black_spacesuit_texture
+				player_sprite_collection[player.id] = sprite
+	
 	
 	for id in filtered_ids:
 		# draw player info with PLAYER_SPACE_WIDTH pixels in between
@@ -95,7 +114,10 @@ func _generate_info(player_roles: Dictionary, role_colors: Dictionary):
 		if player_count % 2 == 0:
 			y_offset = 20
 	
-		p_info.append(PlayerInfo.new(Vector2(x_pos, y_pos + y_offset), id, role_colors[player_roles[id]]))
+		p_info.append(PlayerInfo.new(Vector2(x_pos, y_pos + y_offset),
+										id,
+										role_colors[player_roles[id]],
+										player_sprite_collection[id]))
 		player_count += 1
 	
 	return p_info
@@ -106,15 +128,16 @@ class PlayerInfo:
 	# set the text outline color to black(useful when there are colorful backgrounds)
 		label.set("custom_colors/font_color_shadow", Color(0,0,0,1))
 		label.set("custom_constants/shadow_as_outline", true)
-		
-		
-	
-	var player_texture : Texture = preload("res://assets/player/textures/characters/black/black-proto-1.png")
 	
 	var name_label : Label
-	var sprite : Sprite
+	var sprite_collection : Node2D
 	
-	func _init(position: Vector2, id: int, player_name_color: Color):
+	func _init(position: Vector2, 
+					id: int,
+					player_name_color: Color,
+					player_sprite_collection: Node2D):
+		
+		
 		var player_name = String(Network.get_player_name(id))
 		
 		self.name_label = Label.new()
@@ -124,10 +147,8 @@ class PlayerInfo:
 		
 		_set_label_outline(self.name_label)
 		
-		
-		self.sprite = Sprite.new()
-		self.sprite.texture = player_texture
-		self.sprite.set_position(position)
+		self.sprite_collection = player_sprite_collection
+		self.sprite_collection.set_position(position)
 		
 		# center the label above the player sprite
 		var width = self.name_label.get_combined_minimum_size().x
