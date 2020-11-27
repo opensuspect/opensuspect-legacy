@@ -24,6 +24,7 @@ func _pressed():
 # warning-ignore:return_value_discarded
 		GameManager.transition(GameManager.State.Normal)
 		text = "Back to Lobby"
+		Dlman.distribute()
 	else:
 # warning-ignore:return_value_discarded
 		GameManager.transition(GameManager.State.Lobby)

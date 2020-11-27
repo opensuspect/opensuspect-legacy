@@ -172,6 +172,15 @@ material = SubResource( 4 )
 rotation = 1.5708
 shape = SubResource( 5 )
 
+[node name="Sprite" type="AnimatedSprite" parent="."]
+light_mask = -2147483647
+material = SubResource( 6 )
+position = Vector2( 0, -18 )
+frames = SubResource( 7 )
+animation = "walk-h"
+frame = 3
+playing = true
+
 [node name="MainLight" type="Light2D" parent="."]
 position = Vector2( 0, -0.198425 )
 texture = ExtResource( 15 )
