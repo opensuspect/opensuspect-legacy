@@ -22,6 +22,8 @@ var player_tasks: Dictionary = {}
 #format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, assigned_to: [<network IDs of players task is assigned to>]}
 var task_dict: Dictionary = {}
 
+signal init_tasks
+
 func _ready():
 	randomize()
 	#print(gen_unique_id())
@@ -65,9 +67,7 @@ func new_task(players: Array, task_info: Dictionary):
 func register_task(task_info: Dictionary) -> int:
 	var new_task_id: int = gen_unique_id()
 	var new_task_dict: Dictionary = {"state": task_state.NOT_STARTED, "assigned_to": []}
-	for i in task_info.keys():
-		#do stuff with task info
-		pass
+	#do stuff with task info here
 	task_dict[new_task_id] = new_task_dict
 	return new_task_id
 

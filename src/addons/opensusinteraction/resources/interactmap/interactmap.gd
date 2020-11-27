@@ -24,6 +24,12 @@ func interact(_from: Node):
 	#print(attached_to.get_node(interact_with))
 	MapManager.interact_with(attached_to.get_node(interact_with), attached_to, get_interact_data(_from))
 
+func init_resource(_from: Node):
+	if attached_to == null and _from != null:
+		attached_to = _from
+	if attached_to == null:
+		push_error("InteractMap resource trying to be initiated with no defined node")
+
 func get_interact_data(_from: Node = null) -> Dictionary:
 	if attached_to == null and _from != null:
 		attached_to = _from
