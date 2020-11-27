@@ -3,7 +3,7 @@ extends Resource
 
 #class_name InteractTask
 
-export(String) var task_name
+export(String) var task_text
 
 #export(Resource) var ui_name = base_ui_resource.duplicate()
 
@@ -26,16 +26,34 @@ var base_map_resource:Resource = ResourceLoader.load("res://addons/opensusintera
 #changed in the editor via overriding get(), set(), and get_property_list()
 var ui_res: Resource = base_ui_resource.duplicate()
 
-func init_task():
-	TaskManager.add_task_resource(self)
+#node this task is attached to
+var attached_to: Node
+
+func init_task(_from: Node = null):
+	print(task_text)
+	if attached_to == null and _from != null:
+		attached_to = _from
+	if attached_to == null:
+		push_error("Task resource trying to be used with no defined node")
+		return
 	pass
 
-func get_task_info() -> Dictionary:
+func init_resource(_from: Node):
+	if attached_to == null and _from != null:
+		attached_to = _from
+	if attached_to == null:
+		push_error("Task resource trying to be initiated with no defined node")
+
+func get_interact_data(_from: Node = null) -> Dictionary:
+	if attached_to == null and _from != null:
+		attached_to = _from
+	if attached_to == null:
+		push_error("Task resource trying to be used with no defined node")
 	return gen_task_info()
 
 func gen_task_info() -> Dictionary:
 	var info:Dictionary = {}
-	info["task_name"] = task_name
+	info["task_text"] = task_text
 #	info["ui_name"] = ui_name
 	info["item_inputs"] = item_inputs
 	info["item_outputs"] = item_outputs
@@ -43,9 +61,12 @@ func gen_task_info() -> Dictionary:
 	return info
 
 func _init():
+	#print("task init ", task_name)
 	#ensures customizing this resource won't change other resources
 	if Engine.editor_hint:
 		resource_local_to_scene = true
+	#else:
+	#	TaskManager.connect("init_tasks", self, "init_task")
 
 #EDITOR STUFF BELOW THIS POINT, DO NOT TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 #---------------------------------------------------------------------------------------------------

@@ -3,14 +3,16 @@ extends Resource
 
 #class_name Interact
 
-enum type {ui = 1, map = 2}
+enum type {task = 0, ui = 1, map = 2}
 export(type) var interact_type = 1
 
 #needed to instance new unique resources in editor
+var base_task_resource:Resource = ResourceLoader.load("res://addons/opensusinteraction/resources/interacttask/interacttask.tres")
 var base_ui_resource: Resource = ResourceLoader.load("res://addons/opensusinteraction/resources/interactui/interactui.tres")
 var base_map_resource:Resource = ResourceLoader.load("res://addons/opensusinteraction/resources/interactmap/interactmap.tres")
 
 #changed in the editor via overriding get(), set(), and get_property_list()
+var task_res: Resource = base_task_resource.duplicate()
 var ui_res: Resource = base_ui_resource.duplicate()
 var map_res: Resource = base_map_resource.duplicate()
 
@@ -20,16 +22,29 @@ var interact_data: Dictionary = {}
 func interact(_from: Node):
 	#print(interact_type)
 	match interact_type:
+		type.task:
+			task_res.interact(_from)
 		type.ui:
 			ui_res.interact(_from)
 		type.map:
 			map_res.interact(_from)
+
+func init_resource(_from):
+	match interact_type:
+		type.task:
+			task_res.init_resource(_from)
+		type.ui:
+			ui_res.init_resource(_from)
+		type.map:
+			map_res.init_resource(_from)
 
 func get_interact_data(_from: Node = null) -> Dictionary:
 	var interact_data: Dictionary = {}
 	var res_interact_data: Dictionary = {}
 	#print(interact_type)
 	match interact_type:
+		type.task:
+			res_interact_data = task_res.get_interact_data(_from)
 		type.ui:
 			res_interact_data = ui_res.get_interact_data(_from)
 		type.map:
