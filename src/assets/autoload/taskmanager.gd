@@ -12,17 +12,10 @@ var task_transitions: Dictionary = {task_state.HIDDEN: [task_state.NOT_STARTED],
 									task_state.COMPLETED: []
 									}
 
-#stores info of each task, for instance it's type (see task_type)
-#var tasks: Dictionary = {"clockset": {"type": task_type.BINARY}}
-#array with all names of tasks that can be assigned, most likely used for map specific tasks
-#var enabled_tasks: Array = ["clockset"]
-#dictionary that stores the task IDs corresponding to the tasks assigned to the player
 var player_tasks: Dictionary = {}
 #stores task info corresponding to task IDs
 #format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, assigned_to: [<network IDs of players task is assigned to>]}
 var task_dict: Dictionary = {}
-
-signal init_tasks
 
 func _ready():
 	randomize()
@@ -56,19 +49,15 @@ func transition_task(task_id: int, new_state: int) -> bool:
 	task_dict[task_id].state = new_state
 	return true
 
-func new_task(players: Array, task_info: Dictionary):
-	#register task
-	var new_task_id = register_task(task_info)
-	
-	#assign task to players
-	for i in players:
-		assign_task(i, new_task_id)
-
-func register_task(task_info: Dictionary) -> int:
+func register_task(task_data: Dictionary) -> int:
 	var new_task_id: int = gen_unique_id()
-	var new_task_dict: Dictionary = {"state": task_state.NOT_STARTED, "assigned_to": []}
+	print("registering task with ID ", new_task_id)
+	var new_task_dict: Dictionary = task_data
+	new_task_dict["state"] = task_state.NOT_STARTED
+	new_task_dict["assigned_to"] = []
 	#do stuff with task info here
 	task_dict[new_task_id] = new_task_dict
+	print("task registered: ", new_task_dict)
 	return new_task_id
 
 func assign_task(player_id: int, task_id: int) -> void:

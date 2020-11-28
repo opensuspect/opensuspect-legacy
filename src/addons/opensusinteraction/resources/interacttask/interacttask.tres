@@ -3,11 +3,11 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interacttask/interacttask.gd" type="Script" id=1]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=2]
 
-[sub_resource type="Resource" id=1]
+[sub_resource type="Resource" id=13]
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 2 )
-ui_name = ""
+ui_name = "clockset"
 ui_data = {
 
 }
@@ -18,8 +18,5 @@ resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 1 )
 task_text = ""
-ui_resource = SubResource( 1 )
-inputs/toggle_items = false
-outputs/toggle_items = false
+ui_resource = SubResource( 13 )
 outputs/toggle_map_interactions = false
-outputs/toggle_tasks = false

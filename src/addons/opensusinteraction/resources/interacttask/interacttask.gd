@@ -29,35 +29,39 @@ var ui_res: Resource = base_ui_resource.duplicate()
 #node this task is attached to
 var attached_to: Node
 
-func init_task(_from: Node = null):
-	print(task_text)
+#assigned by TaskManager
+var task_id: int
+
+func interact(_from: Node = null):
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
-		push_error("Task resource trying to be used with no defined node")
-		return
-	pass
+		push_error("InteractTask resource trying to be used with no defined node")
+	ui_res.interact(_from)
 
 func init_resource(_from: Node):
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
-		push_error("Task resource trying to be initiated with no defined node")
+		push_error("InteractTask resource trying to be initiated with no defined node")
+	task_id = TaskManager.register_task(gen_task_info())
 
 func get_interact_data(_from: Node = null) -> Dictionary:
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
-		push_error("Task resource trying to be used with no defined node")
+		push_error("InteractTask resource trying to be used with no defined node")
 	return gen_task_info()
 
 func gen_task_info() -> Dictionary:
-	var info:Dictionary = {}
+	var info: Dictionary = {}
 	info["task_text"] = task_text
-#	info["ui_name"] = ui_name
 	info["item_inputs"] = item_inputs
 	info["item_outputs"] = item_outputs
 	info["task_outputs"] = task_outputs
+	info["attached_node"] = attached_to
+	info["task_resource"] = self
+	#info["ui_resource"] = ui_res
 	return info
 
 func _init():
@@ -148,8 +152,6 @@ func _get(property):
 
 #overrides get_property_list(), tells editor to show more properties in inspector
 func _get_property_list():
-#	if not Engine.editor_hint:
-#		return []
 	var property_list: Array = []
 
 	property_list.append({"name": "ui_resource",
@@ -159,36 +161,36 @@ func _get_property_list():
 		})
 
 	#item input toggle
-	property_list.append({
-		"name": "inputs/toggle_items",
-		"type": TYPE_BOOL,
-		"usage": PROPERTY_USAGE_DEFAULT,
-		"hint": PROPERTY_HINT_NONE,
-		})
-	#item input array field
-	if item_inputs_on:
-		property_list.append({
-		"name": "inputs/input_items",
-		"type": TYPE_STRING_ARRAY,
-		"usage": PROPERTY_USAGE_DEFAULT,
-		"hint": PROPERTY_HINT_NONE,
-		})
+#	property_list.append({
+#		"name": "inputs/toggle_items",
+#		"type": TYPE_BOOL,
+#		"usage": PROPERTY_USAGE_DEFAULT,
+#		"hint": PROPERTY_HINT_NONE,
+#		})
+#	#item input array field
+#	if item_inputs_on:
+#		property_list.append({
+#		"name": "inputs/input_items",
+#		"type": TYPE_STRING_ARRAY,
+#		"usage": PROPERTY_USAGE_DEFAULT,
+#		"hint": PROPERTY_HINT_NONE,
+#		})
 
 	#item output toggle
-	property_list.append({
-		"name": "outputs/toggle_items",
-		"type": TYPE_BOOL,
-		"usage": PROPERTY_USAGE_DEFAULT,
-		"hint": PROPERTY_HINT_NONE,
-		})
-	#item output array field
-	if item_outputs_on:
-		property_list.append({
-		"name": "outputs/output_items",
-		"type": TYPE_STRING_ARRAY,
-		"usage": PROPERTY_USAGE_DEFAULT,
-		"hint": PROPERTY_HINT_NONE,
-		})
+#	property_list.append({
+#		"name": "outputs/toggle_items",
+#		"type": TYPE_BOOL,
+#		"usage": PROPERTY_USAGE_DEFAULT,
+#		"hint": PROPERTY_HINT_NONE,
+#		})
+#	#item output array field
+#	if item_outputs_on:
+#		property_list.append({
+#		"name": "outputs/output_items",
+#		"type": TYPE_STRING_ARRAY,
+#		"usage": PROPERTY_USAGE_DEFAULT,
+#		"hint": PROPERTY_HINT_NONE,
+#		})
 
 	#item output toggle
 	property_list.append({
@@ -207,18 +209,18 @@ func _get_property_list():
 		})
 
 	#task output toggle
-	property_list.append({
-		"name": "outputs/toggle_tasks",
-		"type": TYPE_BOOL,
-		"usage": PROPERTY_USAGE_DEFAULT,
-		"hint": PROPERTY_HINT_NONE,
-		})
-	if task_outputs_on:
-		property_list.append({
-		"name": "outputs/output_tasks",
-		"type": TYPE_ARRAY,
-		"usage": PROPERTY_USAGE_DEFAULT,
-		"hint": PROPERTY_HINT_DIR,
-		"hint_string": ""
-		})
+#	property_list.append({
+#		"name": "outputs/toggle_tasks",
+#		"type": TYPE_BOOL,
+#		"usage": PROPERTY_USAGE_DEFAULT,
+#		"hint": PROPERTY_HINT_NONE,
+#		})
+#	if task_outputs_on:
+#		property_list.append({
+#		"name": "outputs/output_tasks",
+#		"type": TYPE_ARRAY,
+#		"usage": PROPERTY_USAGE_DEFAULT,
+#		"hint": PROPERTY_HINT_DIR,
+#		"hint_string": ""
+#		})
 	return property_list
