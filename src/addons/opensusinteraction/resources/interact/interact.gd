@@ -4,7 +4,7 @@ extends Resource
 #class_name Interact
 
 enum type {task = 0, ui = 1, map = 2}
-export(type) var interact_type = 1
+export(type) var interact_type
 
 #needed to instance new unique resources in editor
 var base_task_resource:Resource = ResourceLoader.load("res://addons/opensusinteraction/resources/interacttask/interacttask.tres")
@@ -68,6 +68,13 @@ func _set(property, value):
 #	#so you can figure out how to handle it
 	#print("setting ", property, " to ", value)
 	match property:
+		"task_resource":
+			#if new resource is a ui interact resource
+			if value is preload("res://addons/opensusinteraction/resources/interacttask/interacttask.gd"):
+				task_res = value
+			else:
+				#create new ui interact resource
+				task_res = base_task_resource.duplicate()
 		"ui_resource":
 			#if new resource is a ui interact resource
 			if value is preload("res://addons/opensusinteraction/resources/interactui/interactui.gd"):
@@ -88,6 +95,8 @@ func _set(property, value):
 #overrides get(), for property groups and to display custom/fake properties/vars
 func _get(property):
 	match property:
+		"task_resource":
+			return task_res
 		"ui_resource":
 			return ui_res
 		"map_resource":
@@ -98,6 +107,11 @@ func _get_property_list():
 #	#if not Engine.editor_hint:
 #	#	return []
 	var property_list: Array = []
+	property_list.append({"name": "task_resource",
+		"type": TYPE_OBJECT,
+		"usage": PROPERTY_USAGE_DEFAULT,
+		"hint": PROPERTY_HINT_RESOURCE_TYPE,
+		})
 	property_list.append({"name": "ui_resource",
 		"type": TYPE_OBJECT,
 		"usage": PROPERTY_USAGE_DEFAULT,

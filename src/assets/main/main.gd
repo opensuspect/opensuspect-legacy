@@ -141,4 +141,3 @@ master func _on_maps_spawn(spawnPositions: Array):
 			spawnPointDict[players.keys()[i]] = spawn_pos
 	#spawn players
 	rpc("createPlayers", Network.get_player_names(), spawnPointDict)
-	TaskManager.emit_signal("init_tasks")

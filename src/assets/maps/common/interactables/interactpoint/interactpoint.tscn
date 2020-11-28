@@ -1,35 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/maps/common/interactables/interactpoint/interactpoint.gd" type="Script" id=1]
-[ext_resource path="res://addons/opensusinteraction/resources/interact/interact.gd" type="Script" id=4]
-[ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=5]
-[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=6]
-
-[sub_resource type="Resource" id=1]
-resource_local_to_scene = true
-resource_name = "InteractMap"
-script = ExtResource( 5 )
-interact_with = NodePath("")
-interact_data = {
-
-}
-
-[sub_resource type="Resource" id=2]
-resource_local_to_scene = true
-resource_name = "InteractUI"
-script = ExtResource( 6 )
-ui_name = ""
-ui_data = {
-
-}
-advanced/reinstance = false
-
-[sub_resource type="Resource" id=3]
-resource_local_to_scene = true
-script = ExtResource( 4 )
-interact_type = 0
-ui_resource = SubResource( 2 )
-map_resource = SubResource( 1 )
+[ext_resource path="res://addons/opensusinteraction/resources/interact/interact.tres" type="Resource" id=2]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 1, 1 )
@@ -43,7 +15,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_editor_description_": ""
 }
-interact = SubResource( 3 )
+interact_resource = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 4 )

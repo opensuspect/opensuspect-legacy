@@ -15,7 +15,7 @@ func receiveInteractData(interactData: Dictionary):
 		createButton(i)
 
 func createButton(interactKey):
-	print(buttonInteractDict)
+	#print(buttonInteractDict)
 	var newButton = Button.new()
 	newButton.name = interactKey
 	#print(newButton.name)
@@ -27,10 +27,11 @@ func buttonPressed(buttonName):
 	#print(buttonName)
 	if not buttonInteractDict.keys().has(buttonName):
 		return
-	match typeof(buttonInteractDict[buttonName].interact):
-		TYPE_STRING:
-			#open a UI
-			UIManager.open_menu(buttonInteractDict[buttonName].interact)
-		TYPE_OBJECT:
-			#interact with map object
-			MapManager.interact_with(buttonInteractDict[buttonName].interact, self)
+	buttonInteractDict[buttonName].interact_node.interact()
+#	match typeof(buttonInteractDict[buttonName].interact):
+#		TYPE_STRING:
+#			#open a UI
+#			UIManager.open_menu(buttonInteractDict[buttonName].interact)
+#		TYPE_OBJECT:
+#			#interact with map object
+#			MapManager.interact_with(buttonInteractDict[buttonName].interact, self)
