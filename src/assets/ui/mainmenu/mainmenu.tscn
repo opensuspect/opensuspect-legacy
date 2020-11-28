@@ -188,8 +188,8 @@ margin_top = 15.0
 margin_right = 704.0
 margin_bottom = 215.0
 [connection signal="returnToMainMenu" from="VBoxContainer/MarginContainer/MenuArea" to="VBoxContainer/MarginContainer/MenuArea" method="_on_MenuArea_returnToMainMenu"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" method="_on_PlayGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" method="_on_PlayGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer/Settings" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/CenterContainer/Quit" to="VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
 
