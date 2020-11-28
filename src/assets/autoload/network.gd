@@ -13,7 +13,7 @@ var player_name: String setget toss, get_player_name
 puppet var peers: Array = []
 puppet var names: Dictionary = {}
 var myID: int = 1
-var rawmap
+
 signal server_started
 signal connection_handled
 
@@ -75,7 +75,6 @@ func _player_connected(id) -> void:
 		# remotely set myID var of new player to their network id
 		# sync peer list of all players
 		rset("peers", peers)
-		
 
 func _player_disconnected(id) -> void:
 	peers.erase(id)
