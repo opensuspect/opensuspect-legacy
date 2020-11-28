@@ -22,7 +22,8 @@ export var main_player = false
 var x_anim_margin = 0.1
 var y_anim_margin = 0.1
 
-
+#keeps track of no. of time key is pressed
+var identify = 0 
 
 onready var reach = $Reach
 onready var item_position = $Reach/item_positon
@@ -178,36 +179,36 @@ func move_to(new_pos, new_movement):
 	
 func _process(delta):
 	if reach.is_colliding():
-		if reach.get_collider().item_name == "item":
-			item_to_hold = item0.instance()
-		elif reach.get_collider().item_name == null:
-			return
-		else:
-			item_to_hold = null
+		item_to_hold = item0.instance()
 	else:
 		item_to_hold = null
 	
-	if item_position.get_child(0) != null:
+	if item_position.get_child(0):
 		if item_position.get_child(0).item_name == "item":
 			item_to_drop = item0.instance()
 		else:
 			item_to_drop = null
-			
-	if Input.is_action_pressed("ui_pick"):
-		if item_to_hold !=null:
-			if item_position.get_child(0) != null:
-				get_parent().add_child(item_to_drop)
-				item_to_drop.global_transform = item_position.global_transform
-				item_to_drop.pick = false
-				item_position.get_child(0).queue_free()
-			reach.get_collider().queue_free()
-			item_to_hold.pick = true
-			item_position.add_child(item_to_hold)
-	if Input.is_action_pressed("ui_drop"):
-		if item_to_drop != null:
-			if item_position.get_child(0) != null:
-				get_parent().add_child(item_to_drop)
-				item_to_drop.global_transform = item_position.global_transform
-				item_to_drop.pick = false
-				item_position.get_child(0).queue_free()
+func _input(event):
+	if Input.is_action_just_pressed("ui_pick"):
+		if identify == 0 or 1:
+			identify +=1
+			if item_to_hold != null:
+				if item_position.get_child(0):
+					get_parent().add_child(item_to_drop)
+					item_to_drop.global_transform = item_position.global_transform
+					item_to_drop.pick = false
+					item_position.get_child(0).queue_free()
+				reach.get_collider().queue_free()
+				item_to_hold.pick = true
+				item_position.add_child(item_to_hold)
+
+	if Input.is_action_just_pressed("ui_pick"):
+		if identify == 2:
+			identify = 0
+			if item_to_drop != null:
+				if item_position.get_child(0):
+					get_parent().add_child(item_to_drop)
+					item_to_drop.global_transform = item_position.global_transform
+					item_to_drop.pick = false
+					item_position.get_child(0).queue_free()
 			#reach.get_collider().add_child()
