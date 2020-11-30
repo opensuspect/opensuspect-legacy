@@ -66,7 +66,6 @@ SceneManager="*res://assets/autoload/scenemanager.gd"
 UIManager="*res://assets/autoload/uimanager.gd"
 MapManager="*res://assets/autoload/mapmanager.gd"
 TaskManager="*res://assets/autoload/taskmanager.gd"
-Dlman="*res://assets/autoload/dlman.gd"
 
 [display]
 
