@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-class_name InteractUI
+#class_name InteractUI
 
 #name of the UI to open
 export(String) var ui_name
@@ -17,6 +17,9 @@ var interact_data: Dictionary = {}
 #called to execute the interaction this resource is customized for
 func interact(_from: Node = null):
 	UIManager.open_menu(ui_name, get_interact_data(_from), reinstance)
+
+func init_resource(_from: Node = null):
+	pass
 
 func get_interact_data(_from: Node = null) -> Dictionary:
 	var reported_interact_data = interact_data
