@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
-onready var sprite: AnimatedSprite = $Sprite
+onready var skeleton: Node2D = $Skeleton
 
 signal main_player_moved(position)
 
@@ -142,13 +142,13 @@ func _physics_process(_delta):
 		if not face_right:
 			face_right = true
 			$spritecollection.scale.x = -$spritecollection.scale.x
-			$Skeleton.scale.x *= -1
+			skeleton.scale.x *= -1
 	elif movement.x < -x_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
 		if face_right:
 			face_right = false
 			$spritecollection.scale.x = -$spritecollection.scale.x
-			$Skeleton.scale.x *= -1
+			skeleton.scale.x *= -1
 	elif movement.y > y_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
 	elif movement.y < -y_anim_margin:
