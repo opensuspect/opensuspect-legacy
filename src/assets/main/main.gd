@@ -6,6 +6,15 @@ var player_scene = load(player_s)
 export (String, FILE, "*.tscn") var item_s = "res://assets/maps/common/item/item.tscn"
 var item_scene = load(item_s)
 
+var item_pos : Dictionary
+var item_visible: Dictionary
+var player_ids : Dictionary
+var item_to_hold
+var item_to_drop
+var identity: int
+var holder
+var item_p = null
+var new_item_pos 
 #onready var player_scene = preload(player_s)
 # Used on both sides, to keep track of all players.
 var players = {}
@@ -17,10 +26,10 @@ var newnumber
 var spawn_pos = Vector2(0,0)
 
 signal positions_updated(last_received_input)
+signal set_position
 
 func _ready():
 	set_network_master(1)
-
 
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree():
@@ -93,6 +102,9 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 	var newPlayer = player_scene.instance()
 	newPlayer.id = id
 	newPlayer.setName(playerName)
+	player_ids[id] = playerName
+	item_pos[playerName] = newPlayer.get_node("Reach/item_position")
+	item_visible[playerName] = newPlayer.get_node("Reach")
 	#newPlayer.set_network_master(id)
 	if id == Network.get_my_id():
 		newPlayer.main_player = true
@@ -146,3 +158,70 @@ master func _on_maps_spawn(spawnPositions: Array):
 	#spawn players
 	rpc("createPlayers", Network.get_player_names(), spawnPointDict)
 
+func _process(delta):
+	#for cast in item_visible:
+	if item_visible.get(Network.get_player_name()).is_colliding():
+		item_to_hold = item_scene.instance()
+		print("this works")
+	else:
+		item_to_hold = null
+		print("not work")
+			
+	if item_pos.get(Network.get_player_name()).get_child(0):
+		if item_pos.get(Network.get_player_name()).get_child(0).item_name == "item":
+			item_to_drop = item_scene.instance()
+			#var sub = item_scene.instance()
+			#$items.add_child(sub)
+		else:
+			item_to_drop = null
+		
+	if new_item_pos != null and item_p != null:
+		new_item_pos.global_transform = item_p.global_transform
+
+
+func _input(event):
+	if Input.is_action_pressed("ui_pick"):
+		if identity == 0 or 1:
+			identity +=1
+			if item_to_hold != null:
+				if item_pos.get(Network.get_player_name()).get_child(0):
+					get_parent().add_child(item_to_drop)
+					item_to_drop.global_transform = item_pos.get(Network.get_player_name()).global_transform
+					item_to_drop.pick = false
+					item_pos.get(Network.get_player_name()).get_child(0).queue_free()
+				item_visible.get(Network.get_player_name()).get_collider().queue_free()
+				item_to_hold.pick = true
+				item_pos.get(Network.get_player_name()).add_child(item_to_hold)
+				print(item_pos.get(Network.get_player_name()).global_transform)
+				rpc("set_item_pos")
+
+
+
+remote func set_item_pos():
+	var player_id = get_tree().get_rpc_sender_id()
+	var name = Network.names.get(player_id)
+	item_p = item_pos.get(name)
+	var source = item_scene.instance()
+	new_item_pos = Position2D.new()
+	print(item_p.global_transform)
+	print(new_item_pos.global_transform)
+	$items.add_child(new_item_pos)
+	new_item_pos.add_child(source)
+	source.pick = true
+	
+	
+	
+	
+	
+	
+	
+	
+#	var vector = Vector2(0,0)
+#	print(item_p)
+#	vector = item_p
+#	print(vector)
+#	$items.set_position(vector) 
+#	print(item_p)
+#	print($items.position)
+#	$items.add_child(source)
+	#item_pos.get

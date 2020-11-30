@@ -11,6 +11,7 @@ var item0 = preload("res://assets/maps/common/item/icon/item0.png")
 var item1 = preload("res://assets/maps/common/item/icon/item1.png")
 func _ready():
 	texture()
+	self.add_collision_exception_with(self)
 	pass
 	
 	

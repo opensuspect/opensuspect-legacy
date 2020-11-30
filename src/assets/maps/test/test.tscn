@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -7,12 +7,11 @@
 [ext_resource path="res://assets/maps/common/interactables/interactpoint/interactpoint.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/maps/common/elements/walls/wallhorizontal/wallhorizontal.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/maps/common/elements/walls/wallvertical/wallvertical.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/maps/common/item/item.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/opensusinteraction/resources/interact/interact.gd" type="Script" id=9]
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=10]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=11]
 
-[sub_resource type="Resource" id=10]
+[sub_resource type="Resource" id=1]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 10 )
@@ -21,7 +20,7 @@ interact_data = {
 
 }
 
-[sub_resource type="Resource" id=11]
+[sub_resource type="Resource" id=2]
 resource_local_to_scene = true
 script = ExtResource( 11 )
 ui_name = ""
@@ -34,10 +33,10 @@ advanced/reinstance = false
 resource_local_to_scene = true
 script = ExtResource( 9 )
 interact_type = 2
-ui_resource = SubResource( 11 )
-map_resource = SubResource( 10 )
+ui_resource = SubResource( 2 )
+map_resource = SubResource( 1 )
 
-[sub_resource type="Resource" id=12]
+[sub_resource type="Resource" id=4]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 10 )
@@ -46,7 +45,7 @@ interact_data = {
 
 }
 
-[sub_resource type="Resource" id=13]
+[sub_resource type="Resource" id=5]
 resource_local_to_scene = true
 script = ExtResource( 11 )
 ui_name = ""
@@ -59,10 +58,10 @@ advanced/reinstance = false
 resource_local_to_scene = true
 script = ExtResource( 9 )
 interact_type = 2
-ui_resource = SubResource( 13 )
-map_resource = SubResource( 12 )
+ui_resource = SubResource( 5 )
+map_resource = SubResource( 4 )
 
-[sub_resource type="Resource" id=14]
+[sub_resource type="Resource" id=7]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 10 )
@@ -71,7 +70,7 @@ interact_data = {
 
 }
 
-[sub_resource type="Resource" id=15]
+[sub_resource type="Resource" id=8]
 resource_local_to_scene = true
 script = ExtResource( 11 )
 ui_name = "chatbox"
@@ -84,8 +83,8 @@ advanced/reinstance = false
 resource_local_to_scene = true
 script = ExtResource( 9 )
 interact_type = 1
-ui_resource = SubResource( 15 )
-map_resource = SubResource( 14 )
+ui_resource = SubResource( 8 )
+map_resource = SubResource( 7 )
 
 [node name="test" type="YSort"]
 
@@ -278,12 +277,3 @@ scale = Vector2( 12, 3 )
 [node name="wallvertical" parent="walls/rightroom" instance=ExtResource( 7 )]
 position = Vector2( 600, 0 )
 scale = Vector2( 3, 19 )
-
-[node name="item" parent="." instance=ExtResource( 8 )]
-position = Vector2( 96, -64 )
-
-[node name="item2" parent="." instance=ExtResource( 8 )]
-position = Vector2( 144, 64 )
-
-[node name="item3" parent="." instance=ExtResource( 8 )]
-position = Vector2( 184, -72 )

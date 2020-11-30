@@ -6,6 +6,7 @@
 extents = Vector2( 8, 8 )
 
 [node name="item" type="RigidBody2D"]
+z_index = 9
 collision_layer = 1024
 collision_mask = 1024
 gravity_scale = 0.0

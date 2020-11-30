@@ -27,11 +27,11 @@ var face_right = true
 #keeps track of no. of time key is pressed
 var identify = 0 
 
-onready var reach = $Reach
-onready var item_position = $Reach/item_positon
-onready var item0 = preload("res://assets/maps/common/item/item.tscn")
-var item_to_hold
-var item_to_drop
+#onready var reach = $Reach
+#onready var item_position = $Reach/item_position
+#onready var item0 = preload("res://assets/maps/common/item/item.tscn")
+#var item_to_hold
+#var item_to_drop
 # The input number is incremented on each _physics_process call. GDScript's int
 # type is int64_t which is enough for thousands of years of gameplay
 var input_number: int = 0
@@ -183,38 +183,39 @@ func move_to(new_pos, new_movement):
 	position = new_pos
 	movement = new_movement
 	
-func _process(delta):
-	if reach.is_colliding():
-		item_to_hold = item0.instance()
-	else:
-		item_to_hold = null
-	
-	if item_position.get_child(0):
-		if item_position.get_child(0).item_name == "item":
-			item_to_drop = item0.instance()
-		else:
-			item_to_drop = null
-func _input(event):
-	if Input.is_action_just_pressed("ui_pick"):
-		if identify == 0 or 1:
-			identify +=1
-			if item_to_hold != null:
-				if item_position.get_child(0):
-					get_parent().add_child(item_to_drop)
-					item_to_drop.global_transform = item_position.global_transform
-					item_to_drop.pick = false
-					item_position.get_child(0).queue_free()
-				reach.get_collider().queue_free()
-				item_to_hold.pick = true
-				item_position.add_child(item_to_hold)
-
-	if Input.is_action_just_pressed("ui_pick"):
-		if identify == 2:
-			identify = 0
-			if item_to_drop != null:
-				if item_position.get_child(0):
-					get_parent().add_child(item_to_drop)
-					item_to_drop.global_transform = item_position.global_transform
-					item_to_drop.pick = false
-					item_position.get_child(0).queue_free()
+#func _process(delta):
+#	if reach.is_colliding():
+#		item_to_hold = item0.instance()
+#	else:
+#		item_to_hold = null
+#	
+#	if item_position.get_child(0):
+#		if item_position.get_child(0).item_name == "item":
+#			item_to_drop = item0.instance()
+#		else:
+#			item_to_drop = null
+#			
+#func _input(event):
+#	if Input.is_action_just_pressed("ui_pick"):
+#		if identify == 0 or 1:
+#			identify +=1
+#			if item_to_hold != null:
+#				if item_position.get_child(0):
+#					get_parent().add_child(item_to_drop)
+#					item_to_drop.global_transform = item_position.global_transform
+#					item_to_drop.pick = false
+#					item_position.get_child(0).queue_free()
+#				reach.get_collider().queue_free()
+#				item_to_hold.pick = true
+#				item_position.add_child(item_to_hold)
+#
+#	if Input.is_action_just_pressed("ui_pick"):
+#		if identify == 2:
+#			identify = 0
+#			if item_to_drop != null:
+#				if item_position.get_child(0):
+#					get_parent().add_child(item_to_drop)
+#					item_to_drop.global_transform = item_position.global_transform
+#					item_to_drop.pick = false
+#					item_position.get_child(0).queue_free()
 			#reach.get_collider().add_child()

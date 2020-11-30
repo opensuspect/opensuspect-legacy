@@ -12,10 +12,10 @@ color = Color( 0.188235, 0.164706, 0.164706, 1 )
 
 [node name="uicontroller" parent="." instance=ExtResource( 4 )]
 
-[node name="players" type="YSort" parent="."]
-
 [node name="maps" type="YSort" parent="."]
 script = ExtResource( 2 )
 
-[node name="items" type="YSort" parent="."]
+[node name="players" type="YSort" parent="."]
+
+[node name="items" type="Node2D" parent="."]
 [connection signal="spawn" from="maps" to="." method="_on_maps_spawn"]

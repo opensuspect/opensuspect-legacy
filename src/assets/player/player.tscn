@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/brown-suit.png" type="Texture" id=2]
@@ -38,15 +38,7 @@ radius = 12.0
 [sub_resource type="CanvasItemMaterial" id=6]
 light_mode = 2
 
-[sub_resource type="SpriteFrames" id=7]
-animations = [ {
-"frames": [  ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
-
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 resource_name = "h_move"
 length = 0.4
 loop = true
@@ -99,7 +91,7 @@ tracks/3/keys = {
 "values": [ 0.0, -30.0, 0.0, 30.0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("01-l-arm:rotation_degrees")
@@ -254,17 +246,16 @@ texture = ExtResource( 9 )
 texture = ExtResource( 6 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="spritecollection"]
-anims/h_move = SubResource( 8 )
-anims/idle = SubResource( 9 )
+anims/h_move = SubResource( 7 )
+anims/idle = SubResource( 8 )
 
 [node name="Reach" type="RayCast2D" parent="."]
 position = Vector2( 0, -1.90735e-06 )
-scale = Vector2( 1, 1 )
 enabled = true
 cast_to = Vector2( 30, 30 )
 collision_mask = 1024
 
-[node name="item_positon" type="Position2D" parent="Reach"]
+[node name="item_position" type="Position2D" parent="Reach"]
 position = Vector2( -5.6189, -8.99212 )
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]
