@@ -1,0 +1,17 @@
+[remap]
+
+importer="texture_atlas"
+type="Texture"
+path="res://.import/wall_window_narrow.png-0a9cf96433cd5bf99ebcb4a44d2e53a4.res"
+group_file="res://assets/maps/lobby/textures/lobby_atlas.png"
+valid=true
+[deps]
+
+
+source_file="res://assets/maps/lobby/textures/wall_window_narrow.png"
+dest_files=[ "res://.import/wall_window_narrow.png-0a9cf96433cd5bf99ebcb4a44d2e53a4.res" ]
+
+[params]
+
+atlas_file="res://assets/maps/lobby/textures/lobby_atlas.png"
+import_mode=0
