@@ -23,11 +23,12 @@ var playerColors: Dictionary = {enabledRoles[0]: Color(1,0,0),# traitor
 								enabledRoles[2]: Color(1,1,1)}# default
 var rng = RandomNumberGenerator.new()
 signal roles_assigned
-signal host_kill
+
 func _ready():
 	set_network_master(1)
 # warning-ignore:return_value_discarded
 	GameManager.connect("state_changed", self, "state_changed")
+
 func assigntasks():
 	for id in Network.peers:
 		taskstoassign = tasks

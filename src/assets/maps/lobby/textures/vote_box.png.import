@@ -1,0 +1,17 @@
+[remap]
+
+importer="texture_atlas"
+type="Texture"
+path="res://.import/vote_box.png-2b9c9c11dbf5ff37ffac222ec57dd856.res"
+group_file="res://assets/maps/lobby/textures/lobby_atlas.png"
+valid=true
+[deps]
+
+
+source_file="res://assets/maps/lobby/textures/vote_box.png"
+dest_files=[ "res://.import/vote_box.png-2b9c9c11dbf5ff37ffac222ec57dd856.res" ]
+
+[params]
+
+atlas_file="res://assets/maps/lobby/textures/lobby_atlas.png"
+import_mode=0

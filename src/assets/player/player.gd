@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
-onready var sprite: AnimatedSprite = $Sprite
+onready var skeleton: Node2D = $Skeleton
 
 signal main_player_moved(position)
 
@@ -37,8 +37,8 @@ var input_queue: Array = []
 func _ready():
 	# Set the sprite material for every player to be a duplicate of their
 	# initial material so that outlines may be modified independently.
-	sprite.set_material(sprite.material.duplicate())
-	PlayerManager.connect("host_kill",self,"on_host_kill")
+	#sprite.set_material(sprite.material.duplicate())
+	#TEMPORARIALLY DISABLED FOR GLASSES GUY
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
 	if main_player:
@@ -80,6 +80,7 @@ func _checkRole(role: String) -> void:
 			set_collision_layer_bit(2, true)
 			if has_node("Infiltrator"):
 				get_node("Infiltrator").queue_free()
+
 func changeNameColor(role: String):
 	match role:
 		"traitor":
@@ -141,11 +142,13 @@ func _physics_process(_delta):
 		if not face_right:
 			face_right = true
 			$spritecollection.scale.x = -$spritecollection.scale.x
+			skeleton.scale.x *= -1
 	elif movement.x < -x_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
 		if face_right:
 			face_right = false
 			$spritecollection.scale.x = -$spritecollection.scale.x
+			skeleton.scale.x *= -1
 	elif movement.y > y_anim_margin:
 		$spritecollection/AnimationPlayer.play("h_move")
 	elif movement.y < -y_anim_margin:

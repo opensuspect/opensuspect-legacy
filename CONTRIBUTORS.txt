@@ -17,15 +17,18 @@ Translations: GrbavaCigla
 Programming
 -----------
 Monban
-Moxvallix
 TheSecondReal0
 TheRyeGuyWhoWillNowDie
 Darshadi
+zapzoop0099
 GrbavaCigla
-Macmv
 NiceMicro
 Vainiovano
+Damjan94
+jngo102
 tooManyArguments
+Moxvallix
+Macmv
 Evolve2k
 Wandang
 Daniel071
@@ -40,16 +43,18 @@ Dleboulanger
 DimiKrik
 DanielKinsman
 1eldiego
+vincens2005
 
 Art
 ---
 Luke_Connor
 Moxvallix
-Zughy
 rand_0moide
 PRIME
 Gai_
 Orangemn6
+jngo102
+NiceMicro
 
 Game design
 -----------

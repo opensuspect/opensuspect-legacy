@@ -75,9 +75,9 @@ func _kill_player(player: KinematicBody2D) -> void:
 	"""
 	Kill the player who is currently the target.
 	"""
-	var target_sprite: AnimatedSprite = _target_player.get_node("Sprite")
-	target_sprite.material.set_shader_param("line_color", Color.transparent)
-	var kid = _target_player.id
+	#var target_sprite: AnimatedSprite = _target_player.get_node("Sprite")
+	#target_sprite.material.set_shader_param("line_color", Color.transparent)
+	emit_signal("kill", _target_player)
 	set_reloaded(false)
 	enable_killing(false)
 #	kill_cooldown_timer.start()
