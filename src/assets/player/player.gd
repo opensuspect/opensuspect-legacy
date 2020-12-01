@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
 onready var skeleton: Node2D = $Skeleton
+onready var animator: AnimationPlayer = skeleton.get_node("AnimationPlayer")
+onready var sprites_viewport: Viewport = $SpritesViewport
 
 signal main_player_moved(position)
 
@@ -35,6 +37,10 @@ var last_reveived_input: int = 0
 var input_queue: Array = []
 
 func _ready():
+	# Reparent Skeleton Node2D to SpritesViewport
+	remove_child(skeleton)
+	sprites_viewport.add_child(skeleton)
+	
 	# Set the sprite material for every player to be a duplicate of their
 	# initial material so that outlines may be modified independently.
 	#sprite.set_material(sprite.material.duplicate())
@@ -138,23 +144,21 @@ func _physics_process(_delta):
 
 	# We handle animations and stuff here
 	if movement.x > x_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
+		animator.play("h_move")
 		if not face_right:
 			face_right = true
-			$spritecollection.scale.x = -$spritecollection.scale.x
 			skeleton.scale.x *= -1
 	elif movement.x < -x_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
+		animator.play("h_move")
 		if face_right:
 			face_right = false
-			$spritecollection.scale.x = -$spritecollection.scale.x
 			skeleton.scale.x *= -1
 	elif movement.y > y_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
+		animator.play("h_move")
 	elif movement.y < -y_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
+		animator.play("h_move")
 	else:
-		$spritecollection/AnimationPlayer.play("idle", 0.2)
+		animator.play("idle", 0.2)
 
 # Only called on the main player. Rerolls the player's unreceived inputs on top
 # of the server's player position

@@ -75,8 +75,8 @@ func _kill_player(player: KinematicBody2D) -> void:
 	"""
 	Kill the player who is currently the target.
 	"""
-	#var target_sprite: AnimatedSprite = _target_player.get_node("Sprite")
-	#target_sprite.material.set_shader_param("line_color", Color.transparent)
+	var target_sprite: Sprite = _target_player.get_node("ViewportTextureTarget")
+	target_sprite.material.set_shader_param("line_color", Color.transparent)
 	emit_signal("kill", _target_player)
 	set_reloaded(false)
 	enable_killing(false)
@@ -96,8 +96,8 @@ func _get_target() -> void:
 			_target_player = player
 	if _target_player != null:
 		pass
-		#var target_sprite: AnimatedSprite = _target_player.get_node("Sprite")
-		#target_sprite.material.set_shader_param("line_color", Color.red)
+		var target_sprite: Sprite = _target_player.get_node("ViewportTextureTarget")
+		target_sprite.material.set_shader_param("line_color", Color.red)
 
 func _instantiate_kill_gui() -> void:
 	"""
@@ -124,9 +124,8 @@ func _on_KillArea_body_exited(body: Node) -> void:
 	Remove the outline from the body that exited the kill area.
 	"""
 	if player.main_player:
-		#var sprite: AnimatedSprite = body.get_node("Sprite")
-		#sprite.material.set_shader_param("line_color", Color.transparent)
-		pass
+		var target_sprite: Sprite = body.get_node("ViewportTextureTarget")
+		target_sprite.material.set_shader_param("line_color", Color.transparent)
 
 func _on_KillCooldownTimer_timeout() -> void:
 	"""
