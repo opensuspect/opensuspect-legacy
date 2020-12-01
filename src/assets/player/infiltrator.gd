@@ -17,6 +17,7 @@ onready var player: KinematicBody2D = get_parent()
 signal kill(player)
 
 # Whether reloading may be cancelled or not
+export(Resource) var ui_interact_resource
 export (bool) var can_cancel_reload := true
 # Whether the infiltrator may kill or not
 var _killing_enabled: bool = true setget enable_killing, is_killing_enabled
@@ -103,7 +104,7 @@ func _instantiate_kill_gui() -> void:
 	"""
 	Add kill UI to the infiltrator's HUD
 	"""
-	ui_controller.open_menu("killui", {"linked_node": self, "rect_position": Vector2(850, 500)}, true)
+	ui_interact_resource.interact(self, {"linked_node": self, "rect_position": Vector2(850, 500)})
 
 func _reload() -> void:
 	"""

@@ -4,6 +4,10 @@ var ui_list: Dictionary = UIManager.ui_list
 
 var instanced_uis: Dictionary = {}
 
+var shown_uis: Dictionary = {}
+
+var floating_uis: Dictionary = {}
+
 onready var config = ConfigFile.new()
 
 func _ready():
@@ -16,9 +20,7 @@ func _ready():
 # warning-ignore:return_value_discarded
 	UIManager.connect("instance_ui", self, "instance_ui")
 # warning-ignore:return_value_discarded
-	UIManager.connect("show_ui", self, "show_ui")
-# warning-ignore:return_value_discarded
-	UIManager.connect("hide_ui", self, "hide_ui")
+	UIManager.connect("free_ui", self, "free_ui")
 	var err = config.load("user://settings.cfg")
 	if err == OK:
 		$ColorblindRect.material.set_shader_param(
@@ -59,7 +61,7 @@ func close_ui(ui_name: String, free: bool = false):
 	if current_ui.has_method("close"):
 		current_ui.close()
 	if free:
-		current_ui.queue_free()
+		current_ui.free_ui(ui_name)
 
 func instance_ui(ui_name: String, ui_data: Dictionary = {}):
 	update_instanced_uis()
@@ -68,21 +70,21 @@ func instance_ui(ui_name: String, ui_data: Dictionary = {}):
 	var new_ui = ui_list[ui_name].scene.instance()
 	if ui_data != {} and new_ui.get("ui_data") != null:
 		new_ui.ui_data = ui_data
+	new_ui.name = ui_name
 	instanced_uis[ui_name] = new_ui
 	add_child(new_ui)
 
-func show_ui(ui_name: String, ui_data: Dictionary = {}, reinstance: bool = false):
-	update_instanced_uis()
-	pass
-
-func hide_ui(ui_name: String, free: bool = false):
-	update_instanced_uis()
+func free_ui(ui_name: String):
 	var current_ui = get_ui(ui_name)
-	if free:
-		current_ui.queue_free()
+	if current_ui == null:
+		return
+	current_ui.queue_free()
 
 func get_ui(ui_name: String):
 	update_instanced_uis()
+	if not instanced_uis.has(ui_name):
+		push_error("trying to get a ui node that doesn't exist")
+		return null
 	return instanced_uis[ui_name]
 
 func update_instanced_uis() -> void:
@@ -93,7 +95,7 @@ func update_instanced_uis() -> void:
 			temp_instanced_uis.erase(i)
 			child_nodes.erase(i)
 	for i in child_nodes:
-		push_error("UI element instanced incorrectly, use instance_ui() instead")
+		push_error("UI element " + i + " instanced incorrectly, use instance_ui() instead")
 		temp_instanced_uis[i] = get_node(i)
 	instanced_uis = temp_instanced_uis
 

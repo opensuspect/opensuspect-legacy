@@ -10,16 +10,18 @@ onready var infiltrator: Node2D
 onready var sprite: AnimatedSprite = $KillSprite
 
 # Loaded with data from call to open_menu function in UIManager
-var menuData: Dictionary = {}
+var ui_data: Dictionary = {}
 
 func _ready() -> void:
-	if menuData.keys().has("linked_node"):
-		infiltrator = menuData["linked_node"]
+	print("killui ", ui_data)
+	show()
+	if ui_data.keys().has("linked_node"):
+		infiltrator = ui_data["linked_node"]
 		infiltrator.connect("tree_exited", self, "_on_Infiltrator_tree_exited")
 		animator = infiltrator.get_node("Animator")
 		kill_cooldown_timer = infiltrator.get_node("KillCooldownTimer")
-	if menuData.keys().has("rect_position"):
-		rect_position = menuData["rect_position"]
+	if ui_data.keys().has("rect_position"):
+		rect_position = ui_data["rect_position"]
 
 func _process(_delta: float) -> void:
 #	if kill_cooldown_timer != null and not kill_cooldown_timer.is_stopped():

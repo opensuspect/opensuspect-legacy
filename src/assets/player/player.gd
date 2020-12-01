@@ -110,7 +110,7 @@ func set_movement_disabled(movement_disabled: bool) -> void:
 # Only called when main_player is true
 func get_input():
 	movement = Vector2(0, 0)
-	if not UIManager.in_menu() and not is_movement_disabled():
+	if not UIManager.in_ui() and not is_movement_disabled():
 		movement.x = Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left')
 		movement.y = Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
 		movement = movement.normalized()

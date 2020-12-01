@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -30,6 +30,7 @@ ui_data = {
 
 }
 advanced/reinstance = false
+advanced/only_instance = false
 
 [sub_resource type="Resource" id=3]
 resource_local_to_scene = true
@@ -48,6 +49,7 @@ ui_data = {
 
 }
 advanced/reinstance = false
+advanced/only_instance = false
 
 [sub_resource type="Resource" id=5]
 resource_local_to_scene = true
@@ -76,6 +78,7 @@ ui_data = {
 
 }
 advanced/reinstance = false
+advanced/only_instance = false
 
 [sub_resource type="Resource" id=8]
 resource_local_to_scene = true
@@ -94,6 +97,7 @@ ui_data = {
 
 }
 advanced/reinstance = false
+advanced/only_instance = false
 
 [sub_resource type="Resource" id=10]
 resource_local_to_scene = true
@@ -103,6 +107,16 @@ interact_type = 2
 task_resource = SubResource( 8 )
 ui_resource = SubResource( 9 )
 map_resource = SubResource( 6 )
+
+[sub_resource type="Resource" id=20]
+resource_local_to_scene = true
+script = ExtResource( 11 )
+ui_name = "clockset"
+ui_data = {
+
+}
+advanced/reinstance = false
+advanced/only_instance = false
 
 [sub_resource type="Resource" id=11]
 resource_local_to_scene = true
@@ -121,6 +135,7 @@ ui_data = {
 
 }
 advanced/reinstance = false
+advanced/only_instance = false
 
 [sub_resource type="Resource" id=13]
 resource_local_to_scene = true
@@ -138,6 +153,7 @@ ui_data = {
 
 }
 advanced/reinstance = false
+advanced/only_instance = false
 
 [sub_resource type="Resource" id=15]
 resource_local_to_scene = true
@@ -171,6 +187,7 @@ ui_data = {
 
 }
 advanced/reinstance = false
+advanced/only_instance = false
 
 [sub_resource type="Resource" id=19]
 resource_local_to_scene = true
@@ -239,6 +256,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+interact_resource = SubResource( 20 )
 
 [node name="interactpoint" parent="." instance=ExtResource( 5 )]
 position = Vector2( -450, 0 )
