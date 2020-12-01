@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/kill_icon_mask.png-08019125089a92920c9523c4195baebf.res"
+
+[deps]
+
+source_file="res://assets/ui/hud/infiltratorui/kill_icon_mask.png"
+dest_files=[ "res://.import/kill_icon_mask.png-08019125089a92920c9523c4195baebf.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5

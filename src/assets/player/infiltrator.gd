@@ -32,20 +32,19 @@ func _ready() -> void:
 		_instantiate_kill_gui()
 
 func _process(delta: float) -> void:
-	if is_killing_enabled() and player.main_player:
-		_get_target()
-
-func _input(event: InputEvent) -> void:
 	if player.main_player:
-		if is_reloaded() and is_killing_enabled() and event.is_action_pressed("kill") and \
+		if is_reloaded() and is_killing_enabled() and Input.is_action_just_pressed("kill") and \
 		   len(kill_area.get_overlapping_bodies()) > 0:
 			_kill_player(_target_player)
-		elif event.is_action_pressed("reload"):
+		elif Input.is_action_just_pressed("reload"):
 			if animator.current_animation == "Reload":
 				if can_cancel_reload:
 					_cancel_reload()
 			elif not is_reloaded():
 				_reload()
+
+	if is_killing_enabled() and player.main_player:
+		_get_target()
 
 func is_killing_enabled() -> bool:
 	"""
@@ -103,7 +102,9 @@ func _instantiate_kill_gui() -> void:
 	"""
 	Add kill UI to the infiltrator's HUD
 	"""
-	ui_controller.open_menu("killui", {"linked_node": self, "rect_position": Vector2(850, 500)}, true)
+	var viewport_size : Vector2 = get_viewport().get_visible_rect().size
+	var kill_ui_position := Vector2(viewport_size.x * 0.6, viewport_size.y * 0.75)
+	ui_controller.open_menu("killui", {"linked_node": self, "rect_position": kill_ui_position}, true)
 
 func _reload() -> void:
 	"""
