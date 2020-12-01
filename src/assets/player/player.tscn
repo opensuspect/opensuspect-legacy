@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/brown-suit.png" type="Texture" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://assets/player/textures/characters/customizable/11-hat-hair/red-hair-bob.png" type="Texture" id=24]
 [ext_resource path="res://assets/player/textures/characters/customizable/09-facial-hair/red-eyebrow-sideburn.png" type="Texture" id=25]
 [ext_resource path="res://assets/player/textures/characters/customizable/10-face-wear/glasses.png" type="Texture" id=26]
+[ext_resource path="res://assets/player/camera.gd" type="Script" id=27]
 
 [sub_resource type="ShaderMaterial" id=1]
 render_priority = 1
@@ -980,6 +981,7 @@ drag_margin_left = 0.65
 drag_margin_top = 0.65
 drag_margin_right = 0.65
 drag_margin_bottom = 0.65
+script = ExtResource( 27 )
 
 [node name="Label" type="Label" parent="."]
 material = SubResource( 6 )
