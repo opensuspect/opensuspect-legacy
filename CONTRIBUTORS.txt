@@ -9,7 +9,7 @@ w4e
 Team leaders
 ------------
 Programming: Monban
-Art: Luke_Connor
+Art: Bestonecrazy + Moxvallix
 Game Design: Gobbel
 Branding: TheRyeGuyWhoWillNowDie
 Translations: GrbavaCigla
@@ -70,3 +70,7 @@ Daniel071
 Botatokde
 Darshadi
 w4e
+
+Hall Of Fame:
+-------------
+Luke Connor - Previous art team leader
