@@ -1,0 +1,17 @@
+[remap]
+
+importer="texture_atlas"
+type="Texture"
+path="res://.import/newspaper.png-cdfe408544f687b6bbc5525a21cd20fb.res"
+group_file="res://assets/maps/lobby/textures/lobby_atlas.png"
+valid=true
+[deps]
+
+
+source_file="res://assets/maps/lobby/textures/newspaper.png"
+dest_files=[ "res://.import/newspaper.png-cdfe408544f687b6bbc5525a21cd20fb.res" ]
+
+[params]
+
+atlas_file="res://assets/maps/lobby/textures/lobby_atlas.png"
+import_mode=0

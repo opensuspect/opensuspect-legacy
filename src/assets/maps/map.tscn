@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="Map" type="Node2D"]
+
+[node name="PlayerSpawnpoints" type="Node2D" parent="."]
+
+[node name="Props" type="Node2D" parent="."]
+
+[node name="Interactive" type="Node2D" parent="."]
+
+[node name="Ground" type="Node2D" parent="."]
+
+[node name="GroundTiles" type="TileMap" parent="Ground"]
+format = 1
