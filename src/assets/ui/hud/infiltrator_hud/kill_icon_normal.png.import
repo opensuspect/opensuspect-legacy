@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/kill_icon.png-c318cf949f43a98097a4ff73df1f8a56.stex"
+path="res://.import/kill_icon_normal.png-f68e3393814c47427e197fcbfdcb8029.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/hud/infiltratorui/kill_icon.png"
-dest_files=[ "res://.import/kill_icon.png-c318cf949f43a98097a4ff73df1f8a56.stex" ]
+source_file="res://assets/ui/hud/infiltrator_hud/kill_icon_normal.png"
+dest_files=[ "res://.import/kill_icon_normal.png-f68e3393814c47427e197fcbfdcb8029.stex" ]
 
 [params]
 

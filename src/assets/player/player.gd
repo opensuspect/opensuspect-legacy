@@ -1,8 +1,10 @@
 extends KinematicBody2D
 
+onready var death_handler: Node2D = $DeathHandler
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
 onready var skeleton: Node2D = $Skeleton
-onready var animator: AnimationPlayer = skeleton.get_node("AnimationPlayer")
+onready var animation_tree: AnimationTree = skeleton.get_node("AnimationPlayer/AnimationTree")
+onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
 onready var sprites_viewport: Viewport = $SpritesViewport
 
 signal main_player_moved(position)
@@ -25,12 +27,14 @@ var x_anim_margin = 0.00
 var y_anim_margin = 0.00
 #whether the character faces in the right direction
 var face_right = true
+# The blend between the idle and move animations in the player's animation tree
+var idle_move_blend: Vector2
 
 # The input number is incremented on each _physics_process call. GDScript's int
 # type is int64_t which is enough for thousands of years of gameplay
 var input_number: int = 0
 # Contains the last input number that the server has received
-var last_reveived_input: int = 0
+var last_received_input: int = 0
 # Contains the movement values for unreceived inputs and matching previous
 # velocities for movement prediciton. The values are stored as Arrays of
 # movement and previous velocity.
@@ -71,9 +75,7 @@ func roles_assigned(playerRoles: Dictionary):
 	_checkRole(myRole)
 
 func _checkRole(role: String) -> void:
-	"""
-	Performs certain functions depending on the passed in role parameter.
-	"""
+	"""Performs certain functions depending on the passed in role parameter."""
 	match role:
 		"traitor":
 			set_collision_layer_bit(3, true)
@@ -102,15 +104,11 @@ func setNameColor(newColor: Color):
 	$Label.set("custom_colors/font_color", newColor)
 
 func is_movement_disabled() -> bool:
-	"""
-	Returns whether player movement is disabled or not.
-	"""
+	"""Returns whether player movement is disabled or not."""
 	return _movement_disabled
 
 func set_movement_disabled(movement_disabled: bool) -> void:
-	"""
-	Set whether player movement should be disabled.
-	"""
+	"""Set whether player movement should be disabled."""
 	_movement_disabled = movement_disabled
 
 # Only called when main_player is true
@@ -120,6 +118,14 @@ func get_input():
 		movement.x = Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left')
 		movement.y = Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
 		movement = movement.normalized()
+
+func animate() -> void:
+	"""
+	Set the blend between the idle and move animations in the animation tree's 
+	root state machine based on the player's current velocity.
+	"""
+	var blend_position := Vector2(0, velocity.length() / speed)
+	animation_tree.set("parameters/idle_move_blend/blend_position", blend_position)
 
 func run_physics(motion):
 	var prev_velocity = velocity
@@ -143,22 +149,15 @@ func _physics_process(_delta):
 		run_physics(movement)
 
 	# We handle animations and stuff here
+	animate()
 	if movement.x > x_anim_margin:
-		animator.play("h_move")
 		if not face_right:
 			face_right = true
 			skeleton.scale.x *= -1
 	elif movement.x < -x_anim_margin:
-		animator.play("h_move")
 		if face_right:
 			face_right = false
 			skeleton.scale.x *= -1
-	elif movement.y > y_anim_margin:
-		animator.play("h_move")
-	elif movement.y < -y_anim_margin:
-		animator.play("h_move")
-	else:
-		animator.play("idle", 0.2)
 
 # Only called on the main player. Rerolls the player's unreceived inputs on top
 # of the server's player position
@@ -167,9 +166,9 @@ func _on_positions_updated(new_last_received_input: int):
 		# The map has probably changed when this happens
 		return
 	# Remove received inputs from the queue
-	for _i in range(new_last_received_input - last_reveived_input):
+	for _i in range(new_last_received_input - last_received_input):
 		input_queue.pop_front()
-	last_reveived_input = new_last_received_input
+	last_received_input = new_last_received_input
 	# Set the initial velocity to predict velocity slowdown correctly
 	if input_queue.size() >= 1:
 		velocity = input_queue[0][1]
@@ -178,5 +177,8 @@ func _on_positions_updated(new_last_received_input: int):
 		run_physics(i[0])
 
 func move_to(new_pos, new_movement):
+	# Calculate the velocity for non-main players.
+	# new_pos - position maxes out at +/-2.5 for some reason, so divide by that.
+	velocity = (new_pos - position) * (speed / 2.5)
 	position = new_pos
 	movement = new_movement

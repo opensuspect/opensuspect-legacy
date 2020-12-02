@@ -52,7 +52,7 @@ func client(hostName: String, port: int, playerName: String) -> void:
 	if (_error):
 		print("Error when connecting to server: ", _error)
 		get_tree().quit()
-		
+
 	get_tree().set_network_peer(client)
 	connect_signals()
 	#do not switch to main scene here, wait until the connection was successful
@@ -112,7 +112,7 @@ func _process(_delta) -> void:
 
 func toss(_newValue) -> void:
 	pass
-	
+
 func deny() -> void:
 	pass
 
@@ -170,6 +170,16 @@ func get_player_name(id: int = myID) -> String:
 
 func get_peers() -> Array:
 	return peers
+
+func get_rpc_id_from_player_name(player_name: String) -> int:
+	"""Fetch a player's RPC ID from their name. Expensive to call."""
+	var main: YSort = get_tree().get_root().find_node("Main", true, false)
+	var players_dict: Dictionary = main.players
+	var players: Array = players_dict.values()
+	for index in range(players_dict.size()):
+		if players[index].name == player_name:
+			return players_dict.keys()[index]
+	return -1
 
 # warning-ignore:unused_argument
 func _on_state_changed(old_state, new_state) -> void:

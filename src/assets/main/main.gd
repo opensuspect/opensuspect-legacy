@@ -141,3 +141,35 @@ master func _on_maps_spawn(spawnPositions: Array):
 			spawnPointDict[players.keys()[i]] = spawn_pos
 	#spawn players
 	rpc("createPlayers", Network.get_player_names(), spawnPointDict)
+
+func _on_infiltrator_kill(killer: KinematicBody2D, killed_player: KinematicBody2D) -> void:
+	"""
+	Runs on the infiltrator's Main scene; sends an RPC to the server to indicate
+	that the infiltrator has killed a player.
+	"""
+	var killer_id: int = Network.get_rpc_id_from_player_name(killer.name)
+	var killed_player_id: int = Network.get_rpc_id_from_player_name(killed_player.name)
+	if not players.keys().has(killer_id) or not players.keys().has(killed_player_id):
+		return
+	if get_tree().is_network_server():
+		# Killer is the network server
+		infiltrator_killed_player(killer_id, killed_player_id)
+	else:
+		rpc_id(1, "infiltrator_killed_player", killer_id, killed_player_id)
+
+remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> void:
+	"""
+	Runs on the server; sends an RPC to every player to indicate that a
+	particular player has been killed.
+	"""
+	for player_id in players.keys():
+		if players[player_id].main_player:
+			# Can't RPC on self
+			player_killed(killer_id, killed_player_id)
+		else:
+			rpc_id(player_id, "player_killed", killer_id, killed_player_id)
+
+remote func player_killed(killer_id: int, killed_player_id: int) -> void:
+	"""Runs on a client; responsible for actually killing off a player."""
+	var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
+	killed_player_death_handler.die_by(killer_id)
