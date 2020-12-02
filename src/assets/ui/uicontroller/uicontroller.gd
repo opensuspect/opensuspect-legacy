@@ -4,10 +4,6 @@ var ui_list: Dictionary = UIManager.ui_list
 
 var instanced_uis: Dictionary = {}
 
-var shown_uis: Dictionary = {}
-
-var floating_uis: Dictionary = {}
-
 onready var config = ConfigFile.new()
 
 func _ready():

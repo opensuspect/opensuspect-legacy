@@ -13,8 +13,6 @@ onready var sprite: AnimatedSprite = $KillSprite
 var ui_data: Dictionary = {}
 
 func _ready() -> void:
-	print("killui ", ui_data)
-	show()
 	if ui_data.keys().has("linked_node"):
 		infiltrator = ui_data["linked_node"]
 		infiltrator.connect("tree_exited", self, "_on_Infiltrator_tree_exited")
