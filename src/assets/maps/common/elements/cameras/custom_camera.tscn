@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/maps/common/elements/cameras/custom_camera.gd" type="Script" id=1]
+
+[node name="CustomCamera" type="Camera2D"]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+editor_draw_limits = true
+editor_draw_drag_margin = true
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": "Custom camera that follows the main player and stays within the limits set by its child Position2D nodes."
+}
+
+[node name="LimitMin" type="Position2D" parent="."]
+__meta__ = {
+"_editor_description_": "The minimum x and y of the custom camera's upper left corner."
+}
+
+[node name="LimitMax" type="Position2D" parent="."]
+__meta__ = {
+"_editor_description_": "The maximum x and y of the custom camera's lower right corner."
+}

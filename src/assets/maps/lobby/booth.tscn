@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/maps/lobby/table.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/maps/lobby/seat.tscn" type="PackedScene" id=2]
+
+[node name="Booth" type="Node2D"]
+
+[node name="SeatRight" parent="." instance=ExtResource( 2 )]
+position = Vector2( 775, -376.906 )
+
+[node name="SeatLeft" parent="." instance=ExtResource( 2 )]
+position = Vector2( -775, -376.906 )
+scale = Vector2( -1, 1 )
+
+[node name="Table" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, -376.906 )
