@@ -106,8 +106,7 @@ func _get_target() -> void:
 func _instantiate_kill_gui() -> void:
 	"""Add kill UI to the infiltrator's HUD."""
 	var viewport_size : Vector2 = get_viewport().get_visible_rect().size
-	var kill_ui_position := Vector2(viewport_size.x * 0.75, viewport_size.y * 0.75)
-	ui_controller.open_menu("killui", {"linked_node": self, "rect_position": kill_ui_position}, true)
+	ui_controller.open_menu("killui", {"linked_node": self}, true)
 
 func _reload() -> void:
 	"""Reload the infiltrator's weapon and freeze the parent player node."""

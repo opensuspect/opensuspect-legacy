@@ -1,7 +1,6 @@
 [gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
-[ext_resource path="res://assets/player/viewport_texture_target.gd" type="Script" id=2]
 [ext_resource path="res://assets/player/death_handler.gd" type="Script" id=3]
 [ext_resource path="res://assets/player/textures/characters/customizable/05-pants/white-shirt-red-sweater.png" type="Texture" id=13]
 [ext_resource path="res://assets/player/textures/characters/customizable/07-clothes/white-shirt-red-sweater.png" type="Texture" id=14]
@@ -1606,6 +1605,7 @@ start_node = "idle_move_blend"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=18]
 
 [sub_resource type="ShaderMaterial" id=19]
+resource_local_to_scene = true
 shader = ExtResource( 17 )
 shader_param/line_color = Color( 1, 1, 1, 0 )
 shader_param/line_thickness = 5.0
@@ -2000,7 +2000,6 @@ material = SubResource( 19 )
 position = Vector2( 0, -20 )
 scale = Vector2( 0.25, 0.25 )
 texture = SubResource( 20 )
-script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": "The Sprite that the viewport tex ture of SpritesViewport will be rendered to."
 }

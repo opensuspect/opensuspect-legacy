@@ -23,8 +23,6 @@ func _ready() -> void:
 		animator = infiltrator.get_node("Animator")
 		animator.connect("animation_finished", self, "_on_Infiltrator_Animator_animation_finished")
 		kill_cooldown_timer = infiltrator.get_node("KillCooldownTimer")
-	if menuData.keys().has("rect_position"):
-		rect_position = menuData["rect_position"]
 
 func _process(_delta: float) -> void:
 #	if kill_cooldown_timer != null and not kill_cooldown_timer.is_stopped():

@@ -171,13 +171,12 @@ func get_player_name(id: int = myID) -> String:
 func get_peers() -> Array:
 	return peers
 
-func get_rpc_id_from_player_name(player_name: String) -> int:
-	"""Fetch a player's RPC ID from their name. Expensive to call."""
-	var main: YSort = get_tree().get_root().find_node("Main", true, false)
-	var players_dict: Dictionary = main.players
-	var players: Array = players_dict.values()
-	for index in range(players_dict.size()):
-		if players[index].name == player_name:
+func get_network_id_from_player_node_name(node_name: String) -> int:
+	"""Fetch a player's network ID from the name of their KinematicBody2D."""
+	var players_dict: Dictionary = PlayerManager.players
+	var players_array: Array = players_dict.values()
+	for index in range(len(players_array)):
+		if players_array[index].name == node_name:
 			return players_dict.keys()[index]
 	return -1
 

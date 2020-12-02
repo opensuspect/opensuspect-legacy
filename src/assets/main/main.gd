@@ -69,11 +69,11 @@ puppet func receiveNumber(number: int) -> void:
 func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects
 	players.erase(id)
+	PlayerManager.players.erase(id)
 
 #idNameDict should look like {<network ID>: <player name>}
 puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary = {}) -> void:
 	deletePlayers()
-	print(spawnPointDict)
 	for i in idNameDict.keys():
 		if spawnPointDict.keys().has(i):
 			#spawn at spawn point
@@ -81,6 +81,8 @@ puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary
 		else:
 			#else spawn at default spawn
 			createPlayer(i, idNameDict[i], spawn_pos)
+	# Assign Main's players to the PlayerManager singleton so they may be accessed anywhere
+	PlayerManager.players = players
 
 puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = Vector2(0,0)) -> void:
 	print("creating player ", id)
@@ -104,6 +106,7 @@ func deletePlayers() -> void:
 	for i in players.keys():
 		players[i].queue_free()
 	players.clear()
+	PlayerManager.players.clear()
 
 # Called from client side to tell the server about the player's actions
 remote func player_moved(new_movement: Vector2, velocity: Vector2, last_input: int) -> void:
@@ -149,8 +152,8 @@ func _on_infiltrator_kill(killer: KinematicBody2D, killed_player: KinematicBody2
 	Runs on the infiltrator's Main scene; sends an RPC to the server to indicate
 	that the infiltrator has killed a player.
 	"""
-	var killer_id: int = Network.get_rpc_id_from_player_name(killer.name)
-	var killed_player_id: int = Network.get_rpc_id_from_player_name(killed_player.name)
+	var killer_id: int = Network.get_network_id_from_player_node_name(killer.name)
+	var killed_player_id: int = Network.get_network_id_from_player_node_name(killed_player.name)
 	if not players.keys().has(killer_id) or not players.keys().has(killed_player_id):
 		return
 	if get_tree().is_network_server():
@@ -164,6 +167,9 @@ remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> 
 	Runs on the server; sends an RPC to every player to indicate that a
 	particular player has been killed.
 	"""
+	if not get_tree().is_network_server():
+		return
+
 	for player_id in players.keys():
 		if players[player_id].main_player:
 			# Can't RPC on self
@@ -171,7 +177,7 @@ remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> 
 		else:
 			rpc_id(player_id, "player_killed", killer_id, killed_player_id)
 
-remote func player_killed(killer_id: int, killed_player_id: int) -> void:
+puppet func player_killed(killer_id: int, killed_player_id: int) -> void:
 	"""Runs on a client; responsible for actually killing off a player."""
 	var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
 	killed_player_death_handler.die_by(killer_id)
