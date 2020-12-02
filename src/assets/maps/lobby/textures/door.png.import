@@ -1,0 +1,17 @@
+[remap]
+
+importer="texture_atlas"
+type="Texture"
+path="res://.import/door.png-96f6b77e672e79e3e64d55be5d722842.res"
+group_file="res://assets/maps/lobby/textures/lobby_atlas.png"
+valid=true
+[deps]
+
+
+source_file="res://assets/maps/lobby/textures/door.png"
+dest_files=[ "res://.import/door.png-96f6b77e672e79e3e64d55be5d722842.res" ]
+
+[params]
+
+atlas_file="res://assets/maps/lobby/textures/lobby_atlas.png"
+import_mode=0

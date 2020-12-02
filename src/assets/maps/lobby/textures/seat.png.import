@@ -1,0 +1,17 @@
+[remap]
+
+importer="texture_atlas"
+type="Texture"
+path="res://.import/seat.png-e34bdd40858f439f0f53dcbafb907f4c.res"
+group_file="res://assets/maps/lobby/textures/lobby_atlas.png"
+valid=true
+[deps]
+
+
+source_file="res://assets/maps/lobby/textures/seat.png"
+dest_files=[ "res://.import/seat.png-e34bdd40858f439f0f53dcbafb907f4c.res" ]
+
+[params]
+
+atlas_file="res://assets/maps/lobby/textures/lobby_atlas.png"
+import_mode=0
