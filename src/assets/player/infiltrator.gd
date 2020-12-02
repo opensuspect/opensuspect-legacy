@@ -92,6 +92,8 @@ func _get_target() -> void:
 	var distance: float = INF
 	_target_player = null
 	for player in kill_area.get_overlapping_bodies():
+		var sprite: Sprite = player.get_node("ViewportTextureTarget")
+		sprite.material.set_shader_param("line_color", Color.transparent)
 		if not player.get_node("DeathHandler").is_dead:
 			var temp_distance: float = (player.global_position - global_position).length()
 			if temp_distance < distance:

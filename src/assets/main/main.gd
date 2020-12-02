@@ -15,11 +15,11 @@ var spawn_pos = Vector2(0,0)
 
 signal positions_updated(last_received_input)
 
-func _ready():
+func _ready() -> void:
 	set_network_master(1)
 
 # Gets called when the title scene sets this scene as the main scene
-func _enter_tree():
+func _enter_tree() -> void:
 	if Network.connection == Network.Connection.CLIENT_SERVER:
 # warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -32,16 +32,16 @@ func _enter_tree():
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 
 # Keep the clients' player positions updated
-func _physics_process(_delta):
+func _physics_process(_delta: float) -> void:
 	if get_tree().is_network_server():
 		var positions_dict = {}
 		for id in players.keys():
-			positions_dict[id] = [players[id].position, players[id].movement]
+			positions_dict[id] = [players[id].position, players[id].movement, players[id].velocity]
 		for id in players.keys():
 			if id != 1:
 				rpc_id(id, "update_positions", positions_dict, players[id].input_number)
 
-func connection_handled(id, playerName):
+func connection_handled(id: int, playerName: String) -> void:
 	print("connection handled, id: ", id, " name: ", playerName)
 	if not get_tree().is_network_server():
 		return
@@ -57,11 +57,11 @@ func connection_handled(id, playerName):
 	print("telling ", id, " to create players")
 	rpc_id(id, "createPlayers", Network.get_player_names())
 
-puppet func checkVersion(sversion):
+puppet func checkVersion(sversion: int) -> void:
 	if version != sversion:
 		print("HEY! YOU! YOU FORGOT TO UPDATE YOUR CLIENT. RE EXPORT AND TRY AGAIN!")
 
-puppet func receiveNumber(number):
+puppet func receiveNumber(number: int) -> void:
 	if get_tree().get_rpc_sender_id() != 1:
 		return
 	PlayerManager.ournumber = number
@@ -71,8 +71,9 @@ func _player_disconnected(id):
 	players.erase(id)
 
 #idNameDict should look like {<network ID>: <player name>}
-puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary = {}):
+puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary = {}) -> void:
 	deletePlayers()
+	print(spawnPointDict)
 	for i in idNameDict.keys():
 		if spawnPointDict.keys().has(i):
 			#spawn at spawn point
@@ -81,7 +82,7 @@ puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary
 			#else spawn at default spawn
 			createPlayer(i, idNameDict[i], spawn_pos)
 
-puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = Vector2(0,0)):
+puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = Vector2(0,0)) -> void:
 	print("creating player ", id)
 	if players.keys().has(id):
 		print("not creating player, already exists")
@@ -99,13 +100,13 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 	newPlayer.move_to(spawnPoint, Vector2(0,0))
 	print("New player: ", id)
 
-func deletePlayers():
+func deletePlayers() -> void:
 	for i in players.keys():
 		players[i].queue_free()
 	players.clear()
 
 # Called from client side to tell the server about the player's actions
-remote func player_moved(new_movement, last_input):
+remote func player_moved(new_movement: Vector2, velocity: Vector2, last_input: int) -> void:
 	# Should only be run on the server
 	if !get_tree().is_network_server():
 		return
@@ -119,15 +120,16 @@ remote func player_moved(new_movement, last_input):
 	players[id].input_number = last_input
 
 # Called from server when the server's players move
-puppet func update_positions(positions_dict, last_received_input):
+puppet func update_positions(positions_dict: Dictionary, last_received_input: int) -> void:
 	for id in positions_dict.keys():
 		if players.keys().has(id):
 			players[id].move_to(positions_dict[id][0], positions_dict[id][1])
+			players[id].velocity = positions_dict[id][2]
 	emit_signal("positions_updated", last_received_input)
 
-func _on_main_player_moved(movement : Vector2, last_input : int):
+func _on_main_player_moved(movement: Vector2, velocity: Vector2, last_input: int):
 	if not get_tree().is_network_server():
-		rpc_id(1, "player_moved", movement, last_input)
+		rpc_id(1, "player_moved", movement, velocity, last_input)
 
 master func _on_maps_spawn(spawnPositions: Array):
 	if not get_tree().is_network_server():

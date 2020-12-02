@@ -7,7 +7,7 @@ onready var animation_tree: AnimationTree = skeleton.get_node("AnimationPlayer/A
 onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
 onready var sprites_viewport: Viewport = $SpritesViewport
 
-signal main_player_moved(position)
+signal main_player_moved(position, velocity, input_number)
 
 export (int) var speed = 150
 
@@ -119,12 +119,12 @@ func get_input():
 		movement.y = Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
 		movement = movement.normalized()
 
-func animate() -> void:
+func animate(current_velocity: Vector2) -> void:
 	"""
 	Set the blend between the idle and move animations in the animation tree's 
 	root state machine based on the player's current velocity.
 	"""
-	var blend_position := Vector2(0, velocity.length() / speed)
+	var blend_position := Vector2(0, current_velocity.length() / speed)
 	animation_tree.set("parameters/idle_move_blend/blend_position", blend_position)
 
 func run_physics(motion):
@@ -143,13 +143,13 @@ func _physics_process(_delta):
 		get_input()
 		input_number += 1
 		input_queue.push_back([movement, velocity])
-		emit_signal("main_player_moved", movement, input_number)
+		emit_signal("main_player_moved", movement, velocity, input_number)
 	# Remove this if check to get bad movement extrapolation for all players
 	if main_player or get_tree().is_network_server():
 		run_physics(movement)
 
 	# We handle animations and stuff here
-	animate()
+	animate(velocity)
 	if movement.x > x_anim_margin:
 		if not face_right:
 			face_right = true
@@ -177,8 +177,5 @@ func _on_positions_updated(new_last_received_input: int):
 		run_physics(i[0])
 
 func move_to(new_pos, new_movement):
-	# Calculate the velocity for non-main players.
-	# new_pos - position maxes out at +/-2.5 for some reason, so divide by that.
-	velocity = (new_pos - position) * (speed / 2.5)
 	position = new_pos
 	movement = new_movement
