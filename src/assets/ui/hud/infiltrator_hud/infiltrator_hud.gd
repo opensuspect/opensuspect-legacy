@@ -12,11 +12,11 @@ onready var kill_button: TextureButton = $KillButton
 onready var reload_button: TextureButton = $ReloadButton
 
 # Loaded with data from call to open_menu function in UIManager
-var menuData: Dictionary = {}
+var ui_data: Dictionary = {}
 
 func _ready() -> void:
-	if menuData.keys().has("linked_node"):
-		infiltrator = menuData["linked_node"]
+	if ui_data.keys().has("linked_node"):
+		infiltrator = ui_data["linked_node"]
 		infiltrator.connect("kill", self, "_on_Infiltrator_kill")
 		infiltrator.connect("stopped_reloading", self, "_on_Infiltrator_stopped_reloading")
 		infiltrator.connect("tree_exited", self, "_on_Infiltrator_tree_exited")
@@ -28,6 +28,8 @@ func _process(_delta: float) -> void:
 #	if kill_cooldown_timer != null and not kill_cooldown_timer.is_stopped():
 #		var progress: float = (kill_cooldown_timer.wait_time - kill_cooldown_timer.time_left) / kill_cooldown_timer.wait_time
 #		sprite.material.set_shader_param("progress", progress)
+	if infiltrator == null:
+		return
 	if infiltrator.is_reloading():
 		var progress: float = 0.0
 		if animator != null and animator.current_animation == "Reload":

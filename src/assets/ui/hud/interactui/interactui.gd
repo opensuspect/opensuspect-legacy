@@ -3,7 +3,7 @@ extends Control
 var buttonInteractDict: Dictionary = {}
 
 func _ready():
-	UIManager.interactUINode = self
+	UIManager.interact_ui_node = self
 	#createButton("hello testing button creation", "chatbox")
 
 func receiveInteractData(interactData: Dictionary):

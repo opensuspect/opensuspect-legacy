@@ -32,7 +32,7 @@ var attached_to: Node
 #assigned by TaskManager
 var task_id: int
 
-func interact(_from: Node = null):
+func interact(_from: Node = null, _interact_data: Dictionary = {}):
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:

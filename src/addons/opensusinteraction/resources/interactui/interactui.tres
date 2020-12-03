@@ -11,3 +11,4 @@ ui_data = {
 
 }
 advanced/reinstance = false
+advanced/only_instance = false

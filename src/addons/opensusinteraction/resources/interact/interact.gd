@@ -19,15 +19,15 @@ var map_res: Resource = base_map_resource.duplicate()
 var interact_data: Dictionary = {}
 
 #called to execute the interaction this resource is customized for
-func interact(_from: Node):
+func interact(_from: Node, interact_data: Dictionary = {}):
 	#print(interact_type)
 	match interact_type:
 		type.task:
 			task_res.interact(_from)
 		type.ui:
-			ui_res.interact(_from)
+			ui_res.interact(_from, interact_data)
 		type.map:
-			map_res.interact(_from)
+			map_res.interact(_from, interact_data)
 
 func init_resource(_from):
 	match interact_type:
