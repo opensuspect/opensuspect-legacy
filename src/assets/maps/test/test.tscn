@@ -374,3 +374,5 @@ scale = Vector2( 12, 3 )
 [node name="wallvertical" parent="walls/rightroom" instance=ExtResource( 7 )]
 position = Vector2( 600, 0 )
 scale = Vector2( 3, 19 )
+
+[node name="Corpses" type="YSort" parent="."]

@@ -3,7 +3,8 @@ extends KinematicBody2D
 onready var death_handler: Node2D = $DeathHandler
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
 onready var skeleton: Node2D = $Skeleton
-onready var animation_tree: AnimationTree = skeleton.get_node("AnimationPlayer/AnimationTree")
+onready var animator: AnimationPlayer = skeleton.get_node("AnimationPlayer")
+onready var animation_tree: AnimationTree = animator.get_node("AnimationTree")
 onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
 onready var sprites_viewport: Viewport = $SpritesViewport
 
@@ -139,6 +140,7 @@ func run_physics(motion):
 	velocity = move_and_slide(velocity)
 
 func _physics_process(_delta):
+
 	if main_player:
 		get_input()
 		input_number += 1
