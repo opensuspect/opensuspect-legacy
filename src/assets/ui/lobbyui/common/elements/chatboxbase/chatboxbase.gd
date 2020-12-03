@@ -1,7 +1,7 @@
-extends WindowDialogBase
+extends Control
 
-onready var chatbox = get_node("Control/chatboxText")
-onready var textbox = get_node("Control/HBoxContainer/TextEdit")
+onready var chatbox = get_node("chatboxText")
+onready var textbox = get_node("HBoxContainer/TextEdit")
 
 var defaultColor: String = "white"
 var emptyChars: Array = [" ", "	", "\n", "\r", "\r\n"] #chars considered empty (spaces, tabs, etc.)
@@ -13,7 +13,6 @@ var sentSide: String = "right" #side of chatbox sent messages are on
 var receivedSide: String = "left" #side of chatbox received messages are on
 
 func open():
-	
 	textbox.grab_focus()
 
 func sendMessage(content, color: String = defaultColor):
@@ -92,9 +91,3 @@ func _on_TextEdit_cursor_changed():
 	textbox.center_viewport_to_cursor()
 	cursorCoord.x = textbox.cursor_get_line()
 	cursorCoord.y = textbox.cursor_get_column()
-
-func _on_chatbox_about_to_show():
-	pass
-
-func _on_chatbox_popup_hide():
-	pass
