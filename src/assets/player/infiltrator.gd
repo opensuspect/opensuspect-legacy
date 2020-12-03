@@ -16,6 +16,7 @@ signal kill(emitter, player)
 signal stopped_reloading
 
 # Whether reloading may be cancelled or not
+export(Resource) var ui_interact_resource
 export (bool) var can_cancel_reload := true
 # Whether the infiltrator may kill or not
 var _killing_enabled: bool = true setget enable_killing, is_killing_enabled
@@ -104,9 +105,10 @@ func _get_target() -> void:
 		target_sprite.material.set_shader_param("line_color", Color.red)
 
 func _instantiate_kill_gui() -> void:
-	"""Add kill UI to the infiltrator's HUD."""
-	var viewport_size : Vector2 = get_viewport().get_visible_rect().size
-	ui_controller.open_menu("killui", {"linked_node": self}, true)
+	"""
+	Add kill UI to the infiltrator's HUD
+	"""
+	ui_interact_resource.interact(self, {"linked_node": self, "rect_position": Vector2(850, 500)})
 
 func _reload() -> void:
 	"""Reload the infiltrator's weapon and freeze the parent player node."""
@@ -133,7 +135,7 @@ func _on_KillCooldownTimer_timeout() -> void:
 
 func _on_Animator_animation_finished(anim_name: String) -> void:
 	"""
-	Re-enable killing mechanic and player movement after reload animation is 
+	Re-enable killing mechanic and player movement after reload animation is
 	finished.
 	"""
 	match anim_name:

@@ -1,6 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
+[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/infiltrator.gd" type="Script" id=2]
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+script = ExtResource( 1 )
+ui_name = "killui"
+ui_data = {
+
+}
+advanced/reinstance = false
+advanced/only_instance = true
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 60.0
@@ -16,6 +27,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": "Node that gets instantiated as a child of a player when they are assigned the role of \"traitor\"."
 }
+ui_interact_resource = SubResource( 3 )
 
 [node name="KillCooldownTimer" type="Timer" parent="."]
 wait_time = 10.0
