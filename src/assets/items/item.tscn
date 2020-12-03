@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/common/shaders/outline.shader" type="Shader" id=2]
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 2 )
 shader_param/line_color = Color( 1, 1, 0, 0 )
@@ -11,16 +11,19 @@ shader_param/line_thickness = 20.0
 [node name="Item" type="KinematicBody2D" groups=[
 "items",
 ]]
-material = SubResource( 4 )
+material = SubResource( 1 )
 collision_layer = 16
-
-[node name="PickupArea" type="Area2D" parent="."]
-collision_layer = 16
-collision_mask = 2
-
-[node name="PickupCollision" type="CollisionShape2D" parent="PickupArea"]
+__meta__ = {
+"_editor_description_": "Base scene for items."
+}
 
 [node name="ItemCollision" type="CollisionShape2D" parent="."]
+__meta__ = {
+"_editor_description_": "The item's collision shape."
+}
 
 [node name="ItemSprite" type="Sprite" parent="."]
 use_parent_material = true
+__meta__ = {
+"_editor_description_": "The item's sprite."
+}

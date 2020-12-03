@@ -1,14 +1,22 @@
 extends Node2D
 
+# The player that the item handler is a child of
 onready var player: KinematicBody2D = get_owner()
+# The area within which items may be picked up
 onready var item_pickup_range: Area2D = player.get_node("ItemPickupRange")
+# The maps node that contains the game's current map
 onready var maps: YSort = get_tree().get_root().get_node("Main/maps")
+# The current map's items
 onready var map_items: YSort
 
+# Emitted when the player picks up an item
 signal main_player_picked_up_item(item_path)
+# Emitted when the player drops an item
 signal main_player_dropped_item(item_path)
 
+# The item that will be picked up if the player decides to do so
 var _target_item: KinematicBody2D
+# The current item in the player's hand
 var picked_up_item: KinematicBody2D
 
 func _process(delta: float) -> void:
@@ -16,15 +24,14 @@ func _process(delta: float) -> void:
 		_get_target()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
+	if event.is_action_pressed("interact") and not player.is_movement_disabled():
 		if get_child_count() > 0:
-			drop(get_child(0))
-#			emit_signal("main_player_dropped_item", get_child(0).get_path())
+			emit_signal("main_player_dropped_item")
 		if _target_item != null:
-			pick_up(_target_item)
-#			emit_signal("main_player_picked_up_item", _target_item.get_path())
+			emit_signal("main_player_picked_up_item", _target_item.get_path())
 
 func _get_target() -> void:
+	"""Every frame, get the nearest item to the player and highlight it in yellow."""
 	var distance: float = INF
 	_target_item = null
 	for body in item_pickup_range.get_overlapping_bodies():
@@ -36,12 +43,16 @@ func _get_target() -> void:
 		_target_item.material.set_shader_param("line_color", Color.yellow)
 
 func pick_up(item: KinematicBody2D) -> void:
+	"""Pick up an item."""
 	item.get_parent().remove_child(item)
 	add_child(item)
 	item.set_collision_layer_bit(4, false)
 	item.position = Vector2.ZERO
+	if player.has_node("Infiltrator"):
+		player.get_node("Infiltrator").enable_killing(false)
 
 func drop(item: KinematicBody2D) -> void:
+	"""Drop and item."""
 	if map_items == null:
 		 map_items = maps.get_child(0).get_node("Items")
 	var offset: Vector2 = item.global_position - map_items.global_position
@@ -49,6 +60,8 @@ func drop(item: KinematicBody2D) -> void:
 	map_items.add_child(item)
 	item.position = offset
 	item.set_collision_layer_bit(4, true)
+	if player.has_node("Infiltrator"):
+		player.get_node("Infiltrator").enable_killing(true)
 
 func _on_ItemPickupRange_body_exited(body: Node) -> void:
 	body.material.set_shader_param("line_color", Color.transparent)

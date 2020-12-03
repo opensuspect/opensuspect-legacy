@@ -133,53 +133,42 @@ func _on_main_player_moved(movement : Vector2, last_input : int):
 		rpc_id(1, "player_moved", movement, last_input)
 
 func _on_main_player_picked_up_item(item_path: String) -> void:
-	print("RPC player_picked_up_item to everyone")
 	if get_tree().is_network_server():
-		player_picked_up_item(item_path)
+		player_picked_up_item(item_path, 1)
 	else:
-		rpc_id(1, "player_picked_up_item", item_path)
+		rpc_id(1, "player_picked_up_item", item_path, get_tree().get_network_unique_id())
 
-func _on_main_player_dropped_item(item_path: String) -> void:
+func _on_main_player_dropped_item() -> void:
 	if get_tree().is_network_server():
-		player_dropped_item(item_path)
+		player_dropped_item(1)
 	else:
-		rpc_id(1, "player_dropped_item", item_path)
+		rpc_id(1, "player_dropped_item", get_tree().get_network_unique_id())
 
-remote func player_picked_up_item(item_path: String) -> void:
-	print("Received RPC player_picked_up_item")
+remote func player_picked_up_item(item_path: String, id: int) -> void:
 	if not get_tree().is_network_server():
-		print("Not server")
 		return
-	var id: int = get_tree().get_rpc_sender_id()
 	if not players.keys().has(id):
-		print("ID dne: ", id)
 		return
 
 	rpc("pick_up_item", id, item_path)
 
-remote func player_dropped_item(item_path: String) -> void:
+remote func player_dropped_item(id: int) -> void:
 	if not get_tree().is_network_server():
 		return
-	var id: int = get_tree().get_rpc_sender_id()
 	if not players.keys().has(id):
 		return
 
-	print("Drop item rpc")
-	rpc("drop_item", id, item_path)
+	rpc("drop_item", id)
 
 remotesync func pick_up_item(id: int, item_path: String) -> void:
-	print("Picking up item...")
 	var player_item_handler: Node2D = players[id].get_node("Skeleton/ItemHandler")
 	var found_item: KinematicBody2D = get_tree().get_root().get_node(item_path)
 	player_item_handler.pick_up(found_item)
 
-puppetsync func drop_item(id: int, item_path: String) -> void:
+puppetsync func drop_item(id: int) -> void:
 	var player_item_handler: Node2D = players[id].get_node("Skeleton/ItemHandler")
-	var found_item: KinematicBody2D = player_item_handler.get_child(0)
-	if found_item.get_path() != item_path:
-		print("Item in hand is not the same as item sent over network????")
-		return
-	player_item_handler.drop(found_item)
+	var item: KinematicBody2D = player_item_handler.get_child(0)
+	player_item_handler.drop(item)
 
 master func _on_maps_spawn(spawnPositions: Array):
 	if not get_tree().is_network_server():
