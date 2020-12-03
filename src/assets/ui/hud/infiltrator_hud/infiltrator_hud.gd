@@ -28,6 +28,8 @@ func _process(_delta: float) -> void:
 #	if kill_cooldown_timer != null and not kill_cooldown_timer.is_stopped():
 #		var progress: float = (kill_cooldown_timer.wait_time - kill_cooldown_timer.time_left) / kill_cooldown_timer.wait_time
 #		sprite.material.set_shader_param("progress", progress)
+	if infiltrator == null:
+		return
 	if infiltrator.is_reloading():
 		var progress: float = 0.0
 		if animator != null and animator.current_animation == "Reload":
