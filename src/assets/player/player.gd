@@ -3,7 +3,8 @@ extends KinematicBody2D
 onready var death_handler: Node2D = $DeathHandler
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
 onready var skeleton: Node2D = $Skeleton
-onready var animation_tree: AnimationTree = skeleton.get_node("AnimationPlayer/AnimationTree")
+onready var animator: AnimationPlayer = skeleton.get_node("AnimationPlayer")
+onready var animation_tree: AnimationTree = animator.get_node("AnimationTree")
 onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
 onready var sprites_viewport: Viewport = $SpritesViewport
 
@@ -55,7 +56,7 @@ func _ready():
 		setName(Network.get_player_name())
 		id = Network.get_my_id()
 	else:
-		$MainLight.queue_free()
+		$MainLight.hide()
 		$Camera2D.queue_free()
 	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
