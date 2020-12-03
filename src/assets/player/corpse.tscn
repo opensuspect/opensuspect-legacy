@@ -6,6 +6,12 @@
 rotation = 0.00416973
 collision_layer = 32
 collision_mask = 0
+__meta__ = {
+"_editor_description_": "A corpse of a player."
+}
 
 [node name="CorpseSprite" type="Sprite" parent="."]
 scale = Vector2( 0.25, 0.25 )
+__meta__ = {
+"_editor_description_": "The corpse's sprite."
+}

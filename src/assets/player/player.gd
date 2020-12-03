@@ -56,7 +56,7 @@ func _ready():
 		setName(Network.get_player_name())
 		id = Network.get_my_id()
 	else:
-		$MainLight.queue_free()
+		$MainLight.hide()
 		$Camera2D.queue_free()
 	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
@@ -140,7 +140,6 @@ func run_physics(motion):
 	velocity = move_and_slide(velocity)
 
 func _physics_process(_delta):
-
 	if main_player:
 		get_input()
 		input_number += 1

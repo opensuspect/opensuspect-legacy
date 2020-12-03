@@ -115,6 +115,13 @@ func roundDown(num, step):
 		return normRound - step
 	return normRound
 
+func get_main_player() -> KinematicBody2D:
+	"""Gets the main player on the local client."""
+	for player in players.values():
+		if player.main_player:
+			return player
+	return null
+
 func get_player_roles() -> Dictionary:
 	return playerRoles
 

@@ -2074,12 +2074,26 @@ tracks/41/keys = {
 "values": [ -5.52806, -5.52806, 0.0 ]
 }
 tracks/42/type = "method"
-tracks/42/path = NodePath("..")
+tracks/42/path = NodePath("../../DeathHandler")
 tracks/42/interp = 1
 tracks/42/loop_wrap = true
 tracks/42/imported = false
 tracks/42/enabled = true
 tracks/42/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "create_corpse"
+} ]
+}
+tracks/43/type = "method"
+tracks/43/path = NodePath("../..")
+tracks/43/interp = 1
+tracks/43/loop_wrap = true
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/keys = {
 "times": PoolRealArray( 2.5 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -2087,18 +2101,30 @@ tracks/42/keys = {
 "method": "set_movement_disabled"
 } ]
 }
-tracks/43/type = "method"
-tracks/43/path = NodePath("../DeathHandler")
-tracks/43/interp = 1
-tracks/43/loop_wrap = true
-tracks/43/imported = false
-tracks/43/enabled = true
-tracks/43/keys = {
+tracks/44/type = "value"
+tracks/44/path = NodePath("../../MainLight:texture_scale")
+tracks/44/interp = 1
+tracks/44/loop_wrap = true
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/keys = {
+"times": PoolRealArray( 0, 2.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 2.0, 10.0 ]
+}
+tracks/45/type = "method"
+tracks/45/path = NodePath("../../DeathHandler")
+tracks/45/interp = 1
+tracks/45/loop_wrap = true
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "create_corpse_and_ghost"
+"method": "update_dead_players"
 } ]
 }
 
@@ -2132,7 +2158,6 @@ min_space = Vector2( -1, 0 )
 animation = "resurrect"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=18]
-xfade_time = 0.33
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=19]
 switch_mode = 2
@@ -2144,14 +2169,14 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachine" id=21]
 states/death/node = SubResource( 11 )
-states/death/position = Vector2( 207, 361 )
+states/death/position = Vector2( 174, 390 )
 states/idle_move_blend/node = SubResource( 16 )
-states/idle_move_blend/position = Vector2( 340, 203 )
+states/idle_move_blend/position = Vector2( 322, 258 )
 states/resurrect/node = SubResource( 17 )
-states/resurrect/position = Vector2( 340, 503 )
+states/resurrect/position = Vector2( 322, 522 )
 transitions = [ "idle_move_blend", "death", SubResource( 18 ), "death", "resurrect", SubResource( 19 ), "resurrect", "idle_move_blend", SubResource( 20 ) ]
 start_node = "idle_move_blend"
-graph_offset = Vector2( -1, 119 )
+graph_offset = Vector2( -311, 172 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=22]
 
@@ -2194,7 +2219,7 @@ rotation = 1.5708
 shape = SubResource( 5 )
 
 [node name="MainLight" type="Light2D" parent="."]
-position = Vector2( 0, -0.226169 )
+position = Vector2( -0.37458, -0.226169 )
 texture = ExtResource( 15 )
 texture_scale = 2.0
 mode = 2
@@ -2546,6 +2571,9 @@ drag_margin_left = 0.65
 drag_margin_top = 0.65
 drag_margin_right = 0.65
 drag_margin_bottom = 0.65
+__meta__ = {
+"_editor_description_": "The camera that will render the player sprites within the sprites viewport."
+}
 
 [node name="ViewportTextureTarget" type="Sprite" parent="."]
 material = SubResource( 23 )
@@ -2563,4 +2591,3 @@ __meta__ = {
 }
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]
-[connection signal="animation_finished" from="Skeleton/AnimationPlayer" to="DeathHandler" method="_on_AnimationPlayer_animation_finished"]

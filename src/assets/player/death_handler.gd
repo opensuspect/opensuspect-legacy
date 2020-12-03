@@ -1,7 +1,12 @@
 extends Node2D
 
+# The player that this DeathHandler is attached to
 onready var player: KinematicBody2D = get_owner()
+# The main player (if the player of this DeathHandler is not the main player)
+onready var main_player: KinematicBody2D
+# A node that will contain the corpses of players in the current map
 onready var corpses: YSort
+# Corpse scene that will be instanced when a player dies
 onready var corpse_scene: PackedScene = preload("res://assets/player/corpse.tscn")
 
 # Whether the player is dead
@@ -17,10 +22,10 @@ func die_by(killer_id: int) -> void:
 		player.face_right = not player.face_right
 		player.skeleton.scale.x *= -1
 	player.set_movement_disabled(true)
-	player.animator.play("death")
 	player.anim_fsm.travel("death")
 
 func create_corpse() -> void:
+	"""Create a corpse where the killed player was."""
 	var corpse: Node2D = corpse_scene.instance()
 	corpses = get_tree().get_root().get_node("Main/maps").get_child(0).get_node("Corpses")
 	var offset: Vector2 = player.global_position + player.get_node("ViewportTextureTarget").position
@@ -32,16 +37,24 @@ func create_corpse() -> void:
 	image_texture.create_from_image(image)
 	corpse_sprite.texture = image_texture
 
-func turn_into_ghost() -> void:
+func show_ghost() -> void:
+	"""Show the player ghost."""
 	player.modulate.a = 0.5
 
-func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
-	if anim_name == "death":
-		create_corpse()
-		if player.main_player:
-			turn_into_ghost()
-			player.animator.play("resurrect")
-		else:
-			player.modulate.a = 0.0
-	elif anim_name == "resurrect":
-		player.set_movement_disabled(false)
+func hide_ghost() -> void:
+	"""Make the player ghost transparent."""
+	player.modulate.a = 0.0
+
+func update_dead_players() -> void:
+	"""Either show or hide ghosts depending on whether the player is living or dead."""
+	for _player in PlayerManager.players.values():
+		var _player_death_handler: Node2D = _player.death_handler
+		if _player_death_handler.is_dead:
+			if main_player == null:
+				main_player = PlayerManager.get_main_player()
+			# Show the newly created ghost if the main player is also dead
+			if main_player.death_handler.is_dead:
+				_player_death_handler.show_ghost()
+			# If the player is still alive, then hide the ghost
+			else:
+				_player_death_handler.hide_ghost()
