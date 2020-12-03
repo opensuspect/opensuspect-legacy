@@ -152,8 +152,8 @@ func _on_infiltrator_kill(killer: KinematicBody2D, killed_player: KinematicBody2
 	Runs on the infiltrator's Main scene; sends an RPC to the server to indicate
 	that the infiltrator has killed a player.
 	"""
-	var killer_id: int = Network.get_network_id_from_player_node_name(killer.name)
-	var killed_player_id: int = Network.get_network_id_from_player_node_name(killed_player.name)
+	var killer_id: int = get_network_id_from_player_node_name(killer.name)
+	var killed_player_id: int = get_network_id_from_player_node_name(killed_player.name)
 	if not players.keys().has(killer_id) or not players.keys().has(killed_player_id):
 		return
 	if get_tree().is_network_server():
@@ -181,3 +181,12 @@ puppet func player_killed(killer_id: int, killed_player_id: int) -> void:
 	"""Runs on a client; responsible for actually killing off a player."""
 	var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
 	killed_player_death_handler.die_by(killer_id)
+
+func get_network_id_from_player_node_name(node_name: String) -> int:
+	"""Fetch a player's network ID from the name of their KinematicBody2D."""
+	var players_dict: Dictionary = PlayerManager.players
+	var players_array: Array = players_dict.values()
+	for index in range(len(players_array)):
+		if players_array[index].name == node_name:
+			return players_dict.keys()[index]
+	return -1
