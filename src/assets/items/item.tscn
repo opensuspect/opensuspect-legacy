@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/common/shaders/outline.shader" type="Shader" id=2]
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 2 )
+shader_param/line_color = Color( 1, 1, 0, 0 )
+shader_param/line_thickness = 20.0
+
+[node name="Item" type="KinematicBody2D" groups=[
+"items",
+]]
+material = SubResource( 4 )
+collision_layer = 16
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+
+[node name="PickupCollision" type="CollisionShape2D" parent="PickupArea"]
+
+[node name="ItemCollision" type="CollisionShape2D" parent="."]
+
+[node name="ItemSprite" type="Sprite" parent="."]
+use_parent_material = true

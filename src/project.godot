@@ -129,6 +129,11 @@ reload={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
  ]
 }
+interact={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [layer_names]
 
@@ -136,6 +141,7 @@ reload={
 2d_physics/layer_2="players"
 2d_physics/layer_3="scientists"
 2d_physics/layer_4="infiltrators"
+2d_physics/layer_5="items"
 
 [locale]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/brown-suit.png" type="Texture" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://assets/player/textures/characters/customizable/09-facial-hair/red-eyebrow-sideburn.png" type="Texture" id=25]
 [ext_resource path="res://assets/player/textures/characters/customizable/10-face-wear/glasses.png" type="Texture" id=26]
 [ext_resource path="res://assets/player/camera.gd" type="Script" id=27]
+[ext_resource path="res://assets/player/item_handler.gd" type="Script" id=28]
 
 [sub_resource type="ShaderMaterial" id=1]
 render_priority = 1
@@ -46,6 +47,10 @@ light_mode = 2
 
 [sub_resource type="CapsuleShape2D" id=5]
 radius = 12.0
+
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 25.0
+height = 50.0
 
 [sub_resource type="CanvasItemMaterial" id=6]
 light_mode = 2
@@ -948,7 +953,7 @@ gravity_vec = Vector2( 0, 0 )
 gravity = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
-collision_layer = 0
+collision_layer = 2
 collision_mask = 16
 script = ExtResource( 16 )
 
@@ -963,6 +968,14 @@ shape = SubResource( 3 )
 material = SubResource( 4 )
 rotation = 1.5708
 shape = SubResource( 5 )
+
+[node name="ItemPickupRange" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 16
+
+[node name="PickupRangeCollision" type="CollisionShape2D" parent="ItemPickupRange"]
+rotation = 1.5708
+shape = SubResource( 9 )
 
 [node name="MainLight" type="Light2D" parent="."]
 position = Vector2( 0, -0.226169 )
@@ -1002,7 +1015,7 @@ scale = Vector2( 0.05, 0.05 )
 
 [node name="01-l-arm" type="Sprite" parent="spritecollection"]
 position = Vector2( 140, 180 )
-rotation = -0.519241
+rotation = 0.508117
 texture = ExtResource( 7 )
 offset = Vector2( -140, -180 )
 
@@ -1014,7 +1027,7 @@ texture = ExtResource( 3 )
 
 [node name="04-l-leg" type="Sprite" parent="spritecollection"]
 position = Vector2( 110, 390 )
-rotation = -0.346161
+rotation = 0.0846862
 texture = ExtResource( 5 )
 offset = Vector2( -110, -390 )
 
@@ -1023,7 +1036,7 @@ texture = ExtResource( 12 )
 
 [node name="06-r-leg" type="Sprite" parent="spritecollection"]
 position = Vector2( -90, 390 )
-rotation = 0.0865402
+rotation = -0.338745
 texture = ExtResource( 2 )
 offset = Vector2( 90, -390 )
 
@@ -1032,7 +1045,7 @@ texture = ExtResource( 11 )
 
 [node name="08-r-arm" type="Sprite" parent="spritecollection"]
 position = Vector2( -120, 180 )
-rotation = 0.519241
+rotation = -0.508117
 texture = ExtResource( 10 )
 offset = Vector2( 120, -180 )
 
@@ -1100,7 +1113,7 @@ __meta__ = {
 }
 
 [node name="Spine" type="Bone2D" parent="Skeleton/Skeleton"]
-position = Vector2( 2.526, -8.9097 )
+position = Vector2( 2.526, -9.08521 )
 rest = Transform2D( 1, 0, 0, 1, 2.52554, -8.41847 )
 __meta__ = {
 "_editor_description_": "The root bone of the skeleton."
@@ -1108,7 +1121,7 @@ __meta__ = {
 
 [node name="LeftUpperArm" type="Bone2D" parent="Skeleton/Skeleton/Spine"]
 position = Vector2( 4.65966, -8.45606 )
-rotation = 0.596657
+rotation = 0.103405
 rest = Transform2D( 1, 0, 0, 1, 4.65966, -8.45606 )
 __meta__ = {
 "_edit_bone_": true,
@@ -1118,7 +1131,7 @@ __meta__ = {
 
 [node name="LeftLowerArm" type="Bone2D" parent="Skeleton/Skeleton/Spine/LeftUpperArm"]
 position = Vector2( 0, 2.77268 )
-rotation = -0.42685
+rotation = -0.516375
 rest = Transform2D( 1, 0, 0, 1, 0, 2.77268 )
 __meta__ = {
 "_edit_bone_": true,
@@ -1127,7 +1140,7 @@ __meta__ = {
 
 [node name="LeftHand" type="Bone2D" parent="Skeleton/Skeleton/Spine/LeftUpperArm/LeftLowerArm"]
 position = Vector2( 0, 3.45508 )
-rotation = 1.1841
+rotation = 1.10221
 scale = Vector2( 0.202147, 1.00688 )
 rest = Transform2D( -8.83613e-09, 0.202147, -1.00688, -4.40121e-08, 0, 3.45508 )
 __meta__ = {
@@ -1137,7 +1150,7 @@ __meta__ = {
 
 [node name="RightUpperArm" type="Bone2D" parent="Skeleton/Skeleton/Spine"]
 position = Vector2( -8.36477, -8.43437 )
-rotation = -0.204192
+rotation = 0.403374
 rest = Transform2D( 1, 0, 0, 1, -8.36477, -8.43437 )
 __meta__ = {
 "_edit_bone_": true,
@@ -1147,7 +1160,7 @@ __meta__ = {
 
 [node name="RightLowerArm" type="Bone2D" parent="Skeleton/Skeleton/Spine/RightUpperArm"]
 position = Vector2( 0, 2.77268 )
-rotation = -0.329658
+rotation = -0.291687
 rest = Transform2D( 1, 0, 0, 1, 0, 2.77268 )
 __meta__ = {
 "_edit_bone_": true,
@@ -1156,17 +1169,27 @@ __meta__ = {
 
 [node name="RightHand" type="Bone2D" parent="Skeleton/Skeleton/Spine/RightUpperArm/RightLowerArm"]
 position = Vector2( 0, 3.45508 )
-rotation = 1.16643
-scale = Vector2( 0.202147, 1.00688 )
+rotation = 1.36273
+scale = Vector2( 0.2, 1 )
 rest = Transform2D( -8.83613e-09, 0.202147, -1.00688, -4.40121e-08, 0, 3.45508 )
 __meta__ = {
 "_edit_bone_": true,
 "_editor_description_": "Bone that controls the player's right hand."
 }
 
+[node name="ItemTransform" type="RemoteTransform2D" parent="Skeleton/Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand"]
+position = Vector2( 7.74789, 0.0131569 )
+rotation = -0.231979
+scale = Vector2( 3.31969, 3.87036 )
+remote_path = NodePath("../../../../../../ItemHandler")
+update_scale = false
+__meta__ = {
+"_editor_description_": "Syncs the transform of the player's right hand with the item that the player has picked up."
+}
+
 [node name="LeftUpperLeg" type="Bone2D" parent="Skeleton/Skeleton/Spine"]
 position = Vector2( 3.53507, 1.61536 )
-rotation = -0.45048
+rotation = -0.837971
 rest = Transform2D( 1, 0, 0, 1, 3.53507, 1.61536 )
 __meta__ = {
 "_edit_bone_": true,
@@ -1176,7 +1199,7 @@ __meta__ = {
 
 [node name="LeftLowerLeg" type="Bone2D" parent="Skeleton/Skeleton/Spine/LeftUpperLeg"]
 position = Vector2( 0, 0.678921 )
-rotation = 0.154463
+rotation = 1.32012
 rest = Transform2D( 1, 0, 0, 1, 0, 0.678921 )
 __meta__ = {
 "_edit_bone_": true,
@@ -1185,7 +1208,7 @@ __meta__ = {
 
 [node name="LeftFoot" type="Bone2D" parent="Skeleton/Skeleton/Spine/LeftUpperLeg/LeftLowerLeg"]
 position = Vector2( 0, 4.05011 )
-rotation = 0.539477
+rotation = -0.0844005
 scale = Vector2( 0.28942, 0.490064 )
 rest = Transform2D( 0.28942, 0, 0, 0.490064, 0, 4.05011 )
 __meta__ = {
@@ -1195,7 +1218,7 @@ __meta__ = {
 
 [node name="LeftToe" type="Bone2D" parent="Skeleton/Skeleton/Spine/LeftUpperLeg/LeftLowerLeg/LeftFoot"]
 position = Vector2( 8.73148, 0 )
-rotation = -0.189635
+rotation = -0.387463
 scale = Vector2( 0.495001, 1.31545 )
 rest = Transform2D( 0.495001, 0, 0, 1.31545, 8.73148, 0 )
 __meta__ = {
@@ -1205,7 +1228,7 @@ __meta__ = {
 
 [node name="RightUpperLeg" type="Bone2D" parent="Skeleton/Skeleton/Spine"]
 position = Vector2( -6.90654, 1.61536 )
-rotation = 0.106867
+rotation = -0.151394
 rest = Transform2D( 1, 0, 0, 1, -6.90243, 1.61536 )
 __meta__ = {
 "_edit_bone_": true,
@@ -1215,7 +1238,7 @@ __meta__ = {
 
 [node name="RightLowerLeg" type="Bone2D" parent="Skeleton/Skeleton/Spine/RightUpperLeg"]
 position = Vector2( 0, 0.678921 )
-rotation = 0.552038
+rotation = -0.0508734
 rest = Transform2D( 1, 0, 0, 1, 0, 0.678921 )
 __meta__ = {
 "_edit_bone_": true,
@@ -1224,7 +1247,7 @@ __meta__ = {
 
 [node name="RightFoot" type="Bone2D" parent="Skeleton/Skeleton/Spine/RightUpperLeg/RightLowerLeg"]
 position = Vector2( 0, 4.05011 )
-rotation = -0.152085
+rotation = 0.300915
 scale = Vector2( 0.28942, 0.490064 )
 rest = Transform2D( 0.28942, 0, 0, 0.490064, 0, 4.05011 )
 __meta__ = {
@@ -1234,7 +1257,7 @@ __meta__ = {
 
 [node name="RightToe" type="Bone2D" parent="Skeleton/Skeleton/Spine/RightUpperLeg/RightLowerLeg/RightFoot"]
 position = Vector2( 8.73148, 0 )
-rotation = -0.197028
+rotation = -0.261482
 scale = Vector2( 0.495001, 1.31545 )
 rest = Transform2D( 0.495001, 0, 0, 1.31545, 8.73148, 0 )
 __meta__ = {
@@ -1304,6 +1327,15 @@ __meta__ = {
 "_editor_description_": "Player's right leg as a polygon."
 }
 
+[node name="ItemHandler" type="Node2D" parent="Skeleton"]
+position = Vector2( -7.17617, -9.99222 )
+rotation = 0.606154
+scale = Vector2( 1, 1 )
+script = ExtResource( 28 )
+__meta__ = {
+"_editor_description_": "Handles picking up and dropping of items."
+}
+
 [node name="RightArm" type="Polygon2D" parent="Skeleton"]
 position = Vector2( -19.3352, -51.6 )
 scale = Vector2( 0.05, 0.05 )
@@ -1319,3 +1351,4 @@ __meta__ = {
 }
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]
+[connection signal="body_exited" from="ItemPickupRange" to="Skeleton/ItemHandler" method="_on_ItemPickupRange_body_exited"]
