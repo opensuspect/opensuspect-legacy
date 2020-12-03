@@ -12,11 +12,11 @@ onready var kill_button: TextureButton = $KillButton
 onready var reload_button: TextureButton = $ReloadButton
 
 # Loaded with data from call to open_menu function in UIManager
-var menuData: Dictionary = {}
+var ui_data: Dictionary = {}
 
 func _ready() -> void:
-	if menuData.keys().has("linked_node"):
-		infiltrator = menuData["linked_node"]
+	if ui_data.keys().has("linked_node"):
+		infiltrator = ui_data["linked_node"]
 		infiltrator.connect("kill", self, "_on_Infiltrator_kill")
 		infiltrator.connect("stopped_reloading", self, "_on_Infiltrator_stopped_reloading")
 		infiltrator.connect("tree_exited", self, "_on_Infiltrator_tree_exited")
