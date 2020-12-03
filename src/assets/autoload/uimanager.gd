@@ -7,7 +7,7 @@ var keybinds = {}
 var menus: Dictionary = {
 						#HUD
 						"interactui": {"scene": preload("res://assets/ui/hud/interactui/interactui.tscn")},
-						"killui": {"scene": preload("res://assets/ui/hud/infiltratorui/killui.tscn")},
+						"killui": {"scene": preload("res://assets/ui/hud/infiltrator_hud/infiltrator_hud.tscn")},
 						
 						#common UI
 						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}, 
