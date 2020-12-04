@@ -75,7 +75,7 @@ margin_left = 869.0
 margin_right = 939.0
 margin_bottom = 28.0
 size_flags_horizontal = 0
-size_flags_vertical = 12
+size_flags_vertical = 3
 text = "Confirm"
 align = 0
 
@@ -84,7 +84,7 @@ margin_left = 943.0
 margin_right = 1004.0
 margin_bottom = 28.0
 size_flags_horizontal = 0
-size_flags_vertical = 12
+size_flags_vertical = 3
 text = "Cancel"
 align = 0
 [connection signal="pressed" from="MarginContainer/ConfirmCancelButtons/VBoxContainer/HBoxContainer/confirm" to="." method="_on_confirm_pressed"]

@@ -6,7 +6,6 @@
 [ext_resource path="res://assets/ui/lobbyui/votemenu/votebuttongrid/VoteButtonGrid.tscn" type="PackedScene" id=4]
 
 [node name="votemenu" type="WindowDialog"]
-visible = true
 anchor_left = 0.05
 anchor_top = 0.09
 anchor_right = 0.95
