@@ -1,13 +1,13 @@
 [gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
+[ext_resource path="res://assets/player/textures/characters/customizable/02-body/body.png" type="Texture" id=2]
 [ext_resource path="res://assets/player/death_handler.gd" type="Script" id=3]
 [ext_resource path="res://assets/player/textures/characters/customizable/05-pants/white-shirt-red-sweater.png" type="Texture" id=13]
 [ext_resource path="res://assets/player/textures/characters/customizable/07-clothes/white-shirt-red-sweater.png" type="Texture" id=14]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
 [ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
 [ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=17]
-[ext_resource path="res://assets/player/textures/characters/customizable/02-body/body02.png" type="Texture" id=18]
 [ext_resource path="res://assets/player/textures/characters/customizable/01-left-arm/white-shirt-red-sweater.png" type="Texture" id=19]
 [ext_resource path="res://assets/player/textures/characters/customizable/08-right-arm/white-shirt-red-sweater.png" type="Texture" id=20]
 [ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/white-shirt-red-sweater.png" type="Texture" id=21]
@@ -2299,7 +2299,7 @@ __meta__ = {
 [node name="Body" type="Polygon2D" parent="Skeleton"]
 position = Vector2( -19.201, -51.6115 )
 scale = Vector2( 0.05, 0.05 )
-texture = ExtResource( 18 )
+texture = ExtResource( 2 )
 skeleton = NodePath("../Skeleton")
 polygon = PoolVector2Array( 340, 100, 420, 100, 550, 100, 610, 100, 610, 550, 610, 640, 610, 710, 610, 790, 610, 850, 610, 890, 550, 890, 420, 890, 340, 890, 240, 890, 140, 890, 140, 850, 140, 790, 140, 710, 140, 640, 140, 550, 140, 100, 320, 550, 470, 550, 470, 570, 320, 570, 320, 530, 470, 530, 320, 640, 470, 640, 470, 620, 320, 620, 320, 660, 470, 660, 320, 710, 470, 710, 470, 690, 320, 690, 320, 730, 470, 730, 320, 790, 320, 770, 470, 770, 470, 790, 470, 810, 320, 810, 220, 230, 360, 160, 400, 160, 550, 230, 230, 550, 560, 550, 560, 640, 230, 640, 230, 710, 230, 790, 230, 850, 560, 850, 560, 790, 560, 710, 320, 850, 470, 850 )
 uv = PoolVector2Array( 340, 100, 420, 100, 550, 100, 610, 100, 610, 550, 610, 640, 610, 710, 610, 790, 610, 850, 610, 890, 550, 890, 420, 890, 340, 890, 240, 890, 140, 890, 140, 850, 140, 790, 140, 710, 140, 640, 140, 550, 140, 100, 330, 550, 410, 550, 410, 570, 330, 570, 330, 520, 410, 520, 330, 640, 410, 640, 410, 630, 330, 620, 330, 660, 410, 660, 330, 710, 410, 710, 410, 690, 330, 690, 330, 730, 410, 730, 330, 790, 330, 780, 400, 770, 410, 790, 410, 810, 330, 810, 220, 230, 360, 160, 400, 160, 550, 230, 230, 550, 560, 550, 560, 640, 230, 640, 230, 710, 230, 790, 230, 850, 560, 850, 560, 790, 560, 710, 320, 850, 470, 850 )

@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/ui/submenus/appearance_editor/textures/arrow_left_normal.png" type="Texture" id=1]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/textures/arrow_left_pressed.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/textures/arrow_right_normal.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/textures/arrow_right_pressed.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/part_selector.gd" type="Script" id=5]
+
+[node name="PartSelector" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+custom_constants/separation = 10
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PartLabel" type="Label" parent="."]
+margin_top = 289.0
+margin_right = 30.0
+margin_bottom = 311.0
+text = "Part"
+
+[node name="LeftButtonContainer" type="CenterContainer" parent="."]
+margin_left = 40.0
+margin_right = 72.0
+margin_bottom = 600.0
+
+[node name="LeftButton" type="TextureButton" parent="LeftButtonContainer"]
+margin_top = 284.0
+margin_right = 32.0
+margin_bottom = 316.0
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 2 )
+
+[node name="CurrentPartLabel" type="Label" parent="."]
+margin_left = 82.0
+margin_top = 289.0
+margin_right = 112.0
+margin_bottom = 311.0
+text = "Part"
+
+[node name="RightButtonContainer" type="CenterContainer" parent="."]
+margin_left = 122.0
+margin_right = 154.0
+margin_bottom = 600.0
+
+[node name="RightButton" type="TextureButton" parent="RightButtonContainer"]
+margin_top = 284.0
+margin_right = 32.0
+margin_bottom = 316.0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 4 )
+[connection signal="pressed" from="LeftButtonContainer/LeftButton" to="." method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="RightButtonContainer/RightButton" to="." method="_on_RightButton_pressed"]
