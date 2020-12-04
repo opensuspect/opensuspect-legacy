@@ -6,6 +6,10 @@ extends Node
 var inMenu = false
 var ourrole
 var ournumber
+
+# stores messages so they can be shown on multiple chatboxes
+var chatbox_cache: Array
+
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
 #mustAssign specifies if the role is mandatory to have, team specifies a team number which
