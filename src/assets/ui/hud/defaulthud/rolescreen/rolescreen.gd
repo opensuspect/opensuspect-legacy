@@ -53,12 +53,14 @@ func _on_roles_assigned(player_roles : Dictionary):
 	for info in self.player_info:
 		self.add_child(info.name_label)
 		self.add_child(info.sprite_collection)
+		
 	
 	self.show()
 
 
 
-const  PLAYER_SPACE_WIDTH = 100
+const PLAYER_SPACE_WIDTH = 100
+const PLAYER_SPACE_HEIGHT = 200
 # player_roles - only players with player roles contained as keys
 # in role_colors will be processed
 #
@@ -96,7 +98,7 @@ func _generate_info(player_roles: Dictionary, role_colors: Dictionary):
 	var player_sprite_collection = Dictionary()
 	for player in player_group_members:
 		if player_roles.has(player.id):
-			var node = player.get_node(NodePath("spritecollection"))
+			var node = player.get_node(NodePath("SpritesViewport/Skeleton"))
 			if node != null:
 				player_sprite_collection[player.id] = node.duplicate(0)
 			else:
@@ -132,6 +134,8 @@ class PlayerInfo:
 	var name_label : Label
 	var sprite_collection : Node2D
 	
+	const SCALE_FACTOR = 3.0
+	const SCALE_FACTOR_LABEL = SCALE_FACTOR / 2.0
 	func _init(position: Vector2, 
 					id: int,
 					player_name_color: Color,
@@ -143,16 +147,23 @@ class PlayerInfo:
 		self.name_label = Label.new()
 		self.name_label.align = Label.ALIGN_CENTER
 		self.name_label.text = player_name
+		self.name_label.set_scale(Vector2(SCALE_FACTOR_LABEL, SCALE_FACTOR_LABEL))
 		self.name_label.set("custom_colors/font_color", player_name_color)
 		
 		_set_label_outline(self.name_label)
 		
+		
+		# enlarge the sprite, so the details are visible
+		# I wonder if bitmaps would fix that problem
+		player_sprite_collection.set_scale(Vector2(SCALE_FACTOR, SCALE_FACTOR))
 		self.sprite_collection = player_sprite_collection
 		self.sprite_collection.set_position(position)
 		
 		# center the label above the player sprite
-		var width = self.name_label.get_combined_minimum_size().x
+		var width = self.name_label.get_combined_minimum_size().x * (SCALE_FACTOR_LABEL)
 		self.name_label.rect_position = position
 		self.name_label.rect_position.x -= (width/2)
+		
 		# position the label a bit above the player sprite
-		self.name_label.rect_position.y -= 50
+		self.name_label.rect_position.y -= PLAYER_SPACE_HEIGHT - 20
+

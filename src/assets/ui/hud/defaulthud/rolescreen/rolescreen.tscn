@@ -28,7 +28,6 @@ size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
 text = "Team"
 align = 1
-valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
