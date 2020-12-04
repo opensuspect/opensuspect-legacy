@@ -1,0 +1,164 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=1]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/appearance_editor.gd" type="Script" id=2]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/textures/cursor.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/skin_color_range.gd" type="Script" id=4]
+
+[sub_resource type="Shader" id=8]
+code = "shader_type canvas_item;
+render_mode blend_disabled;
+
+void fragment()
+{
+	
+}"
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Shader" id=6]
+code = "shader_type canvas_item;
+render_mode blend_disabled;
+
+uniform vec4 color_tone: hint_color = vec4(1.0);
+
+void fragment()
+{
+	
+}"
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
+shader_param/color_tone = Color( 1, 1, 1, 1 )
+
+[sub_resource type="Gradient" id=3]
+colors = PoolColorArray( 0.917647, 0.823529, 0.596078, 1, 0.117647, 0.00392157, 0.00392157, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[node name="AppearanceEditor" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.943878
+custom_constants/margin_right = 64
+custom_constants/margin_top = 64
+custom_constants/margin_left = 64
+custom_constants/margin_bottom = 64
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AppearanceHBox" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 960.0
+margin_bottom = 536.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CustomizationVBox" type="VBoxContainer" parent="MarginContainer/AppearanceHBox"]
+margin_right = 446.0
+margin_bottom = 472.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SkinColorSelector" type="Control" parent="MarginContainer/AppearanceHBox/CustomizationVBox"]
+margin_right = 446.0
+margin_bottom = 472.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkinToneRange" type="TextureRect" parent="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector"]
+material = SubResource( 9 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
+texture = SubResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkinColorRange" type="TextureRect" parent="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector"]
+modulate = Color( 1, 1, 1, 0.498039 )
+material = SubResource( 7 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 446.0
+margin_right = 471.0
+margin_bottom = -27.0
+rect_rotation = 90.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
+texture = SubResource( 4 )
+expand = true
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cursor" type="Sprite" parent="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector"]
+texture = ExtResource( 3 )
+
+[node name="ColorPreview" type="ColorRect" parent="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector/Cursor"]
+visible = false
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 72.0
+margin_bottom = 72.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PreviewButtonsVBox" type="VBoxContainer" parent="MarginContainer/AppearanceHBox"]
+margin_left = 450.0
+margin_right = 896.0
+margin_bottom = 472.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox"]
+margin_top = 219.0
+margin_right = 446.0
+margin_bottom = 253.0
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox"]
+margin_right = 221.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Cancel"
+
+[node name="SaveButton" type="Button" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox"]
+margin_left = 225.0
+margin_right = 446.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Save"
+[connection signal="gui_input" from="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector" to="." method="_on_SkinColorSelector_gui_input"]
