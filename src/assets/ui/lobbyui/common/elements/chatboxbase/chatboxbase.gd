@@ -12,9 +12,6 @@ var cursorCoord: Vector2 = Vector2(0,0) #x is line, y is column
 var sentSide: String = "right" #side of chatbox sent messages are on
 var receivedSide: String = "left" #side of chatbox received messages are on
 
-func open():
-	textbox.grab_focus()
-
 func sendMessage(content, color: String = defaultColor):
 	if isEmpty(content) or hasLineBreaks(content):
 		return
@@ -77,6 +74,9 @@ func hasLineBreaks(inputStr):
 			return true
 	return false
 
+func focus_textbox():
+	textbox.grab_focus()
+
 func _on_send_pressed():
 	sendMessage(textbox.text, "green")
 
@@ -91,3 +91,6 @@ func _on_TextEdit_cursor_changed():
 	textbox.center_viewport_to_cursor()
 	cursorCoord.x = textbox.cursor_get_line()
 	cursorCoord.y = textbox.cursor_get_column()
+
+func _on_chatboxbase_visibility_changed():
+	pass # Replace with function body.
