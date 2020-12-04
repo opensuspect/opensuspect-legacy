@@ -132,3 +132,26 @@ func setourrole():
 	ourrole = PlayerManager.get_player_role(Network.myID)
 	print(ourrole)
 	emit_signal("roles_assigned", playerRoles)
+
+func get_player_sprite_by_id(id: int) -> Node2D:
+	var playerGroupMembers = get_tree().get_nodes_in_group("players")
+	for player in playerGroupMembers:
+		if player.id == id:
+			return get_player_sprite(player)
+	return null
+	
+func get_player_sprite(player) -> Node2D:
+	if player == null:
+		return null
+	var node = player.get_node(NodePath("SpritesViewport/Skeleton"))
+	if node == null:
+		return null
+	# duplicate, so that the caller doesn't change the actual player's sprite
+	return node.duplicate(0) 
+
+func get_defalut_player_sprite() -> Sprite:
+		# Return the plain ol' black spacesuit sprite
+		var sprite = Sprite.new()
+		var blackSpacesuitTexture = preload("res://assets/player/textures/characters/black/black-proto-1.png")
+		sprite.texture = blackSpacesuitTexture
+		return sprite

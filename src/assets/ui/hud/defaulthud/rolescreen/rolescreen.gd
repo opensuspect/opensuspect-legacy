@@ -85,9 +85,6 @@ func _generate_info(player_roles: Dictionary, role_colors: Dictionary):
 	if x_pos_start < 0:
 		# there are too many players to fit in one row.. need to wrap to the next row
 		pass
-		
-	var black_spacesuit_texture : Texture = preload("res://assets/player/textures/characters/black/black-proto-1.png")
-	
 	# assists with positioning player info
 	var player_count = 0
 	
@@ -98,13 +95,10 @@ func _generate_info(player_roles: Dictionary, role_colors: Dictionary):
 	var player_sprite_collection = Dictionary()
 	for player in player_group_members:
 		if player_roles.has(player.id):
-			var node = player.get_node(NodePath("SpritesViewport/Skeleton"))
-			if node != null:
-				player_sprite_collection[player.id] = node.duplicate(0)
-			else:
-				var sprite = Sprite.new()
-				sprite.texture = black_spacesuit_texture
-				player_sprite_collection[player.id] = sprite
+			var player_sprite = PlayerManager.get_player_sprite(player)
+			if player_sprite == null:
+				player_sprite = PlayerManager.get_defalut_player_sprite()
+			player_sprite_collection[player.id] = player_sprite
 	
 	
 	for id in filtered_ids:
