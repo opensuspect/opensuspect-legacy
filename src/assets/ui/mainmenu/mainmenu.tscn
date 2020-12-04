@@ -120,36 +120,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-
 [node name="Control3" type="Control" parent="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu"]
 margin_top = 100.0
 margin_right = 640.0
 margin_bottom = 100.0
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="loadpck" type="Button" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/CenterContainer"]
-margin_left = 276.0
-margin_right = 363.0
-margin_bottom = 34.0
-text = "LOAD PCK"
-flat = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Control3" type="Control" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu"]
-margin_top = 150.0
-margin_right = 640.0
-margin_bottom = 150.0
-
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3"]
-=======
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -167,11 +142,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-
 [node name="Control5" type="Control" parent="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu"]
 margin_top = 150.0
 margin_right = 640.0
-margin_bottom = 200.0
+margin_bottom = 150.0
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5"]
 anchor_right = 1.0
@@ -217,7 +191,6 @@ margin_top = 15.0
 margin_right = 704.0
 margin_bottom = 215.0
 
-
 [node name="KeyBind" parent="." instance=ExtResource( 2 )]
 visible = false
 anchor_right = 1.0
@@ -226,4 +199,3 @@ anchor_bottom = 1.0
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer/Settings" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/CenterContainer/Quit" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/CenterContainer/loadpck" to="VBoxContainer/MarginContainer/MenuArea" method="_on_loadpck_pressed"]
