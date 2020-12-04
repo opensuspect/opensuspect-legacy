@@ -3,6 +3,8 @@ extends CanvasLayer
 var ui_list: Dictionary = UIManager.ui_list
 
 var instanced_uis: Dictionary = {}
+#nodes to ignore when updating instanced UIs
+var ignored_ui_nodes: Array = ["ColorblindRect", "defaulthud"]
 
 onready var config = ConfigFile.new()
 
@@ -28,7 +30,7 @@ func _ready():
 	instance_ui("interactui")
 
 #menu data is data to pass to the menu, such as a task identifier
-#reInstance is whether or not to recreate the corresponding menu node if it already exists
+#reinstance is whether or not to recreate the corresponding menu node if it already exists
 func open_ui(ui_name: String, ui_data: Dictionary = {}, reinstance: bool = false):
 	update_instanced_uis()
 	if not ui_list.keys().has(ui_name):
@@ -91,6 +93,9 @@ func update_instanced_uis() -> void:
 			temp_instanced_uis.erase(i)
 			child_nodes.erase(i)
 	for i in child_nodes:
+		print(i, " ", ignored_ui_nodes.has(i))
+		if ignored_ui_nodes.has(i) or temp_instanced_uis.has(i):
+			continue
 		push_error("UI element " + i + " instanced incorrectly, use instance_ui() instead")
 		temp_instanced_uis[i] = get_node(i)
 	instanced_uis = temp_instanced_uis
@@ -100,4 +105,3 @@ func get_child_node_names() -> Array:
 	for i in get_children():
 		name_list.append(i.name)
 	return name_list
-
