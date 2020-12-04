@@ -15,8 +15,8 @@ func base_open():
 	$Timer.start()
 
 func _clean_up():
-	#UIManager.close_ui("roleannouncementui", true)
 	$Timer.stop()
+	PlayerManager.inMenu = false
 	UIManager.free_ui("roleannouncementui")
 
 func show_roles(player_roles : Dictionary):
