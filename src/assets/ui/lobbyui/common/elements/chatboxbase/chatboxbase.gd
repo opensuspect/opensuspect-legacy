@@ -12,30 +12,62 @@ var cursorCoord: Vector2 = Vector2(0,0) #x is line, y is column
 var sentSide: String = "right" #side of chatbox sent messages are on
 var receivedSide: String = "left" #side of chatbox received messages are on
 
+func _ready():
+	set_network_master(1)
+	showBulkMessages(PlayerManager.chatbox_cache)
+
 func sendMessage(content, color: String = defaultColor):
 	if isEmpty(content) or hasLineBreaks(content):
 		return
 	if content.length() > maxChars: #if maxChars is raised clientside it can't affect other clients
 		return
-	showMessage("You", content, color, sentSide)
+	PlayerManager.chatbox_cache.append({"sender": Network.get_my_id(), "content": content, "color": color})
+	showMessage(Network.get_my_id(), content, color)
 	textbox.text = ""
 	currentText = ""
 	#TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
-	rpc("receiveMessage", Network.myID, content, color, Network.get_player_name())
+	rpc("receiveMessage", Network.myID, content, color)
 
-#TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
-remote func receiveMessage(sender: int, content: String, color: String, sentname: String):
+puppet func receiveBulkMessages(messageArray: Array):
+	if get_tree().is_network_server():
+		return
+	PlayerManager.chatbox_cache = messageArray
+	showBulkMessages(messageArray)
+
+func showBulkMessages(messageArray: Array):
+	chatbox.bbcode_text = ""
+	for i in messageArray:
+		showMessage(i.sender, i.content, i.color)
+
+remote func receiveMessageServer(sender: int, content: String, color: String):
 	#add checks here to make sure it's valid (correct color-sender combo, etc.)
 	if sender != get_tree().get_rpc_sender_id():
-		#having the sender be sent and then checked allows to double check if get_rpc_sender_id returns the wrong id, most likely won't happen as long as we stay single threaded
-		pass
-	if isEmpty(content) or hasLineBreaks(content):
 		return
-	#eventually use id to find the player's name
-	showMessage(str(sentname), content, color, receivedSide)
+	if isEmpty(content):
+		return
+	var usedContent = content
+	if hasLineBreaks(usedContent):
+		usedContent = removeLineBreaks(usedContent)
+	rpc("receiveMessage", sender, usedContent, color)
+	showMessage(sender, content, color)
 
-func showMessage(sender, content, color, align: String = ""):
-	if sender == "" or content == "":
+#TODO: switch to getting the color from locally stored data to avoid sending false colors
+puppet func receiveMessage(sender: int, content: String, color: String):
+	#add checks here to make sure it's valid (correct color-sender combo, etc.)
+	if sender == Network.get_my_id():
+		return
+	if isEmpty(content):
+		return
+	var usedContent = content
+	if hasLineBreaks(usedContent):
+		usedContent = removeLineBreaks(usedContent)
+	PlayerManager.chatbox_cache.append({"sender": sender, "content": content, "color": color})
+	showMessage(sender, content, color)
+
+func showMessage(sender, content, color):
+	if content == "":
+		return
+	if not Network.get_peers().has(sender):
 		return
 	chatbox.pop()
 	var newMessage: String
@@ -45,10 +77,18 @@ func showMessage(sender, content, color, align: String = ""):
 		chatbox.scroll_following = true
 	else:
 		chatbox.scroll_following = false
-	if align == "right":
-		newMessage = "[right]" + "[color=" + color + "]" + sender + "[/color][/right]\n[right][color=" + defaultColor + "]" + content + "[/color][/right]\n"
+	var senderName: String
+	var align: String
+	if sender == Network.get_my_id():
+		senderName = "You"
+		align = sentSide
 	else:
-		newMessage = "[color=" + color + "]" + sender + "[/color]\n[color=" + defaultColor + "]" + content + "[/color]\n"
+		senderName = Network.get_player_name(sender)
+		align = receivedSide
+	if align == "right":
+		newMessage = "[right]" + "[color=" + color + "]" + senderName + "[/color][/right]\n[right][color=" + defaultColor + "]" + content + "[/color][/right]\n"
+	else:
+		newMessage = "[color=" + color + "]" + senderName + "[/color]\n[color=" + defaultColor + "]" + content + "[/color]\n"
 	chatbox.append_bbcode(newMessage)
 
 func restrictText():
@@ -59,6 +99,12 @@ func restrictText():
 		textbox.cursor_set_column(cursorCoord.y)
 	else:
 		currentText = newText
+
+func removeLineBreaks(content: String) -> String:
+	var newContent = content
+	for i in breakChars:
+		newContent = newContent.replace(i, "")
+	return newContent
 
 #tests if the string is full of empty chars, like tabs and spaces
 func isEmpty(inputStr):
@@ -93,4 +139,5 @@ func _on_TextEdit_cursor_changed():
 	cursorCoord.y = textbox.cursor_get_column()
 
 func _on_chatboxbase_visibility_changed():
-	pass # Replace with function body.
+	if visible:
+		textbox.grab_focus()

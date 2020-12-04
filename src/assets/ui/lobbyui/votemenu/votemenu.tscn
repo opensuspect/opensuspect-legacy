@@ -8,7 +8,7 @@
 [node name="votemenu" type="WindowDialog"]
 visible = true
 anchor_left = 0.05
-anchor_top = 0.05
+anchor_top = 0.09
 anchor_right = 0.95
 anchor_bottom = 0.95
 rect_min_size = Vector2( 500, 350 )
@@ -32,19 +32,20 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 6.0
-margin_top = 37.0
+margin_top = 51.0
 margin_right = -6.0
 margin_bottom = -7.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 0
+custom_constants/margin_top = -16
 custom_constants/margin_left = 0
 custom_constants/margin_bottom = 0
 
 [node name="VoteControl" type="Control" parent="TabContainer/Vote"]
-margin_top = 15.0
+margin_top = -16.0
 margin_right = 909.0
-margin_bottom = 496.0
+margin_bottom = 458.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -61,12 +62,12 @@ __meta__ = {
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 909.0
-margin_bottom = 443.0
+margin_bottom = 436.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Vote/VoteControl/VBoxContainer"]
-margin_top = 447.0
+margin_top = 440.0
 margin_right = 909.0
-margin_bottom = 481.0
+margin_bottom = 474.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
@@ -109,7 +110,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 6.0
-margin_top = 37.0
+margin_top = 51.0
 margin_right = -6.0
 margin_bottom = -7.0
 
@@ -119,7 +120,7 @@ anchor_bottom = 0.0
 margin_left = 15.0
 margin_top = 15.0
 margin_right = 894.0
-margin_bottom = 481.0
+margin_bottom = 443.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

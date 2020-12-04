@@ -9,6 +9,10 @@ var ournumber
 var tasks = [-1]
 var taskstoassign
 var assignedtasks
+
+# stores messages so they can be shown on multiple chatboxes
+var chatbox_cache: Array
+
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
 enum assignStyle {Percent, Amount}
