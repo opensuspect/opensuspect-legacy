@@ -1,8 +1,19 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/ui/hud/defaulthud/startgamebutton.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/hud/defaulthud/Button.gd" type="Script" id=2]
 [ext_resource path="res://assets/ui/hud/defaulthud/rolescreen/rolescreen.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=4]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 4 )
+ui_name = "chatbox"
+ui_data = {
+
+}
+advanced/reinstance = false
+advanced/only_instance = false
 
 [node name="defaulthud" type="Control"]
 anchor_right = 1.0
@@ -23,6 +34,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+interact_ui_resource = SubResource( 1 )
 
 [node name="startgamebutton" type="Button" parent="."]
 anchor_top = 1.0

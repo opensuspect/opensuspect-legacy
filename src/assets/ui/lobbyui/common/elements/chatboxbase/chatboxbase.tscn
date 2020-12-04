@@ -1,16 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=1]
 [ext_resource path="res://assets/ui/lobbyui/common/elements/chatboxbase/chatboxbase.gd" type="Script" id=2]
 
 [node name="chatboxbase" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -10.0
-theme = ExtResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true,
@@ -21,7 +15,9 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -65.0
+focus_mode = 2
 bbcode_enabled = true
+selection_enabled = true
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -37,7 +33,7 @@ __meta__ = {
 }
 
 [node name="TextEdit" type="TextEdit" parent="HBoxContainer"]
-margin_right = 951.0
+margin_right = 971.0
 margin_bottom = 55.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 3
@@ -49,8 +45,8 @@ __meta__ = {
 }
 
 [node name="send" type="Button" parent="HBoxContainer"]
-margin_left = 955.0
-margin_right = 1004.0
+margin_left = 975.0
+margin_right = 1024.0
 margin_bottom = 55.0
 text = "Send"
 __meta__ = {
