@@ -2,8 +2,11 @@
 
 [ext_resource path="res://assets/ui/submenus/settings/keybind/keybind.gd" type="Script" id=1]
 
-[node name="KeyBind" type="CanvasLayer"]
+[node name="KeyBind" type="Control"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="."]
 margin_right = 1024.0
