@@ -4,11 +4,11 @@
 [ext_resource path="res://assets/ui/hud/defaulthud/rolescreen/rolescreen.gd" type="Script" id=2]
 [ext_resource path="res://Roboto-Bold.ttf" type="DynamicFontData" id=3]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 56
 font_data = ExtResource( 3 )
 
-[node name="Node2D" type="Node2D"]
+[node name="RoleScreen" type="Popup"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -17,7 +17,6 @@ scale = Vector2( 0.545715, 0.575279 )
 texture = ExtResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
 one_shot = true
 
 [node name="Label" type="Label" parent="."]
@@ -25,7 +24,7 @@ margin_right = 42.0
 margin_bottom = 22.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Team"
 align = 1
 __meta__ = {

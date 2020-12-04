@@ -147,8 +147,14 @@ func get_player_sprite(player) -> Node2D:
 	if node == null:
 		return null
 	# duplicate, so that the caller doesn't change the actual player's sprite
-	return node.duplicate(0) 
-
+	var sprite = node.duplicate(0)
+	var animTree: AnimationTree = sprite.get_node("AnimationPlayer/AnimationTree")
+	if animTree != null:
+		# a hackish way to stop the animation
+		# don't know how to seek it back to position 0
+		animTree.set_active(false)
+	return sprite
+	
 func get_defalut_player_sprite() -> Sprite:
 		# Return the plain ol' black spacesuit sprite
 		var sprite = Sprite.new()

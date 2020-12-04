@@ -1,36 +1,27 @@
-extends Node2D
+extends PopupBase
 
-func _ready():
-	# warning-ignore:return_value_discarded
-	PlayerManager.connect("roles_assigned", self, "_on_roles_assigned")
+# gets updated by the UIManager
+export var ui_data: Dictionary
+
+func base_open():
+	.base_open()# we need to 'pop up'
 	# warning-ignore:return_value_discarded
 	$Timer.connect("timeout", self, "_clean_up")
-	
+	# warning-ignore:return_value_discarde
+	GameManager.connect("state_changed", self, "_clean_up")# HELP<<-- Never gets called
 	$Label.set_size(get_viewport().size)
 	PlayerInfo._set_label_outline($Label)
-
-var player_info : Array
+	show_roles(ui_data)
+	$Timer.start()
 
 func _clean_up():
-	self.hide()
-	PlayerManager.inMenu = false
-	if self.player_info == null:
-		return
-	
-	for info in self.player_info:
-		info.name_label.queue_free()
-		info.sprite_collection.queue_free()
-	self.player_info.clear()
+	#UIManager.close_ui("roleannouncementui", true)
+	$Timer.stop()
+	UIManager.free_ui("roleannouncementui")
 
-func _on_roles_assigned(player_roles : Dictionary):
-	# just in case the timer didn't fire
-	_clean_up()
-	if GameManager.state != GameManager.State.Normal:
-		return
-	
-	
-	$Timer.start()
+func show_roles(player_roles : Dictionary):
 	PlayerManager.inMenu = true
+	var player_info: Array
 	var we_are_traitor = PlayerManager.ourrole == "traitor"
 	if we_are_traitor:
 		# makes _generate_info return only traitor PlayerInfo
@@ -50,12 +41,10 @@ func _on_roles_assigned(player_roles : Dictionary):
 		player_info = _generate_info(player_roles, everyone_dict)
 		$Label.text = "Good guys"
 		$Label.set("custom_colors/font_color", PlayerManager.playerColors["detective"])
-	for info in self.player_info:
+	for info in player_info:
 		self.add_child(info.name_label)
 		self.add_child(info.sprite_collection)
 		
-	
-	self.show()
 
 
 
