@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=1]
 [ext_resource path="res://assets/ui/submenus/appearance_editor/appearance_editor.gd" type="Script" id=2]
 [ext_resource path="res://assets/ui/submenus/appearance_editor/textures/cursor.png" type="Texture" id=3]
 [ext_resource path="res://assets/ui/submenus/appearance_editor/skin_color_range.gd" type="Script" id=4]
+[ext_resource path="res://assets/player/player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=6]
 
 [sub_resource type="Shader" id=8]
 code = "shader_type canvas_item;
@@ -43,6 +45,17 @@ colors = PoolColorArray( 0.917647, 0.823529, 0.596078, 1, 0.117647, 0.00392157, 
 
 [sub_resource type="GradientTexture" id=4]
 gradient = SubResource( 3 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
+
+[sub_resource type="ShaderMaterial" id=11]
+resource_local_to_scene = true
+shader = ExtResource( 6 )
+shader_param/line_color = Color( 1, 1, 1, 0 )
+shader_param/line_thickness = 5.0
+
+[sub_resource type="ViewportTexture" id=12]
+viewport_path = NodePath("SpritesViewport")
 
 [node name="AppearanceEditor" type="Control"]
 anchor_right = 1.0
@@ -141,10 +154,28 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
-[node name="ButtonsHBox" type="HBoxContainer" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox"]
-margin_top = 219.0
+[node name="PlayerContainer" type="CenterContainer" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox"]
 margin_right = 446.0
-margin_bottom = 253.0
+margin_bottom = 434.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer" instance=ExtResource( 5 )]
+position = Vector2( 221.193, 328.221 )
+scale = Vector2( 5, 5 )
+script = null
+
+[node name="AnimationTree" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Player/Skeleton/AnimationPlayer" index="0"]
+parameters/playback = SubResource( 10 )
+
+[node name="ViewportTextureTarget" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Player" index="7"]
+material = SubResource( 11 )
+texture = SubResource( 12 )
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox"]
+margin_top = 438.0
+margin_right = 446.0
+margin_bottom = 472.0
 alignment = 1
 
 [node name="CancelButton" type="Button" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox"]
@@ -162,3 +193,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Save"
 [connection signal="gui_input" from="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector" to="." method="_on_SkinColorSelector_gui_input"]
+[connection signal="pressed" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox/CancelButton" to="." method="_on_CancelButton_pressed"]
+[connection signal="pressed" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox/SaveButton" to="." method="_on_SaveButton_pressed"]
+
+[editable path="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Player"]
