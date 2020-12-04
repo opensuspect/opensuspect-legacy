@@ -93,7 +93,6 @@ func update_instanced_uis() -> void:
 			temp_instanced_uis.erase(i)
 			child_nodes.erase(i)
 	for i in child_nodes:
-		print(i, " ", ignored_ui_nodes.has(i))
 		if ignored_ui_nodes.has(i) or temp_instanced_uis.has(i):
 			continue
 		push_error("UI element " + i + " instanced incorrectly, use instance_ui() instead")
