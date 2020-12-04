@@ -32,3 +32,12 @@ func _on_Back_pressed() -> void:
 
 func _on_MenuArea_returnToMainMenu():
 	default_state()
+
+
+func _on_loadpck_pressed():
+	var directory = Directory.new();
+	var doFileExists = directory.file_exists("user://custom.pck")
+	if doFileExists:
+		directory.open("user://custom.pck")
+		ProjectSettings.load_resource_pack("user://custom.pck")
+	get_tree().change_scene("res://assets/ui/mainmenu/mainmenu.tscn")
