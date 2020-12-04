@@ -171,7 +171,6 @@ remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> 
 		return
 
 	for player_id in players.keys():
-		PlayerManager.playerRoles.erase(killed_player_id)
 		if players[player_id].main_player:
 			# Can't RPC on self
 			player_killed(killer_id, killed_player_id)
@@ -180,25 +179,8 @@ remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> 
 
 puppet func player_killed(killer_id: int, killed_player_id: int) -> void:
 	"""Runs on a client; responsible for actually killing off a player."""
-	PlayerManager.playerRoles.erase(killed_player_id)
-	var killvalid = false
-	var intrudersleft = 0
-	var innosleft = 0
-	for i in PlayerManager.playerRoles:
-		var role = PlayerManager.get_player_role(i)
-		if role == "traitor":
-			intrudersleft = intrudersleft + 1
-		if role == "default":
-			innosleft = innosleft + 1
-	if intrudersleft >= innosleft:
-		GameManager.transition(GameManager.State.Lobby)
-	elif intrudersleft == 0:
-		GameManager.transition(GameManager.State.Lobby)
-	else:
-		killvalid = true
-	if killvalid == true:
-		var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
-		killed_player_death_handler.die_by(killer_id)
+	var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
+	killed_player_death_handler.die_by(killer_id)
 
 func get_network_id_from_player_node_name(node_name: String) -> int:
 	"""Fetch a player's network ID from the name of their KinematicBody2D."""

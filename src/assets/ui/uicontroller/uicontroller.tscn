@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/ui/hud/defaulthud/defaulthud.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/ui/uicontroller/uicontroller.gd" type="Script" id=2]
 [ext_resource path="res://assets/common/shaders/colorblind.shader" type="Shader" id=3]
-[ext_resource path="res://assets/ui/pausemenu/pausemenu.tscn" type="PackedScene" id=4]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 3 )
@@ -23,6 +22,3 @@ __meta__ = {
 [node name="defaulthud" parent="." instance=ExtResource( 1 )]
 margin_left = 1.0
 margin_right = 1.0
-
-[node name="pausemenu" parent="." instance=ExtResource( 4 )]
-visible = false

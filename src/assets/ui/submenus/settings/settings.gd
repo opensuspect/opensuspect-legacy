@@ -81,9 +81,9 @@ func _ready():
 	back_button.text = tr("Back")
 	back_button.connect("pressed", get_node(".."), "_on_Return")
 	
-	var button = Button.new()
-	button.text = tr("Keybinds")
-	button.connect("pressed", self, "_on_Button_pressed")
+	var keybinds_button = Button.new()
+	keybinds_button.text = tr("Keybinds")
+	keybinds_button.connect("pressed", self, "_on_KeyBindsButton_pressed")
 	
 
 	# Init settings view
@@ -137,7 +137,7 @@ func _ready():
 
 
 		vbox.add_child(hbox)
-	vbox.add_child(button)
+	vbox.add_child(keybinds_button)
 	vbox.add_child(back_button)
 
 
@@ -158,5 +158,9 @@ func get_languages() -> Array:
 func set_language(setting):
 	TranslationServer.set_locale(setting.available[setting.value])
 	
-func _on_Button_pressed():
-	get_tree().change_scene("res://assets/ui/submenus/settings/keybind/keybind.tscn")
+func _on_KeyBindsButton_pressed():
+	if GameManager.state == GameManager.State.Start:
+		get_owner().get_node("KeyBind").show()
+	else:
+		UIManager.open_ui("keybind")
+		UIManager.close_ui("pausemenu")
