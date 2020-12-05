@@ -23,7 +23,7 @@ void fragment()
 		float inline = (1.0 - l * r * u * d * lu * ru * rd * ld) * color.a;
 
 		vec4 outlined_result = mix(color, line_color, outline + inline);
-		COLOR = mix(color, outlined_result, outlined_result.a);		
+		COLOR = mix(color, outlined_result, outlined_result.a);
 	}
 	else
 	{

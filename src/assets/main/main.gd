@@ -96,6 +96,9 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 	if id == Network.get_my_id():
 		newPlayer.main_player = true
 		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
+		var player_item_handler: Node2D = newPlayer.get_node("Skeleton/ItemHandler")
+		player_item_handler.connect("main_player_picked_up_item", self, "_on_main_player_picked_up_item")
+		player_item_handler.connect("main_player_dropped_item", self, "_on_main_player_dropped_item")
 		self.connect("positions_updated", newPlayer, "_on_positions_updated")
 	players[id] = newPlayer
 	$players.add_child(newPlayer)
@@ -133,6 +136,44 @@ puppet func update_positions(positions_dict: Dictionary, last_received_input: in
 func _on_main_player_moved(movement: Vector2, velocity: Vector2, last_input: int):
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", movement, velocity, last_input)
+
+func _on_main_player_picked_up_item(item_path: String) -> void:
+	if get_tree().is_network_server():
+		player_picked_up_item(item_path, 1)
+	else:
+		rpc_id(1, "player_picked_up_item", item_path, get_tree().get_network_unique_id())
+
+func _on_main_player_dropped_item() -> void:
+	if get_tree().is_network_server():
+		player_dropped_item(1)
+	else:
+		rpc_id(1, "player_dropped_item", get_tree().get_network_unique_id())
+
+remote func player_picked_up_item(item_path: String, id: int) -> void:
+	if not get_tree().is_network_server():
+		return
+	if not players.keys().has(id):
+		return
+
+	rpc("pick_up_item", id, item_path)
+
+remote func player_dropped_item(id: int) -> void:
+	if not get_tree().is_network_server():
+		return
+	if not players.keys().has(id):
+		return
+
+	rpc("drop_item", id)
+
+remotesync func pick_up_item(id: int, item_path: String) -> void:
+	var player_item_handler: Node2D = players[id].get_node("Skeleton/ItemHandler")
+	var found_item: KinematicBody2D = get_tree().get_root().get_node(item_path)
+	player_item_handler.pick_up(found_item)
+
+puppetsync func drop_item(id: int) -> void:
+	var player_item_handler: Node2D = players[id].get_node("Skeleton/ItemHandler")
+	var item: KinematicBody2D = player_item_handler.get_child(0)
+	player_item_handler.drop(item)
 
 master func _on_maps_spawn(spawnPositions: Array):
 	if not get_tree().is_network_server():

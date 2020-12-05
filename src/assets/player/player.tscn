@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/death_handler.gd" type="Script" id=3]
@@ -17,6 +17,7 @@
 [ext_resource path="res://assets/player/textures/characters/customizable/09-facial-hair/red-eyebrow-sideburn.png" type="Texture" id=25]
 [ext_resource path="res://assets/player/textures/characters/customizable/10-face-wear/glasses.png" type="Texture" id=26]
 [ext_resource path="res://assets/player/camera.gd" type="Script" id=27]
+[ext_resource path="res://assets/player/item_handler.gd" type="Script" id=28]
 
 [sub_resource type="ShaderMaterial" id=1]
 render_priority = 1
@@ -36,6 +37,10 @@ light_mode = 2
 
 [sub_resource type="CapsuleShape2D" id=5]
 radius = 12.0
+
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 25.0
+height = 50.0
 
 [sub_resource type="CanvasItemMaterial" id=6]
 light_mode = 2
@@ -2202,7 +2207,7 @@ gravity_vec = Vector2( 0, 0 )
 gravity = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
-collision_layer = 0
+collision_layer = 2
 collision_mask = 16
 script = ExtResource( 16 )
 
@@ -2217,6 +2222,14 @@ shape = SubResource( 3 )
 material = SubResource( 4 )
 rotation = 1.5708
 shape = SubResource( 5 )
+
+[node name="ItemPickupRange" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 16
+
+[node name="PickupRangeCollision" type="CollisionShape2D" parent="ItemPickupRange"]
+rotation = 1.5708
+shape = SubResource( 9 )
 
 [node name="MainLight" type="Light2D" parent="."]
 position = Vector2( -0.37458, -0.226169 )
@@ -2316,7 +2329,8 @@ __meta__ = {
 }
 
 [node name="Spine" type="Bone2D" parent="Skeleton/Skeleton"]
-position = Vector2( 2.52554, -8.41847 )
+position = Vector2( 2.526, -8.97935 )
+
 rest = Transform2D( 1, 0, 0, 1, 2.52554, -8.41847 )
 __meta__ = {
 "_editor_description_": "The root bone of the skeleton."
@@ -2350,6 +2364,7 @@ rest = Transform2D( -3.83988e-08, -0.878462, 0.878462, -3.83988e-08, 0, -1.59279
 
 [node name="LeftUpperArm" type="Bone2D" parent="Skeleton/Skeleton/Spine"]
 position = Vector2( 4.65966, -8.45606 )
+rotation = 0.144229
 rest = Transform2D( 1, 0, 0, 1, 4.65966, -8.45606 )
 __meta__ = {
 "_edit_bone_": true,
@@ -2359,6 +2374,7 @@ __meta__ = {
 
 [node name="LeftLowerArm" type="Bone2D" parent="Skeleton/Skeleton/Spine/LeftUpperArm"]
 position = Vector2( 0, 2.77268 )
+rotation = -0.508616
 rest = Transform2D( 1, 0, 0, 1, 0, 2.77268 )
 __meta__ = {
 "_edit_bone_": true,
@@ -2402,6 +2418,16 @@ __meta__ = {
 "_editor_description_": "Bone that controls the player's right hand."
 }
 
+[node name="ItemTransform" type="RemoteTransform2D" parent="Skeleton/Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand"]
+position = Vector2( 7.74789, 0.0131569 )
+rotation = -0.231979
+scale = Vector2( 3.31969, 3.87036 )
+remote_path = NodePath("../../../../../../ItemHandler")
+update_scale = false
+__meta__ = {
+"_editor_description_": "Syncs the transform of the player's right hand with the item that the player has picked up."
+}
+
 [node name="LeftUpperLeg" type="Bone2D" parent="Skeleton/Skeleton/Spine"]
 position = Vector2( 3.53507, 1.61536 )
 rest = Transform2D( 1, 0, 0, 1, 3.53507, 1.61536 )
@@ -2438,7 +2464,8 @@ __meta__ = {
 }
 
 [node name="RightUpperLeg" type="Bone2D" parent="Skeleton/Skeleton/Spine"]
-position = Vector2( -6.90243, 1.61536 )
+position = Vector2( -6.90654, 1.61536 )
+rotation = -0.0684658
 rest = Transform2D( 1, 0, 0, 1, -6.90243, 1.61536 )
 __meta__ = {
 "_edit_bone_": true,
@@ -2534,6 +2561,15 @@ __meta__ = {
 "_editor_description_": "Player's right leg as a polygon."
 }
 
+[node name="ItemHandler" type="Node2D" parent="Skeleton"]
+position = Vector2( -6.5255, -9.79591 )
+rotation = 0.522613
+scale = Vector2( 1, 1 )
+script = ExtResource( 28 )
+__meta__ = {
+"_editor_description_": "Handles picking up and dropping of items."
+}
+
 [node name="RightArm" type="Polygon2D" parent="Skeleton"]
 position = Vector2( -19.3352, -51.6 )
 scale = Vector2( 0.05, 0.05 )
@@ -2591,3 +2627,4 @@ __meta__ = {
 }
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]
+[connection signal="body_exited" from="ItemPickupRange" to="Skeleton/ItemHandler" method="_on_ItemPickupRange_body_exited"]
