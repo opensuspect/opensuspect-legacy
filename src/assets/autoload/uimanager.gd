@@ -20,8 +20,6 @@ var ui_list: Dictionary = {
 
 var open_uis: Array = []
 
-var shown_uis: Array = []
-
 var just_closed: String = ""
 
 var interact_ui_node: Node
