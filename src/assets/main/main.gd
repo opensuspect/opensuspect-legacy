@@ -210,8 +210,8 @@ func elimination_victory_check(main_team: int):
 	for team in enabled_teams:
 		players_left[team] = 0
 	
-	for player in PlayerManager.players:
-		if player.get_is_alive():
+	for player in PlayerManager.players.keys():
+		if PlayerManager.players[player].get_is_alive():
 			players_team = PlayerManager.get_player_team(player)
 			players_left[players_team] = players_left[players_team] + 1
 	
