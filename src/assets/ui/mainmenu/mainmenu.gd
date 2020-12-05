@@ -35,3 +35,11 @@ func _on_MenuArea_returnToMainMenu():
 
 func _on_Appearence_pressed() -> void:
 	get_owner().get_node("AppearanceEditor").open()
+
+func _on_loadpck_pressed():
+	var directory = Directory.new();
+	var doFileExists = directory.file_exists("user://custom.pck")
+	if doFileExists:
+		directory.open("user://custom.pck")
+		ProjectSettings.load_resource_pack("user://custom.pck")
+	get_tree().change_scene("res://assets/ui/mainmenu/mainmenu.tscn")
