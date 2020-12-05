@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/ui/mainmenu/mainmenu.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/submenus/settings/keybind/keybind.tscn" type="PackedScene" id=2]
@@ -7,10 +7,14 @@
 [ext_resource path="res://assets/common/fonts/title-font.tres" type="DynamicFont" id=5]
 [ext_resource path="res://assets/common/fonts/menufont.tres" type="DynamicFont" id=6]
 [ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=7]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/appearance_editor.tscn" type="PackedScene" id=8]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -217,8 +221,12 @@ margin_bottom = 215.0
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="AppearanceEditor" parent="." instance=ExtResource( 8 )]
+visible = false
 [connection signal="returnToMainMenu" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_MenuArea_returnToMainMenu"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2/CenterContainer/Appearence" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_Appearence_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control4/CenterContainer/loadpck" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_loadpck_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control3/CenterContainer/Settings" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_Settings_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control5/CenterContainer/Quit" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_Quit_pressed"]
