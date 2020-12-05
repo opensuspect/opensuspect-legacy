@@ -26,7 +26,7 @@
 [ext_resource path="res://assets/maps/lobby/textures/cloud1.png" type="Texture" id=24]
 [ext_resource path="res://assets/maps/lobby/textures/cloud0.png" type="Texture" id=25]
 
-[sub_resource type="TileSet" id=3]
+[sub_resource type="TileSet" id=1]
 0/name = "carpet.png 0"
 0/texture = ExtResource( 8 )
 0/tex_offset = Vector2( 0, 0 )
@@ -56,7 +56,7 @@
 1/shapes = [  ]
 1/z_index = 0
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 375, 10 )
 
 [node name="lobby" type="YSort"]
@@ -553,7 +553,7 @@ position = Vector2( 299.294, 117.634 )
 [node name="Ground" type="TileMap" parent="."]
 position = Vector2( -1529, -1600 )
 scale = Vector2( 0.2, 0.2 )
-tile_set = SubResource( 3 )
+tile_set = SubResource( 1 )
 cell_size = Vector2( 102, 51 )
 cell_quadrant_size = 51
 format = 1
@@ -676,7 +676,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="FaderCollision" type="CollisionShape2D" parent="walls/BottomWall/FadeTrigger"]
-shape = SubResource( 4 )
+shape = SubResource( 2 )
 
 [node name="LeftWall" type="YSort" parent="walls"]
 position = Vector2( -361.603, -41.6641 )

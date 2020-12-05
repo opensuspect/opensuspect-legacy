@@ -67,6 +67,7 @@ UIManager="*res://assets/autoload/uimanager.gd"
 MapManager="*res://assets/autoload/mapmanager.gd"
 TaskManager="*res://assets/autoload/taskmanager.gd"
 Helpers="*res://assets/autoload/helpers.gd"
+SaveLoadHandler="*res://assets/autoload/save_load_handler.gd"
 
 [display]
 

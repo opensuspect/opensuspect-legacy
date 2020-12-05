@@ -1,13 +1,19 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=1]
 [ext_resource path="res://assets/ui/submenus/appearance_editor/appearance_editor.gd" type="Script" id=2]
 [ext_resource path="res://assets/ui/submenus/appearance_editor/textures/cursor.png" type="Texture" id=3]
 [ext_resource path="res://assets/ui/submenus/appearance_editor/skin_color_range.gd" type="Script" id=4]
-[ext_resource path="res://assets/player/player.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=6]
+[ext_resource path="res://assets/player/skeleton.tscn" type="PackedScene" id=5]
 
-[sub_resource type="Shader" id=8]
+[sub_resource type="Gradient" id=12]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0.121569, 0.121569, 0.121569, 1 )
+
+[sub_resource type="GradientTexture" id=13]
+gradient = SubResource( 12 )
+
+[sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 render_mode blend_disabled;
 
@@ -16,16 +22,16 @@ void fragment()
 	
 }"
 
-[sub_resource type="ShaderMaterial" id=9]
-shader = SubResource( 8 )
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
 
-[sub_resource type="Gradient" id=1]
+[sub_resource type="Gradient" id=3]
 colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1 )
 
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
 
-[sub_resource type="Shader" id=6]
+[sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
 render_mode blend_disabled;
 
@@ -36,26 +42,15 @@ void fragment()
 	
 }"
 
-[sub_resource type="ShaderMaterial" id=7]
-shader = SubResource( 6 )
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
 shader_param/color_tone = Color( 1, 1, 1, 1 )
 
-[sub_resource type="Gradient" id=3]
+[sub_resource type="Gradient" id=7]
 colors = PoolColorArray( 0.917647, 0.823529, 0.596078, 1, 0.117647, 0.00392157, 0.00392157, 1 )
 
-[sub_resource type="GradientTexture" id=4]
-gradient = SubResource( 3 )
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
-
-[sub_resource type="ShaderMaterial" id=11]
-resource_local_to_scene = true
-shader = ExtResource( 6 )
-shader_param/line_color = Color( 1, 1, 1, 0 )
-shader_param/line_thickness = 5.0
-
-[sub_resource type="ViewportTexture" id=12]
-viewport_path = NodePath("SpritesViewport")
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
 
 [node name="AppearanceEditor" type="Control"]
 anchor_right = 1.0
@@ -64,6 +59,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 13 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -104,12 +108,12 @@ __meta__ = {
 }
 
 [node name="SkinToneRange" type="TextureRect" parent="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector"]
-material = SubResource( 9 )
+material = SubResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 11
-texture = SubResource( 2 )
+texture = SubResource( 4 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -117,7 +121,7 @@ __meta__ = {
 
 [node name="SkinColorRange" type="TextureRect" parent="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector"]
 modulate = Color( 1, 1, 1, 0.498039 )
-material = SubResource( 7 )
+material = SubResource( 6 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 446.0
@@ -126,7 +130,7 @@ margin_bottom = -27.0
 rect_rotation = 90.0
 size_flags_horizontal = 3
 size_flags_vertical = 11
-texture = SubResource( 4 )
+texture = SubResource( 8 )
 expand = true
 script = ExtResource( 4 )
 __meta__ = {
@@ -160,17 +164,9 @@ margin_bottom = 434.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Player" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer" instance=ExtResource( 5 )]
-position = Vector2( 221.193, 328.221 )
+[node name="Skeleton" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer" instance=ExtResource( 5 )]
+position = Vector2( 223, 335 )
 scale = Vector2( 5, 5 )
-script = null
-
-[node name="AnimationTree" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Player/Skeleton/AnimationPlayer" index="0"]
-parameters/playback = SubResource( 10 )
-
-[node name="ViewportTextureTarget" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Player" index="7"]
-material = SubResource( 11 )
-texture = SubResource( 12 )
 
 [node name="ButtonsHBox" type="HBoxContainer" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox"]
 margin_top = 438.0
@@ -192,8 +188,7 @@ margin_bottom = 34.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Save"
+[connection signal="visibility_changed" from="." to="." method="_on_AppearanceEditor_visibility_changed"]
 [connection signal="gui_input" from="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector" to="." method="_on_SkinColorSelector_gui_input"]
 [connection signal="pressed" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox/CancelButton" to="." method="_on_CancelButton_pressed"]
 [connection signal="pressed" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox/SaveButton" to="." method="_on_SaveButton_pressed"]
-
-[editable path="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Player"]

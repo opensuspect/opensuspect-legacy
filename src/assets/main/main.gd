@@ -12,10 +12,12 @@ var version = 13
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
+var player_data_dict: Dictionary
 
 signal positions_updated(last_received_input)
 
 func _ready() -> void:
+	print(OS.get_user_data_dir())
 	set_network_master(1)
 
 # Gets called when the title scene sets this scene as the main scene
@@ -77,14 +79,20 @@ puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary
 	for i in idNameDict.keys():
 		if spawnPointDict.keys().has(i):
 			#spawn at spawn point
-			createPlayer(i, idNameDict[i], spawnPointDict[i])
+			if player_data_dict.has(i):
+				createPlayer(i, idNameDict[i], spawnPointDict[i], player_data_dict[i])
+			else:
+				createPlayer(i, idNameDict[i], spawnPointDict[i])
 		else:
 			#else spawn at default spawn
-			createPlayer(i, idNameDict[i], spawn_pos)
+			if player_data_dict.has(i):
+				createPlayer(i, idNameDict[i], spawn_pos, player_data_dict[i])
+			else:
+				createPlayer(i, idNameDict[i], spawn_pos)
 	# Assign Main's players to the PlayerManager singleton so they may be accessed anywhere
 	PlayerManager.players = players
 
-puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = Vector2(0,0)) -> void:
+puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = Vector2(0,0), player_data: Dictionary = {}) -> void:
 	print("creating player ", id)
 	if players.keys().has(id):
 		print("not creating player, already exists")
@@ -97,9 +105,15 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 		newPlayer.main_player = true
 		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
 		self.connect("positions_updated", newPlayer, "_on_positions_updated")
+		player_data = SaveLoadHandler.load_data("user://player_data.save")
+		_apply_customizations(newPlayer, player_data)
 	players[id] = newPlayer
 	$players.add_child(newPlayer)
 	newPlayer.move_to(spawnPoint, Vector2(0,0))
+	if get_tree().is_network_server():
+		query_player_data()
+	else:
+		rpc_id(1, "query_player_data")
 	print("New player: ", id)
 
 func deletePlayers() -> void:
@@ -145,7 +159,7 @@ master func _on_maps_spawn(spawnPositions: Array):
 		if spawnPointDict[players.keys()[i]] == null:
 			spawnPointDict[players.keys()[i]] = spawn_pos
 	#spawn players
-	rpc("createPlayers", Network.get_player_names(), spawnPointDict)
+	rpc("createPlayers", Network.get_player_names(), spawnPointDict, player_data_dict)
 
 func _on_infiltrator_kill(killer: KinematicBody2D, killed_player: KinematicBody2D) -> void:
 	"""
@@ -190,3 +204,58 @@ func get_network_id_from_player_node_name(node_name: String) -> int:
 		if players_array[index].name == node_name:
 			return players_dict.keys()[index]
 	return -1
+
+func query_player_data() -> void:
+	rpc("send_player_data_to_server")
+
+puppet func send_player_data_to_server() -> void:
+	var player_data: Dictionary = SaveLoadHandler.load_data("user://player_data.save")
+	rpc("received_player_data_from_client", player_data)
+
+master func received_player_data_from_client(player_data: Dictionary) -> void:
+	var id: int = get_tree().get_rpc_sender_id()
+	player_data_dict[id] = player_data
+	_apply_customizations(players[id], player_data)
+	rpc("received_player_data_from_server", 1, player_data)
+	rpc("received_player_data_from_server", id, player_data)
+
+puppet func received_player_data_from_server(id: int, player_data: Dictionary) -> void:
+	if id == Network.get_my_id():
+		return
+	player_data_dict[id] = player_data
+	_apply_customizations(players[id], player_data)
+
+func _apply_customizations(player: KinematicBody2D, player_data: Dictionary) -> void:
+	if player_data.empty():
+		return
+
+	var skeleton: Node2D
+	if player.has_node("SpritesViewport/Skeleton"):
+		skeleton = player.get_node("SpritesViewport/Skeleton")
+	elif player.has_node("Skeleton"):
+		skeleton = player.get_node("Skeleton")
+	var body: Polygon2D = skeleton.get_node("Body")
+	var left_leg: Polygon2D = skeleton.get_node("LeftLeg")
+	var left_arm: Polygon2D = skeleton.get_node("LeftArm")
+	var right_leg: Polygon2D = skeleton.get_node("RightLeg")
+	var right_arm: Polygon2D = skeleton.get_node("RightArm")
+	var spine: Bone2D = skeleton.get_node("Skeleton/Spine")
+	var clothes: Sprite = spine.get_node("Clothes")
+	var pants: Sprite = spine.get_node("Pants")
+	var facial_hair: Sprite = spine.get_node("FacialHair")
+	var face_wear: Sprite = spine.get_node("FaceWear")
+	var hat_hair: Sprite = spine.get_node("HatHair")
+	var mouth: Sprite = spine.get_node("Mouth")
+
+	var appearance: Dictionary = player_data["Appearance"]
+	body.modulate = Color(appearance["Skin Color"])
+	left_leg.texture = load(appearance["Clothes"]["left_leg"]["texture_path"])
+	left_arm.texture = load(appearance["Clothes"]["left_arm"]["texture_path"])
+	right_leg.texture = load(appearance["Clothes"]["right_leg"]["texture_path"])
+	right_arm.texture = load(appearance["Clothes"]["right_arm"]["texture_path"])
+	clothes.texture = load(appearance["Clothes"]["clothes"]["texture_path"])
+	pants.texture = load(appearance["Clothes"]["pants"]["texture_path"])
+	facial_hair.texture = load(appearance["Facial Hair"]["texture_path"])
+	face_wear.texture = load(appearance["Face Wear"]["texture_path"])
+	hat_hair.texture = load(appearance["Hat/Hair"]["texture_path"])
+	mouth.texture = load(appearance["Mouth"]["texture_path"])
