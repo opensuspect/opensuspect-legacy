@@ -1,5 +1,6 @@
 extends Node2D
 
+const player_data_path : String = "user://player_data.save"
 export (int) var MAX_PLAYERS = 10
 export (String, FILE, "*.tscn") var player_s = "res://assets/player/player.tscn"
 var player_scene = load(player_s)
@@ -17,7 +18,6 @@ var player_data_dict: Dictionary
 signal positions_updated(last_received_input)
 
 func _ready() -> void:
-	print(OS.get_user_data_dir())
 	set_network_master(1)
 
 # Gets called when the title scene sets this scene as the main scene
@@ -105,7 +105,7 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 		newPlayer.main_player = true
 		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
 		self.connect("positions_updated", newPlayer, "_on_positions_updated")
-		player_data = SaveLoadHandler.load_data("user://player_data.save")
+		player_data = SaveLoadHandler.load_data(player_data_path)
 		_apply_customizations(newPlayer, player_data)
 	players[id] = newPlayer
 	$players.add_child(newPlayer)
@@ -205,28 +205,44 @@ func get_network_id_from_player_node_name(node_name: String) -> int:
 			return players_dict.keys()[index]
 	return -1
 
-func query_player_data() -> void:
+master func query_player_data() -> void:
+	"""Called from the server; fetches every client's player data."""
+	if not get_tree().is_network_server():
+		return
 	rpc("send_player_data_to_server")
 
 puppet func send_player_data_to_server() -> void:
-	var player_data: Dictionary = SaveLoadHandler.load_data("user://player_data.save")
-	rpc("received_player_data_from_client", player_data)
+	"""Loads player data from user file and sends it to the server."""
+	var player_data: Dictionary = SaveLoadHandler.load_data(player_data_path)
+	rpc_id(1, "received_player_data_from_client", player_data)
 
 master func received_player_data_from_client(player_data: Dictionary) -> void:
+	"""
+	Confirms that player data has been received on the server from the client.
+	Sends this player data to all the other clients along with its own player data.
+	"""
+	if not get_tree().is_network_server():
+		return
 	var id: int = get_tree().get_rpc_sender_id()
-	print("ID: ", id)
 	player_data_dict[id] = player_data
 	_apply_customizations(players[id], player_data)
-	rpc("received_player_data_from_server", 1, SaveLoadHandler.load_data("user://player_data.save"))
+	rpc("received_player_data_from_server", 1, SaveLoadHandler.load_data(player_data_path))
 	rpc("received_player_data_from_server", id, player_data)
 
 puppet func received_player_data_from_server(id: int, player_data: Dictionary) -> void:
+	"""Takes player data received from the server and applies them to the local player."""
 	if id == Network.get_my_id():
 		return
 	player_data_dict[id] = player_data
 	_apply_customizations(players[id], player_data)
 
+func _on_appearance_saved() -> void:
+	"""Called when a player changes their appearance in-game."""
+	_apply_customizations(players[Network.get_my_id()], SaveLoadHandler.load_data(player_data_path))
+	rpc_id(1, "query_player_data")
+
 func _apply_customizations(player: KinematicBody2D, player_data: Dictionary) -> void:
+	"""Apply cosmetic changes to a local player."""
 	if player_data.empty():
 		return
 
@@ -249,7 +265,7 @@ func _apply_customizations(player: KinematicBody2D, player_data: Dictionary) -> 
 	var mouth: Sprite = spine.get_node("Mouth")
 
 	var appearance: Dictionary = player_data["Appearance"]
-	body.modulate = Color(appearance["Skin Color"])
+	skeleton.material.set_shader_param("skin_color", Color(appearance["Skin Color"]))
 	left_leg.texture = load(appearance["Clothes"]["left_leg"]["texture_path"])
 	left_arm.texture = load(appearance["Clothes"]["left_arm"]["texture_path"])
 	right_leg.texture = load(appearance["Clothes"]["right_leg"]["texture_path"])

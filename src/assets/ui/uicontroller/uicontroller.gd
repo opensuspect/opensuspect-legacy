@@ -44,6 +44,7 @@ func open_ui(ui_name: String, ui_data: Dictionary = {}, reinstance: bool = false
 	#call open on the inherited class, most likely the script attached to a given task or menu
 	if current_ui.has_method("open"):
 		current_ui.open()
+	move_child(current_ui, get_child_count() - 1)
 
 func close_ui(ui_name: String, free: bool = false):
 	update_instanced_uis()

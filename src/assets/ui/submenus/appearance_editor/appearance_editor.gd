@@ -1,7 +1,9 @@
 extends Control
 
+# Controls for changing parts
 onready var part_selector_scene: PackedScene = preload("res://assets/ui/submenus/appearance_editor/part_selector.tscn")
 
+# Appearance editor nodes
 onready var appearance_hbox: HBoxContainer = $MarginContainer/AppearanceHBox
 onready var customization_vbox: VBoxContainer = appearance_hbox.get_node("CustomizationVBox")
 onready var skin_color_selector: Control = customization_vbox.get_node("SkinColorSelector")
@@ -11,10 +13,12 @@ onready var cursor: Sprite = skin_color_selector.get_node("Cursor")
 onready var color_preview: ColorRect = cursor.get_node("ColorPreview")
 onready var preview_buttons_vbox: VBoxContainer = appearance_hbox.get_node("PreviewButtonsVBox")
 onready var player_container: CenterContainer = preview_buttons_vbox.get_node("PlayerContainer")
-onready var player_skeleton: Node2D = player_container.get_node("Skeleton")
 onready var buttons_hbox: HBoxContainer = preview_buttons_vbox.get_node("ButtonsHBox")
 onready var root: Viewport = get_tree().get_root()
 
+# Player preview nodes
+onready var player_skeleton: Node2D = player_container.get_node("Skeleton")
+onready var animator: AnimationPlayer = player_skeleton.get_node("AnimationPlayer")
 onready var player_left_leg: Polygon2D
 onready var player_left_arm: Polygon2D
 onready var player_body: Polygon2D
@@ -26,6 +30,8 @@ onready var player_hat_hair: Sprite
 onready var player_mouth: Sprite
 onready var player_right_leg: Polygon2D
 onready var player_right_arm: Polygon2D
+
+signal appearance_saved
 
 const player_data_path: String = "user://player_data.save"
 
@@ -46,6 +52,7 @@ export (Array, String) var player_parts_directories := [
 
 var player_part_options: Dictionary = {
 	"Clothes": [],
+	"Body": [],
 	"Facial Hair": [],
 	"Face Wear": [],
 	"Hat/Hair": [],
@@ -57,7 +64,7 @@ var current_customization: Dictionary = {
 var part_selectors: Dictionary = {}
 var player_data: Dictionary = {}
 
-var selecting_skin_color: bool
+var viewport_texture_data: Image
 
 class PlayerPart:
 	var part_group: String
@@ -78,6 +85,10 @@ class PlayerClothes extends PartOption:
 	var pants: PartOption
 
 func _ready() -> void:
+	get_tree().get_root().connect("size_changed", self, "_on_root_size_changed")
+	if get_tree().get_root().has_node("Main"):
+		connect("appearance_saved", get_tree().get_root().get_node("Main"), "_on_appearance_saved")
+
 	# Center cursor in the middle of the skin color picker
 	cursor.position = skin_color_selector.rect_position + (skin_color_selector.rect_size / 2.0)
 
@@ -87,8 +98,10 @@ func _ready() -> void:
 
 	var player_parts: Array = []
 	for path in player_parts_paths:
-		var files: Array = _list_directory(path)
+		var files: Array = Helpers.list_directory(path)
 		for file in files:
+			# Skip PNG files. We will instead be modifying the PNG import file
+			# names because PNG resource files aren't saved on export.
 			if file.ends_with("png"):
 				continue
 			var part_group: String = file.replace(".png.import", "")
@@ -139,7 +152,9 @@ func _ready() -> void:
 			part_option.part_name = part.part_group
 			part_option.part_texture = part.texture
 			part_option.part_texture_path = part.texture_path
-			if "facial" in part.texture_path.to_lower() and "hair" in part.texture_path.to_lower():
+			if "body" in part.texture_path.to_lower():
+				player_part_options["Body"].append(part_option)
+			elif "facial" in part.texture_path.to_lower() and "hair" in part.texture_path.to_lower():
 				player_part_options["Facial Hair"].append(part_option)
 			elif "face" in part.texture_path.to_lower() and "wear" in part.texture_path.to_lower():
 				player_part_options["Face Wear"].append(part_option)
@@ -172,60 +187,68 @@ func _ready() -> void:
 	player_hat_hair = spine.get_node("HatHair")
 	player_mouth = spine.get_node("Mouth")
 
-func _list_directory(path: String, recursive: bool = false) -> Array:
-	var directory := Directory.new()
-	assert(directory.open(path) == OK)
-	var files: Array = []
-	directory.list_dir_begin(true)
-	var file_name: String = directory.get_next()
-	while file_name != "":
-		if directory.current_is_dir() and recursive:
-			_list_directory(file_name, recursive)
-		else:
-			files.append(file_name)
-		file_name = directory.get_next()
-	return files
-
 func _choose_skin_color(coords: Vector2) -> void:
+	"""Chooses the player's new skin color if the mouse is within the palette."""
 	if coords.x > 1 and coords.x < skin_color_selector.rect_size.x - 1 and \
 	   coords.y > 1 and coords.y < skin_color_selector.rect_size.y - 1:
-		color_preview.show()
-		var viewport_texture_data: Image = get_viewport().get_texture().get_data()
-		var offset: Vector2 = skin_color_selector.rect_global_position
-		viewport_texture_data.flip_y()
-		viewport_texture_data.lock()
-		current_customization["Skin Color"] = viewport_texture_data.get_pixelv(coords)
 		cursor.set_position(coords)
-		color_preview.color = current_customization["Skin Color"]
-		player_body.modulate = current_customization["Skin Color"]
+		color_preview.show()
+		var viewport_coords: Vector2 = cursor.get_viewport_transform() * cursor.global_position
+		if viewport_texture_data == null:
+			viewport_texture_data = get_viewport().get_texture().get_data()
+			viewport_texture_data.flip_y()
+			viewport_texture_data.lock()
+		var pixel_color: Color = viewport_texture_data.get_pixelv(viewport_coords)
+		current_customization["Skin Color"] = pixel_color
+		color_preview.color = pixel_color
+		_update_preview()
 	else:
 		color_preview.hide()
 
 func _update_preview() -> void:
-	player_body.modulate = current_customization["Skin Color"]
+	"""Updates the player preview with the currently selected customizations."""
+	if player_skeleton.material.get_shader_param("skin_color") != current_customization["Skin Color"]:
+		player_skeleton.material.set_shader_param("skin_color", current_customization["Skin Color"])
 	var current_clothes: PlayerClothes = current_customization["Clothes"]
-	player_left_leg.texture = current_clothes.left_leg.part_texture
-	player_left_arm.texture = current_clothes.left_arm.part_texture
-	player_right_leg.texture = current_clothes.right_leg.part_texture
-	player_right_arm.texture = current_clothes.right_arm.part_texture
-	player_clothes.texture = current_clothes.clothes.part_texture
-	player_pants.texture = current_clothes.pants.part_texture
-	player_facial_hair.texture = current_customization["Facial Hair"].part_texture
-	player_face_wear.texture = current_customization["Face Wear"].part_texture
-	player_hat_hair.texture = current_customization["Hat/Hair"].part_texture
-	player_mouth.texture = current_customization["Mouth"].part_texture
+	if player_left_leg.texture.resource_path != current_clothes.left_leg.part_texture_path:
+		player_left_leg.texture = current_clothes.left_leg.part_texture
+		player_left_arm.texture = current_clothes.left_arm.part_texture
+		player_right_leg.texture = current_clothes.right_leg.part_texture
+		player_right_arm.texture = current_clothes.right_arm.part_texture
+		player_clothes.texture = current_clothes.clothes.part_texture
+		player_pants.texture = current_clothes.pants.part_texture
+	if player_body.texture.resource_path != current_customization["Body"].part_texture_path:
+		player_body.texture = current_customization["Body"].part_texture
+	if player_facial_hair.texture.resource_path != current_customization["Facial Hair"].part_texture_path:
+		player_facial_hair.texture = current_customization["Facial Hair"].part_texture
+	if player_face_wear.texture.resource_path != current_customization["Face Wear"].part_texture_path:
+		player_face_wear.texture = current_customization["Face Wear"].part_texture
+	if player_hat_hair.texture.resource_path != current_customization["Hat/Hair"].part_texture_path:
+		player_hat_hair.texture = current_customization["Hat/Hair"].part_texture
+	if player_mouth.texture.resource_path != current_customization["Mouth"].part_texture_path:
+		player_mouth.texture = current_customization["Mouth"].part_texture
 
-func _on_AppearanceEditor_visibility_changed() -> void:
-	if visible:
-		_load()
+func open() -> void:
+	show()
+	_load()
+
+func close() -> void:
+	hide()
+
+func _close_editor() -> void:
+	"""Handle closing the editor differently depending on game state."""
+	if GameManager.state == GameManager.State.Start:
+		close()
+	else:
+		UIManager.close_ui("appearance_editor")
+		UIManager.ui_closed("appearance_editor")
 
 func _on_SkinColorSelector_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-		selecting_skin_color = event.pressed
 		_choose_skin_color(event.position)
 		if not event.pressed:
 			color_preview.hide()
-	elif selecting_skin_color and event is InputEventMouseMotion:
+	elif event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_LEFT):
 		_choose_skin_color(event.position)
 
 func _on_part_changed(new_part: String, part_name: String) -> void:
@@ -239,28 +262,54 @@ func _on_part_changed(new_part: String, part_name: String) -> void:
 	current_customization[part_name] = part_option
 	_update_preview()
 
+func _on_root_size_changed() -> void:
+	"""Reset the viewport image when the window has been resized."""
+	viewport_texture_data = null
+
+func _on_Animations_item_selected(index: int) -> void:
+	match index:
+		# Idle item
+		0:
+			animator.play("idle")
+		# Move item
+		1:
+			animator.play("h_move")
+		# Death item
+		2:
+			animator.play("death")
+
 func _on_CancelButton_pressed() -> void:
-	hide()
+	_close_editor()
 
 func _on_SaveButton_pressed() -> void:
 	_save()
-	hide()
+	_close_editor()
 
 func _load() -> void:
+	"""
+	Loads the player's saved appearance from player_data.save and applies it to
+	the preview.
+	"""
 	player_data = SaveLoadHandler.load_data(player_data_path)
 	if player_data.empty():
-		return
-	for part in current_customization:
-		if part == "Skin Color":
-			current_customization[part] = Color(player_data["Appearance"][part])
-		else:
-			for key in player_part_options:
-				for part_option in player_part_options[key]:
-					if part_option.part_name == player_data["Appearance"][part]["part_name"]:
-						current_customization[part] = part_option
+		# Default customization
+		current_customization["Skin Color"] = player_skeleton.material.get_shader_param("skin_color")
+		for part_option in player_part_options:
+			current_customization[part_option] = player_part_options[part_option][0]
+	else:
+		for part in current_customization:
+			if part == "Skin Color":
+				current_customization[part] = Color(player_data["Appearance"][part])
+			else:
+				for key in player_part_options:
+					for part_option in player_part_options[key]:
+						if part_option.part_name == player_data["Appearance"][part]["part_name"]:
+							current_customization[part] = part_option
+							part_selectors[part].set_current_part(part_option.part_name)
 	_update_preview()
 
 func _save() -> void:
+	"""Saves the player's selected appearance to player_data.save."""
 	var clothes: PlayerClothes = current_customization["Clothes"]
 	var player_data: Dictionary = {
 		"Appearance": {
@@ -292,6 +341,10 @@ func _save() -> void:
 					"texture_path": clothes.right_arm.part_texture_path,
 				},
 			},
+			"Body": {
+				"part_name": current_customization["Body"].part_name,
+				"texture_path": current_customization["Body"].part_texture_path,
+			},
 			"Facial Hair": {
 				"part_name": current_customization["Facial Hair"].part_name,
 				"texture_path": current_customization["Facial Hair"].part_texture_path,
@@ -312,3 +365,4 @@ func _save() -> void:
 	}
 	
 	SaveLoadHandler.save_data(player_data_path, player_data)
+	emit_signal("appearance_saved")

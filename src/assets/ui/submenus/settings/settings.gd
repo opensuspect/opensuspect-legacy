@@ -53,10 +53,8 @@ func _save_state(value, node, setting):
 	config.save("user://settings.cfg")
 	call(setting.function, setting)
 
-
 func dummy_function(setting):
 	pass
-
 
 var settings = [
 	Setting.new(true, SettingType.SWITCH, tr("Video")+"/"+tr("Fullscreen"), "toggle_fullscreen"),
@@ -65,16 +63,13 @@ var settings = [
 	),
 	Setting.new(30, SettingType.SLIDER, tr("Sound")+"/"+("Volume"), "dummy_function"),
 	Setting.new(0, SettingType.OPTION, tr("Locale")+"/"+tr("Language"), "set_language", get_languages())
-
 ]
-
 
 func _ready():
 	# Load configuration
 	var err = config.load("user://settings.cfg")
 	if err != OK:
 		raise()
-	
 
 	# Init back button
 	var back_button = Button.new()

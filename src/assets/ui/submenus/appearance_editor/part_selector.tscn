@@ -9,7 +9,8 @@
 [node name="PartSelector" type="HBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-size_flags_horizontal = 3
+rect_min_size = Vector2( 600, 0 )
+size_flags_horizontal = 0
 custom_constants/separation = 10
 script = ExtResource( 5 )
 __meta__ = {
@@ -18,13 +19,14 @@ __meta__ = {
 
 [node name="PartLabel" type="Label" parent="."]
 margin_top = 289.0
-margin_right = 30.0
+margin_right = 150.0
 margin_bottom = 311.0
+rect_min_size = Vector2( 150, 0 )
 text = "Part"
 
 [node name="LeftButtonContainer" type="CenterContainer" parent="."]
-margin_left = 40.0
-margin_right = 72.0
+margin_left = 160.0
+margin_right = 192.0
 margin_bottom = 600.0
 
 [node name="LeftButton" type="TextureButton" parent="LeftButtonContainer"]
@@ -35,15 +37,19 @@ texture_normal = ExtResource( 1 )
 texture_pressed = ExtResource( 2 )
 
 [node name="CurrentPartLabel" type="Label" parent="."]
-margin_left = 82.0
+margin_left = 202.0
 margin_top = 289.0
-margin_right = 112.0
+margin_right = 982.0
 margin_bottom = 311.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 3
 text = "Part"
+align = 1
+valign = 1
 
 [node name="RightButtonContainer" type="CenterContainer" parent="."]
-margin_left = 122.0
-margin_right = 154.0
+margin_left = 992.0
+margin_right = 1024.0
 margin_bottom = 600.0
 
 [node name="RightButton" type="TextureButton" parent="RightButtonContainer"]

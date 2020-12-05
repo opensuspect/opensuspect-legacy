@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/skeleton.tscn" type="PackedScene" id=2]
@@ -7,16 +7,6 @@
 [ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
 [ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=17]
 [ext_resource path="res://assets/player/camera.gd" type="Script" id=27]
-
-[sub_resource type="ShaderMaterial" id=1]
-render_priority = 1
-shader = ExtResource( 17 )
-shader_param/line_color = Color( 1, 1, 1, 1 )
-shader_param/line_thickness = 1.0
-
-[sub_resource type="CanvasItemMaterial" id=2]
-next_pass = SubResource( 1 )
-light_mode = 2
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 100.0
@@ -30,19 +20,18 @@ radius = 12.0
 [sub_resource type="CanvasItemMaterial" id=6]
 light_mode = 2
 
-[sub_resource type="ShaderMaterial" id=23]
+[sub_resource type="ShaderMaterial" id=7]
 resource_local_to_scene = true
 shader = ExtResource( 17 )
 shader_param/line_color = Color( 1, 1, 1, 0 )
 shader_param/line_thickness = 5.0
 
-[sub_resource type="ViewportTexture" id=24]
+[sub_resource type="ViewportTexture" id=8]
 viewport_path = NodePath("SpritesViewport")
 
 [node name="Player" type="KinematicBody2D" groups=[
 "players",
 ]]
-material = SubResource( 2 )
 collision_layer = 2
 script = ExtResource( 1 )
 
@@ -100,6 +89,7 @@ __meta__ = {
 }
 
 [node name="Skeleton" parent="." instance=ExtResource( 2 )]
+use_parent_material = true
 
 [node name="SpritesViewport" type="Viewport" parent="."]
 size = Vector2( 300, 300 )
@@ -129,10 +119,10 @@ __meta__ = {
 }
 
 [node name="ViewportTextureTarget" type="Sprite" parent="."]
-material = SubResource( 23 )
+material = SubResource( 7 )
 position = Vector2( 0, -20 )
 scale = Vector2( 0.25, 0.25 )
-texture = SubResource( 24 )
+texture = SubResource( 8 )
 __meta__ = {
 "_editor_description_": "The Sprite that the viewport tex ture of SpritesViewport will be rendered to."
 }

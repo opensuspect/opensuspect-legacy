@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://assets/player/textures/characters/customizable/01-left-arm/white-shirt-red-sweater.png" type="Texture" id=1]
 [ext_resource path="res://assets/player/textures/characters/customizable/07-clothes/white-shirt-red-sweater.png" type="Texture" id=2]
@@ -11,6 +11,14 @@
 [ext_resource path="res://assets/player/textures/characters/customizable/08-right-arm/white-shirt-red-sweater.png" type="Texture" id=9]
 [ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/white-shirt-red-sweater.png" type="Texture" id=10]
 [ext_resource path="res://assets/player/textures/characters/customizable/03-mouth/mouth-smile.png" type="Texture" id=11]
+[ext_resource path="res://assets/common/shaders/skin_color_key.shader" type="Shader" id=12]
+
+[sub_resource type="ShaderMaterial" id=17]
+resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
+shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
+shader_param/tolerance = 0.75
 
 [sub_resource type="Animation" id=1]
 resource_name = "death"
@@ -2153,6 +2161,7 @@ graph_offset = Vector2( -311, 172 )
 [sub_resource type="AnimationNodeStateMachinePlayback" id=16]
 
 [node name="Skeleton" type="Node2D"]
+material = SubResource( 17 )
 __meta__ = {
 "_editor_description_": "Node to hold the polygon sprites and the skeleton."
 }
@@ -2186,6 +2195,7 @@ __meta__ = {
 }
 
 [node name="LeftArm" type="Polygon2D" parent="."]
+use_parent_material = true
 position = Vector2( -19.2083, -51.5386 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 1 )
@@ -2200,6 +2210,7 @@ __meta__ = {
 }
 
 [node name="Body" type="Polygon2D" parent="."]
+use_parent_material = true
 position = Vector2( -19.201, -51.6115 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 3 )
@@ -2438,6 +2449,7 @@ __meta__ = {
 }
 
 [node name="RightArm" type="Polygon2D" parent="."]
+use_parent_material = true
 position = Vector2( -19.3352, -51.6 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 9 )

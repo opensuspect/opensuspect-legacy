@@ -34,4 +34,4 @@ func _on_MenuArea_returnToMainMenu():
 	default_state()
 
 func _on_Appearence_pressed() -> void:
-	get_owner().get_node("AppearanceEditor").show()
+	get_owner().get_node("AppearanceEditor").open()
