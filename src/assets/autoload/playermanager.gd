@@ -9,15 +9,16 @@ var ournumber
 var tasks = [-1]
 var taskstoassign
 var assignedtasks
-var aliveplayers: Dictionary = {}
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
+#mustAssign specifies if the role is mandatory to have, team specifies a team number which
+#will be checked by the win condition scripts.
 enum assignStyle {Percent, Amount}
 var style: int = assignStyle.Percent
 var enabledRoles: Array = ["traitor", "detective", "default"]
-var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "critical": true}, 
-						"detective": {"percent": float(1)/7, "amount": 1, "critical": false}, 
-						"default": {"percent": 0, "amount": 0, "critical": false}}
+var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "mustAssign": true, "team": 1}, 
+						"detective": {"percent": float(1)/7, "amount": 1, "mustAssign": false, "team": 0}, 
+						"default": {"percent": 0, "amount": 0, "mustAssign": false, "team": 0}}
 var players: Dictionary = {}
 var playerRoles: Dictionary = {}
 var playerColors: Dictionary = {enabledRoles[0]: Color(1,0,0),# traitor
@@ -80,7 +81,7 @@ func assignRoles(players: Array):
 				continue
 			#rounds down to be more predictable, if percent is 1/7th, role won't be assigned until there are 7 players
 			roles[i].amount = roundDown(roles[i].percent * playerAmount, 1)
-			if roles[i].amount < 1 and roles[i].critical:
+			if roles[i].amount < 1 and roles[i].mustAssign:
 				roles[i].amount = 1
 
 	# of players that aren't going to be assigned to a special role
@@ -107,7 +108,6 @@ func assignRoles(players: Array):
 
 puppet func receiveRoles(newRoles):
 	playerRoles = newRoles
-	aliveplayers = playerRoles
 	print("received roles: ", newRoles)
 	setourrole()
 
@@ -129,6 +129,20 @@ func get_player_roles() -> Dictionary:
 
 func get_player_role(id) -> String:
 	return playerRoles[id]
+
+func get_player_team(id) -> int:
+	return roles[playerRoles[id]]["team"]
+
+func get_enabledRoles():
+	return enabledRoles
+
+func get_enabledTeams() -> Array:
+	var teams: Array
+	
+	for role in roles:
+		if teams.find(role) == -1:
+			teams.append(roles[role]["team"])
+	return teams
 
 func setourrole():
 	ourrole = PlayerManager.get_player_role(Network.myID)

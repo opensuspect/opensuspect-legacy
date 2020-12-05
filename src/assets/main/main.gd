@@ -8,11 +8,10 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 13
+var version = 20120515
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
-var killvalid
 
 signal positions_updated(last_received_input)
 
@@ -178,27 +177,66 @@ remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> 
 		else:
 			rpc_id(player_id, "player_killed", killer_id, killed_player_id)
 
+func end_round(winner):
+	"""This function would need to show the win / lose screens for the players,
+	but at this stage it only transitions back to the lobby."""
+	GameManager.transition(GameManager.State.Lobby)
+
 puppet func player_killed(killer_id: int, killed_player_id: int) -> void:
 	"""Runs on a client; responsible for actually killing off a player."""
-	#check if a round ends automatically due to winning by elimination (more infiltrators than innos or no infiltrators)
-	PlayerManager.aliveplayers.erase(killed_player_id)
-	var intrudersleft = 0
-	var innosleft = 0
-	for i in PlayerManager.aliveplayers:
-		var role = PlayerManager.get_player_role(i)
-		if role == "traitor":
-			intrudersleft = intrudersleft + 1
-		if role == "default":
-			innosleft = innosleft + 1
-	if intrudersleft >= innosleft:
-		GameManager.transition(GameManager.State.Lobby)
-	elif intrudersleft == 0:
-		GameManager.transition(GameManager.State.Lobby)
-	else:
-		killvalid = true
-	if killvalid == true:
-		var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
-		killed_player_death_handler.die_by(killer_id)
+	var winner: int
+	var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
+	killed_player_death_handler.die_by(killer_id)
+	#check if a round ends due to passing winning conditions:
+	winner = victory_check()
+	if winner != -1:
+		end_round(winner)
+
+func elimination_victory_check(main_team: int):
+	"""Checks whether the elimination victory has been achieved. Returns -1
+	if no one wins, otherwise returns the number of the winning tean
+	main_team: this variable is the team number of the team that needs to keep
+		hold of the majority of the players, and they only win if every other team
+		got eliminated."""
+	var players_left = {}
+	var players_team: int
+	var enabled_teams
+	var total_players = 0
+	var max_member = -1
+	var max_team = -1
+	
+	enabled_teams = PlayerManager.get_enabledTeams()
+	for team in enabled_teams:
+		players_left[team] = 0
+	
+	for player in PlayerManager.players:
+		if player.get_is_alive():
+			players_team = PlayerManager.get_player_team(player)
+			players_left[players_team] = players_left[players_team] + 1
+	
+	for team in enabled_teams:
+		total_players = total_players + players_left[team]
+		if players_left[team] > max_member:
+			max_member = players_left[team]
+			max_team = team
+	
+	if total_players == players_left[main_team]:
+		#All players who are left are from the main team
+		return main_team
+	elif max_member >= total_players:
+		#Any infiltrator team managed to get majority
+		return max_team
+	
+	return -1
+
+func victory_check():
+	"""Returns -1 if no one wins, otherwise returns the number of the winning team"""
+	var victorious: int
+	
+	victorious = -1
+	if victorious == -1:
+		victorious = elimination_victory_check(0)
+	return victorious
 
 func get_network_id_from_player_node_name(node_name: String) -> int:
 	"""Fetch a player's network ID from the name of their KinematicBody2D."""
