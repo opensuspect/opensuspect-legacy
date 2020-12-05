@@ -159,7 +159,7 @@ master func _on_maps_spawn(spawnPositions: Array):
 		if spawnPointDict[players.keys()[i]] == null:
 			spawnPointDict[players.keys()[i]] = spawn_pos
 	#spawn players
-	rpc("createPlayers", Network.get_player_names(), spawnPointDict, player_data_dict)
+	rpc("createPlayers", Network.get_player_names(), spawnPointDict)
 
 func _on_infiltrator_kill(killer: KinematicBody2D, killed_player: KinematicBody2D) -> void:
 	"""
@@ -214,9 +214,10 @@ puppet func send_player_data_to_server() -> void:
 
 master func received_player_data_from_client(player_data: Dictionary) -> void:
 	var id: int = get_tree().get_rpc_sender_id()
+	print("ID: ", id)
 	player_data_dict[id] = player_data
 	_apply_customizations(players[id], player_data)
-	rpc("received_player_data_from_server", 1, player_data)
+	rpc("received_player_data_from_server", 1, SaveLoadHandler.load_data("user://player_data.save"))
 	rpc("received_player_data_from_server", id, player_data)
 
 puppet func received_player_data_from_server(id: int, player_data: Dictionary) -> void:
