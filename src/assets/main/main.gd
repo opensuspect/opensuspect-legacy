@@ -12,6 +12,7 @@ var version = 13
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
+var killvalid
 
 signal positions_updated(last_received_input)
 
@@ -179,8 +180,25 @@ remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> 
 
 puppet func player_killed(killer_id: int, killed_player_id: int) -> void:
 	"""Runs on a client; responsible for actually killing off a player."""
-	var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
-	killed_player_death_handler.die_by(killer_id)
+	#check if a round ends automatically due to winning by elimination (more infiltrators than innos or no infiltrators)
+	PlayerManager.aliveplayers.erase(killed_player_id)
+	var intrudersleft = 0
+	var innosleft = 0
+	for i in PlayerManager.aliveplayers:
+		var role = PlayerManager.get_player_role(i)
+		if role == "traitor":
+			intrudersleft = intrudersleft + 1
+		if role == "default":
+			innosleft = innosleft + 1
+	if intrudersleft >= innosleft:
+		GameManager.transition(GameManager.State.Lobby)
+	elif intrudersleft == 0:
+		GameManager.transition(GameManager.State.Lobby)
+	else:
+		killvalid = true
+	if killvalid == true:
+		var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
+		killed_player_death_handler.die_by(killer_id)
 
 func get_network_id_from_player_node_name(node_name: String) -> int:
 	"""Fetch a player's network ID from the name of their KinematicBody2D."""

@@ -9,6 +9,7 @@ var ournumber
 var tasks = [-1]
 var taskstoassign
 var assignedtasks
+var aliveplayers: Dictionary = {}
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
 enum assignStyle {Percent, Amount}
@@ -106,6 +107,7 @@ func assignRoles(players: Array):
 
 puppet func receiveRoles(newRoles):
 	playerRoles = newRoles
+	aliveplayers = playerRoles
 	print("received roles: ", newRoles)
 	setourrole()
 
