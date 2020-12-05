@@ -1,8 +1,5 @@
 extends Node2D
 
-# Scene containing UI element for kill indicator
-onready var killui_scene: PackedScene = load("res://assets/ui/hud/infiltratorui/killui.tscn")
-
 onready var animator: AnimationPlayer = $Animator
 # UI Controller for the player
 onready var ui_controller: CanvasLayer = get_tree().get_root().find_node("uicontroller", true, false)
@@ -14,9 +11,12 @@ onready var kill_cooldown_timer: Timer = $KillCooldownTimer
 onready var player: KinematicBody2D = get_parent()
 
 # Emitted when the infiltrator kills a player
-signal kill(player)
+signal kill(emitter, player)
+# Emitted when the infiltrator stops reloading their weapon
+signal stopped_reloading
 
 # Whether reloading may be cancelled or not
+export(Resource) var ui_interact_resource
 export (bool) var can_cancel_reload := true
 # Whether the infiltrator may kill or not
 var _killing_enabled: bool = true setget enable_killing, is_killing_enabled
@@ -24,60 +24,63 @@ var _killing_enabled: bool = true setget enable_killing, is_killing_enabled
 # _killing_enabled as an infiltrator may be reloaded but an event may prevent
 # them from killing
 var _reloaded: bool = true setget set_reloaded, is_reloaded
+# Whether the infiltrator is reloading their weapon
+var _reloading: bool = false setget set_reloading, is_reloading
 # The highlighted target if the infiltrator decides to kill
 var _target_player: KinematicBody2D
 
 func _ready() -> void:
 	if player.main_player:
 		_instantiate_kill_gui()
+	# Get Main parent node and connect kill player signal to it
+	var main: YSort = get_tree().get_root().find_node("Main", true, false)
+	connect("kill", main, "_on_infiltrator_kill")
 
 func _process(delta: float) -> void:
-	if is_killing_enabled() and player.main_player:
-		_get_target()
-
-func _input(event: InputEvent) -> void:
 	if player.main_player:
-		if is_reloaded() and is_killing_enabled() and event.is_action_pressed("kill") and \
-		   len(kill_area.get_overlapping_bodies()) > 0:
-			_kill_player(_target_player)
-		elif event.is_action_pressed("reload"):
+		if is_reloaded() and is_killing_enabled() and Input.is_action_just_pressed("kill") and \
+		   _target_player != null:
+			_kill_player()
+		elif Input.is_action_just_pressed("reload"):
 			if animator.current_animation == "Reload":
 				if can_cancel_reload:
 					_cancel_reload()
 			elif not is_reloaded():
 				_reload()
 
+	if is_killing_enabled() and player.main_player:
+		_get_target()
+
 func is_killing_enabled() -> bool:
-	"""
-	Returns whether killing is enabled for the infiltrator.
-	"""
+	"""Returns whether killing is enabled for the infiltrator."""
 	return _killing_enabled
 
 func enable_killing(enable: bool = true) -> void:
-	"""
-	Enable or disable killing; may be used from outside of script.
-	"""
+	"""Enable or disable killing; may be used from outside of script."""
 	_killing_enabled = enable
 
 func is_reloaded() -> bool:
-	"""
-	Check whether the infiltrator has reloaded.
-	"""
+	"""Check whether the infiltrator has reloaded."""
 	return _reloaded
 
 func set_reloaded(reloaded: bool) -> void:
-	"""
-	Set whether the infiltrator has reloaded.
-	"""
+	"""Set whether the infiltrator has reloaded."""
 	_reloaded = reloaded
 
-func _kill_player(player: KinematicBody2D) -> void:
-	"""
-	Kill the player who is currently the target.
-	"""
-	#var target_sprite: AnimatedSprite = _target_player.get_node("Sprite")
-	#target_sprite.material.set_shader_param("line_color", Color.transparent)
-	emit_signal("kill", _target_player)
+func is_reloading() -> bool:
+	"""Returns whether the infiltrator is reloading their weapon."""
+	return _reloading
+
+func set_reloading(reloading: bool) -> void:
+	"""Set whether the infiltrator is reloading their weapon."""
+	_reloading = reloading
+
+func _kill_player() -> void:
+	"""Kill the player who is currently the target."""
+	for player in kill_area.get_overlapping_bodies():
+		var target_sprite: Sprite = player.get_node("ViewportTextureTarget")
+		target_sprite.material.set_shader_param("line_color", Color.transparent)
+	emit_signal("kill", player, _target_player)
 	set_reloaded(false)
 	enable_killing(false)
 #	kill_cooldown_timer.start()
@@ -90,56 +93,54 @@ func _get_target() -> void:
 	var distance: float = INF
 	_target_player = null
 	for player in kill_area.get_overlapping_bodies():
-		var temp_distance: float = (player.global_position - global_position).length()
-		if temp_distance < distance:
-			distance = temp_distance
-			_target_player = player
+		var sprite: Sprite = player.get_node("ViewportTextureTarget")
+		sprite.material.set_shader_param("line_color", Color.transparent)
+		if not player.get_node("DeathHandler").is_dead:
+			var temp_distance: float = (player.global_position - global_position).length()
+			if temp_distance < distance:
+				distance = temp_distance
+				_target_player = player
 	if _target_player != null:
-		pass
-		#var target_sprite: AnimatedSprite = _target_player.get_node("Sprite")
-		#target_sprite.material.set_shader_param("line_color", Color.red)
+		var target_sprite: Sprite = _target_player.get_node("ViewportTextureTarget")
+		target_sprite.material.set_shader_param("line_color", Color.red)
 
 func _instantiate_kill_gui() -> void:
 	"""
 	Add kill UI to the infiltrator's HUD
 	"""
-	ui_controller.open_menu("killui", {"linked_node": self, "rect_position": Vector2(850, 500)}, true)
+	ui_interact_resource.interact(self, {"linked_node": self, "rect_position": Vector2(850, 500)})
 
 func _reload() -> void:
-	"""
-	Reload the infiltrator's weapon and freeze the parent player node.
-	"""
+	"""Reload the infiltrator's weapon and freeze the parent player node."""
 	animator.play("Reload")
+	set_reloading(true)
 	player.set_movement_disabled(true)
 
 func _cancel_reload() -> void:
-	"""
-	Stop reload animation, returning control to the player.
-	"""
+	"""Stop reload animation, returning control to the player."""
 	animator.stop()
+	set_reloading(false)
+	emit_signal("stopped_reloading")
 	player.set_movement_disabled(false)
 
 func _on_KillArea_body_exited(body: Node) -> void:
-	"""
-	Remove the outline from the body that exited the kill area.
-	"""
+	"""Remove the outline from the body that exited the kill area."""
 	if player.main_player:
-		#var sprite: AnimatedSprite = body.get_node("Sprite")
-		#sprite.material.set_shader_param("line_color", Color.transparent)
-		pass
+		var target_sprite: Sprite = body.get_node("ViewportTextureTarget")
+		target_sprite.material.set_shader_param("line_color", Color.transparent)
 
 func _on_KillCooldownTimer_timeout() -> void:
-	"""
-	Re-enable killing mechanic after cooldown ends.
-	"""
+	"""Re-enable killing mechanic after cooldown ends."""
 	enable_killing()
 
 func _on_Animator_animation_finished(anim_name: String) -> void:
 	"""
-	Re-enable killing mechanic and player movement after reload animation is finished.
+	Re-enable killing mechanic and player movement after reload animation is
+	finished.
 	"""
 	match anim_name:
 		"Reload":
 			set_reloaded(true)
+			set_reloading(false)
 			enable_killing()
 			player.set_movement_disabled(false)

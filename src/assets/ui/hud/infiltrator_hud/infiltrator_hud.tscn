@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/ui/hud/infiltrator_hud/textures/kill_icon_mask.png" type="BitMap" id=1]
+[ext_resource path="res://assets/ui/hud/infiltrator_hud/textures/kill_icon_pressed.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/hud/infiltrator_hud/textures/kill_icon_normal.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/hud/infiltrator_hud/textures/reload_icon_pressed.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/hud/infiltrator_hud/textures/reload_icon_normal.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/hud/infiltrator_hud/textures/kill_icon_disabled.png" type="Texture" id=6]
+[ext_resource path="res://assets/common/shaders/time_indicator.shader" type="Shader" id=7]
+[ext_resource path="res://assets/ui/hud/infiltrator_hud/infiltrator_hud.gd" type="Script" id=8]
+[ext_resource path="res://assets/ui/hud/infiltrator_hud/textures/reload_icon_mask.png" type="BitMap" id=9]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 7 )
+shader_param/tint = Color( 0, 0, 0, 0 )
+shader_param/progress = 0.0
+
+[node name="InfiltratorHUD" type="Control"]
+anchor_left = 0.75
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "GUI that indicates whether a kill is ready to be executed."
+}
+
+[node name="KillButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_scale = Vector2( 0.25, 0.25 )
+mouse_filter = 1
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 2 )
+texture_disabled = ExtResource( 6 )
+texture_click_mask = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReloadButton" type="TextureButton" parent="."]
+visible = false
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 45.0
+margin_top = -16.0
+margin_right = 365.0
+margin_bottom = 304.0
+rect_scale = Vector2( 0.5, 0.5 )
+mouse_filter = 1
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_click_mask = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="KillButton" to="." method="_on_KillButton_pressed"]
+[connection signal="pressed" from="ReloadButton" to="." method="_on_ReloadButton_pressed"]

@@ -52,7 +52,7 @@ func client(hostName: String, port: int, playerName: String) -> void:
 	if (_error):
 		print("Error when connecting to server: ", _error)
 		get_tree().quit()
-		
+
 	get_tree().set_network_peer(client)
 	connect_signals()
 	#do not switch to main scene here, wait until the connection was successful
@@ -112,7 +112,7 @@ func _process(_delta) -> void:
 
 func toss(_newValue) -> void:
 	pass
-	
+
 func deny() -> void:
 	pass
 

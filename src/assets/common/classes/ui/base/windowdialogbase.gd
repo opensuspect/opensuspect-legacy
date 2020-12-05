@@ -16,6 +16,6 @@ func base_close():
 func _notification(what):
 	match what:
 		NOTIFICATION_POST_POPUP:
-			UIManager.menu_opened(menu_name)
+			UIManager.ui_opened(menu_name)
 		NOTIFICATION_POPUP_HIDE:
-			UIManager.menu_closed(menu_name)
+			UIManager.ui_closed(menu_name)

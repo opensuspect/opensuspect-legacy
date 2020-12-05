@@ -1,6 +1,6 @@
 extends WindowDialogTask
 
-var menuData: Dictionary = {}
+var ui_data: Dictionary = {}
 var targetTime: int = 433
 var currentTime: int = 630
 
@@ -14,8 +14,8 @@ func _ready():
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
 
 func open():
-	if menuData.has("currentTime"):
-		currentTime = menuData["currentTime"]
+	if ui_data.has("currentTime"):
+		currentTime = ui_data["currentTime"]
 # warning-ignore:narrowing_conversion
 	targetTime = round(rand_range(100, 1259))
 	targetTime = roundDown(targetTime, 100) + (targetTime % 100) % 60
@@ -36,8 +36,8 @@ func taskComplete():
 	#gotcha!
 	PlayerManager.assignedtasks[0] = 1
 	print("clockset task complete")
-	if menuData.keys().has("linkedNode"):
-		MapManager.interact_with(menuData["linkedNode"], self, {"newText": str(currentTime)})
+	if ui_data.keys().has("linkedNode"):
+		MapManager.interact_with(ui_data["linkedNode"], self, {"newText": str(currentTime)})
 	hide()
 
 func setClockTime(newTime):

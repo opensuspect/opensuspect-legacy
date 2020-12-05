@@ -24,6 +24,7 @@ ui_data = {
 
 }
 advanced/reinstance = false
+advanced/only_instance = false
 
 [sub_resource type="Resource" id=3]
 resource_local_to_scene = true

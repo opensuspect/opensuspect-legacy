@@ -13,4 +13,4 @@ func state_changed(old_state, new_state):
 			show()
 
 func _on_Button_pressed():
-	UIManager.open_menu("chatbox")
+	UIManager.open_ui("chatbox")

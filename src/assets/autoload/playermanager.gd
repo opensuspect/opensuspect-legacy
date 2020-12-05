@@ -17,6 +17,7 @@ var enabledRoles: Array = ["traitor", "detective", "default"]
 var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "critical": true}, 
 						"detective": {"percent": float(1)/7, "amount": 1, "critical": false}, 
 						"default": {"percent": 0, "amount": 0, "critical": false}}
+var players: Dictionary = {}
 var playerRoles: Dictionary = {}
 var playerColors: Dictionary = {enabledRoles[0]: Color(1,0,0),# traitor
 								enabledRoles[1]: Color(0,0,1),# detective
@@ -113,6 +114,13 @@ func roundDown(num, step):
 	if normRound > num:
 		return normRound - step
 	return normRound
+
+func get_main_player() -> KinematicBody2D:
+	"""Gets the main player on the local client."""
+	for player in players.values():
+		if player.main_player:
+			return player
+	return null
 
 func get_player_roles() -> Dictionary:
 	return playerRoles

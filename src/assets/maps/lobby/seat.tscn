@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/maps/lobby/textures/seat.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 235, 325 )
+
+[node name="Seat" type="StaticBody2D"]
+
+[node name="SeatSprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="SeatCollision" type="CollisionShape2D" parent="."]
+position = Vector2( -50, 185 )
+shape = SubResource( 1 )

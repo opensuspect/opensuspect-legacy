@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Control
 
 onready var buttoncontainer = get_node("Panel/VBoxContainer")
 onready var buttonscript = load("res://assets/ui/submenus/settings/keybind/keybutton.gd")
@@ -38,8 +38,13 @@ func _ready():
 		buttoncontainer.add_child(hbox)
 		
 		buttons[key] = button
-	
-	
+
+func open() -> void:
+	show()
+
+func close() -> void:
+	hide()
+
 func change_bind(key, value):
 	keybinds[key] = value
 	for k in keybinds.keys():
@@ -51,7 +56,9 @@ func change_bind(key, value):
 
 
 func back():
-	get_tree().change_scene("res://assets/ui/mainmenu/mainmenu.tscn")
+	UIManager.close_ui("keybind")
+	UIManager.open_ui("pausemenu")
+	hide()
 
 
 
@@ -59,13 +66,15 @@ func save():
 	UIManager.keybinds = keybinds.duplicate()
 	UIManager.set_game_binds()
 	UIManager.write_config()
-	get_tree().change_scene("res://assets/ui/mainmenu/mainmenu.tscn")
+	UIManager.close_ui("keybind")
+	UIManager.open_ui("pausemenu")
+	hide()
 
 func label_text(key, label):
 	if key == "ui_up":
-		label.text = "UP"
+		label.text = "Up"
 	elif key == "ui_down":
-		label.text = "DOWN"
+		label.text = "Down"
 	elif key == "ui_left":
 		label.text = "Left"
 	elif key == "ui_right":

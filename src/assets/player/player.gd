@@ -1,9 +1,14 @@
 extends KinematicBody2D
 
+onready var death_handler: Node2D = $DeathHandler
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
 onready var skeleton: Node2D = $Skeleton
+onready var animator: AnimationPlayer = skeleton.get_node("AnimationPlayer")
+onready var animation_tree: AnimationTree = animator.get_node("AnimationTree")
+onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
+onready var sprites_viewport: Viewport = $SpritesViewport
 
-signal main_player_moved(position)
+signal main_player_moved(position, velocity, input_number)
 
 export (int) var speed = 150
 
@@ -23,18 +28,24 @@ var x_anim_margin = 0.00
 var y_anim_margin = 0.00
 #whether the character faces in the right direction
 var face_right = true
+# The blend between the idle and move animations in the player's animation tree
+var idle_move_blend: Vector2
 
 # The input number is incremented on each _physics_process call. GDScript's int
 # type is int64_t which is enough for thousands of years of gameplay
 var input_number: int = 0
 # Contains the last input number that the server has received
-var last_reveived_input: int = 0
+var last_received_input: int = 0
 # Contains the movement values for unreceived inputs and matching previous
 # velocities for movement prediciton. The values are stored as Arrays of
 # movement and previous velocity.
 var input_queue: Array = []
 
 func _ready():
+	# Reparent Skeleton Node2D to SpritesViewport
+	remove_child(skeleton)
+	sprites_viewport.add_child(skeleton)
+	
 	# Set the sprite material for every player to be a duplicate of their
 	# initial material so that outlines may be modified independently.
 	#sprite.set_material(sprite.material.duplicate())
@@ -45,7 +56,7 @@ func _ready():
 		setName(Network.get_player_name())
 		id = Network.get_my_id()
 	else:
-		$MainLight.queue_free()
+		$MainLight.hide()
 		$Camera2D.queue_free()
 	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
@@ -65,9 +76,7 @@ func roles_assigned(playerRoles: Dictionary):
 	_checkRole(myRole)
 
 func _checkRole(role: String) -> void:
-	"""
-	Performs certain functions depending on the passed in role parameter.
-	"""
+	"""Performs certain functions depending on the passed in role parameter."""
 	match role:
 		"traitor":
 			set_collision_layer_bit(3, true)
@@ -96,24 +105,28 @@ func setNameColor(newColor: Color):
 	$Label.set("custom_colors/font_color", newColor)
 
 func is_movement_disabled() -> bool:
-	"""
-	Returns whether player movement is disabled or not.
-	"""
+	"""Returns whether player movement is disabled or not."""
 	return _movement_disabled
 
 func set_movement_disabled(movement_disabled: bool) -> void:
-	"""
-	Set whether player movement should be disabled.
-	"""
+	"""Set whether player movement should be disabled."""
 	_movement_disabled = movement_disabled
 
 # Only called when main_player is true
 func get_input():
 	movement = Vector2(0, 0)
-	if not UIManager.in_menu() and not is_movement_disabled():
+	if not UIManager.in_ui() and not is_movement_disabled():
 		movement.x = Input.get_action_strength('ui_right') - Input.get_action_strength('ui_left')
 		movement.y = Input.get_action_strength('ui_down') - Input.get_action_strength('ui_up')
 		movement = movement.normalized()
+
+func animate(current_velocity: Vector2) -> void:
+	"""
+	Set the blend between the idle and move animations in the animation tree's 
+	root state machine based on the player's current velocity.
+	"""
+	var blend_position := Vector2(0, current_velocity.length() / speed)
+	animation_tree.set("parameters/idle_move_blend/blend_position", blend_position)
 
 func run_physics(motion):
 	var prev_velocity = velocity
@@ -131,30 +144,21 @@ func _physics_process(_delta):
 		get_input()
 		input_number += 1
 		input_queue.push_back([movement, velocity])
-		emit_signal("main_player_moved", movement, input_number)
+		emit_signal("main_player_moved", movement, velocity, input_number)
 	# Remove this if check to get bad movement extrapolation for all players
 	if main_player or get_tree().is_network_server():
 		run_physics(movement)
 
 	# We handle animations and stuff here
+	animate(velocity)
 	if movement.x > x_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
 		if not face_right:
 			face_right = true
-			$spritecollection.scale.x = -$spritecollection.scale.x
 			skeleton.scale.x *= -1
 	elif movement.x < -x_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
 		if face_right:
 			face_right = false
-			$spritecollection.scale.x = -$spritecollection.scale.x
 			skeleton.scale.x *= -1
-	elif movement.y > y_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
-	elif movement.y < -y_anim_margin:
-		$spritecollection/AnimationPlayer.play("h_move")
-	else:
-		$spritecollection/AnimationPlayer.play("idle", 0.2)
 
 # Only called on the main player. Rerolls the player's unreceived inputs on top
 # of the server's player position
@@ -163,9 +167,9 @@ func _on_positions_updated(new_last_received_input: int):
 		# The map has probably changed when this happens
 		return
 	# Remove received inputs from the queue
-	for _i in range(new_last_received_input - last_reveived_input):
+	for _i in range(new_last_received_input - last_received_input):
 		input_queue.pop_front()
-	last_reveived_input = new_last_received_input
+	last_received_input = new_last_received_input
 	# Set the initial velocity to predict velocity slowdown correctly
 	if input_queue.size() >= 1:
 		velocity = input_queue[0][1]

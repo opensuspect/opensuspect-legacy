@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/reload_icon_mask.png-95186bffe2b05defdd23fd016dda809c.res"
+
+[deps]
+
+source_file="res://assets/ui/hud/infiltrator_hud/textures/reload_icon_mask.png"
+dest_files=[ "res://.import/reload_icon_mask.png-95186bffe2b05defdd23fd016dda809c.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5

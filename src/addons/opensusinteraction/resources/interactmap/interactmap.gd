@@ -14,7 +14,7 @@ export(Dictionary) var interact_data
 var reported_interact_data: Dictionary = {}
 
 #called to execute the interaction this resource is customized for
-func interact(_from: Node):
+func interact(_from: Node, _interact_data: Dictionary = {}):
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
@@ -22,21 +22,24 @@ func interact(_from: Node):
 		return
 	#print("InteractMap attached_to: ", attached_to)
 	#print(attached_to.get_node(interact_with))
-	MapManager.interact_with(attached_to.get_node(interact_with), attached_to, get_interact_data(_from))
+	MapManager.interact_with(attached_to.get_node(interact_with), attached_to, _interact_data)
 
-func init_resource(_from: Node):
+func init_resource(_from: Node, interact_data: Dictionary = {}):
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractMap resource trying to be initiated with no defined node")
 
-func get_interact_data(_from: Node = null) -> Dictionary:
+func get_interact_data(_from: Node = null, _interact_data: Dictionary = {}) -> Dictionary:
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractMap resource trying to be used with no defined node")
+	var reported_interact_data = interact_data
 	for i in interact_data.keys():
 		reported_interact_data[i] = interact_data[i]
+	for i in _interact_data.keys():
+		reported_interact_data[i] = _interact_data[i]
 	#map interact type is 2
 	reported_interact_data["interact_type"] = 2
 	if attached_to != null:
