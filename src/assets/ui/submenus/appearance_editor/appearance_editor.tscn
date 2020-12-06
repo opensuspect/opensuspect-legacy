@@ -1,0 +1,224 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=1]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/appearance_editor.gd" type="Script" id=2]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/textures/cursor.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/submenus/appearance_editor/skin_color_range.gd" type="Script" id=4]
+[ext_resource path="res://assets/player/skeleton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/common/shaders/skin_color_key.shader" type="Shader" id=6]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0.121569, 0.121569, 0.121569, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+render_mode blend_disabled;
+
+void fragment()
+{
+	
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+
+[sub_resource type="Gradient" id=5]
+colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="Shader" id=7]
+code = "shader_type canvas_item;
+render_mode blend_disabled;
+
+uniform vec4 color_tone: hint_color = vec4(1.0);
+
+void fragment()
+{
+	
+}"
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = SubResource( 7 )
+shader_param/color_tone = Color( 1, 1, 1, 1 )
+
+[sub_resource type="Gradient" id=9]
+offsets = PoolRealArray( 0, 0.333, 0.667, 1 )
+colors = PoolColorArray( 0.984314, 0.968627, 0.898039, 1, 0.827451, 0.294118, 0.145098, 1, 0.380392, 0.054902, 0.054902, 1, 0.0980392, 0.00784314, 0.00784314, 1 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[sub_resource type="ShaderMaterial" id=12]
+resource_local_to_scene = true
+shader = ExtResource( 6 )
+shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
+shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
+shader_param/tolerance = 0.75
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=11]
+
+[node name="AppearanceEditor" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.943878
+custom_constants/margin_right = 64
+custom_constants/margin_top = 64
+custom_constants/margin_left = 64
+custom_constants/margin_bottom = 64
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AppearanceHBox" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 960.0
+margin_bottom = 536.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CustomizationVBox" type="VBoxContainer" parent="MarginContainer/AppearanceHBox"]
+margin_right = 446.0
+margin_bottom = 472.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SkinColorSelector" type="Control" parent="MarginContainer/AppearanceHBox/CustomizationVBox"]
+margin_right = 446.0
+margin_bottom = 472.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkinToneRange" type="TextureRect" parent="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector"]
+material = SubResource( 4 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
+texture = SubResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkinColorRange" type="TextureRect" parent="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector"]
+modulate = Color( 1, 1, 1, 0.498039 )
+material = SubResource( 8 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 446.0
+margin_right = 471.0
+margin_bottom = -27.0
+rect_rotation = 90.0
+size_flags_horizontal = 3
+size_flags_vertical = 11
+texture = SubResource( 10 )
+expand = true
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cursor" type="Sprite" parent="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector"]
+texture = ExtResource( 3 )
+
+[node name="ColorPreview" type="ColorRect" parent="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector/Cursor"]
+visible = false
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 72.0
+margin_bottom = 72.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PreviewButtonsVBox" type="VBoxContainer" parent="MarginContainer/AppearanceHBox"]
+margin_left = 450.0
+margin_right = 896.0
+margin_bottom = 472.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Animations" type="OptionButton" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox"]
+margin_right = 446.0
+margin_bottom = 31.0
+text = "Idle"
+items = [ "Idle", null, false, 0, null, "Move", null, false, 1, null, "Death", null, false, 2, null ]
+selected = 0
+
+[node name="PlayerContainer" type="CenterContainer" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox"]
+margin_top = 35.0
+margin_right = 446.0
+margin_bottom = 434.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Skeleton" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer" instance=ExtResource( 5 )]
+material = SubResource( 12 )
+position = Vector2( 223, 335 )
+scale = Vector2( 5, 5 )
+
+[node name="AnimationPlayer" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Skeleton" index="0"]
+playback_default_blend_time = 0.0
+
+[node name="AnimationTree" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Skeleton/AnimationPlayer" index="0"]
+active = false
+parameters/playback = SubResource( 11 )
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox"]
+margin_top = 438.0
+margin_right = 446.0
+margin_bottom = 472.0
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox"]
+margin_right = 221.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Cancel"
+
+[node name="SaveButton" type="Button" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox"]
+margin_left = 225.0
+margin_right = 446.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Save"
+[connection signal="gui_input" from="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector" to="." method="_on_SkinColorSelector_gui_input"]
+[connection signal="item_selected" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/Animations" to="." method="_on_Animations_item_selected"]
+[connection signal="pressed" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox/CancelButton" to="." method="_on_CancelButton_pressed"]
+[connection signal="pressed" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox/SaveButton" to="." method="_on_SaveButton_pressed"]
+
+[editable path="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Skeleton"]
