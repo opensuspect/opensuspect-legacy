@@ -52,7 +52,7 @@ func pick_up(item: KinematicBody2D) -> void:
 		player.get_node("Infiltrator").enable_killing(false)
 
 func drop(item: KinematicBody2D) -> void:
-	"""Drop and item."""
+	"""Drop an item."""
 	if map_items == null:
 		 map_items = maps.get_child(0).get_node("Items")
 	var offset: Vector2 = item.global_position - map_items.global_position

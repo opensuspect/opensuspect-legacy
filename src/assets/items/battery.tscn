@@ -17,9 +17,9 @@ extents = Vector2( 9.5, 4.4 )
 material = SubResource( 1 )
 position = Vector2( -0.0936432, 0 )
 
-[node name="ItemCollision" parent="." index="1"]
+[node name="ItemCollision" parent="." index="0"]
 shape = SubResource( 2 )
 
-[node name="ItemSprite" parent="." index="2"]
+[node name="ItemSprite" parent="." index="1"]
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 2 )

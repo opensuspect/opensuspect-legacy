@@ -3,6 +3,7 @@ extends KinematicBody2D
 onready var death_handler: Node2D = $DeathHandler
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
 onready var skeleton: Node2D = $Skeleton
+onready var item_handler: Node2D = skeleton.get_node("ItemHandler")
 onready var animator: AnimationPlayer = skeleton.get_node("AnimationPlayer")
 onready var animation_tree: AnimationTree = animator.get_node("AnimationTree")
 onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
@@ -62,6 +63,10 @@ func _ready():
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
+
+func _input(event: InputEvent) -> void:
+	# Item Handler does not receive input as a child of a Viewport
+	item_handler._input(event)
 
 func setName(newName):
 	ourname = newName

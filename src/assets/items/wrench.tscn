@@ -17,12 +17,12 @@ height = 21.7139
 [node name="Wrench" instance=ExtResource( 1 )]
 material = SubResource( 1 )
 
-[node name="ItemCollision" parent="." index="1"]
+[node name="ItemCollision" parent="." index="0"]
 position = Vector2( 4.10542, -4.10542 )
 rotation = 0.785398
 shape = SubResource( 2 )
 
-[node name="ItemSprite" parent="." index="2"]
+[node name="ItemSprite" parent="." index="1"]
 position = Vector2( 5.82705, -3.84056 )
 scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 3 )
