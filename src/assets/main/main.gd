@@ -8,11 +8,10 @@ var player_scene = load(player_s)
 var players = {}
 #!!!THIS IS IMPORTANT!!!
 #INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 20120515
+var version = 20120610
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
-var player_data_dict: Dictionary
 
 signal positions_updated(last_received_input)
 
@@ -211,20 +210,25 @@ func elimination_victory_check(main_team: int):
 		players_left[team] = 0
 	
 	for player in PlayerManager.players.keys():
+		#print("checking player number ", player)
 		if PlayerManager.players[player].get_is_alive():
 			players_team = PlayerManager.get_player_team(player)
 			players_left[players_team] = players_left[players_team] + 1
+			#print("player is alive and member of team ", players_team)
 	
 	for team in enabled_teams:
+		#print("team ", team, " with ", players_left[team], " alive members")
 		total_players = total_players + players_left[team]
-		if players_left[team] > max_member:
+		if players_left[team] > max_member and team != main_team:
 			max_member = players_left[team]
 			max_team = team
+	#print("max members: ", max_member, " in team ", max_team)
+	#print("total players remain: ", total_players)
 	
 	if total_players == players_left[main_team]:
 		#All players who are left are from the main team
 		return main_team
-	elif max_member >= total_players:
+	elif max_member >= total_players-max_member:
 		#Any infiltrator team managed to get majority
 		return max_team
 	

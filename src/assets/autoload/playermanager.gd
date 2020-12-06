@@ -140,8 +140,10 @@ func get_enabledTeams() -> Array:
 	var teams: Array
 	
 	for role in roles:
-		if teams.find(role) == -1:
+		#print("Role: ", role, ", team: ", roles[role]["team"])
+		if teams.find(roles[role]["team"]) == -1:
 			teams.append(roles[role]["team"])
+			#print("added team ", roles[role]["team"])
 	return teams
 
 func setourrole():
