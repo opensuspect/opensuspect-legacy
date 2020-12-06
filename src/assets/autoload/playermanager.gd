@@ -12,7 +12,9 @@ var assignedtasks
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
 #mustAssign specifies if the role is mandatory to have, team specifies a team number which
-#will be checked by the win condition scripts.
+#will be checked by the win condition scripts. When giving numbers out to the infiltrator
+#teams, consider, that the majority count for elimination victory will favor the lower number
+#in case of tie (check main.gd for details).
 enum assignStyle {Percent, Amount}
 var style: int = assignStyle.Percent
 var enabledRoles: Array = ["traitor", "detective", "default"]
@@ -125,25 +127,28 @@ func get_main_player() -> KinematicBody2D:
 	return null
 
 func get_player_roles() -> Dictionary:
+	"""Returns all players and their roles"""
 	return playerRoles
 
 func get_player_role(id) -> String:
+	"""Returns the role name of the player with the requested id"""
 	return playerRoles[id]
 
 func get_player_team(id) -> int:
+	"""Returns the team number of the player with the requested id"""
 	return roles[playerRoles[id]]["team"]
 
 func get_enabledRoles():
+	"""Returns all roles that are enabled in the current game"""
 	return enabledRoles
 
 func get_enabledTeams() -> Array:
+	"""Returns an array with the teams (numbered) enabled in the current game"""
 	var teams: Array
 	
 	for role in roles:
-		#print("Role: ", role, ", team: ", roles[role]["team"])
 		if teams.find(roles[role]["team"]) == -1:
 			teams.append(roles[role]["team"])
-			#print("added team ", roles[role]["team"])
 	return teams
 
 func setourrole():

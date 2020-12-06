@@ -200,15 +200,13 @@ puppet func end_round(winner):
 	"""This function is called by the server and when it is, it would need to
 	show the win / lose screens for the players, and then transitions back
 	to the lobby."""
-	#print("Round ended with winning team ", winner)
-	#print("Current player's team: ", PlayerManager.get_player_team(main_player_id()))
 	if PlayerManager.get_player_team(main_player_id()):
+		#TODO
 		#Here should be the code for displaying the victory screen
-		#print("We have won the game")
 		pass
 	else:
+		#TODO
 		#Here should be the code for displaying the defeat screen
-		#print("We have lost the game")
 		pass
 	GameManager.transition(GameManager.State.Lobby)
 
@@ -218,10 +216,11 @@ master func victory_check():
 	var victorious: int
 	
 	victorious = -1
-	#print("We are running victory checks...")
+	#TODO:
 	#Here, there should be a check whether the current map allows for elimination victory ot not
 	if victorious == -1:
 		victorious = elimination_victory_check(0)
+	#TODO
 	#Here, all other victory conditions should be checked.
 	if victorious != -1:
 		for player_id in players.keys():
@@ -244,31 +243,30 @@ func elimination_victory_check(main_team: int):
 	var max_member = -1
 	var max_team = -1
 	
+	#Counting up the alive members of each teams
 	enabled_teams = PlayerManager.get_enabledTeams()
 	for team in enabled_teams:
 		players_left[team] = 0
-	
 	for player in PlayerManager.players.keys():
-		#print("checking player number ", player)
 		if PlayerManager.players[player].get_is_alive():
 			players_team = PlayerManager.get_player_team(player)
 			players_left[players_team] = players_left[players_team] + 1
-			#print("player is alive and member of team ", players_team)
 	
+	#Looks for the team with the largest number of players except the main team
+	#In case of a tie in terms of player numbers, the lower team number will
+	#be handled as the majority: if everyone of the main team is dead, and two-two
+	#players are left alive from teams 1 and 2, team 1 wins
 	for team in enabled_teams:
-		#print("team ", team, " with ", players_left[team], " alive members")
 		total_players = total_players + players_left[team]
 		if players_left[team] > max_member and team != main_team:
 			max_member = players_left[team]
 			max_team = team
-	#print("max members: ", max_member, " in team ", max_team)
-	#print("total players remain: ", total_players)
 	
 	if total_players == players_left[main_team]:
-		#All players who are left are from the main team
+		#All players who are left are from the main team, no infiltrators remain
 		return main_team
 	elif max_member >= total_players-max_member:
-		#Any infiltrator team managed to get majority
+		#Any infiltrator team that managed to get at least 50% of alive players, wins
 		return max_team
 	
 	return -1
