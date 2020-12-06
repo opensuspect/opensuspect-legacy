@@ -139,22 +139,18 @@ func get_player_sprite_by_id(id: int) -> Node2D:
 		if player.id == id:
 			return get_player_sprite(player)
 	return null
-	
+
 func get_player_sprite(player) -> Node2D:
 	if player == null:
 		return null
-	var node = player.get_node(NodePath("SpritesViewport/Skeleton"))
-	if node == null:
-		return null
-	# duplicate, so that the caller doesn't change the actual player's sprite
-	var sprite = node.duplicate(0)
-	var animTree: AnimationTree = sprite.get_node("AnimationPlayer/AnimationTree")
-	if animTree != null:
-		# a hackish way to stop the animation
-		# don't know how to seek it back to position 0
-		animTree.set_active(false)
+	var node = player.get_node(NodePath("SpritesViewport"))
+	var img = node.get_texture().get_data()
+	var tex = ImageTexture.new()
+	tex.create_from_image(img)
+	var sprite = Sprite.new()
+	sprite.texture = tex
 	return sprite
-	
+
 func get_defalut_player_sprite() -> Sprite:
 		# Return the plain ol' black spacesuit sprite
 		var sprite = Sprite.new()

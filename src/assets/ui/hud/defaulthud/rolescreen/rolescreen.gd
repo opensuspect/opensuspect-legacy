@@ -43,13 +43,13 @@ func show_roles(player_roles : Dictionary):
 		$Label.set("custom_colors/font_color", PlayerManager.playerColors["detective"])
 	for info in player_info:
 		self.add_child(info.name_label)
-		self.add_child(info.sprite_collection)
+		self.add_child(info.sprite)
 		
 
 
 
 const PLAYER_SPACE_WIDTH = 100
-const PLAYER_SPACE_HEIGHT = 200
+const PLAYER_SPACE_HEIGHT = 125
 # player_roles - only players with player roles contained as keys
 # in role_colors will be processed
 #
@@ -115,14 +115,14 @@ class PlayerInfo:
 		label.set("custom_constants/shadow_as_outline", true)
 	
 	var name_label : Label
-	var sprite_collection : Node2D
+	var sprite : Node2D
 	
-	const SCALE_FACTOR = 3.0
-	const SCALE_FACTOR_LABEL = SCALE_FACTOR / 2.0
+	const SCALE_FACTOR = 0.8
+	const SCALE_FACTOR_LABEL = SCALE_FACTOR * 2.0
 	func _init(position: Vector2, 
 					id: int,
 					player_name_color: Color,
-					player_sprite_collection: Node2D):
+					player_sprite: Sprite):
 		
 		
 		var player_name = String(Network.get_player_name(id))
@@ -135,12 +135,10 @@ class PlayerInfo:
 		
 		_set_label_outline(self.name_label)
 		
+		self.sprite = player_sprite
+		self.sprite.set_scale(Vector2(SCALE_FACTOR, SCALE_FACTOR))
 		
-		# enlarge the sprite, so the details are visible
-		# I wonder if bitmaps would fix that problem
-		player_sprite_collection.set_scale(Vector2(SCALE_FACTOR, SCALE_FACTOR))
-		self.sprite_collection = player_sprite_collection
-		self.sprite_collection.set_position(position)
+		self.sprite.set_position(position)
 		
 		# center the label above the player sprite
 		var width = self.name_label.get_combined_minimum_size().x * (SCALE_FACTOR_LABEL)
