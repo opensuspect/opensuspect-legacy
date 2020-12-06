@@ -2,8 +2,9 @@ extends KinematicBody2D
 
 onready var death_handler: Node2D = $DeathHandler
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
+onready var item_handler: Node2D = $ItemHandler
+onready var item_pickup_range: Area2D = $ItemPickupRange
 onready var skeleton: Node2D = $Skeleton
-onready var item_handler: Node2D = skeleton.get_node("ItemHandler")
 onready var animator: AnimationPlayer = skeleton.get_node("AnimationPlayer")
 onready var animation_tree: AnimationTree = animator.get_node("AnimationTree")
 onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
@@ -43,6 +44,13 @@ var last_received_input: int = 0
 var input_queue: Array = []
 
 func _ready():
+	# Reparent ItemHandler to Skeleton Node2D
+	remove_child(item_handler)
+	skeleton.add_child(item_handler)
+	skeleton.move_child(item_handler, 6)
+	var item_transform: RemoteTransform2D = skeleton.get_node("Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand/ItemTransform")
+	item_transform.remote_path = item_transform.get_path_to(item_handler)
+	
 	# Reparent Skeleton Node2D to SpritesViewport
 	remove_child(skeleton)
 	sprites_viewport.add_child(skeleton)

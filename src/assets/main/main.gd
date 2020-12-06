@@ -104,7 +104,7 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 	if id == Network.get_my_id():
 		newPlayer.main_player = true
 		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
-		var player_item_handler: Node2D = newPlayer.get_node("Skeleton/ItemHandler")
+		var player_item_handler: Node2D = newPlayer.get_node("ItemHandler")
 		player_item_handler.connect("main_player_picked_up_item", self, "_on_main_player_picked_up_item")
 		player_item_handler.connect("main_player_dropped_item", self, "_on_main_player_dropped_item")
 		self.connect("positions_updated", newPlayer, "_on_positions_updated")
@@ -152,7 +152,6 @@ func _on_main_player_moved(movement: Vector2, velocity: Vector2, last_input: int
 		rpc_id(1, "player_moved", movement, velocity, last_input)
 
 func _on_main_player_picked_up_item(item_path: String) -> void:
-	print("Main player picked up item")
 	if get_tree().is_network_server():
 		player_picked_up_item(item_path, 1)
 	else:
@@ -170,7 +169,6 @@ remote func player_picked_up_item(item_path: String, id: int) -> void:
 	if not players.keys().has(id):
 		return
 
-	print("Player picked up item")
 	rpc("pick_up_item", id, item_path)
 
 remote func player_dropped_item(id: int) -> void:
@@ -182,7 +180,6 @@ remote func player_dropped_item(id: int) -> void:
 	rpc("drop_item", id)
 
 puppetsync func pick_up_item(id: int, item_path: String) -> void:
-	print("Pick up item: ", item_path)
 	var player_item_handler: Node2D = players[id].get_node("SpritesViewport/Skeleton/ItemHandler")
 	var found_item: KinematicBody2D = get_tree().get_root().get_node(item_path)
 	player_item_handler.pick_up(found_item)

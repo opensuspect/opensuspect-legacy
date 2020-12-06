@@ -4,10 +4,6 @@ extends Node2D
 onready var player: KinematicBody2D = get_owner()
 # The area within which items may be picked up
 onready var item_pickup_range: Area2D = player.get_node("ItemPickupRange")
-# The maps node that contains the game's current map
-onready var maps: YSort = get_tree().get_root().get_node("Main/maps")
-# The current map's items
-onready var map_items: YSort
 
 # Emitted when the player picks up an item
 signal main_player_picked_up_item(item_path)
@@ -18,6 +14,9 @@ signal main_player_dropped_item(item_path)
 var _target_item: KinematicBody2D
 # The current item in the player's hand
 var picked_up_item: KinematicBody2D
+
+func _ready() -> void:
+	player.get_node("DeathHandler").connect("dead", self, "_on_Player_dead")
 
 func _process(delta: float) -> void:
 	if player.main_player:
@@ -35,6 +34,8 @@ func _get_target() -> void:
 	var distance: float = INF
 	_target_item = null
 	for body in item_pickup_range.get_overlapping_bodies():
+		if not body.is_in_group("items"):
+			continue
 		body.material.set_shader_param("line_color", Color.transparent)
 		if (body.global_position - player.global_position).length() < distance:
 			distance = (body.global_position - player.global_position).length()
@@ -53,9 +54,8 @@ func pick_up(item: KinematicBody2D) -> void:
 
 func drop(item: KinematicBody2D) -> void:
 	"""Drop an item."""
-	if map_items == null:
-		 map_items = maps.get_child(0).get_node("Items")
-	var offset: Vector2 = item.global_position - map_items.global_position
+	var map_items: Node2D = MapManager.get_current_map().items
+	var offset: Vector2 = player.global_position - map_items.global_position
 	remove_child(item)
 	map_items.add_child(item)
 	item.position = offset
@@ -67,3 +67,6 @@ func _on_ItemPickupRange_body_exited(body: Node) -> void:
 	body.material.set_shader_param("line_color", Color.transparent)
 	if len(item_pickup_range.get_overlapping_bodies()) <= 0:
 		_target_item = null
+
+func _on_Player_dead() -> void:
+	emit_signal("main_player_dropped_item")

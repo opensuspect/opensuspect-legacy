@@ -67,7 +67,7 @@ UIManager="*res://assets/autoload/uimanager.gd"
 MapManager="*res://assets/autoload/mapmanager.gd"
 TaskManager="*res://assets/autoload/taskmanager.gd"
 Helpers="*res://assets/autoload/helpers.gd"
-SaveLoadHandler="*res://assets/autoload/save_load_handler.gd"
+SaveLoadHandler="*res://assets/autoload/saveloadhandler.gd"
 
 [display]
 
@@ -147,7 +147,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_2="players"
 2d_physics/layer_3="scientists"
 2d_physics/layer_4="infiltrators"
-2d_physics/layer_5="items"
+2d_physics/layer_5="interactive"
 2d_physics/layer_6="corpse"
 
 [locale]

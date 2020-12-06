@@ -58,6 +58,10 @@ func is_killing_enabled() -> bool:
 func enable_killing(enable: bool = true) -> void:
 	"""Enable or disable killing; may be used from outside of script."""
 	_killing_enabled = enable
+	if not enable:
+		_target_player = null
+		for body in kill_area.get_overlapping_bodies():
+			body.get_node("ViewportTextureTarget").material.set_shader_param("line_color", Color.transparent)
 
 func is_reloaded() -> bool:
 	"""Check whether the infiltrator has reloaded."""
@@ -87,7 +91,7 @@ func _kill_player() -> void:
 
 func _get_target() -> void:
 	"""
-	Each frame, highlight the nearest target within the kill area in red as the
+	Each frame, outline the nearest target within the kill area in red as the
 	player who will be killed if the infiltrator decides to do so.
 	"""
 	var distance: float = INF

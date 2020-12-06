@@ -13,15 +13,14 @@
 [ext_resource path="res://assets/player/textures/characters/customizable/03-mouth/mouth-smile.png" type="Texture" id=11]
 [ext_resource path="res://assets/common/shaders/skin_color_key.shader" type="Shader" id=12]
 
-[sub_resource type="ShaderMaterial" id=17]
+[sub_resource type="ShaderMaterial" id=18]
 resource_local_to_scene = true
 shader = ExtResource( 12 )
 shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
 shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
 shader_param/tolerance = 0.75
 
-[sub_resource type="Animation" id=1]
-resource_name = "death"
+[sub_resource type="Animation" id=19]
 length = 1.5
 step = 0.01
 tracks/0/type = "value"
@@ -529,7 +528,7 @@ tracks/41/keys = {
 "values": [ 90.0, 90.0, 90.0, 57.5553, 83.3688 ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=20]
 length = 0.5
 loop = true
 step = 0.01
@@ -1038,7 +1037,7 @@ tracks/41/keys = {
 "values": [ -90.0, -90.0, -90.0, -90.0 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=21]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Skeleton:position")
@@ -1545,8 +1544,7 @@ tracks/41/keys = {
 "values": [ -90.0 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "resurrect"
+[sub_resource type="Animation" id=22]
 length = 2.5
 step = 0.01
 tracks/0/type = "value"
@@ -2108,76 +2106,76 @@ tracks/45/keys = {
 } ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=5]
+[sub_resource type="AnimationNodeAnimation" id=23]
 animation = "death"
 
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=24]
 animation = "h_move"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=25]
 animation = "h_move"
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=26]
 animation = "idle"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=27]
 animation = "idle"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id=10]
-blend_point_0/node = SubResource( 6 )
+[sub_resource type="AnimationNodeBlendSpace2D" id=28]
+blend_point_0/node = SubResource( 24 )
 blend_point_0/pos = Vector2( 0, 1 )
-blend_point_1/node = SubResource( 7 )
+blend_point_1/node = SubResource( 25 )
 blend_point_1/pos = Vector2( 1, 0.5 )
-blend_point_2/node = SubResource( 8 )
+blend_point_2/node = SubResource( 26 )
 blend_point_2/pos = Vector2( 0, 0 )
-blend_point_3/node = SubResource( 9 )
+blend_point_3/node = SubResource( 27 )
 blend_point_3/pos = Vector2( -1, 0.5 )
 min_space = Vector2( -1, 0 )
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=29]
 animation = "resurrect"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachine" id=15]
-states/death/node = SubResource( 5 )
+[sub_resource type="AnimationNodeStateMachine" id=33]
+states/death/node = SubResource( 23 )
 states/death/position = Vector2( 174, 390 )
-states/idle_move_blend/node = SubResource( 10 )
+states/idle_move_blend/node = SubResource( 28 )
 states/idle_move_blend/position = Vector2( 322, 258 )
-states/resurrect/node = SubResource( 11 )
+states/resurrect/node = SubResource( 29 )
 states/resurrect/position = Vector2( 322, 522 )
-transitions = [ "idle_move_blend", "death", SubResource( 12 ), "death", "resurrect", SubResource( 13 ), "resurrect", "idle_move_blend", SubResource( 14 ) ]
+transitions = [ "idle_move_blend", "death", SubResource( 30 ), "death", "resurrect", SubResource( 31 ), "resurrect", "idle_move_blend", SubResource( 32 ) ]
 start_node = "idle_move_blend"
 graph_offset = Vector2( -311, 172 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=16]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
 [node name="Skeleton" type="Node2D"]
-material = SubResource( 17 )
+material = SubResource( 18 )
 __meta__ = {
 "_editor_description_": "Node to hold the polygon sprites and the skeleton."
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_default_blend_time = 0.33
-anims/death = SubResource( 1 )
-anims/h_move = SubResource( 2 )
-anims/idle = SubResource( 3 )
-anims/resurrect = SubResource( 4 )
+anims/death = SubResource( 19 )
+anims/h_move = SubResource( 20 )
+anims/idle = SubResource( 21 )
+anims/resurrect = SubResource( 22 )
 
 [node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
-tree_root = SubResource( 15 )
+tree_root = SubResource( 33 )
 anim_player = NodePath("..")
 active = true
-parameters/playback = SubResource( 16 )
+parameters/playback = SubResource( 17 )
 parameters/idle_move_blend/blend_position = Vector2( 0, 0 )
 
 [node name="LeftLeg" type="Polygon2D" parent="."]
@@ -2315,6 +2313,9 @@ __meta__ = {
 "_edit_bone_": true,
 "_editor_description_": "Bone that controls the player's right hand."
 }
+
+[node name="ItemTransform" type="RemoteTransform2D" parent="Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand"]
+update_scale = false
 
 [node name="LeftUpperLeg" type="Bone2D" parent="Skeleton/Spine"]
 position = Vector2( 3.53507, 1.61536 )

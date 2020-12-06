@@ -18,8 +18,12 @@ material = SubResource( 1 )
 position = Vector2( -0.0936432, 0 )
 
 [node name="ItemCollision" parent="." index="0"]
+position = Vector2( 5, -5 )
+rotation = 2.35619
 shape = SubResource( 2 )
 
 [node name="ItemSprite" parent="." index="1"]
+position = Vector2( 5, -5 )
+rotation = 2.35619
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 2 )
