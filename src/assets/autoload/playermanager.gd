@@ -124,6 +124,7 @@ func get_main_player() -> KinematicBody2D:
 	for player in players.values():
 		if player.main_player:
 			return player
+	#There is no main player, the program runs as a dedicated server
 	return null
 
 func get_player_roles() -> Dictionary:

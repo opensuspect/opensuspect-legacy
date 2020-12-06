@@ -7,8 +7,9 @@ var player_scene = load(player_s)
 # Used on both sides, to keep track of all players.
 var players = {}
 #!!!THIS IS IMPORTANT!!!
-#INCREASE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-var version = 20120610
+#CHANGE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
+#A way to make up version number: year month date hour of editing this script
+var version = 20120707
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
@@ -185,22 +186,25 @@ remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> 
 		return
 
 	for player_id in players.keys():
-		if players[player_id].main_player:
-			# Can't RPC on self
-			player_killed(killer_id, killed_player_id)
-		else:
-			rpc_id(player_id, "player_killed", killer_id, killed_player_id)
+		rpc_id(player_id, "player_killed", killer_id, killed_player_id)
 
-puppet func player_killed(killer_id: int, killed_player_id: int) -> void:
+puppetsync func player_killed(killer_id: int, killed_player_id: int) -> void:
 	"""Runs on a client; responsible for actually killing off a player."""
 	var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
 	killed_player_death_handler.die_by(killer_id)
 
-puppet func end_round(winner):
+puppetsync func end_round(winner):
 	"""This function is called by the server and when it is, it would need to
 	show the win / lose screens for the players, and then transitions back
 	to the lobby."""
-	if PlayerManager.get_player_team(main_player_id()):
+	var main_player
+	main_player = main_player_id()
+	if main_player == -1:
+		#TODO
+		#Here should be the code for whatever happens on a dedicated server at the
+		#end of the turn
+		pass
+	elif PlayerManager.get_player_team(main_player):
 		#TODO
 		#Here should be the code for displaying the victory screen
 		pass
@@ -224,11 +228,7 @@ master func victory_check():
 	#Here, all other victory conditions should be checked.
 	if victorious != -1:
 		for player_id in players.keys():
-			if players[player_id].main_player:
-				# Can't RPC on self
-				end_round(victorious)
-			else:
-				rpc_id(player_id, "end_round", victorious)
+			rpc_id(player_id, "end_round", victorious)
 
 func elimination_victory_check(main_team: int):
 	"""Checks whether the elimination victory has been achieved. Returns -1
