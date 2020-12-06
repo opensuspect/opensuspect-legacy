@@ -131,6 +131,16 @@ reload={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
  ]
 }
+ui_pick={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":80,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_drop={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [input_devices]
 
@@ -148,6 +158,10 @@ pointing/emulate_touch_from_mouse=true
 
 translations=PoolStringArray( "res://locale/de.po", "res://locale/el.po", "res://locale/en.po", "res://locale/es.po", "res://locale/fr.po", "res://locale/hu.po", "res://locale/ko.po", "res://locale/ro.po", "res://locale/sr.po", "res://locale/sv.po" )
 locale_filter=[ 0, [  ] ]
+
+[network]
+
+limits/debugger_stdout/max_chars_per_second=100000000000
 
 [rendering]
 

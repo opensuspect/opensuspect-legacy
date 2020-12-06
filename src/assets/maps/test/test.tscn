@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interact/interact.gd" type="Script" id=9]
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=10]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=11]
+[ext_resource path="res://assets/maps/common/interactables/items/item.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
@@ -391,3 +392,9 @@ position = Vector2( 600, 0 )
 scale = Vector2( 3, 19 )
 
 [node name="Corpses" type="YSort" parent="."]
+
+[node name="item" parent="." instance=ExtResource( 12 )]
+position = Vector2( -168, 40 )
+
+[node name="item2" parent="." instance=ExtResource( 12 )]
+position = Vector2( 184, 64 )

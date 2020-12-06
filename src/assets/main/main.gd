@@ -15,6 +15,10 @@ var newnumber
 var spawn_pos = Vector2(0,0)
 var player_data_dict: Dictionary
 
+var hand_pos:Dictionary
+var pick_range:Dictionary
+var keystroke:int
+
 signal positions_updated(last_received_input)
 
 func _ready() -> void:
@@ -100,6 +104,8 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 	var newPlayer = player_scene.instance()
 	newPlayer.id = id
 	newPlayer.setName(playerName)
+	hand_pos[id] = newPlayer.get_node("reach/hand_pos")
+	pick_range[id] = newPlayer.get_node("reach")
 	#newPlayer.set_network_master(id)
 	if id == Network.get_my_id():
 		newPlayer.main_player = true
@@ -276,3 +282,62 @@ func _apply_customizations(player: KinematicBody2D, player_data: Dictionary) -> 
 	face_wear.texture = load(appearance["Face Wear"]["texture_path"])
 	hat_hair.texture = load(appearance["Hat/Hair"]["texture_path"])
 	mouth.texture = load(appearance["Mouth"]["texture_path"])
+
+
+
+func _input(event):
+	if Input.is_action_just_pressed("ui_pick"):
+			if get_pick_range(Network.get_my_id()).is_colliding():
+				rpc("pick")
+				if get_hand_pos(Network.get_my_id()).get_child_count() > 0:
+					disable_killing(Network.get_my_id())
+				
+	if Input.is_action_just_pressed("ui_drop"):
+		if get_hand_pos(Network.get_my_id()).get_child_count() > 0:
+			rpc("drop")
+			enable_killing(Network.get_my_id())
+
+
+remotesync func pick():
+	if get_hand_pos(get_tree().get_rpc_sender_id()).get_child_count() > 0:
+		drop()
+	var body = get_pick_range(get_tree().get_rpc_sender_id()).get_collider().duplicate()
+	body.position = Vector2(0,0)
+	get_hand_pos(get_tree().get_rpc_sender_id()).add_child(body)
+	get_pick_range(get_tree().get_rpc_sender_id()).get_collider().queue_free()
+	get_hand_pos(get_tree().get_rpc_sender_id()).get_child(0).pick =false
+	body = null
+	
+remotesync func drop():
+	var child = get_hand_pos(get_tree().get_rpc_sender_id()).get_child(0).duplicate()
+	$maps.add_child(child)
+	child.pick = false
+	child.global_transform = get_hand_pos(get_tree().get_rpc_sender_id()).global_transform 
+	get_hand_pos(get_tree().get_rpc_sender_id()).get_child(0).queue_free()
+	child = null 
+	
+	
+	
+func get_hand_pos(id):
+	return hand_pos.get(id)
+	
+func get_pick_range(id):
+	return pick_range.get(id)
+
+
+func enable_killing(id):
+	var name = Network.names.get(id)
+	for player in $players.get_children():
+		if player.get_node("Label").text == str(name):
+			if player.has_node("Infiltrator"):
+				player.get_node("Infiltrator").enable_killing(true)
+
+
+func disable_killing(id):
+	var name = Network.names.get(id)
+	for player in $players.get_children():
+		if player.get_node("Label").text == str(name):
+			if player.has_node("Infiltrator"):
+				player.get_node("Infiltrator").enable_killing(false)
+
+
