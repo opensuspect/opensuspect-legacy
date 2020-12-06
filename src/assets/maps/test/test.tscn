@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -11,6 +11,9 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interact/interact.gd" type="Script" id=9]
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=10]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=11]
+[ext_resource path="res://assets/common/shaders/outline.shader" type="Shader" id=12]
+[ext_resource path="res://assets/items/battery.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/items/wrench.tscn" type="PackedScene" id=14]
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
@@ -193,6 +196,18 @@ interact_type = 0
 task_resource = SubResource( 18 )
 ui_resource = SubResource( 19 )
 map_resource = SubResource( 17 )
+
+[sub_resource type="ShaderMaterial" id=21]
+resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/line_color = Color( 1, 1, 0, 0 )
+shader_param/line_thickness = 5.0
+
+[sub_resource type="ShaderMaterial" id=22]
+resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/line_color = Color( 1, 1, 0, 0 )
+shader_param/line_thickness = 5.0
 
 [node name="test" type="YSort"]
 
@@ -389,5 +404,15 @@ scale = Vector2( 12, 3 )
 [node name="wallvertical" parent="walls/rightroom" instance=ExtResource( 7 )]
 position = Vector2( 600, 0 )
 scale = Vector2( 3, 19 )
+
+[node name="Items" type="YSort" parent="."]
+
+[node name="Wrench" parent="Items" instance=ExtResource( 14 )]
+material = SubResource( 21 )
+position = Vector2( -198.451, 57.1808 )
+
+[node name="Battery" parent="Items" instance=ExtResource( 13 )]
+material = SubResource( 22 )
+position = Vector2( -168.273, -14.2952 )
 
 [node name="Corpses" type="YSort" parent="."]
