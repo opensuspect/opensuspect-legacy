@@ -41,6 +41,14 @@ func _physics_process(_delta: float) -> void:
 			if id != 1:
 				rpc_id(id, "update_positions", positions_dict, players[id].input_number)
 
+func main_player_id():
+	"""Returns the id of the main player (the player who is the playable character
+	on this instance)"""
+	for player_id in players.keys():
+		if players[player_id].main_player:
+			return player_id
+	return -1
+
 func connection_handled(id: int, playerName: String) -> void:
 	print("connection handled, id: ", id, " name: ", playerName)
 	if not get_tree().is_network_server():
@@ -192,8 +200,16 @@ puppet func end_round(winner):
 	"""This function is called by the server and when it is, it would need to
 	show the win / lose screens for the players, and then transitions back
 	to the lobby."""
-	#Here should be the code for displaying the victory / defeat screens
 	#print("Round ended with winning team ", winner)
+	#print("Current player's team: ", PlayerManager.get_player_team(main_player_id()))
+	if PlayerManager.get_player_team(main_player_id()):
+		#Here should be the code for displaying the victory screen
+		#print("We have won the game")
+		pass
+	else:
+		#Here should be the code for displaying the defeat screen
+		#print("We have lost the game")
+		pass
 	GameManager.transition(GameManager.State.Lobby)
 
 master func victory_check():
