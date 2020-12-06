@@ -150,17 +150,23 @@ master func _on_maps_spawn(spawnPositions: Array):
 func _on_infiltrator_kill(killer: KinematicBody2D, killed_player: KinematicBody2D) -> void:
 	"""
 	Runs on the infiltrator's Main scene; sends an RPC to the server to indicate
-	that the infiltrator has killed a player.
+	that the infiltrator has killed a player, and also sends an RPC to the server
+	to initiate a check whether the win conditions have been achieved.
 	"""
 	var killer_id: int = get_network_id_from_player_node_name(killer.name)
 	var killed_player_id: int = get_network_id_from_player_node_name(killed_player.name)
+	
 	if not players.keys().has(killer_id) or not players.keys().has(killed_player_id):
 		return
 	if get_tree().is_network_server():
 		# Killer is the network server
 		infiltrator_killed_player(killer_id, killed_player_id)
+		#check if a round ends due to passing winning conditions:
+		victory_check()
 	else:
 		rpc_id(1, "infiltrator_killed_player", killer_id, killed_player_id)
+		#ask the server to check if a round ends due to passing winning conditions:
+		rpc_id(1, "victory_check")
 
 remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> void:
 	"""
@@ -177,20 +183,37 @@ remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> 
 		else:
 			rpc_id(player_id, "player_killed", killer_id, killed_player_id)
 
-func end_round(winner):
-	"""This function would need to show the win / lose screens for the players,
-	but at this stage it only transitions back to the lobby."""
-	GameManager.transition(GameManager.State.Lobby)
-
 puppet func player_killed(killer_id: int, killed_player_id: int) -> void:
 	"""Runs on a client; responsible for actually killing off a player."""
-	var winner: int
 	var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
 	killed_player_death_handler.die_by(killer_id)
-	#check if a round ends due to passing winning conditions:
-	winner = victory_check()
-	if winner != -1:
-		end_round(winner)
+
+puppet func end_round(winner):
+	"""This function is called by the server and when it is, it would need to
+	show the win / lose screens for the players, and then transitions back
+	to the lobby."""
+	#Here should be the code for displaying the victory / defeat screens
+	#print("Round ended with winning team ", winner)
+	GameManager.transition(GameManager.State.Lobby)
+
+master func victory_check():
+	"""Checks all possible victory conditions, and if any passes, tells all clients
+	to proceed to the victory / defeat screens"""
+	var victorious: int
+	
+	victorious = -1
+	#print("We are running victory checks...")
+	#Here, there should be a check whether the current map allows for elimination victory ot not
+	if victorious == -1:
+		victorious = elimination_victory_check(0)
+	#Here, all other victory conditions should be checked.
+	if victorious != -1:
+		for player_id in players.keys():
+			if players[player_id].main_player:
+				# Can't RPC on self
+				end_round(victorious)
+			else:
+				rpc_id(player_id, "end_round", victorious)
 
 func elimination_victory_check(main_team: int):
 	"""Checks whether the elimination victory has been achieved. Returns -1
@@ -233,15 +256,6 @@ func elimination_victory_check(main_team: int):
 		return max_team
 	
 	return -1
-
-func victory_check():
-	"""Returns -1 if no one wins, otherwise returns the number of the winning team"""
-	var victorious: int
-	
-	victorious = -1
-	if victorious == -1:
-		victorious = elimination_victory_check(0)
-	return victorious
 
 func get_network_id_from_player_node_name(node_name: String) -> int:
 	"""Fetch a player's network ID from the name of their KinematicBody2D."""
