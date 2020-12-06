@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/body01.png-d898a1189aff34292e21704236bc55a1.stex"
+path="res://.import/arrow.png-67960a7c1550322b14f789ea36eb881c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/textures/characters/customizable/02-body/body01.png"
-dest_files=[ "res://.import/body01.png-d898a1189aff34292e21704236bc55a1.stex" ]
+source_file="res://assets/ui/submenus/appearance_editor/textures/arrow.png"
+dest_files=[ "res://.import/arrow.png-67960a7c1550322b14f789ea36eb881c.stex" ]
 
 [params]
 

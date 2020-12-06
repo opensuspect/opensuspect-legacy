@@ -33,6 +33,8 @@ func _on_Back_pressed() -> void:
 func _on_MenuArea_returnToMainMenu():
 	default_state()
 
+func _on_Appearence_pressed() -> void:
+	get_owner().get_node("AppearanceEditor").open()
 
 func _on_loadpck_pressed():
 	var directory = Directory.new();

@@ -1,12 +1,15 @@
 shader_type canvas_item;
 
-uniform vec4 line_color : hint_color = vec4(1);
+uniform vec4 line_color : hint_color = vec4(1.0);
 uniform float line_thickness : hint_range(0, 10) = 1.0;
 
 void fragment()
 {
+	// Only show the player when they are in light
 	if (AT_LIGHT_PASS)
 	{
+		vec4 color = texture(TEXTURE, UV);
+
 		vec2 size = TEXTURE_PIXEL_SIZE * line_thickness / 2.0;
 
 		float l = texture(TEXTURE, UV + vec2(-size.x, 0)).a;
@@ -18,15 +21,16 @@ void fragment()
 		float ld = texture(TEXTURE, UV + vec2(-size.x, -size.y)).a;
 		float rd = texture(TEXTURE, UV + vec2(size.x, -size.y)).a;
 
-		vec4 color = texture(TEXTURE, UV);
 		float outline = min(1.0, l+r+u+d+lu+ru+ld+rd) - color.a;
 		float inline = (1.0 - l * r * u * d * lu * ru * rd * ld) * color.a;
 
 		vec4 outlined_result = mix(color, line_color, outline + inline);
+
+		// Outline color
 		COLOR = mix(color, outlined_result, outlined_result.a);
 	}
 	else
 	{
-		COLOR = vec4(texture(TEXTURE, UV).rgb, 0.0)
+		COLOR.a = 0.0;
 	}
 }

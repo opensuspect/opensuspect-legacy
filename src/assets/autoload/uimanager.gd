@@ -13,10 +13,13 @@ var ui_list: Dictionary = {
 						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}, 
 						"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")},
 						"keybind": {"scene": preload("res://assets/ui/submenus/settings/keybind/keybind.tscn")},
+						"appearance_editor": {"scene": preload("res://assets/ui/submenus/appearance_editor/appearance_editor.tscn")},
 						
 						#task UI
 						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")}
 						}
+
+var current_ui: Control
 
 var open_uis: Array = []
 
@@ -83,10 +86,13 @@ func ui_opened(menuName):
 	if open_uis.has(menuName):
 		return
 	open_uis.append(menuName)
+	current_ui = get_ui(menuName)
 
 func ui_closed(menuName):
 	open_uis.erase(menuName)
 	just_closed = menuName
+	if not open_uis.empty():
+		current_ui = get_ui(open_uis[-1])
 
 # warning-ignore:unused_argument
 func state_changed(old_state, new_state):
@@ -102,11 +108,13 @@ func get_interact_ui_node():
 	return interact_ui_node
 
 func _process(_delta):
-	#if ui_cancel (most likely esc) and not in menu, open pause menu
-	if Input.is_action_just_pressed("ui_cancel") and not in_ui() and just_closed != "pausemenu":
-		open_ui("pausemenu")
 	just_closed = ""
 
+func _input(event: InputEvent) -> void:
+	#if ui_cancel (most likely esc) and not in menu, open pause menu
+	if event.is_action_pressed("ui_cancel") and not in_ui() and just_closed != "pausemenu":
+		open_ui("pausemenu")
+		ui_opened("pausemenu")
 
 func set_game_binds():#Set new binds
 	for key in keybinds.keys():

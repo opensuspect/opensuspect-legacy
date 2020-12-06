@@ -46,13 +46,12 @@ func open_ui(ui_name: String, ui_data: Dictionary = {}, reinstance: bool = false
 	#call open on the inherited class, most likely the script attached to a given task or menu
 	if current_ui.has_method("open"):
 		current_ui.open()
+	move_child(current_ui, get_child_count() - 1)
 
 func close_ui(ui_name: String, free: bool = false):
-	print("Closing: ", ui_name)
 	update_instanced_uis()
 	if not instanced_uis.has(ui_name):
 		return
-	print("Continuing to close: ", ui_name)
 	var current_ui = get_ui(ui_name)
 	#call close on a lower class, handles ui system integration
 	if current_ui.has_method("base_close"):
@@ -62,7 +61,6 @@ func close_ui(ui_name: String, free: bool = false):
 		current_ui.close()
 	if free:
 		current_ui.free_ui(ui_name)
-	print("Closed: ", ui_name)
 
 func instance_ui(ui_name: String, ui_data: Dictionary = {}):
 	update_instanced_uis()
