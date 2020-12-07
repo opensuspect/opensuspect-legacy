@@ -11,12 +11,16 @@ var taskstoassign
 var assignedtasks
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
+#mustAssign specifies if the role is mandatory to have, team specifies a team number which
+#will be checked by the win condition scripts. When giving numbers out to the infiltrator
+#teams, consider, that the majority count for elimination victory will favor the lower number
+#in case of tie (check main.gd for details).
 enum assignStyle {Percent, Amount}
 var style: int = assignStyle.Percent
 var enabledRoles: Array = ["traitor", "detective", "default"]
-var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "critical": true}, 
-						"detective": {"percent": float(1)/7, "amount": 1, "critical": false}, 
-						"default": {"percent": 0, "amount": 0, "critical": false}}
+var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "mustAssign": true, "team": 1}, 
+						"detective": {"percent": float(1)/7, "amount": 1, "mustAssign": false, "team": 0}, 
+						"default": {"percent": 0, "amount": 0, "mustAssign": false, "team": 0}}
 var players: Dictionary = {}
 var playerRoles: Dictionary = {}
 var playerColors: Dictionary = {enabledRoles[0]: Color(1,0,0),# traitor
@@ -79,7 +83,7 @@ func assignRoles(players: Array):
 				continue
 			#rounds down to be more predictable, if percent is 1/7th, role won't be assigned until there are 7 players
 			roles[i].amount = roundDown(roles[i].percent * playerAmount, 1)
-			if roles[i].amount < 1 and roles[i].critical:
+			if roles[i].amount < 1 and roles[i].mustAssign:
 				roles[i].amount = 1
 
 	# of players that aren't going to be assigned to a special role
@@ -120,13 +124,33 @@ func get_main_player() -> KinematicBody2D:
 	for player in players.values():
 		if player.main_player:
 			return player
+	#There is no main player, the program runs as a dedicated server
 	return null
 
 func get_player_roles() -> Dictionary:
+	"""Returns all players and their roles"""
 	return playerRoles
 
 func get_player_role(id) -> String:
+	"""Returns the role name of the player with the requested id"""
 	return playerRoles[id]
+
+func get_player_team(id) -> int:
+	"""Returns the team number of the player with the requested id"""
+	return roles[playerRoles[id]]["team"]
+
+func get_enabledRoles():
+	"""Returns all roles that are enabled in the current game"""
+	return enabledRoles
+
+func get_enabledTeams() -> Array:
+	"""Returns an array with the teams (numbered) enabled in the current game"""
+	var teams: Array
+	
+	for role in roles:
+		if teams.find(roles[role]["team"]) == -1:
+			teams.append(roles[role]["team"])
+	return teams
 
 func setourrole():
 	ourrole = PlayerManager.get_player_role(Network.myID)
