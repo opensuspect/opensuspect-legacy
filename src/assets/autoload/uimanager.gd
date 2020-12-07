@@ -8,6 +8,7 @@ var ui_list: Dictionary = {
 						#HUD
 						"interactui": {"scene": preload("res://assets/ui/hud/interactui/interactui.tscn")},
 						"killui": {"scene": preload("res://assets/ui/hud/infiltrator_hud/infiltrator_hud.tscn")},
+						"rolescreen": {"scene": preload("res://assets/ui/hud/defaulthud/rolescreen/rolescreen.tscn")},
 						
 						#common UI
 						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}, 
