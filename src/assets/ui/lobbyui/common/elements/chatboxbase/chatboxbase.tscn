@@ -28,6 +28,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -55.0
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -37,7 +38,7 @@ margin_right = 971.0
 margin_bottom = 55.0
 rect_min_size = Vector2( 150, 0 )
 size_flags_horizontal = 3
-fold_gutter = true
+size_flags_vertical = 3
 wrap_enabled = true
 __meta__ = {
 "_edit_lock_": true,
