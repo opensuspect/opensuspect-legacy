@@ -1,5 +1,12 @@
 extends Node
 
+func choose(array: Array):
+	randomize()
+	var random_index : int = 0
+	if len(array) > 0:
+		random_index = randi() % len(array)
+	return array[random_index]
+
 func string_join(string_array: Array, separator: String) -> String:
 	var combined_string: String = ""
 	for index in range(len(string_array) - 1):
