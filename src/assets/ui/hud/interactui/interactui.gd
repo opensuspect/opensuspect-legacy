@@ -1,4 +1,4 @@
-extends Control
+extends ControlBase
 
 var buttonInteractDict: Dictionary = {}
 

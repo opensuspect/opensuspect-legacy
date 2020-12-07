@@ -1,4 +1,4 @@
-extends Control
+extends ControlBase
 
 # Animator for infiltrator-specific animations
 onready var animator: AnimationPlayer
@@ -35,10 +35,6 @@ func _process(_delta: float) -> void:
 		if animator != null and animator.current_animation == "Reload":
 			progress = animator.current_animation_position / animator.current_animation_length
 		reload_button.material.set_shader_param("progress", progress)
-
-func base_open() -> void:
-	"""For sake of compliance with open_menu."""
-	pass
 
 func _on_Infiltrator_Animator_animation_finished(anim_name: String) -> void:
 	"""
