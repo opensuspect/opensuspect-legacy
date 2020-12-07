@@ -133,27 +133,24 @@ func setourrole():
 	print(ourrole)
 	emit_signal("roles_assigned", playerRoles)
 
-func get_player_sprite_by_id(id: int) -> Node2D:
+func get_player_sprite_by_id(id: int) -> Texture:
 	var playerGroupMembers = get_tree().get_nodes_in_group("players")
 	for player in playerGroupMembers:
 		if player.id == id:
-			return get_player_sprite(player)
+			return get_player_texture(player)
 	return null
 
-func get_player_sprite(player) -> Node2D:
+func get_player_texture(player) -> Texture:
 	if player == null:
 		return null
 	var node = player.get_node(NodePath("SpritesViewport"))
 	var img = node.get_texture().get_data()
 	var tex = ImageTexture.new()
 	tex.create_from_image(img)
-	var sprite = Sprite.new()
-	sprite.texture = tex
-	return sprite
+	return tex
 
-func get_defalut_player_sprite() -> Sprite:
+func get_defalut_player_texture() -> Texture:
 		# Return the plain ol' black spacesuit sprite
 		var sprite = Sprite.new()
 		var blackSpacesuitTexture = preload("res://assets/player/textures/characters/black/black-proto-1.png")
-		sprite.texture = blackSpacesuitTexture
-		return sprite
+		return blackSpacesuitTexture

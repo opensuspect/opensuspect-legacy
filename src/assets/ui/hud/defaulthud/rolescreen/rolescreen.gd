@@ -1,15 +1,15 @@
 extends PopupBase
 
 # gets updated by the UIManager
+# holds the assigned player roles
 export var ui_data: Dictionary
 
 func base_open():
 	.base_open()# we need to 'pop up'
 	# warning-ignore:return_value_discarded
 	$Timer.connect("timeout", self, "_clean_up")
-	# warning-ignore:return_value_discarde
+	# warning-ignore:return_value_discarded
 	GameManager.connect("state_changed", self, "_clean_up")# HELP<<-- Never gets called
-	$Label.set_size(get_viewport().size)
 	PlayerInfo._set_label_outline($Label)
 	show_roles(ui_data)
 	$Timer.start()
@@ -41,15 +41,16 @@ func show_roles(player_roles : Dictionary):
 		player_info = _generate_info(player_roles, everyone_dict)
 		$Label.text = "Good guys"
 		$Label.set("custom_colors/font_color", PlayerManager.playerColors["detective"])
+	
+	# Center the team label
+	var team_label_width = $Label.get_combined_minimum_size().x
+	var team_label_pos = $Label.get_position()
+	team_label_pos.x -= team_label_width/4
+	$Label.set_position(team_label_pos)
+	
 	for info in player_info:
 		self.add_child(info.name_label)
-		self.add_child(info.sprite)
 		
-
-
-
-const PLAYER_SPACE_WIDTH = 100
-const PLAYER_SPACE_HEIGHT = 125
 # player_roles - only players with player roles contained as keys
 # in role_colors will be processed
 #
@@ -65,44 +66,39 @@ func _generate_info(player_roles: Dictionary, role_colors: Dictionary):
 		if role_colors.has(player_roles[id]):
 			filtered_ids.append(id)
 	
-	# set the player info to the bottom of the screen
-	var y_pos = get_viewport().size.y * 0.80
+	# gets the player texture to be displayed
+	# or, displays the black spacesuit character,
+	# if the customized player texture wasn't found
+	var player_group_members = get_tree().get_nodes_in_group("players")
+	var player_texture_collection = Dictionary()
+	var total_texture_width = 0.0
+	for player in player_group_members:
+		if not filtered_ids.has(player.id):
+			continue
+		var player_texture = PlayerManager.get_player_texture(player)
+		if player_texture == null:
+			player_texture = PlayerManager.get_defalut_player_texture()
+		player_texture_collection[player.id] = player_texture
+		total_texture_width += player_texture.get_width()
 	
-	var viewport_width = get_viewport().size.x
-	# start drawing player info from here, centered on the middle of the screen
-	var x_pos_start = (viewport_width / 2) - ((PLAYER_SPACE_WIDTH * filtered_ids.size()) / 2)
-	if x_pos_start < 0:
-		# there are too many players to fit in one row.. need to wrap to the next row
-		pass
 	# assists with positioning player info
 	var player_count = 0
-	
-	# gets the player sprites to be displayed
-	# or, displays the black spacesuit character,
-	# if the "spritecollection" node wasn't found
-	var player_group_members = get_tree().get_nodes_in_group("players")
-	var player_sprite_collection = Dictionary()
-	for player in player_group_members:
-		if player_roles.has(player.id):
-			var player_sprite = PlayerManager.get_player_sprite(player)
-			if player_sprite == null:
-				player_sprite = PlayerManager.get_defalut_player_sprite()
-			player_sprite_collection[player.id] = player_sprite
-	
+	var average_texture_width = total_texture_width / filtered_ids.size()
+	var texture_ratio = average_texture_width / get_viewport().get_size().x
+	var anchor_spacing = 1.0 / filtered_ids.size()
 	
 	for id in filtered_ids:
-		# draw player info with PLAYER_SPACE_WIDTH pixels in between
-		var x_pos = x_pos_start + (PLAYER_SPACE_WIDTH * player_count)
-		
+		# find the middle, so every player is placed evenly-ish apart
+		var x_anchor = (anchor_spacing * player_count) + (anchor_spacing / 2) - (texture_ratio/4)
 		# every other player info should be lowered, to make more room for the name label
-		var y_offset = 0
+		var y_anchor = 0.7
 		if player_count % 2 == 0:
-			y_offset = 20
+			y_anchor = 0.6
 	
-		p_info.append(PlayerInfo.new(Vector2(x_pos, y_pos + y_offset),
+		p_info.append(PlayerInfo.new(	Vector2(x_anchor, y_anchor),
 										id,
 										role_colors[player_roles[id]],
-										player_sprite_collection[id]))
+										player_texture_collection[id]))
 		player_count += 1
 	
 	return p_info
@@ -115,14 +111,13 @@ class PlayerInfo:
 		label.set("custom_constants/shadow_as_outline", true)
 	
 	var name_label : Label
-	var sprite : Node2D
 	
-	const SCALE_FACTOR = 0.8
+	const SCALE_FACTOR = 0.6
 	const SCALE_FACTOR_LABEL = SCALE_FACTOR * 2.0
-	func _init(position: Vector2, 
+	func _init(		anchors: Vector2, 
 					id: int,
 					player_name_color: Color,
-					player_sprite: Sprite):
+					player_texture: Texture):
 		
 		
 		var player_name = String(Network.get_player_name(id))
@@ -134,17 +129,19 @@ class PlayerInfo:
 		self.name_label.set("custom_colors/font_color", player_name_color)
 		
 		_set_label_outline(self.name_label)
+		var sprite = Sprite.new()
+		sprite.texture = player_texture
+		sprite.set_scale(Vector2(SCALE_FACTOR, SCALE_FACTOR))
 		
-		self.sprite = player_sprite
-		self.sprite.set_scale(Vector2(SCALE_FACTOR, SCALE_FACTOR))
-		
-		self.sprite.set_position(position)
-		
-		# center the label above the player sprite
-		var width = self.name_label.get_combined_minimum_size().x * (SCALE_FACTOR_LABEL)
-		self.name_label.rect_position = position
-		self.name_label.rect_position.x -= (width/2)
-		
-		# position the label a bit above the player sprite
-		self.name_label.rect_position.y -= PLAYER_SPACE_HEIGHT - 20
+		var spacing_h = player_texture.get_height() * SCALE_FACTOR
+		var spacing_label = self.name_label.get_combined_minimum_size().y * (SCALE_FACTOR_LABEL)
+		sprite.set_position(Vector2(0, (spacing_h / 4) + spacing_label / 2))
+		var center = Control.new()
+		center.add_child(sprite)
+		# Center horizontally
+		center.set_anchor(MARGIN_TOP, 1)
+		center.set_anchor(MARGIN_LEFT, 0.5)
+		self.name_label.add_child(center)
 
+		self.name_label.set_anchor(MARGIN_LEFT, anchors.x)
+		self.name_label.set_anchor(MARGIN_TOP, anchors.y)
