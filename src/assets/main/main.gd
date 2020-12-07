@@ -97,14 +97,14 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 	if players.keys().has(id):
 		print("not creating player, already exists")
 		return
-	var newPlayer = player_scene.instance()
+	var newPlayer: Player = player_scene.instance()
 	newPlayer.id = id
 	newPlayer.setName(playerName)
 	#newPlayer.set_network_master(id)
 	if id == Network.get_my_id():
 		newPlayer.main_player = true
 		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
-		var player_item_handler: Node2D = newPlayer.get_node("ItemHandler")
+		var player_item_handler: ItemHandler = newPlayer.get_node("ItemHandler")
 		player_item_handler.connect("main_player_picked_up_item", self, "_on_main_player_picked_up_item")
 		player_item_handler.connect("main_player_dropped_item", self, "_on_main_player_dropped_item")
 		self.connect("positions_updated", newPlayer, "_on_positions_updated")
@@ -151,42 +151,44 @@ func _on_main_player_moved(movement: Vector2, velocity: Vector2, last_input: int
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", movement, velocity, last_input)
 
-func _on_main_player_picked_up_item(item_path: String) -> void:
-	if get_tree().is_network_server():
-		player_picked_up_item(item_path, 1)
-	else:
-		rpc_id(1, "player_picked_up_item", item_path, Network.get_my_id())
+remotesync func _on_main_player_picked_up_item(item_path: String) -> void:
+	"""Called when the main player sends a request to pick up an item."""
+	rpc_id(1, "player_picked_up_item", item_path)
 
-func _on_main_player_dropped_item() -> void:
-	if get_tree().is_network_server():
-		player_dropped_item(1)
-	else:
-		rpc_id(1, "player_dropped_item", Network.get_my_id())
+remotesync func _on_main_player_dropped_item() -> void:
+	"""Called when the main player sends a request to drop an item."""
+	rpc_id(1, "player_dropped_item")
 
-remote func player_picked_up_item(item_path: String, id: int) -> void:
+remotesync func player_picked_up_item(item_path: String) -> void:
+	"""Called by the server; RPCs all clients to have a player pick up an item."""
 	if not get_tree().is_network_server():
 		return
+	var id: int = get_tree().get_rpc_sender_id()
 	if not players.keys().has(id):
 		return
 
 	rpc("pick_up_item", id, item_path)
 
-remote func player_dropped_item(id: int) -> void:
+remotesync func player_dropped_item() -> void:
+	"""Called by the server; RPCs all clients to have a player drop an item."""
 	if not get_tree().is_network_server():
 		return
+	var id: int = get_tree().get_rpc_sender_id()
 	if not players.keys().has(id):
 		return
 
 	rpc("drop_item", id)
 
 puppetsync func pick_up_item(id: int, item_path: String) -> void:
-	var player_item_handler: Node2D = players[id].get_node("SpritesViewport/Skeleton/ItemHandler")
-	var found_item: KinematicBody2D = get_tree().get_root().get_node(item_path)
+	"""Actually have a player pick up an item."""
+	var player_item_handler: ItemHandler = players[id].item_handler
+	var found_item: Item = get_tree().get_root().get_node(item_path)
 	player_item_handler.pick_up(found_item)
 
 puppetsync func drop_item(id: int) -> void:
-	var player_item_handler: Node2D = players[id].get_node("SpritesViewport/Skeleton/ItemHandler")
-	var item: KinematicBody2D = player_item_handler.get_child(0)
+	"""Actually have a player drop an item."""
+	var player_item_handler: ItemHandler = players[id].item_handler
+	var item: Item = player_item_handler.picked_up_item
 	player_item_handler.drop(item)
 
 master func _on_maps_spawn(spawnPositions: Array):

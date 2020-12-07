@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Player
 
 onready var death_handler: Node2D = $DeathHandler
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
@@ -8,6 +9,7 @@ onready var skeleton: Node2D = $Skeleton
 onready var animator: AnimationPlayer = skeleton.get_node("AnimationPlayer")
 onready var animation_tree: AnimationTree = animator.get_node("AnimationTree")
 onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
+onready var item_transform: RemoteTransform2D = skeleton.get_node("Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand/ItemTransform")
 onready var sprites_viewport: Viewport = $SpritesViewport
 
 signal main_player_moved(position, velocity, input_number)
@@ -48,16 +50,12 @@ func _ready():
 	remove_child(item_handler)
 	skeleton.add_child(item_handler)
 	skeleton.move_child(item_handler, 6)
-	var item_transform: RemoteTransform2D = skeleton.get_node("Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand/ItemTransform")
 	item_transform.remote_path = item_transform.get_path_to(item_handler)
-	
+
 	# Reparent Skeleton Node2D to SpritesViewport
 	remove_child(skeleton)
 	sprites_viewport.add_child(skeleton)
-	
-	# Set the sprite material for every player to be a duplicate of their
-	# initial material so that outlines may be modified independently.
-	#sprite.set_material(sprite.material.duplicate())
+
 	#TEMPORARIALLY DISABLED FOR GLASSES GUY
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
@@ -135,7 +133,7 @@ func get_input():
 
 func animate(current_velocity: Vector2) -> void:
 	"""
-	Set the blend between the idle and move animations in the animation tree's 
+	Set the blend between the idle and move animations in the animation tree's
 	root state machine based on the player's current velocity.
 	"""
 	var blend_position := Vector2(0, current_velocity.length() / speed)

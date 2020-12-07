@@ -213,19 +213,6 @@ shader_param/line_thickness = 5.0
 [node name="test" type="YSort"]
 script = ExtResource( 15 )
 
-[node name="Node2D" type="Node2D" parent="."]
-z_index = -100
-
-[node name="ColorRect" type="ColorRect" parent="Node2D"]
-margin_left = -1117.67
-margin_top = -710.188
-margin_right = 1424.33
-margin_bottom = 302.812
-color = Color( 0.239216, 0.239216, 0.239216, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Sprite2" type="Sprite" parent="."]
 light_mask = -2147483647
 scale = Vector2( 2.96302, 2.84043 )
@@ -413,11 +400,19 @@ scale = Vector2( 3, 19 )
 
 [node name="Wrench" parent="Interactive/Items" instance=ExtResource( 14 )]
 material = SubResource( 21 )
-position = Vector2( -198.451, 57.1808 )
+position = Vector2( 55.4992, 31.1132 )
+
+[node name="Wrench2" parent="Interactive/Items" instance=ExtResource( 14 )]
+material = SubResource( 21 )
+position = Vector2( -53.8174, -40.363 )
 
 [node name="Battery" parent="Interactive/Items" instance=ExtResource( 13 )]
 material = SubResource( 22 )
-position = Vector2( -168.273, -14.2952 )
+position = Vector2( 155.052, -40.363 )
+
+[node name="Battery2" parent="Interactive/Items" instance=ExtResource( 13 )]
+material = SubResource( 22 )
+position = Vector2( -96.3763, 93.3395 )
 
 [node name="Props" type="YSort" parent="."]
 

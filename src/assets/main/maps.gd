@@ -23,7 +23,7 @@ func _on_state_change(old_state, new_state) -> void:
 func switch_map(new_map_name: String) -> void:
 	print("switch_map called for ", new_map_name)
 	var map_path: String = Helpers.find_file(new_map_name + ".tscn", maps_path)
-	print("Map path: ", map_path)
+	var path_checksum: String = map_path.sha256_text()
 	if map_path == "":
 		return
 	var map_scene: PackedScene = load(map_path)
@@ -33,6 +33,7 @@ func switch_map(new_map_name: String) -> void:
 	var map_clone = map_scene.instance()
 	current_map = map_clone
 	add_child(map_clone)
+	print("Setting current map")
 	MapManager.set_current_map(current_map)
 	emit_signal("spawn", get_spawn_points())
 
