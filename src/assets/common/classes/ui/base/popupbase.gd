@@ -4,6 +4,8 @@ class_name PopupBase
 
 export (String) var menu_name
 
+export (bool) var disable_movement
+
 #called by ui system
 func base_open():
 	popup()
@@ -14,6 +16,8 @@ func base_close():
 
 # warning-ignore:unused_argument
 func _notification(what):
+	if not disable_movement:
+		return
 	match what:
 		NOTIFICATION_POST_POPUP:
 			UIManager.ui_opened(menu_name)

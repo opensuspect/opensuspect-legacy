@@ -14,6 +14,8 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+menu_name = "clockset"
+disable_movement = true
 
 [node name="clock" type="HBoxContainer" parent="."]
 anchor_right = 1.0
