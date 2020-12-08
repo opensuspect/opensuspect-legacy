@@ -16,7 +16,7 @@ func create_vote_buttons():
 	button_grid.create_vote_buttons(Network.get_peers())
 
 func vote_for(vote_for: int):
-	print("voting for ", vote_for)
+	print("voting for ", vote_for, ", my id: ", my_id)
 	if not get_tree().is_network_server():
 		rpc_id(1, "recieve_vote_server", vote_for, my_id)
 	else:
@@ -25,6 +25,9 @@ func vote_for(vote_for: int):
 remote func recieve_vote_server(vote_for: int, vote_from: int):
 	if not get_tree().is_network_server():
 		return
+	if get_tree().get_rpc_sender_id() != vote_from:
+		return
+	print("server recieving vote for ", vote_for, " from ", vote_from)
 	rpc("recieve_vote", vote_for, vote_from)
 
 puppetsync func recieve_vote(vote_for: int, vote_from: int):

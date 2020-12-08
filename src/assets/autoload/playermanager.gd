@@ -136,3 +136,39 @@ func setourrole():
 	ourrole = PlayerManager.get_player_role(Network.myID)
 	print(ourrole)
 	emit_signal("roles_assigned", playerRoles)
+
+signal message_received(sender, content, color)
+signal message_received_server(sender, content, color)
+signal bulk_messages_received(messages)
+
+func send_message(content: String, color):
+	print("message sent")
+	if get_tree().is_network_server():
+		# sender is 1 because the server always has a network ID of 1
+		send_message_server(1, content, color)
+	rpc_id(1, "receive_message_server", Network.get_my_id(), content, color)
+
+# used by the server to sync messages, not to send messages written by the host player
+func send_message_server(sender: int, content: String, color):
+	print("message sent server")
+	if not get_tree().is_network_server():
+		return
+	rpc("receive_message", sender, content, color)
+
+puppet func receive_message(sender: int, content: String, color):
+	print("message received")
+	emit_signal("message_received", sender, content, color)
+
+remote func receive_message_server(sender: int, content: String, color):
+	print("message received server")
+	if not get_tree().is_network_server():
+		return
+	if get_tree().get_rpc_sender_id() != sender:
+		return
+	emit_signal("message_received_server", sender, content, color)
+
+func send_bulk_messages(messages):
+	rpc("receive_bulk_messages", messages)
+
+puppet func receive_bulk_messages(messages: Array):
+	emit_signal("bulk_messages_received", messages)
