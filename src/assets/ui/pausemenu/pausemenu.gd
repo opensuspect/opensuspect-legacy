@@ -1,4 +1,4 @@
-extends Control
+extends ControlBase
 
 func _ready():
 	pass
@@ -21,13 +21,6 @@ func show_only(node_name: String):
 	for i in get_children():
 		i.hide()
 	get_node(node_name).show()
-
-func _on_pausemenu_about_to_show():
-	pass
-
-func _on_pausemenu_popup_hide():
-	pass
-#	close()
 
 func _on_resume_pressed():
 	_resume_game()
@@ -53,7 +46,6 @@ func _on_quit_pressed():
 
 func _resume_game() -> void:
 	UIManager.close_ui("pausemenu")
-	UIManager.ui_closed("pausemenu")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and visible and UIManager.current_ui == self:
