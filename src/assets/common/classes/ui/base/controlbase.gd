@@ -6,6 +6,8 @@ export (String) var menu_name
 
 export (bool) var disable_movement
 
+var ui_data: Dictionary = {}
+
 func _init():
 	connect("visibility_changed", self, "_on_visibility_changed")
 
