@@ -26,8 +26,8 @@ func switch_map(new_map_name: String) -> void:
 	var path_checksum: String = map_path.sha256_text()
 	if map_path == "":
 		return
-	var map_scene: PackedScene = load(map_path)
 	print("loading map: ", new_map_name)
+	var map_scene: PackedScene = load(map_path)
 	for i in get_children():
 		i.queue_free()
 	var map_clone = map_scene.instance()

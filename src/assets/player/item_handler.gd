@@ -35,7 +35,9 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		for body in item_pickup_range.get_overlapping_bodies():
 			if body.is_in_group("items") and body.can_pickup_with_mouse:
-					_test_pickup(body)
+				_test_pickup(body)
+				# Avoid picking up multiple objects at once if they're overlapping
+				return
 
 func _exit_tree() -> void:
 	# Drop the player's item when a player node is destroyed, e.g. when they disconnect

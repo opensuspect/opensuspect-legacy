@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/maps/common/interactables/interactpoint/interactpoint.gd" type="Script" id=1]
 [ext_resource path="res://addons/opensusinteraction/resources/interact/interact.tres" type="Resource" id=2]
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1, 1 )
 
 [node name="interactpoint" type="StaticBody2D" groups=[
@@ -18,4 +18,4 @@ __meta__ = {
 interact_resource = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 4 )
+shape = SubResource( 1 )
