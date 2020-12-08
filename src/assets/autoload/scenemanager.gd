@@ -5,9 +5,11 @@ signal scene_changed #TODO: actually emit this signal
 
 func _ready() -> void:
 # warning-ignore:return_value_discarded
-	GameManager.connect('state_changed', self, '_on_gamestate_change')
+	GameManager.connect("state_changed_priority", self, "_on_state_changed_priority")
 	
-func _on_gamestate_change(old_state, new_state) -> void:
+func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
+	if priority != 0:
+		return
 	if new_state == GameManager.State.Lobby:
 		if old_state == GameManager.State.Normal:
 			return
