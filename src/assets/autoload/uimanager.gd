@@ -8,21 +8,24 @@ var ui_list: Dictionary = {
 						#HUD
 						"interactui": {"scene": preload("res://assets/ui/hud/interactui/interactui.tscn")},
 						"killui": {"scene": preload("res://assets/ui/hud/infiltrator_hud/infiltrator_hud.tscn")},
-						
+						"rolescreen": {"scene": preload("res://assets/ui/hud/defaulthud/rolescreen/rolescreen.tscn")},
+
 						#common UI
-						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}, 
-						
+						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")},
+						"keybind": {"scene": preload("res://assets/ui/submenus/settings/keybind/keybind.tscn")},
+						"appearance_editor": {"scene": preload("res://assets/ui/submenus/appearance_editor/appearance_editor.tscn")},
+
 						#lobby UI
-						"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")}, 
-						"voteui": {"scene": preload("res://assets/ui/lobbyui/voteui/voteui.tscn")}, 
-						
+						"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")},
+						"voteui": {"scene": preload("res://assets/ui/lobbyui/voteui/voteui.tscn")},
+
 						#task UI
 						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")}
 						}
 
-var open_uis: Array = []
+var current_ui: Control
 
-var shown_uis: Array = []
+var open_uis: Array = []
 
 var just_closed: String = ""
 
@@ -87,10 +90,13 @@ func ui_opened(menuName):
 	if open_uis.has(menuName):
 		return
 	open_uis.append(menuName)
+	current_ui = get_ui(menuName)
 
 func ui_closed(menuName):
 	open_uis.erase(menuName)
 	just_closed = menuName
+	if not open_uis.empty():
+		current_ui = get_ui(open_uis[-1])
 
 # warning-ignore:unused_argument
 func state_changed(old_state, new_state):
@@ -106,11 +112,13 @@ func get_interact_ui_node():
 	return interact_ui_node
 
 func _process(_delta):
-	#if ui_cancel (most likely esc) and not in menu, open pause menu
-	if Input.is_action_just_pressed("ui_cancel") and not in_ui() and just_closed != "pausemenu":
-		open_ui("pausemenu")
 	just_closed = ""
 
+func _input(event: InputEvent) -> void:
+	#if ui_cancel (most likely esc) and not in menu, open pause menu
+	if event.is_action_pressed("ui_cancel") and not in_ui() and just_closed != "pausemenu":
+		open_ui("pausemenu")
+		ui_opened("pausemenu")
 
 func set_game_binds():#Set new binds
 	for key in keybinds.keys():
@@ -120,12 +128,12 @@ func set_game_binds():#Set new binds
 		#Erases the key binds of previous action
 # warning-ignore:void_assignment
 		erase = InputMap.action_erase_events(key)
-		
+
 		if value != null:
 			var new_key = InputEventKey.new()
 			new_key.set_scancode(value)
 			InputMap.action_add_event(key, new_key)
-		
+
 	#print(keybinds)
 
 func write_config():
@@ -145,7 +153,7 @@ func write_keybinds():
 	configFile.set_value("Keybinds","ui_down",int(83))
 	configFile.set_value("Keybinds","ui_left",int(65))
 	configFile.set_value("Keybinds","ui_right",int(68))
-	
+
 	configFile.save(file)
 
 # warning-ignore:shadowed_variable
