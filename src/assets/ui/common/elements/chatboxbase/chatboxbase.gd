@@ -14,6 +14,9 @@ var receivedSide: String = "left" #side of chatbox received messages are on
 
 func _ready():
 	set_network_master(1)
+	PlayerManager.connect("message_received", self, "receiveMessage")
+	PlayerManager.connect("message_received_server", self, "receiveMessageServer")
+	PlayerManager.connect("bulk_messages_received", self, "receiveBulkMessages")
 	showBulkMessages(PlayerManager.chatbox_cache)
 
 func sendMessage(content, color: String = defaultColor):
@@ -26,9 +29,10 @@ func sendMessage(content, color: String = defaultColor):
 	textbox.text = ""
 	currentText = ""
 	#TODO: switch to getting the color from locally stored data to avoid sending false colors, same with names
-	rpc("receiveMessage", Network.myID, content, color)
+	PlayerManager.send_message(content, color)
+	#rpc("receiveMessage", Network.myID, content, color)
 
-puppet func receiveBulkMessages(messageArray: Array):
+func receiveBulkMessages(messageArray: Array):
 	if get_tree().is_network_server():
 		return
 	PlayerManager.chatbox_cache = messageArray
@@ -39,20 +43,21 @@ func showBulkMessages(messageArray: Array):
 	for i in messageArray:
 		showMessage(i.sender, i.content, i.color)
 
-remote func receiveMessageServer(sender: int, content: String, color: String):
+func receiveMessageServer(sender: int, content: String, color: String):
 	#add checks here to make sure it's valid (correct color-sender combo, etc.)
-	if sender != get_tree().get_rpc_sender_id():
-		return
+#	if sender != get_tree().get_rpc_sender_id():
+#		return
 	if isEmpty(content):
 		return
 	var usedContent = content
 	if hasLineBreaks(usedContent):
 		usedContent = removeLineBreaks(usedContent)
-	rpc("receiveMessage", sender, usedContent, color)
+	PlayerManager.send_message_server(sender, usedContent, color)
+	#rpc("receiveMessage", sender, usedContent, color)
 	showMessage(sender, content, color)
 
 #TODO: switch to getting the color from locally stored data to avoid sending false colors
-puppet func receiveMessage(sender: int, content: String, color: String):
+func receiveMessage(sender: int, content: String, color: String):
 	#add checks here to make sure it's valid (correct color-sender combo, etc.)
 	if sender == Network.get_my_id():
 		return

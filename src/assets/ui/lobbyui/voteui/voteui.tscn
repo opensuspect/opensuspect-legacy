@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=1]
-[ext_resource path="res://assets/ui/lobbyui/common/elements/chatboxbase/chatboxbase.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ui/lobbyui/votemenu/votemenu.gd" type="Script" id=3]
-[ext_resource path="res://assets/ui/lobbyui/votemenu/votebuttongrid/VoteButtonGrid.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/ui/common/elements/chatboxbase/chatboxbase.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ui/lobbyui/voteui/voteui.gd" type="Script" id=3]
+[ext_resource path="res://assets/ui/lobbyui/voteui/votebuttongrid/VoteButtonGrid.tscn" type="PackedScene" id=4]
 
 [node name="votemenu" type="WindowDialog"]
 anchor_left = 0.05
