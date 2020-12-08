@@ -1,42 +1,47 @@
 extends Node2D
 
-var maps: Dictionary = {"lobby": {"dir": preload("res://assets/maps/lobby/lobby.tscn")}, "test": {"dir": preload("res://assets/maps/test/test.tscn")}}
+const maps_path: String = "res://assets/maps/"
 
-signal spawn(position,frommap)
+signal spawn(position, frommap)
 
-var currentMap: String = "lobby"
+var current_map: Node
 
 func _ready() -> void:
 	set_network_master(1)
-	switchMap(currentMap)
+	switch_map("lobby")
 # warning-ignore:return_value_discarded
-	GameManager.connect('state_changed', self, '_on_state_change')
+	GameManager.connect("state_changed", self, "_on_state_change")
 
 # warning-ignore:unused_argument
 func _on_state_change(old_state, new_state) -> void:
 	match new_state:
 		GameManager.State.Lobby:
-			switchMap('lobby')
+			switch_map("lobby")
 		GameManager.State.Normal:
-			switchMap('test')
+			switch_map("test")
 
-func switchMap(newMap: String) -> void:
-	print('switchMap called for ', newMap)
-	if not maps.keys().has(newMap):
+func switch_map(new_map_name: String) -> void:
+	print("switch_map called for ", new_map_name)
+	var map_path: String = Helpers.find_file(new_map_name + ".tscn", maps_path)
+	var path_checksum: String = map_path.sha256_text()
+	if map_path == "":
 		return
-	print("loading map: ", newMap)
+	print("loading map: ", new_map_name)
+	var map_scene: PackedScene = load(map_path)
 	for i in get_children():
 		i.queue_free()
-	currentMap = newMap
-	var mapClone = maps[newMap].dir.instance()
-	add_child(mapClone)
-	emit_signal("spawn", getSpawnPoints())
+	var map_clone = map_scene.instance()
+	current_map = map_clone
+	add_child(map_clone)
+	print("Setting current map")
+	MapManager.set_current_map(current_map)
+	emit_signal("spawn", get_spawn_points())
 
-func getSpawnPoints() -> Array:
-	var spawnPointArray: Array = []
-	if not get_node(str(currentMap + "/spawnpoints")):
-		return [Vector2(0,0)]
-	for i in get_node(str(currentMap + "/spawnpoints")).get_children():
-		spawnPointArray.append(i.global_position)
+func get_spawn_points() -> Array:
+	var spawn_point_array: Array = []
+	if not get_node(current_map.name + "/SpawnPoints"):
+		return [Vector2.ZERO]
+	for i in get_node(current_map.name + "/SpawnPoints").get_children():
+		spawn_point_array.append(i.global_position)
 	#print(spawnPointArray)
-	return spawnPointArray
+	return spawn_point_array

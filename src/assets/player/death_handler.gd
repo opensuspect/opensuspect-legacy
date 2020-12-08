@@ -4,10 +4,11 @@ extends Node2D
 onready var player: KinematicBody2D = get_owner()
 # The main player (if the player of this DeathHandler is not the main player)
 onready var main_player: KinematicBody2D
-# A node that will contain the corpses of players in the current map
-onready var corpses: YSort
 # Corpse scene that will be instanced when a player dies
 onready var corpse_scene: PackedScene = preload("res://assets/player/corpse.tscn")
+
+# Emitted when the player dies
+signal dead
 
 # Whether the player is dead
 var is_dead: bool = false
@@ -23,11 +24,12 @@ func die_by(killer_id: int) -> void:
 		player.skeleton.scale.x *= -1
 	player.set_movement_disabled(true)
 	player.anim_fsm.travel("death")
+	emit_signal("dead")
 
 func create_corpse() -> void:
 	"""Create a corpse where the killed player was."""
 	var corpse: Node2D = corpse_scene.instance()
-	corpses = get_tree().get_root().get_node("Main/maps").get_child(0).get_node("Corpses")
+	var corpses: Node2D = MapManager.get_current_map().corpses
 	var offset: Vector2 = player.global_position + player.get_node("ViewportTextureTarget").position
 	corpses.add_child(corpse)
 	corpse.position = offset

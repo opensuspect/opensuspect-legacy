@@ -1,8 +1,10 @@
 extends Node
 
-
+onready var main: Node2D
 
 signal interacted_with
+
+var _current_map: Node setget set_current_map, get_current_map
 
 func _ready():
 # warning-ignore:return_value_discarded
@@ -23,4 +25,13 @@ func interact_with(interactNode: Node, from: Node, interact_data: Dictionary = {
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
 func state_changed(old_state, new_state):
-	pass
+	match new_state:
+		GameManager.State.Normal:
+			var map: Node = get_tree().get_root().get_node("Main/maps").get_child(0)
+			set_current_map(map)
+
+func get_current_map() -> Node:
+	return _current_map
+
+func set_current_map(map: Node) -> void:
+	_current_map = map
