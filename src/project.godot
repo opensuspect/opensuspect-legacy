@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Control",
+"class": "ControlBase",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/base/controlbase.gd"
+}, {
+"base": "ControlBase",
+"class": "ControlTask",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/task/controltask.gd"
+}, {
 "base": "Popup",
 "class": "PopupBase",
 "language": "GDScript",
@@ -40,6 +50,8 @@ _global_script_classes=[ {
 "path": "res://assets/common/classes/ui/task/windowdialogtask.gd"
 } ]
 _global_script_class_icons={
+"ControlBase": "",
+"ControlTask": "",
 "PopupBase": "",
 "PopupPanelBase": "",
 "PopupPanelTask": "",

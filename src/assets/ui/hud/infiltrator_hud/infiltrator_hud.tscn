@@ -28,6 +28,7 @@ __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": "GUI that indicates whether a kill is ready to be executed."
 }
+menu_name = "killui"
 
 [node name="KillButton" type="TextureButton" parent="."]
 anchor_right = 1.0
