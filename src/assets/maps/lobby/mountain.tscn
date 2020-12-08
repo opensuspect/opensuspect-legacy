@@ -1,0 +1,25 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/maps/lobby/background_object.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/maps/lobby/textures/mountain0.png" type="Texture" id=2]
+[ext_resource path="res://assets/maps/lobby/textures/mountain3.png" type="Texture" id=3]
+[ext_resource path="res://assets/maps/lobby/textures/mountain2.png" type="Texture" id=4]
+[ext_resource path="res://assets/maps/lobby/textures/mountain1.png" type="Texture" id=5]
+[ext_resource path="res://assets/common/shaders/tint.shader" type="Shader" id=6]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 6 )
+shader_param/tint_color = null
+shader_param/tint_amount = null
+
+[node name="Mountain" instance=ExtResource( 1 )]
+material = SubResource( 1 )
+textures = [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ) ]
+
+[node name="Sprite" parent="." index="0"]
+show_behind_parent = true
+use_parent_material = true
+position = Vector2( 0, -750.172 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 2 )

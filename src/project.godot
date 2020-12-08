@@ -9,6 +9,21 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "IPoolable",
+"class": "BackgroundObject",
+"language": "GDScript",
+"path": "res://assets/maps/lobby/background_object.gd"
+}, {
+"base": "Node2D",
+"class": "IPoolable",
+"language": "GDScript",
+"path": "res://assets/common/classes/objectpool/ipoolable.gd"
+}, {
+"base": "Node",
+"class": "PoolManager",
+"language": "GDScript",
+"path": "res://assets/common/classes/objectpool/poolmanager.gd"
+}, {
 "base": "Control",
 "class": "ControlBase",
 "language": "GDScript",
@@ -50,6 +65,9 @@ _global_script_classes=[ {
 "path": "res://assets/common/classes/ui/task/windowdialogtask.gd"
 } ]
 _global_script_class_icons={
+"BackgroundObject": "",
+"IPoolable": "",
+"PoolManager": "",
 "ControlBase": "",
 "ControlTask": "",
 "PopupBase": "",

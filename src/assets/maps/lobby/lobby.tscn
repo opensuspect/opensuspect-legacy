@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/maps/lobby/wall_door.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/maps/lobby/window_wall_wide_outside.tscn" type="PackedScene" id=2]
@@ -16,15 +16,7 @@
 [ext_resource path="res://assets/maps/common/elements/cameras/custom_camera.tscn" type="PackedScene" id=14]
 [ext_resource path="res://assets/maps/lobby/lobby.gd" type="Script" id=15]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=16]
-[ext_resource path="res://assets/maps/lobby/textures/tree.png" type="Texture" id=17]
-[ext_resource path="res://assets/maps/lobby/moving_background.gd" type="Script" id=18]
-[ext_resource path="res://assets/maps/lobby/textures/mountain3.png" type="Texture" id=19]
-[ext_resource path="res://assets/maps/lobby/textures/mountain0.png" type="Texture" id=20]
-[ext_resource path="res://assets/maps/lobby/textures/mountain1.png" type="Texture" id=21]
-[ext_resource path="res://assets/maps/lobby/textures/mountain2.png" type="Texture" id=22]
-[ext_resource path="res://assets/maps/lobby/textures/cloud2.png" type="Texture" id=23]
-[ext_resource path="res://assets/maps/lobby/textures/cloud1.png" type="Texture" id=24]
-[ext_resource path="res://assets/maps/lobby/textures/cloud0.png" type="Texture" id=25]
+[ext_resource path="res://assets/maps/lobby/moving_background_generator.tscn" type="PackedScene" id=26]
 
 [sub_resource type="TileSet" id=1]
 0/name = "carpet.png 0"
@@ -64,7 +56,7 @@ script = ExtResource( 15 )
 
 [node name="Sky" type="Node2D" parent="."]
 position = Vector2( 0, 30 )
-z_index = -100
+z_index = -1000
 __meta__ = {
 "_editor_description_": "The background sky."
 }
@@ -82,464 +74,56 @@ __meta__ = {
 }
 
 [node name="MovingBackground" type="Node2D" parent="."]
-scale = Vector2( 0.8, 0.8 )
+position = Vector2( 500, -80 )
 __meta__ = {
 "_editor_description_": "Simulates the effect of a parallax background."
 }
 
-[node name="MovingTrees0" type="Node2D" parent="MovingBackground"]
-position = Vector2( 0, -156.149 )
-z_index = -1
-script = ExtResource( 18 )
-scroll_target = Vector2( -750, -156.149 )
-scroll_reset_position = Vector2( 750, -156.149 )
-
-[node name="Tree" type="Sprite" parent="MovingBackground/MovingTrees0"]
-position = Vector2( -269.315, 5.95947 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree2" type="Sprite" parent="MovingBackground/MovingTrees0"]
-position = Vector2( -178.598, -5.95947 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree3" type="Sprite" parent="MovingBackground/MovingTrees0"]
-position = Vector2( -99.554, 10.5946 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree4" type="Sprite" parent="MovingBackground/MovingTrees0"]
-position = Vector2( -45.7275, 9.27032 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree5" type="Sprite" parent="MovingBackground/MovingTrees0"]
-position = Vector2( 16.4897, -7.94598 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree6" type="Sprite" parent="MovingBackground/MovingTrees0"]
-position = Vector2( 142.344, 3.97302 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree7" type="Sprite" parent="MovingBackground/MovingTrees0"]
-position = Vector2( 233.82, -3.31079 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree8" type="Sprite" parent="MovingBackground/MovingTrees0"]
-position = Vector2( 305.538, 7.94598 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="MovingTrees1" type="Node2D" parent="MovingBackground"]
-position = Vector2( 0, -154.825 )
-scale = Vector2( 0.75, 0.75 )
-z_index = -2
-script = ExtResource( 18 )
-scroll_target = Vector2( -750, -154.825 )
-scroll_reset_position = Vector2( 750, -154.825 )
-scroll_speed = 250.0
-
-[node name="Tree" type="Sprite" parent="MovingBackground/MovingTrees1"]
-position = Vector2( -456.469, -40.0695 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-offset = Vector2( 6.98816, 370.289 )
-
-[node name="Tree2" type="Sprite" parent="MovingBackground/MovingTrees1"]
-position = Vector2( -348.115, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree3" type="Sprite" parent="MovingBackground/MovingTrees1"]
-position = Vector2( -209.677, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree4" type="Sprite" parent="MovingBackground/MovingTrees1"]
-position = Vector2( -100.615, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree5" type="Sprite" parent="MovingBackground/MovingTrees1"]
-position = Vector2( 7.33499, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree6" type="Sprite" parent="MovingBackground/MovingTrees1"]
-position = Vector2( 136.159, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree7" type="Sprite" parent="MovingBackground/MovingTrees1"]
-position = Vector2( 228.229, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree8" type="Sprite" parent="MovingBackground/MovingTrees1"]
-position = Vector2( 309.179, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree9" type="Sprite" parent="MovingBackground/MovingTrees1"]
-position = Vector2( 402.173, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree10" type="Sprite" parent="MovingBackground/MovingTrees1"]
-position = Vector2( 490.009, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="MovingTrees2" type="Node2D" parent="MovingBackground"]
-position = Vector2( 0, -146.217 )
-scale = Vector2( 0.5, 0.5 )
-z_index = -3
-script = ExtResource( 18 )
-scroll_target = Vector2( -750, -146.217 )
-scroll_reset_position = Vector2( 750, -146.217 )
-scroll_speed = 125.0
-
-[node name="Tree" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( -700.136, -52.1492 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-offset = Vector2( 6.98816, 370.289 )
-
-[node name="Tree2" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( -591.781, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree3" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( -453.343, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree4" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( -344.281, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree5" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( -236.331, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree6" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( -107.507, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree7" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( -15.4368, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree8" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( 65.5132, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree9" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( 158.507, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree10" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( 246.343, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree11" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( 364.605, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree12" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( 447.943, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree13" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( 546.362, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree14" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( 640.018, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="Tree15" type="Sprite" parent="MovingBackground/MovingTrees2"]
-position = Vector2( 743.199, 0 )
-scale = Vector2( 0.15, 0.15 )
-z_index = -1
-texture = ExtResource( 17 )
-
-[node name="MovingMountains0" type="Node2D" parent="MovingBackground"]
-modulate = Color( 0.72229, 0.925563, 0.953125, 1 )
-position = Vector2( -5.05109, -154.187 )
-scale = Vector2( 0.5, 0.5 )
-z_index = -10
-script = ExtResource( 18 )
-scroll_target = Vector2( -750, -154.187 )
-scroll_reset_position = Vector2( 750, -154.187 )
-scroll_speed = 15.0
-
-[node name="Mountain0" type="Sprite" parent="MovingBackground/MovingMountains0"]
-position = Vector2( -61.7355, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 20 )
-
-[node name="Mountain1" type="Sprite" parent="MovingBackground/MovingMountains0"]
-position = Vector2( -181.944, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 21 )
-
-[node name="Mountain10" type="Sprite" parent="MovingBackground/MovingMountains0"]
-position = Vector2( 561.226, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 21 )
-
-[node name="Mountain9" type="Sprite" parent="MovingBackground/MovingMountains0"]
-position = Vector2( 461.524, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain7" type="Sprite" parent="MovingBackground/MovingMountains0"]
-position = Vector2( -452.058, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain3" type="Sprite" parent="MovingBackground/MovingMountains0"]
-position = Vector2( 134.133, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 19 )
-
-[node name="Mountain8" type="Sprite" parent="MovingBackground/MovingMountains0"]
-position = Vector2( -577.216, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 19 )
-
-[node name="Mountain12" type="Sprite" parent="MovingBackground/MovingMountains0"]
-position = Vector2( -674.797, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 20 )
-
-[node name="MovingMountains1" type="Node2D" parent="MovingBackground"]
-modulate = Color( 0.517647, 0.768627, 0.8, 1 )
-position = Vector2( -3.46188, -147.565 )
-scale = Vector2( 0.35, 0.35 )
-z_index = -11
-script = ExtResource( 18 )
-scroll_target = Vector2( -750, -147.565 )
-scroll_reset_position = Vector2( 750, -147.565 )
-scroll_speed = 10.0
-
-[node name="Mountain0" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( -42.0597, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 20 )
-
-[node name="Mountain1" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( -181.944, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 21 )
-
-[node name="Mountain15" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( 1042.49, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 21 )
-
-[node name="Mountain2" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( 96.5727, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain9" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( 422.172, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain7" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( -397.572, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain5" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( 233.339, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain13" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( -910.88, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain6" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( 447.893, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 19 )
-
-[node name="Mountain16" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( -1048.98, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 19 )
-
-[node name="Mountain4" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( -371.091, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 19 )
-
-[node name="Mountain12" type="Sprite" parent="MovingBackground/MovingMountains1"]
-position = Vector2( -767.122, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 20 )
-
-[node name="MovingMountains2" type="Node2D" parent="MovingBackground"]
-modulate = Color( 0.254902, 0.533333, 0.564706, 1 )
-position = Vector2( -3.46188, -144.917 )
-scale = Vector2( 0.25, 0.25 )
-z_index = -12
-script = ExtResource( 18 )
-scroll_target = Vector2( -750, -144.917 )
-scroll_reset_position = Vector2( 750, -144.917 )
-scroll_speed = 5.0
-
-[node name="Mountain0" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( 55.411, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 20 )
-
-[node name="Mountain1" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( -364.171, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 21 )
-
-[node name="Mountain15" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( 1222.6, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 21 )
-
-[node name="Mountain2" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( 749.202, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain9" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( 1390.52, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain7" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( -475.973, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain5" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( 133.75, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain13" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( -860.026, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 22 )
-
-[node name="Mountain6" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( 742.424, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 19 )
-
-[node name="Mountain16" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( -1233.32, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 19 )
-
-[node name="Mountain4" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( -205.814, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 19 )
-
-[node name="Mountain12" type="Sprite" parent="MovingBackground/MovingMountains2"]
-position = Vector2( -1462.13, 0 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 20 )
-
-[node name="MovingClouds0" type="Node2D" parent="MovingBackground"]
-position = Vector2( -3.46188, -123.299 )
-scale = Vector2( 0.25, 0.25 )
-z_index = -20
-script = ExtResource( 18 )
-scroll_target = Vector2( -750, -123.299 )
-scroll_reset_position = Vector2( 750, -123.299 )
-scroll_speed = 2.0
-
-[node name="Cloud0" type="Sprite" parent="MovingBackground/MovingClouds0"]
-position = Vector2( -1109.79, -45.0272 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 25 )
-
-[node name="Cloud3" type="Sprite" parent="MovingBackground/MovingClouds0"]
-position = Vector2( 842.273, -121.838 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 25 )
-
-[node name="Cloud1" type="Sprite" parent="MovingBackground/MovingClouds0"]
-position = Vector2( -405.244, -37.0812 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 24 )
-
-[node name="Cloud4" type="Sprite" parent="MovingBackground/MovingClouds0"]
-position = Vector2( -1647.46, -105.946 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 24 )
-
-[node name="Cloud2" type="Sprite" parent="MovingBackground/MovingClouds0"]
-position = Vector2( 254.271, 2.64862 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 23 )
-
-[node name="Cloud5" type="Sprite" parent="MovingBackground/MovingClouds0"]
-position = Vector2( 1589.19, -31.784 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 23 )
+[node name="TreeGenerator0" parent="MovingBackground" instance=ExtResource( 26 )]
+pool_size = 25
+spawn_delay_min = 0.1
+spawn_delay_max = 0.5
+num_initial_spawn = 25
+initial_spawn_position_min = Vector2( -1000, 0 )
+initial_spawn_position_max = Vector2( 0, 0 )
+background_path = NodePath("../../Sky/SkyRect")
+background_distance = 1024.0
+
+[node name="HillGenerator0" parent="MovingBackground" instance=ExtResource( 26 )]
+object_to_spawn_path = "res://assets/maps/lobby/hill.tscn"
+distance_min = 500
+distance_max = 600
+spawn_delay_min = 3.0
+spawn_delay_max = 5.0
+num_initial_spawn = 8
+initial_spawn_position_min = Vector2( -1000, 0 )
+initial_spawn_position_max = Vector2( 0, 0 )
+background_path = NodePath("../../Sky/SkyRect")
+background_distance = 1024.0
+
+[node name="MountainGenerator0" parent="MovingBackground" instance=ExtResource( 26 )]
+object_to_spawn_path = "res://assets/maps/lobby/mountain.tscn"
+distance_min = 2000
+distance_max = 3000
+spawn_delay_min = 5.0
+spawn_delay_max = 8.0
+initial_spawn_position_min = Vector2( -1000, 0 )
+initial_spawn_position_max = Vector2( 0, 0 )
+background_path = NodePath("../../Sky/SkyRect")
+background_distance = 1024.0
+
+[node name="CloudGenerator0" parent="MovingBackground" instance=ExtResource( 26 )]
+position = Vector2( 0, -30 )
+object_to_spawn_path = "res://assets/maps/lobby/cloud.tscn"
+pool_size = 5
+distance_min = 3010
+distance_max = 3500
+spawn_delay_min = 15.0
+spawn_delay_max = 20.0
+num_initial_spawn = 5
+initial_spawn_position_min = Vector2( -1000, 0 )
+initial_spawn_position_max = Vector2( 0, 0 )
+background_path = NodePath("../../Sky/SkyRect")
 
 [node name="CustomCamera" parent="." instance=ExtResource( 14 )]
 zoom_factor = 0.35
