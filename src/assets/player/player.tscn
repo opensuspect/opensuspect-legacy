@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/skeleton.tscn" type="PackedScene" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://assets/common/shaders/skin_color_key.shader" type="Shader" id=4]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
 [ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
-[ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=17]
 [ext_resource path="res://assets/player/camera.gd" type="Script" id=27]
 [ext_resource path="res://assets/player/item_handler.gd" type="Script" id=28]
 
@@ -32,12 +31,6 @@ shader = ExtResource( 4 )
 shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
 shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
 shader_param/tolerance = 0.75
-
-[sub_resource type="ShaderMaterial" id=7]
-resource_local_to_scene = true
-shader = ExtResource( 17 )
-shader_param/line_color = Color( 1, 1, 1, 0 )
-shader_param/line_thickness = 4.0
 
 [sub_resource type="ViewportTexture" id=7]
 viewport_path = NodePath("SpritesViewport")

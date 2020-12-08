@@ -2,7 +2,7 @@ extends Node2D
 class_name ItemHandler
 
 # The player that the item handler is a child of
-onready var player: Player = get_owner()
+onready var player: Node = get_owner()
 # The area within which items may be picked up
 onready var item_pickup_range: Area2D = player.get_node("ItemPickupRange")
 
