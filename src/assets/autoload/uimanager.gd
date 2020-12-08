@@ -13,6 +13,7 @@ var ui_list: Dictionary = {
 						#common UI
 						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}, 
 						"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")},
+						"voteui": {"scene": preload("res://assets/ui/lobbyui/voteui/voteui.tscn")}, 
 						"keybind": {"scene": preload("res://assets/ui/submenus/settings/keybind/keybind.tscn")},
 						"appearance_editor": {"scene": preload("res://assets/ui/submenus/appearance_editor/appearance_editor.tscn")},
 						
