@@ -7,4 +7,4 @@ onready var sprite: Sprite = $Sprite
 export (Array, Texture) var textures
 
 func _ready() -> void:
-	$Sprite.texture = Helpers.choose(textures)
+	$Sprite.texture = Helpers.pick_random(textures)

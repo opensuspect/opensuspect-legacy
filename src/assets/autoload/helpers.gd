@@ -1,6 +1,6 @@
 extends Node
 
-func choose(array: Array):
+func pick_random(array: Array):
 	randomize()
 	var random_index : int = 0
 	if len(array) > 0:
