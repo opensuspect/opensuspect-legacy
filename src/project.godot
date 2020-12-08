@@ -23,6 +23,15 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://assets/player/player.gd"
+"base": "Control",
+"class": "ControlBase",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/base/controlbase.gd"
+}, {
+"base": "ControlBase",
+"class": "ControlTask",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/task/controltask.gd"
 }, {
 "base": "Popup",
 "class": "PopupBase",
@@ -58,6 +67,8 @@ _global_script_class_icons={
 "Item": "",
 "ItemHandler": "",
 "Player": "",
+"ControlBase": "",
+"ControlTask": "",
 "PopupBase": "",
 "PopupPanelBase": "",
 "PopupPanelTask": "",

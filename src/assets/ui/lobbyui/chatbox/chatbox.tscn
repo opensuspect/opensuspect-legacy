@@ -13,6 +13,8 @@ theme = ExtResource( 2 )
 window_title = "Chatbox"
 resizable = true
 script = ExtResource( 1 )
+menu_name = "chatbox"
+disable_movement = true
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
