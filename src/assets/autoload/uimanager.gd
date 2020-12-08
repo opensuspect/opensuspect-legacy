@@ -11,7 +11,10 @@ var ui_list: Dictionary = {
 						
 						#common UI
 						"pausemenu": {"scene": preload("res://assets/ui/pausemenu/pausemenu.tscn")}, 
+						
+						#lobby UI
 						"chatbox": {"scene": preload("res://assets/ui/lobbyui/chatbox/chatbox.tscn")}, 
+						"voteui": {"scene": preload("res://assets/ui/lobbyui/voteui/voteui.tscn")}, 
 						
 						#task UI
 						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")}

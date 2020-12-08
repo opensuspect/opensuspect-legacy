@@ -3,7 +3,7 @@ extends ScrollContainer
 #export(NodePath) var master_node_path
 
 #onready var master_node = get_node(master_node_path)
-onready var button_scene: PackedScene = load("res://assets/ui/lobbyui/votemenu/votebuttongrid/votebutton/votebutton.tscn")
+onready var button_scene: PackedScene = load("res://assets/ui/lobbyui/voteui/votebuttongrid/votebutton/votebutton.tscn")
 onready var grid = get_node("GridContainer")
 
 var able_to_select: bool = true
@@ -14,10 +14,17 @@ var buttons: Dictionary
 signal vote(player_id)
 
 func _ready():
-	for i in 10:
-		create_vote_button(i, str(i))
+	pass
+#	for i in 10:
+#		create_vote_button(i, str(i))
+
+func reset():
+	able_to_select = true
+	selected = null
 
 func create_vote_buttons(player_ids: Array):
+	for button in buttons.values():
+		button.queue_free()
 	for player in player_ids:
 		create_vote_button(player, Network.get_player_name(player))
 
@@ -42,8 +49,8 @@ func vote_for(player_id):
 func vote_button_pressed(button: Node):
 	if not able_to_select:
 		return
-	if selected == button:
-		return
+#	if selected == button:
+#		return
 	if selected != null:
 		selected.set_selected(false)
 	button.set_selected(true)

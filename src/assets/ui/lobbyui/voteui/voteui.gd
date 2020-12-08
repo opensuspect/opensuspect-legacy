@@ -1,16 +1,26 @@
 extends WindowDialogBase
 
 onready var button_grid: Node = get_node("TabContainer/Vote/VoteControl/VBoxContainer/VoteButtonGrid")
+onready var chatbox: Node = get_node("TabContainer/Chat/chatboxbase")
 
 var my_id: int = Network.get_my_id()
 # format: {voter network ID: voted for network ID}
 var votes: Dictionary = {}
 
 func _ready():
-	show()
 	# hides x so players can't close the menu
-	get_close_button().hide()
+	#get_close_button().hide()
 	button_grid.connect("vote", self, "vote_for")
+	create_vote_buttons()
+
+func open():
+	chatbox.update()
+	reset()
+
+func reset():
+	votes = {}
+	button_grid.reset()
+	create_vote_buttons()
 
 func create_vote_buttons():
 	button_grid.create_vote_buttons(Network.get_peers())

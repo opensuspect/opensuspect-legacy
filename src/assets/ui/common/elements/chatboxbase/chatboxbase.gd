@@ -14,9 +14,15 @@ var receivedSide: String = "left" #side of chatbox received messages are on
 
 func _ready():
 	set_network_master(1)
+# warning-ignore:return_value_discarded
 	PlayerManager.connect("message_received", self, "receiveMessage")
+# warning-ignore:return_value_discarded
 	PlayerManager.connect("message_received_server", self, "receiveMessageServer")
+# warning-ignore:return_value_discarded
 	PlayerManager.connect("bulk_messages_received", self, "receiveBulkMessages")
+	showBulkMessages(PlayerManager.chatbox_cache)
+
+func update() -> void:
 	showBulkMessages(PlayerManager.chatbox_cache)
 
 func sendMessage(content, color: String = defaultColor):
@@ -49,9 +55,7 @@ func receiveMessageServer(sender: int, content: String, color: String):
 #		return
 	if isEmpty(content):
 		return
-	var usedContent = content
-	if hasLineBreaks(usedContent):
-		usedContent = removeLineBreaks(usedContent)
+	var usedContent = processContent(content)
 	PlayerManager.send_message_server(sender, usedContent, color)
 	#rpc("receiveMessage", sender, usedContent, color)
 	showMessage(sender, content, color)
@@ -61,17 +65,14 @@ func receiveMessage(sender: int, content: String, color: String):
 	#add checks here to make sure it's valid (correct color-sender combo, etc.)
 	if sender == Network.get_my_id():
 		return
-	if isEmpty(content):
-		return
-	var usedContent = content
-	if hasLineBreaks(usedContent):
-		usedContent = removeLineBreaks(usedContent)
 	PlayerManager.chatbox_cache.append({"sender": sender, "content": content, "color": color})
 	showMessage(sender, content, color)
 
 func showMessage(sender, content, color):
-	if content == "":
+	if isEmpty(content):
 		return
+	content = processContent(content)
+	
 	if not Network.get_peers().has(sender):
 		return
 	chatbox.pop()
@@ -105,6 +106,11 @@ func restrictText():
 	else:
 		currentText = newText
 
+func processContent(content) -> String:
+	var usedContent: String = content
+	usedContent = removeLineBreaks(usedContent)
+	return content
+
 func removeLineBreaks(content: String) -> String:
 	var newContent = content
 	for i in breakChars:
@@ -113,6 +119,8 @@ func removeLineBreaks(content: String) -> String:
 
 #tests if the string is full of empty chars, like tabs and spaces
 func isEmpty(inputStr):
+	if inputStr == "":
+		return true
 	var emptyCount = 0
 	for i in emptyChars:
 		emptyCount += inputStr.count(i)
