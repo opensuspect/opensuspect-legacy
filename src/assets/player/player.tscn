@@ -39,7 +39,7 @@ shader = ExtResource( 17 )
 shader_param/line_color = Color( 1, 1, 1, 0 )
 shader_param/line_thickness = 4.0
 
-[sub_resource type="ViewportTexture" id=8]
+[sub_resource type="ViewportTexture" id=7]
 viewport_path = NodePath("SpritesViewport")
 
 [node name="Player" type="KinematicBody2D" groups=[
@@ -142,10 +142,10 @@ __meta__ = {
 }
 
 [node name="ViewportTextureTarget" type="Sprite" parent="."]
-material = SubResource( 7 )
+material = SubResource( 6 )
 position = Vector2( 0, -20 )
 scale = Vector2( 0.25, 0.25 )
-texture = SubResource( 8 )
+texture = SubResource( 7 )
 __meta__ = {
 "_editor_description_": "The Sprite that the viewport tex ture of SpritesViewport will be rendered to."
 }

@@ -191,3 +191,6 @@ func _on_positions_updated(new_last_received_input: int):
 func move_to(new_pos, new_movement):
 	position = new_pos
 	movement = new_movement
+
+func get_is_alive() -> bool:
+	return not death_handler.is_dead
