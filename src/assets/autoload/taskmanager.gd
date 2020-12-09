@@ -23,9 +23,9 @@ func _ready():
 
 func complete_task(task_id: int, data: Dictionary = {}) -> bool:
 	print("trying to complete task ", task_id)
-	if not advance_task(task_id, task_state.COMPLETED):
-		return false
 	if not does_task_exist(task_id):
+		return false
+	if not advance_task(task_id, task_state.COMPLETED):
 		return false
 	return get_task_resource(task_id).complete_task(data)
 
