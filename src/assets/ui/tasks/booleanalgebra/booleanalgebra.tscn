@@ -1,0 +1,400 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/ui/tasks/booleanalgebra/booleanalgebra.gd" type="Script" id=1]
+
+[node name="WindowDialog" type="WindowDialog"]
+margin_left = 300.0
+margin_top = 100.0
+margin_right = 810.0
+margin_bottom = 500.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.45
+anchor_top = 0.4
+anchor_right = 0.45
+anchor_bottom = 0.4
+margin_top = 1.52588e-05
+margin_right = 40.0
+margin_bottom = 22.0
+text = "AND"
+
+[node name="Byte0" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit0" type="ColorRect" parent="Byte0"]
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.02
+anchor_bottom = 0.02
+margin_left = 19.68
+margin_top = 11.2
+margin_right = 59.68
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit1" type="ColorRect" parent="Byte0"]
+anchor_left = 0.08
+anchor_top = 0.02
+anchor_right = 0.08
+anchor_bottom = 0.02
+margin_left = 78.72
+margin_top = 11.2
+margin_right = 118.72
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit2" type="ColorRect" parent="Byte0"]
+anchor_left = 0.14
+anchor_top = 0.02
+anchor_right = 0.14
+anchor_bottom = 0.02
+margin_left = 137.76
+margin_top = 11.2
+margin_right = 177.76
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit3" type="ColorRect" parent="Byte0"]
+anchor_left = 0.2
+anchor_top = 0.02
+anchor_right = 0.2
+anchor_bottom = 0.02
+margin_left = 196.8
+margin_top = 11.2
+margin_right = 236.8
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit4" type="ColorRect" parent="Byte0"]
+anchor_left = 0.26
+anchor_top = 0.02
+anchor_right = 0.26
+anchor_bottom = 0.02
+margin_left = 255.84
+margin_top = 11.2
+margin_right = 295.84
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit5" type="ColorRect" parent="Byte0"]
+anchor_left = 0.32
+anchor_top = 0.02
+anchor_right = 0.32
+anchor_bottom = 0.02
+margin_left = 314.88
+margin_top = 11.2
+margin_right = 354.88
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit6" type="ColorRect" parent="Byte0"]
+anchor_left = 0.38
+anchor_top = 0.02
+anchor_right = 0.38
+anchor_bottom = 0.02
+margin_left = 373.92
+margin_top = 11.2
+margin_right = 413.92
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit7" type="ColorRect" parent="Byte0"]
+anchor_left = 0.44
+anchor_top = 0.02
+anchor_right = 0.44
+anchor_bottom = 0.02
+margin_left = 432.96
+margin_top = 11.2
+margin_right = 472.96
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Byte1" type="Control" parent="."]
+anchor_top = 0.2
+anchor_bottom = 0.2
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit0" type="ColorRect" parent="Byte1"]
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.02
+anchor_bottom = 0.02
+margin_left = 19.68
+margin_top = 11.2
+margin_right = 59.68
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit1" type="ColorRect" parent="Byte1"]
+anchor_left = 0.08
+anchor_top = 0.02
+anchor_right = 0.08
+anchor_bottom = 0.02
+margin_left = 78.72
+margin_top = 11.2
+margin_right = 118.72
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit2" type="ColorRect" parent="Byte1"]
+anchor_left = 0.14
+anchor_top = 0.02
+anchor_right = 0.14
+anchor_bottom = 0.02
+margin_left = 137.76
+margin_top = 11.2
+margin_right = 177.76
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit3" type="ColorRect" parent="Byte1"]
+anchor_left = 0.2
+anchor_top = 0.02
+anchor_right = 0.2
+anchor_bottom = 0.02
+margin_left = 196.8
+margin_top = 11.2
+margin_right = 236.8
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit4" type="ColorRect" parent="Byte1"]
+anchor_left = 0.26
+anchor_top = 0.02
+anchor_right = 0.26
+anchor_bottom = 0.02
+margin_left = 255.84
+margin_top = 11.2
+margin_right = 295.84
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit5" type="ColorRect" parent="Byte1"]
+anchor_left = 0.32
+anchor_top = 0.02
+anchor_right = 0.32
+anchor_bottom = 0.02
+margin_left = 314.88
+margin_top = 11.2
+margin_right = 354.88
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit6" type="ColorRect" parent="Byte1"]
+anchor_left = 0.38
+anchor_top = 0.02
+anchor_right = 0.38
+anchor_bottom = 0.02
+margin_left = 373.92
+margin_top = 11.2
+margin_right = 413.92
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit7" type="ColorRect" parent="Byte1"]
+anchor_left = 0.44
+anchor_top = 0.02
+anchor_right = 0.44
+anchor_bottom = 0.02
+margin_left = 432.96
+margin_top = 11.2
+margin_right = 472.96
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Answer" type="Control" parent="."]
+anchor_top = 0.6
+anchor_bottom = 0.6
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bit0" type="ColorRect" parent="Answer"]
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.02
+anchor_bottom = 0.02
+margin_left = 19.68
+margin_top = 11.2
+margin_right = 59.68
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Answer/bit0"]
+margin_right = 12.0
+margin_bottom = 28.0
+
+[node name="bit1" type="ColorRect" parent="Answer"]
+anchor_left = 0.08
+anchor_top = 0.02
+anchor_right = 0.08
+anchor_bottom = 0.02
+margin_left = 78.72
+margin_top = 11.2
+margin_right = 118.72
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Answer/bit1"]
+margin_right = 12.0
+margin_bottom = 28.0
+
+[node name="bit2" type="ColorRect" parent="Answer"]
+anchor_left = 0.14
+anchor_top = 0.02
+anchor_right = 0.14
+anchor_bottom = 0.02
+margin_left = 137.76
+margin_top = 11.2
+margin_right = 177.76
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Answer/bit2"]
+margin_right = 12.0
+margin_bottom = 28.0
+
+[node name="bit3" type="ColorRect" parent="Answer"]
+anchor_left = 0.2
+anchor_top = 0.02
+anchor_right = 0.2
+anchor_bottom = 0.02
+margin_left = 196.8
+margin_top = 11.2
+margin_right = 236.8
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Answer/bit3"]
+margin_right = 12.0
+margin_bottom = 28.0
+
+[node name="bit4" type="ColorRect" parent="Answer"]
+anchor_left = 0.26
+anchor_top = 0.02
+anchor_right = 0.26
+anchor_bottom = 0.02
+margin_left = 255.84
+margin_top = 11.2
+margin_right = 295.84
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Answer/bit4"]
+margin_right = 12.0
+margin_bottom = 28.0
+
+[node name="bit5" type="ColorRect" parent="Answer"]
+anchor_left = 0.32
+anchor_top = 0.02
+anchor_right = 0.32
+anchor_bottom = 0.02
+margin_left = 314.88
+margin_top = 11.2
+margin_right = 354.88
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Answer/bit5"]
+margin_right = 12.0
+margin_bottom = 28.0
+
+[node name="bit6" type="ColorRect" parent="Answer"]
+anchor_left = 0.38
+anchor_top = 0.02
+anchor_right = 0.38
+anchor_bottom = 0.02
+margin_left = 373.92
+margin_top = 11.2
+margin_right = 413.92
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Answer/bit6"]
+margin_right = 12.0
+margin_bottom = 28.0
+
+[node name="bit7" type="ColorRect" parent="Answer"]
+anchor_left = 0.44
+anchor_top = 0.02
+anchor_right = 0.44
+anchor_bottom = 0.02
+margin_left = 432.96
+margin_top = 11.2
+margin_right = 472.96
+margin_bottom = 51.2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Answer/bit7"]
+margin_right = 12.0
+margin_bottom = 28.0
+[connection signal="pressed" from="Answer/bit0/Button" to="." method="_on_answer_0_pressed"]
+[connection signal="pressed" from="Answer/bit1/Button" to="." method="_on_answer_1_pressed"]
+[connection signal="pressed" from="Answer/bit2/Button" to="." method="_on_answer_2_pressed"]
+[connection signal="pressed" from="Answer/bit3/Button" to="." method="_on_answer_3_pressed"]
+[connection signal="pressed" from="Answer/bit4/Button" to="." method="_on_answer_4_pressed"]
+[connection signal="pressed" from="Answer/bit5/Button" to="." method="_on_answer_5_pressed"]
+[connection signal="pressed" from="Answer/bit6/Button" to="." method="_on_answer_06pressed"]
+[connection signal="pressed" from="Answer/bit7/Button" to="." method="_on_answer_7_pressed"]

@@ -1,0 +1,86 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://assets/maps/common/interactables/standbutton/standbutton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/common/classes/tasks-maitenance/base/base-task-maintenance.gd" type="Script" id=2]
+[ext_resource path="res://addons/opensusinteraction/resources/interact/interact.gd" type="Script" id=3]
+[ext_resource path="res://addons/opensusinteraction/resources/interacttask/interacttask.gd" type="Script" id=4]
+[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=5]
+[ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=6]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+resource_name = "InteractMap"
+script = ExtResource( 6 )
+interact_with = NodePath("")
+interact_data = {
+
+}
+
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+resource_name = "InteractUI"
+script = ExtResource( 5 )
+ui_name = "clockset"
+ui_data = {
+
+}
+advanced/reinstance = false
+advanced/only_instance = false
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+resource_name = "InteractTask"
+script = ExtResource( 4 )
+task_text = ""
+ui_resource = SubResource( 2 )
+outputs/toggle_map_interactions = false
+
+[sub_resource type="Resource" id=4]
+resource_local_to_scene = true
+resource_name = "InteractUI"
+script = ExtResource( 5 )
+ui_name = ""
+ui_data = {
+
+}
+advanced/reinstance = false
+advanced/only_instance = false
+
+[sub_resource type="Resource" id=5]
+resource_local_to_scene = true
+resource_name = "Interact"
+script = ExtResource( 3 )
+interact_type = 0
+task_resource = SubResource( 3 )
+ui_resource = SubResource( 4 )
+map_resource = SubResource( 1 )
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends Timer
+
+
+# How often to update when there are no peers connected to maintenance task
+export(float) var wait_time_no_peers = 2.0
+# How often to update when there are peers connected
+export(float) var wait_time_peers = 0.1
+
+func _ready():
+	set_wait_time(wait_time_no_peers)
+
+func set_has_peers(has_peers: bool):
+	if has_peers:
+		set_wait_time(wait_time_peers)
+	else:
+		set_wait_time(wait_time_no_peers)
+"
+
+[node name="MaintenanceTask" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="standbutton" parent="." instance=ExtResource( 1 )]
+interact_resource = SubResource( 5 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+script = SubResource( 6 )

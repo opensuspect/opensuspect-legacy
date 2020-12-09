@@ -17,7 +17,8 @@ var ui_list: Dictionary = {
 						"appearance_editor": {"scene": preload("res://assets/ui/submenus/appearance_editor/appearance_editor.tscn")},
 						
 						#task UI
-						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")}
+						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")},
+						"gasvalve": {"scene": preload("res://assets/ui/tasks/gasvalve/gasvalve.tscn")}
 						}
 
 var current_ui: Control
