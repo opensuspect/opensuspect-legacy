@@ -11,7 +11,6 @@ void fragment()
 	// Replace magenta skin mask color with proper skin color
 	vec3 diff = color.rgb - skin_mask_color.rgb;
 	float m = max(max(abs(diff.r), abs(diff.g)), abs(diff.b));
-   	color.rgb = mix(color.rgb, skin_color.rgb, step(m, tolerance));
+	color.rgb = mix(color.rgb, skin_color.rgb, step(m, tolerance));
 	COLOR = color;
-
 }

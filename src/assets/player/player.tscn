@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/skeleton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/player/death_handler.gd" type="Script" id=3]
 [ext_resource path="res://assets/common/shaders/skin_color_key.shader" type="Shader" id=4]
+[ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=5]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
 [ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
 [ext_resource path="res://assets/player/camera.gd" type="Script" id=27]
@@ -25,12 +26,18 @@ height = 50.0
 [sub_resource type="CanvasItemMaterial" id=5]
 light_mode = 2
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=8]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
 shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
 shader_param/tolerance = 0.75
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
+shader_param/line_color = Color( 1, 1, 1, 0 )
+shader_param/line_thickness = 5.0
 
 [sub_resource type="ViewportTexture" id=7]
 viewport_path = NodePath("SpritesViewport")
@@ -103,18 +110,17 @@ __meta__ = {
 }
 
 [node name="Skeleton" parent="." instance=ExtResource( 2 )]
-material = SubResource( 6 )
-use_parent_material = true
+material = SubResource( 8 )
 
 [node name="SpritesViewport" type="Viewport" parent="."]
-size = Vector2( 300, 300 )
+size = Vector2( 1024, 600 )
 transparent_bg = true
 handle_input_locally = false
 disable_3d = true
 usage = 0
-debug_draw = 1
 render_target_v_flip = true
 render_target_update_mode = 3
+physics_object_picking = true
 __meta__ = {
 "_editor_description_": "The viewport that will contain and render the player polygon sprites and Skeleton2D animations."
 }
@@ -122,22 +128,21 @@ __meta__ = {
 [node name="SpritesCamera" type="Camera2D" parent="SpritesViewport"]
 offset = Vector2( 0, -25 )
 current = true
-zoom = Vector2( 0.25, 0.25 )
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
+zoom = Vector2( 0.2, 0.2 )
 smoothing_enabled = true
 drag_margin_left = 0.65
 drag_margin_top = 0.65
 drag_margin_right = 0.65
 drag_margin_bottom = 0.65
+editor_draw_screen = false
 __meta__ = {
 "_editor_description_": "The camera that will render the player sprites within the sprites viewport."
 }
 
 [node name="ViewportTextureTarget" type="Sprite" parent="."]
 material = SubResource( 6 )
-position = Vector2( 0, -20 )
-scale = Vector2( 0.25, 0.25 )
+position = Vector2( 0, -25 )
+scale = Vector2( 0.2, 0.2 )
 texture = SubResource( 7 )
 __meta__ = {
 "_editor_description_": "The Sprite that the viewport tex ture of SpritesViewport will be rendered to."

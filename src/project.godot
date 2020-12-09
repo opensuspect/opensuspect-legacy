@@ -9,21 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "KinematicBody2D",
-"class": "Item",
-"language": "GDScript",
-"path": "res://assets/items/item.gd"
-}, {
-"base": "Node2D",
-"class": "ItemHandler",
-"language": "GDScript",
-"path": "res://assets/player/item_handler.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "Player",
-"language": "GDScript",
-"path": "res://assets/player/player.gd"
-}, {
 "base": "IPoolable",
 "class": "BackgroundObject",
 "language": "GDScript",
@@ -43,6 +28,21 @@ _global_script_classes=[ {
 "class": "IPoolable",
 "language": "GDScript",
 "path": "res://assets/common/classes/objectpool/ipoolable.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Item",
+"language": "GDScript",
+"path": "res://assets/items/item.gd"
+}, {
+"base": "Node2D",
+"class": "ItemHandler",
+"language": "GDScript",
+"path": "res://assets/player/item_handler.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://assets/player/player.gd"
 }, {
 "base": "Node",
 "class": "PoolManager",
@@ -80,13 +80,13 @@ _global_script_classes=[ {
 "path": "res://assets/common/classes/ui/task/windowdialogtask.gd"
 } ]
 _global_script_class_icons={
-"Item": "",
-"ItemHandler": "",
-"Player": "",
 "BackgroundObject": "",
 "ControlBase": "",
 "ControlTask": "",
 "IPoolable": "",
+"Item": "",
+"ItemHandler": "",
+"Player": "",
 "PoolManager": "",
 "PopupBase": "",
 "PopupPanelBase": "",
