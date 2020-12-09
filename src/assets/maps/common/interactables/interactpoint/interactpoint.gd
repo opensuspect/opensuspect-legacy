@@ -7,11 +7,10 @@ var interact_data: Dictionary = {} setget , get_interact_data
 
 func _ready():
 	interact_resource.init_resource(self)
-#	print(interact.get_interact_data())
 
 func get_interact_data():
 	#var interact_resource: Interact = interact
-	interact_data = interact_resource.get_interact_data()
+	interact_data = interact_resource.get_interact_data(self)
 	interact_data["display_text"] = display_text
 	#interact_data["interact_resource"] = interact_resource
 	interact_data["interact_node"] = self

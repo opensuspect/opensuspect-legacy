@@ -12,7 +12,8 @@ onready var kill_button: TextureButton = $KillButton
 onready var reload_button: TextureButton = $ReloadButton
 
 # Loaded with data from call to open_menu function in UIManager
-var ui_data: Dictionary = {}
+# ui_data var now built into the class
+#var ui_data: Dictionary = {}
 
 func _ready() -> void:
 	if ui_data.keys().has("linked_node"):

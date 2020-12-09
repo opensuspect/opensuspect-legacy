@@ -5,8 +5,6 @@ extends Resource
 
 export(String) var task_text
 
-#export(Resource) var ui_name = base_ui_resource.duplicate()
-
 var item_inputs_on: bool
 var item_inputs: PoolStringArray
 
@@ -29,40 +27,90 @@ var ui_res: Resource = base_ui_resource.duplicate()
 #node this task is attached to
 var attached_to: Node
 
-#assigned by TaskManager
+#assigned at runtime when registered by TaskManager
 var task_id: int
+var task_data: Dictionary = {}
+
+var task_registered: bool = false
+
+func complete_task(data: Dictionary = {}) -> bool:
+	var temp_interact_data = task_data
+	for key in data.keys():
+		temp_interact_data[key] = data[key]
+	if map_outputs_on:
+		for resource in map_outputs:
+			resource.interact(attached_to, temp_interact_data)
+	return true
+
+func assign_player(player_id: int):
+	if not task_data.keys().has("assigned_players"):
+		task_data["assigned_players"] = []
+	if task_data["assigned_players"].has(player_id):
+		return
+	task_data["assigned_players"].append(player_id)
+
+func registered(new_id: int, new_task_data: Dictionary):
+	task_id = new_id
+	for key in new_task_data.keys():
+		task_data[key] = new_task_data[key]
+	task_registered = true
+
+func get_task_data() -> Dictionary:
+	var temp_task_data = task_data
+	temp_task_data["task_id"] = task_id
+	if task_registered:
+		return temp_task_data
+	var generated_task_data = gen_task_data()
+	for key in generated_task_data.keys():
+		temp_task_data[key] = generated_task_data[key]
+	return temp_task_data
+
+# generate initial data to send to the task manager, should not be called after it is registered
+func gen_task_data() -> Dictionary:
+	if task_registered:
+		return task_data
+	var info: Dictionary = {}
+	info["task_text"] = task_text
+#	info["item_inputs"] = item_inputs
+#	info["item_outputs"] = item_outputs
+	info["task_outputs"] = task_outputs
+	info["attached_node"] = attached_to
+	info["resource"] = self
+	#info["ui_resource"] = ui_res
+	for key in info.keys():
+		task_data[key] = info[key]
+	return info
+
+func get_task_id() -> int:
+	return task_id
+
+func get_task_state() -> int:
+	return task_data["state"]
+
+func set_task_state(new_state: int) -> bool:
+	task_data["state"] = new_state
+	return true
 
 func interact(_from: Node = null, _interact_data: Dictionary = {}):
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be used with no defined node")
-	ui_res.interact(_from)
+	ui_res.interact(_from, get_task_data())
 
 func init_resource(_from: Node):
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be initiated with no defined node")
-	task_id = TaskManager.register_task(gen_task_info())
+	task_id = TaskManager.register_task(self)
 
 func get_interact_data(_from: Node = null) -> Dictionary:
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be used with no defined node")
-	return gen_task_info()
-
-func gen_task_info() -> Dictionary:
-	var info: Dictionary = {}
-	info["task_text"] = task_text
-	info["item_inputs"] = item_inputs
-	info["item_outputs"] = item_outputs
-	info["task_outputs"] = task_outputs
-	info["attached_node"] = attached_to
-	info["task_resource"] = self
-	#info["ui_resource"] = ui_res
-	return info
+	return gen_task_data()
 
 func _init():
 	#print("task init ", task_name)

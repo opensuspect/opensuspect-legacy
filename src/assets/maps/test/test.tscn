@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -25,7 +25,7 @@ interact_data = {
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 11 )
-ui_name = "clockset"
+ui_name = ""
 ui_data = {
 
 }
@@ -69,6 +69,15 @@ interact_data = {
 
 }
 
+[sub_resource type="Resource" id=23]
+resource_local_to_scene = true
+resource_name = "InteractMap"
+script = ExtResource( 10 )
+interact_with = NodePath("clocktext")
+interact_data = {
+
+}
+
 [sub_resource type="Resource" id=7]
 resource_local_to_scene = true
 resource_name = "InteractUI"
@@ -84,9 +93,10 @@ advanced/only_instance = false
 resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 8 )
-task_text = ""
+task_text = "Task system clockset standbutton"
 ui_resource = SubResource( 7 )
-outputs/toggle_map_interactions = false
+outputs/toggle_map_interactions = true
+outputs/output_map_interactions = [ SubResource( 23 ) ]
 
 [sub_resource type="Resource" id=9]
 resource_local_to_scene = true
@@ -103,7 +113,7 @@ advanced/only_instance = false
 resource_local_to_scene = true
 resource_name = "Interact"
 script = ExtResource( 9 )
-interact_type = 2
+interact_type = 0
 task_resource = SubResource( 8 )
 ui_resource = SubResource( 9 )
 map_resource = SubResource( 6 )
@@ -128,8 +138,9 @@ interact_data = {
 
 [sub_resource type="Resource" id=13]
 resource_local_to_scene = true
+resource_name = "InteractUI"
 script = ExtResource( 11 )
-ui_name = "clockset"
+ui_name = ""
 ui_data = {
 
 }
@@ -169,14 +180,35 @@ interact_data = {
 
 }
 
+[sub_resource type="Resource" id=22]
+resource_local_to_scene = true
+resource_name = "InteractMap"
+script = ExtResource( 10 )
+interact_with = NodePath("Label")
+interact_data = {
+
+}
+
 [sub_resource type="Resource" id=18]
 resource_local_to_scene = true
-script = ExtResource( 8 )
-task_text = ""
-ui_resource = SubResource( 13 )
-outputs/toggle_map_interactions = false
+resource_name = "InteractUI"
+script = ExtResource( 11 )
+ui_name = "clockset"
+ui_data = {
+
+}
+advanced/reinstance = false
+advanced/only_instance = false
 
 [sub_resource type="Resource" id=19]
+resource_local_to_scene = true
+script = ExtResource( 8 )
+task_text = "Task system clockset"
+ui_resource = SubResource( 18 )
+outputs/toggle_map_interactions = true
+outputs/output_map_interactions = [ SubResource( 22 ) ]
+
+[sub_resource type="Resource" id=20]
 resource_local_to_scene = true
 script = ExtResource( 11 )
 ui_name = ""
@@ -186,12 +218,12 @@ ui_data = {
 advanced/reinstance = false
 advanced/only_instance = false
 
-[sub_resource type="Resource" id=20]
+[sub_resource type="Resource" id=21]
 resource_local_to_scene = true
 script = ExtResource( 9 )
 interact_type = 0
-task_resource = SubResource( 18 )
-ui_resource = SubResource( 19 )
+task_resource = SubResource( 19 )
+ui_resource = SubResource( 20 )
 map_resource = SubResource( 17 )
 
 [node name="test" type="YSort"]
@@ -236,7 +268,7 @@ margin_top = -35.0
 margin_right = 170.0
 margin_bottom = -13.0
 rect_pivot_offset = Vector2( 49, 11 )
-text = "clockset task (does not use task system)"
+text = "clockset task (now uses task system)"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -291,8 +323,17 @@ __meta__ = {
 
 [node name="tasktest" parent="." instance=ExtResource( 5 )]
 position = Vector2( 450, 0 )
-interact_resource = SubResource( 20 )
+interact_resource = SubResource( 21 )
 display_text = "task test"
+
+[node name="Label" type="Label" parent="tasktest"]
+margin_right = 40.0
+margin_bottom = 22.0
+text = "735"
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="spawnpoints" type="Node2D" parent="."]
 

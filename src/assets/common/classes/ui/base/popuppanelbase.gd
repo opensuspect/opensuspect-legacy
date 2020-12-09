@@ -6,6 +6,8 @@ export (String) var menu_name
 
 export (bool) var disable_movement
 
+var ui_data: Dictionary = {}
+
 #called by ui system
 func base_open():
 	popup()
