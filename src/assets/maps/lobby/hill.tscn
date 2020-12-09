@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/maps/lobby/background_object.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/maps/lobby/textures/hill0.png" type="Texture" id=2]
+[ext_resource path="res://assets/common/shaders/tint.shader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 3 )
+shader_param/tint_color = null
+shader_param/tint_amount = null
+
+[node name="Hill" instance=ExtResource( 1 )]
+material = SubResource( 1 )
+textures = [ ExtResource( 2 ) ]
+
+[node name="Sprite" parent="." index="0"]
+use_parent_material = true
+position = Vector2( 0, -199.71 )
+texture = ExtResource( 2 )

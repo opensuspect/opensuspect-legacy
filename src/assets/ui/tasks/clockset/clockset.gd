@@ -1,6 +1,6 @@
 extends WindowDialogTask
 
-var ui_data: Dictionary = {}
+#var ui_data: Dictionary = {}
 var targetTime: int = 433
 var currentTime: int = 630
 
@@ -35,10 +35,11 @@ func taskComplete():
 	#theoretically this is where it would hook into the task manager
 	#gotcha!
 	PlayerManager.assignedtasks[0] = 1
-	print("clockset task complete")
-	if ui_data.keys().has("linkedNode"):
-		MapManager.interact_with(ui_data["linkedNode"], self, {"newText": str(currentTime)})
-	hide()
+#	print("clockset task complete")
+#	if ui_data.keys().has("linkedNode"):
+#		MapManager.interact_with(ui_data["linkedNode"], self, {"newText": str(currentTime)})
+	.complete_task({"newText": str(currentTime)})
+	#hide()
 
 func setClockTime(newTime):
 	hoursNode.value = roundDown(newTime / 100, 1)
