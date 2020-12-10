@@ -160,11 +160,11 @@ func _on_main_player_moved(movement: Vector2, velocity: Vector2, last_input: int
 	if not get_tree().is_network_server():
 		rpc_id(1, "player_moved", movement, velocity, last_input)
 
-remotesync func _on_main_player_picked_up_item(item_path: String) -> void:
+func _on_main_player_picked_up_item(item_path: String) -> void:
 	"""Called when the main player sends a request to pick up an item."""
 	rpc_id(1, "player_picked_up_item", item_path)
 
-remotesync func _on_main_player_dropped_item() -> void:
+func _on_main_player_dropped_item() -> void:
 	"""Called when the main player sends a request to drop an item."""
 	rpc_id(1, "player_dropped_item")
 
