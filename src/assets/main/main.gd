@@ -21,7 +21,7 @@ signal positions_updated(last_received_input)
 func _ready() -> void:
 	set_network_master(1)
 
-# Gets called when the title scene sets this scene as the main scene
+# Runs when the title scene sets this scene as the main scene
 func _enter_tree() -> void:
 	if Network.connection == Network.Connection.CLIENT_SERVER:
 # warning-ignore:return_value_discarded
@@ -134,7 +134,7 @@ func deletePlayers() -> void:
 	players.clear()
 	PlayerManager.players.clear()
 
-# Called from client side to tell the server about the player's actions
+# Runs on the client side to tell the server about the player's actions
 remote func player_moved(new_movement: Vector2, velocity: Vector2, last_input: int) -> void:
 	# Should only be run on the server
 	if !get_tree().is_network_server():
@@ -148,7 +148,7 @@ remote func player_moved(new_movement: Vector2, velocity: Vector2, last_input: i
 	players[id].movement = new_movement
 	players[id].input_number = last_input
 
-# Called from server when the server's players move
+# Runs on the server when the server's players move
 puppet func update_positions(positions_dict: Dictionary, last_received_input: int) -> void:
 	for id in positions_dict.keys():
 		if players.keys().has(id):
@@ -161,15 +161,15 @@ func _on_main_player_moved(movement: Vector2, velocity: Vector2, last_input: int
 		rpc_id(1, "player_moved", movement, velocity, last_input)
 
 func _on_main_player_picked_up_item(item_path: String) -> void:
-	"""Called when the main player sends a request to pick up an item."""
+	"""Runs when the main player sends a request to pick up an item."""
 	rpc_id(1, "player_picked_up_item", item_path)
 
 func _on_main_player_dropped_item() -> void:
-	"""Called when the main player sends a request to drop an item."""
+	"""Runs when the main player sends a request to drop an item."""
 	rpc_id(1, "player_dropped_item")
 
 remotesync func player_picked_up_item(item_path: String) -> void:
-	"""Called by the server; RPCs all clients to have a player pick up an item."""
+	"""Runs on the server; RPCs all clients to have a player pick up an item."""
 	if not get_tree().is_network_server():
 		return
 	var id: int = get_tree().get_rpc_sender_id()
@@ -179,7 +179,7 @@ remotesync func player_picked_up_item(item_path: String) -> void:
 	rpc("pick_up_item", id, item_path)
 
 remotesync func player_dropped_item() -> void:
-	"""Called by the server; RPCs all clients to have a player drop an item."""
+	"""Runs on the server; RPCs all clients to have a player drop an item."""
 	if not get_tree().is_network_server():
 		return
 	var id: int = get_tree().get_rpc_sender_id()
@@ -251,7 +251,7 @@ puppetsync func player_killed(killer_id: int, killed_player_id: int) -> void:
 	killed_player_death_handler.die_by(killer_id)
 
 puppetsync func end_round(winner):
-	"""This function is called by the server and when it is, it would need to
+	"""This function is run on the server and when it is, it would need to
 	show the win / lose screens for the players, and then transitions back
 	to the lobby."""
 	var main_player
@@ -338,7 +338,7 @@ func get_network_id_from_player_node_name(node_name: String) -> int:
 	return -1
 
 master func query_player_data() -> void:
-	"""Called from the server; fetches every client's player data."""
+	"""Runs on the server; fetches every client's player data."""
 	if not get_tree().is_network_server():
 		return
 	rpc("send_player_data_to_server")
@@ -369,7 +369,7 @@ puppet func received_player_data_from_server(id: int, player_data: Dictionary) -
 	_apply_customizations(players[id], player_data)
 
 func _on_appearance_saved() -> void:
-	"""Called when a player changes their appearance in-game."""
+	"""Runs when a player changes their appearance in-game."""
 	_apply_customizations(players[Network.get_my_id()], SaveLoadHandler.load_data(player_data_path))
 	rpc_id(1, "query_player_data")
 
