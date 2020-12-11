@@ -7,10 +7,8 @@ var player_scene = load(player_s)
 #onready var player_scene = preload(player_s)
 # Used on both sides, to keep track of all players.
 var players = {}
-#!!!THIS IS IMPORTANT!!!
-#CHANGE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
-#A way to make up version number: year month date hour of editing this script
-var version = 20120707
+#version no longer requires manual updating
+onready var version = OS.get_time()
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
