@@ -15,6 +15,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+disable_movement = true
 
 [node name="inputrange" type="ColorRect" parent="."]
 margin_left = 30.0
@@ -59,6 +60,16 @@ __meta__ = {
 [node name="outputpressure" type="Polygon2D" parent="outputrange"]
 color = Color( 0.0352941, 0.0352941, 0.0352941, 1 )
 polygon = PoolVector2Array( 1.35919, 0.494644, 1.35919, 21.3058, 39.4138, 10.6029 )
+script = ExtResource( 2 )
+
+[node name="outputminaccepted" type="Polygon2D" parent="outputrange"]
+color = Color( 1, 0, 0, 1 )
+polygon = PoolVector2Array( 1.359, 0, 39.414, 0, 39.414, 2, 1.359, 2 )
+script = ExtResource( 2 )
+
+[node name="outputmaxaccepted" type="Polygon2D" parent="outputrange"]
+color = Color( 1, 0, 0, 1 )
+polygon = PoolVector2Array( 1.359, 0, 39.414, 0, 39.414, 2, 1.359, 2 )
 script = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
@@ -107,9 +118,10 @@ text = "+"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="popup_hide" from="." to="." method="_on_gasvalve_popup_hide"]
 [connection signal="updateDial" from="." to="valveset/valvepos" method="_on_gasvalve_updateGauge"]
 [connection signal="updateInputGauge" from="." to="inputrange/inputpressure" method="_on_gasvalve_updateGauge"]
 [connection signal="updateOutputGauge" from="." to="outputrange/outputpressure" method="_on_gasvalve_updateGauge"]
+[connection signal="updateOutputMax" from="." to="outputrange/outputmaxaccepted" method="_on_gasvalve_updateGauge"]
+[connection signal="updateOutputMin" from="." to="outputrange/outputminaccepted" method="_on_gasvalve_updateGauge"]
 [connection signal="pressed" from="decrease" to="." method="_on_decrease_pressed"]
 [connection signal="pressed" from="increase" to="." method="_on_increase_pressed"]

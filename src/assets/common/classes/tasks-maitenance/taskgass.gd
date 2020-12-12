@@ -9,27 +9,40 @@ var inputDrift: float #the drift velocity of the input pressure
 var dial: float #the setting of the pressure valve on the regulator
 var outputPressure: float #the regulated pressure provided by the valve
 
+var idealOutput:int
 
+export var acceptedRange = 2.0
+export var warningRange = 3.0
+
+#The minimum and maximum input with min and max drift velocities
+export var inputMinPressure = 0
+export var inputMaxPressure = 10
+export var inputMaxDrift = 1
+export var inputMinDrift = 0.0
+export var driftDrift = 0.01
+#Possible settings of the dial
+
+export var dialMinValue = 0
+export var dialMaxValue = 10.0
+export var dialUnit = 0.2
+export var outputDrift = 0.2
 
 func _ready():
 	var initialOutput: float
 	
+	idealOutput = rand_range(inputMinPressure, inputMaxPressure)
 	inputPressure = rand_range(inputMinPressure, inputMaxPressure)
 	inputPressTarget = rand_range(inputMinPressure, inputMaxPressure)
 	inputDrift = inputMinDrift
 	initialOutput = rand_range(idealOutput-warningRange, idealOutput-acceptedRange)
-	print("Initial Output: ", initialOutput)
 	dial = round((initialOutput - inputPressure) / dialUnit) * dialUnit
 	outputPressure = inputPressure + dial
-	#emit_signal("updateDial",  dial / (dialMaxValue - dialMinValue))
-	print("D=", dial, "; IP=", inputPressure, "; IPT=", inputPressTarget, "; OP=", outputPressure)
-
+	
 	
 	
 func _handle_input_from_gui(new_input_data: Dictionary):
-	if new_input_data != null and not new_input_data.has("direction"):
-		print("[Maintenance task::Gas]	_handle_input: bad dictionary provided")
-		return
+	assert(new_input_data != null and new_input_data.has("direction"))
+	
 	var direction = new_input_data["direction"]
 	assert(direction == -1 or direction == 1)
 	dial += dialUnit * direction
@@ -64,17 +77,18 @@ func update(delta):
 	if abs(inputPressure - inputPressTarget) < (inputMaxPressure - inputMinPressure) * 0.005:
 		inputPressTarget = rand_range(inputMinPressure, inputMaxPressure)
 		inputDrift = inputMinDrift
-		print("reached target pressure, moving on")
-		print("D=", dial, "; IP=", inputPressure, "; IPT=", inputPressTarget, "; OP=", outputPressure)
 
 func get_update_gui_dict():
 	var guiInput = (inputPressure - inputMinPressure) / (inputMaxPressure - inputMinPressure)
 	var guiOutput = (outputPressure - idealOutput) / (warningRange * 2 + 2) + 0.5
 	var dialOutput = dial / (dialMaxValue - dialMinValue)
+	
+	var minAcceptedRange = ((idealOutput - acceptedRange) - inputMinPressure) / (inputMaxPressure - inputMinPressure)
+	var maxAcceptedRange = ((idealOutput + acceptedRange) - inputMinPressure) / (inputMaxPressure - inputMinPressure)
+	
 	return {"inputPressureRatio": guiInput,
 			"outputPressureRatio": guiOutput,
-			"dialRatio": dialOutput}
-			
-func get_gui_name() -> String:
-	return "gasvalve"
-	
+			"dialRatio": dialOutput,
+			"minAcceptedRange": minAcceptedRange,
+			"maxAcceptedRange": maxAcceptedRange}
+

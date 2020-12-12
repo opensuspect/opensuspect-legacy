@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -222,54 +222,6 @@ task_resource = SubResource( 21 )
 ui_resource = SubResource( 22 )
 map_resource = SubResource( 18 )
 
-[sub_resource type="Resource" id=24]
-resource_local_to_scene = true
-resource_name = "InteractMap"
-script = ExtResource( 10 )
-interact_with = NodePath("MaintenanceTask")
-interact_data = {
-
-}
-
-[sub_resource type="Resource" id=25]
-resource_local_to_scene = true
-resource_name = "InteractUI"
-script = ExtResource( 11 )
-ui_name = ""
-ui_data = {
-
-}
-advanced/reinstance = false
-advanced/only_instance = false
-
-[sub_resource type="Resource" id=26]
-resource_local_to_scene = true
-resource_name = "InteractTask"
-script = ExtResource( 8 )
-task_text = ""
-ui_resource = SubResource( 25 )
-outputs/toggle_map_interactions = false
-
-[sub_resource type="Resource" id=27]
-resource_local_to_scene = true
-resource_name = "InteractUI"
-script = ExtResource( 11 )
-ui_name = ""
-ui_data = {
-
-}
-advanced/reinstance = false
-advanced/only_instance = false
-
-[sub_resource type="Resource" id=28]
-resource_local_to_scene = true
-resource_name = "Interact"
-script = ExtResource( 9 )
-interact_type = 2
-task_resource = SubResource( 26 )
-ui_resource = SubResource( 27 )
-map_resource = SubResource( 24 )
-
 [node name="test" type="YSort"]
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -479,9 +431,7 @@ scale = Vector2( 3, 19 )
 
 [node name="MaintenanceTasks" type="Node" parent="."]
 
-[node name="standbutton" parent="MaintenanceTasks" instance=ExtResource( 3 )]
+[node name="GasTask" parent="MaintenanceTasks" instance=ExtResource( 13 )]
 position = Vector2( 0, 100 )
-interact_resource = SubResource( 28 )
-
-[node name="MaintenanceTask" parent="MaintenanceTasks/standbutton" instance=ExtResource( 13 )]
 script = ExtResource( 12 )
+frontendMenuName = "gasvalve"

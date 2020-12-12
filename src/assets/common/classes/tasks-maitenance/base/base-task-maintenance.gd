@@ -3,13 +3,7 @@ class_name BaseMaintenanceTask
 
 """
 To create a maintenance task:
-	1. add a standbutton to the map
-	2. instance src/assets/maps/interactables/maintenancetask/maintenancetask.tscn
-		as a child of the standbutton
-	3. in the standbutton's node editor edit the interact resource
-		* set the interact type to map
-		* set the interact node to the node you created in step 2.
-	4. write a script that inherrits this script, and implement the required methods:
+	1. write a script that inherrits this script, and implement the required methods:
 		* update(delta) the only optinal func to inherit. gets called periodicaly to run your task logic
 			@delta can be 0.1ms or 2 seconds(in order to preserve bandwidth)
 			it is determened by the timer in maintenancetask.tscn
@@ -31,22 +25,11 @@ To create a maintenance task:
 			@_new_input_data when the user of your gui clicks some buttons
 			this function will get called so you can act upon it.
 			You choose what the dict is going to contain in your gui script
-			
-		* get_gui_name() -> String
-			@return a name of your gui, as you specified in the UIManager.ui_list
-			so that gui interaction can be abstracted for you.
-			Currently, godot fails to export variables to child classes,
-			so the guiName variable below can't be used to set the gui name in the inspector.
-			I hear that godot 4.0 fixes this, so, when we start using that,
-			the get_gui_name() -> String in child classes should be removed
-			and the gui name should be supplied in the node editor.
-			this script can then use guiName in its get_gui_name() -> String method
-
 ================
-	5. IMPORTANT Set the just created script as the script for the instanced maintenancetask.tscn
+	2. IMPORTANT Set the just created script as the script for the instanced maintenancetask.tscn
 ================
 	
-	6. Create a scene that represents your gui,
+	3. Create a scene that represents your gui,
 		and create a script that inherits BaseMaintenanceTaskGui.
 		Override the required methods:
 			*update_gui(params: Dictionary)
@@ -62,44 +45,20 @@ To create a maintenance task:
 ------------------------------
 
 So, to create the GasValve task that NiceMicro made:
-	1. a) add an empty node on the map(this is so the standbutton becomes visible)
-	1. b) instance a standbutton as the child of the empty node added in step 1. a)
+	1. add an empty node on the map(this is so the standbutton becomes visible)
 	2. instance src/assets/maps/interactables/maintenancetask/maintenancetask.tscn
-		as the child of the standbutton
-	3. in the standbutton's node editor edit the interact resource
-		* set the interact type to map
-		* set the interact Map -> interact with to the node you created in step 2.
+		as the child of the empty node(ideally there should be one empty node for all the tasks)
+	3. set Frontend Menu Name to the one set in UIManager.ui_list
 	4. IMPORTANT: Load the following script:
 		src/assets/common/classes/tasks-maintenance/taskgass.gd
 		to be the script of the node you created in step 2.
 	5. UIManager.ui_list already contains the required entry to activate the gastask ui
 		"gasvalve": {"scene": preload("res://assets/ui/tasks/gasvalve/gasvalve.tscn")}
-		but when writing your own task, you would add your own tscn and the name
-		Here, name is "gasvalve", so the
-		BaseMaintenanceTask, BaseMaintenanceTaskGui both suply methods that
-		need to be overridden to return
-		get_gui_name() -> String that returns "gasvalve"(in this case)
+		but when writing your own task, you would add your own tscn)
 """
 # the name of the gui that should represent this task to the user
 # as defined in UIManager.menus
-export var guiName: String = "Null"
-
-export var idealOutput = 10.0
-export var acceptedRange = 2.0
-export var warningRange = 3.0
-
-#The minimum and maximum input with min and max drift velocities
-export var inputMinPressure = 0
-export var inputMaxPressure = 10
-export var inputMaxDrift = 1
-export var inputMinDrift = 0.0
-export var driftDrift = 0.01
-#Possible settings of the dial
-
-export var dialMinValue = 0
-export var dialMaxValue = 10.0
-export var dialUnit = 0.2
-export var outputDrift = 0.2
+export var frontendMenuName: String
 
 var frontend
 
@@ -110,7 +69,8 @@ func register_gui(gui) -> bool:
 	# only assign a gui if we don't already have a gui
 	if frontend == null:
 		frontend = gui
-		rpc_id(1, "_register_peer") # tell the server we have opened a gui
+		# tell the server we have opened a gui
+		rpc_id(1, "_register_peer", Network.get_my_id())
 			
 	# if the gui was previously assigned, the below expression will be false
 	return frontend == gui
@@ -118,28 +78,39 @@ func register_gui(gui) -> bool:
 func unregister_gui(gui):
 	if frontend == gui:
 		frontend = null
-		rpc_id(1, "_unregister_peer") # tell the server we have closed a gui
+		# tell the server we have closed a gui
+		rpc_id(1, "_unregister_peer", Network.get_my_id())
 
-master func _register_peer():
-	# TODO supply peer id as an argument too, as get_tree().get_rpc_sender_id()
-	# can get unreliable in certian cases. But dont 100% trust the supplied id,
-	# as it could be fake, something like supplied id == peer_id is the best
+master func _register_peer(caller_id: int):
 	var peer_id = get_tree().get_rpc_sender_id()
-	if not peers.has(peer_id):
-		peers.append(peer_id)
-		$Timer.set_has_peers(true)
+	if caller_id != peer_id:
+		return
+	
+	if peers.has(peer_id):
+		# only one peer is allowed
+		return 
 		
+	peers.append(peer_id)
+	$Timer.set_has_peers(true)
+	$Timer.start()
 		
-master func _unregister_peer():
-	peers.erase(get_tree().get_rpc_sender_id())
+master func _unregister_peer(caller_id: int):
+	var peer_id = get_tree().get_rpc_sender_id()
+	if caller_id != peer_id:
+		return
+	
+	peers.erase(peer_id)
 	if peers.empty():
 		# no peers left, no need to waste processing power and network bandwidth
 		$Timer.set_has_peers(false)
 	
-	
+
+
 var last_timer_fire: float
 func _ready():
 	set_network_master(1)
+	# Supply the menu that should be opened when the user interacts with the task
+	assert(self.frontendMenuName != null and not self.frontendMenuName.empty())
 	#warning-ignore:return_value_discarded
 	MapManager.connect("interacted_with", self, "interacted_with")
 	# only the server should start the timer
@@ -154,7 +125,7 @@ func _ready():
 func interacted_with(interactNode, _from, _interact_data):
 	if interactNode != self:
 		return
-	UIManager.open_ui(get_gui_name(), {"linkedNode": self})
+	UIManager.open_ui(self.frontendMenuName, {"linkedNode": self})
 	
 master func input_from_gui(new_input_data: Dictionary):
 	if not Network.is_network_master():
@@ -205,11 +176,6 @@ func update(_delta):
 func get_update_gui_dict():
 	assert(false) # Never can be called on base class
 	return {}
-# overwrite this method in your implementation
-# and make it return the gui name that you specified in UIManager.menus
-func get_gui_name() -> String:
-	assert(false) # Never can be called on base class
-	return guiName
 	
 func _handle_input_from_gui(_new_input_data: Dictionary):
 	assert(false) # Never can be called on base class

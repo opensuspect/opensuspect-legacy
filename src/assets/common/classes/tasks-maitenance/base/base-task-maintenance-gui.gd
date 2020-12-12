@@ -3,43 +3,44 @@ class_name BaseMaintenanceTaskGui
 
 var backend: BaseMaintenanceTask = null
 
+func _ready():
+	# warning-ignore:return_value_discarded
+	self.connect("popup_hide", self, "_on_popup_hide")
+
+func _on_popup_hide():
+	# depends on the node name being the same as the name in UIManager.ui_list
+	UIManager.close_ui(self.name)
+	
+	
 # Implement this to receive updates from the backend
+# warning-ignore:unused_argument
 func update_gui(params: Dictionary):
 	assert(false)
 	pass
 	
+# abstract the interaction with the backend
+func send_input_to_backend(params: Dictionary):
+	if backend != null:
+		backend.input_from_gui(params)
+	
 func base_open():
 	.base_open()
-	if self.ui_data.has("linkedNode"):
-		if self.ui_data["linkedNode"] is BaseMaintenanceTask:
-			backend = self.ui_data["linkedNode"]
-			var registration_successful: bool = backend.register_gui(self)
-			if not registration_successful:
-				backend = null
-				# TODO show an error saying that we failed to link the backend?
+	
+	if not self.ui_data.has("linkedNode"):
+		return
+		
+	if not self.ui_data["linkedNode"] is BaseMaintenanceTask:
+		return
+		
+	backend = self.ui_data["linkedNode"]
+	var registration_successful: bool = backend.register_gui(self)
+	if not registration_successful:
+		assert(false)
+		backend = null
 
-# TODO it is important that this gets called so that the server can go into
-# low update frequency mode. But it doesn't get called currently
 func base_close():
 	.base_close()
-	UIManager.close_ui(self.getGuiName())
 	if backend != null:
 		backend.unregister_gui(self)
 		backend = null
 
-func _on_gasvalve_about_to_show():
-	pass
-	
-# Instead this gets called out of the blue.. why??
-func _on_gasvalve_popup_hide():
-	#UIManager.menu_closed(getGuiName())
-	if backend != null:
-		backend.unregister_gui(self)
-		backend = null
-	assert(false) #why does this method get called???
-
-# override this in your implementation. the name should be what you
-# wrote in UIManager.menus
-func getGuiName() -> String:
-	assert(false)
-	return "null"
