@@ -15,7 +15,7 @@ interact_data = {
 
 }
 
-[sub_resource type="Resource" id=4]
+[sub_resource type="Resource" id=2]
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 4 )
@@ -31,7 +31,7 @@ resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 5 )
 task_text = ""
-ui_resource = SubResource( 4 )
+ui_resource = SubResource( 2 )
 outputs/toggle_map_interactions = false
 
 [resource]
