@@ -7,7 +7,7 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=5]
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=6]
 
-[sub_resource type="GDScript" id=6]
+[sub_resource type="GDScript" id=1]
 script/source = "extends Timer
 
 
@@ -29,7 +29,7 @@ func get_has_peers():
 	return get_wait_time() == wait_time_peers
 "
 
-[sub_resource type="Resource" id=7]
+[sub_resource type="Resource" id=2]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 6 )
@@ -38,7 +38,7 @@ interact_data = {
 
 }
 
-[sub_resource type="Resource" id=8]
+[sub_resource type="Resource" id=3]
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 5 )
@@ -49,15 +49,15 @@ ui_data = {
 advanced/reinstance = false
 advanced/only_instance = false
 
-[sub_resource type="Resource" id=9]
+[sub_resource type="Resource" id=4]
 resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 4 )
 task_text = ""
-ui_resource = SubResource( 8 )
+ui_resource = SubResource( 3 )
 outputs/toggle_map_interactions = false
 
-[sub_resource type="Resource" id=10]
+[sub_resource type="Resource" id=5]
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 5 )
@@ -68,14 +68,14 @@ ui_data = {
 advanced/reinstance = false
 advanced/only_instance = false
 
-[sub_resource type="Resource" id=11]
+[sub_resource type="Resource" id=6]
 resource_local_to_scene = true
 resource_name = "Interact"
 script = ExtResource( 3 )
 interact_type = 2
-task_resource = SubResource( 9 )
-ui_resource = SubResource( 10 )
-map_resource = SubResource( 7 )
+task_resource = SubResource( 4 )
+ui_resource = SubResource( 5 )
+map_resource = SubResource( 2 )
 
 [node name="MaintenanceTask" type="Node2D"]
 script = ExtResource( 2 )
@@ -83,8 +83,8 @@ script = ExtResource( 2 )
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.05
 autostart = true
-script = SubResource( 6 )
+script = SubResource( 1 )
 
 [node name="standbutton" parent="." instance=ExtResource( 1 )]
-interact_resource = SubResource( 11 )
+interact_resource = SubResource( 6 )
 only_main_player = true

@@ -18,7 +18,8 @@ var ui_list: Dictionary = {
 						
 						#task UI
 						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")},
-						"gasvalve": {"scene": preload("res://assets/ui/tasks/gasvalve/gasvalve.tscn")}
+						"gasvalve": {"scene": preload("res://assets/ui/tasks/gasvalve/gasvalve.tscn")},
+						"mainframecoolant": {"scene": preload("res://assets/ui/tasks/mainframecoolant/mainframecoolant.tscn")}
 						}
 
 var current_ui: Control

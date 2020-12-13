@@ -1,10 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/ui/tasks/gasvalve/gasvalve.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/tasks/gasvalve/gasvalve-gui.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/tasks/gasvalve/pressuregauge.gd" type="Script" id=2]
 
 [node name="gasvalve" type="WindowDialog"]
-visible = true
 anchor_left = 0.3
 anchor_top = 0.2
 anchor_right = 0.7
