@@ -6,9 +6,6 @@ extends Node
 var inMenu = false
 var ourrole
 var ournumber
-var tasks = [-1]
-var taskstoassign
-var assignedtasks
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
 #mustAssign specifies if the role is mandatory to have, team specifies a team number which
@@ -18,9 +15,9 @@ var assignedtasks
 enum assignStyle {Percent, Amount}
 var style: int = assignStyle.Percent
 var enabledRoles: Array = ["traitor", "detective", "default"]
-var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "mustAssign": true, "team": 1}, 
+var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "mustAssign": false, "team": 1}, 
 						"detective": {"percent": float(1)/7, "amount": 1, "mustAssign": false, "team": 0}, 
-						"default": {"percent": 0, "amount": 0, "mustAssign": false, "team": 0}}
+						"default": {"percent": 0, "amount": 0, "mustAssign": true, "team": 0}}
 var players: Dictionary = {}
 var playerRoles: Dictionary = {}
 var playerColors: Dictionary = {enabledRoles[0]: Color(1,0,0),# traitor
@@ -36,21 +33,27 @@ func _ready():
 
 func assigntasks():
 	for id in Network.peers:
-		taskstoassign = tasks
-		for task in taskstoassign:
-			if task == -1:
-				rng.randomize()
-				taskstoassign[task] = rng.randi_range(-1,0)
+		var taskstoassign = TaskManager.task_dict
+		for task in taskstoassign.keys():
+			rng.randomize()
+			#"true" is here for development purposes(we want to get assigned to all tasks)
+			if true or rng.randi_range(-1,0) < 0:
+				TaskManager.assign_task(task, id)
 				print("task assigned,",taskstoassign[task])
 		if id == 1:
-			assignedtasks = taskstoassign
-			print("host tasks assigned",taskstoassign)
+			if TaskManager.player_tasks.has(id):
+				print("host tasks assigned", TaskManager.player_tasks[id].keys())
+			else:
+				print("host tasks assigned -------")
 		else:
-			rpc_id(id,"gettasks",taskstoassign)
-			print("client tasks assigned",taskstoassign)
-
-remote func gettasks(tasksget):
-	assignedtasks = tasksget
+			rpc_id(id,"gettasks",TaskManager.get_player_tasks[id].keys())
+			if TaskManager.player_tasks.has(id):
+				print("client tasks assigned", TaskManager.player_tasks[id].keys())
+			else:
+				print("client tasks assigned -------")
+remote func gettasks(tasksget: Array):
+	for task_id in tasksget:
+		TaskManager.assign_task(task_id, Network.get_my_id())
 	print("we got our tasks!")
 
 # warning-ignore:unused_argument

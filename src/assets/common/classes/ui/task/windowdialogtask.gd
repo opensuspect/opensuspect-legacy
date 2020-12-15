@@ -1,9 +1,14 @@
 extends WindowDialogBase
 
 class_name WindowDialogTask
-
+func _ready():
+	TaskManager.connect("task_completed", self, "_on_task_completed")
+	
 func complete_task(data: Dictionary = {}):
-	if TaskManager.complete_task(ui_data["task_id"], data):
+	TaskManager.rpc_id(1, "complete_task_remote", ui_data["task_id"], Network.get_my_id(), data)
+
+func _on_task_completed(task_id: int):
+	if ui_data["task_id"] == task_id:
 		base_close()
 
 #called by ui system

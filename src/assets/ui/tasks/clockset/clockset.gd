@@ -34,7 +34,7 @@ func checkComplete():
 func taskComplete():
 	#theoretically this is where it would hook into the task manager
 	#gotcha!
-	PlayerManager.assignedtasks[0] = 1
+	#PlayerManager.assignedtasks[0] = 1
 #	print("clockset task complete")
 #	if ui_data.keys().has("linkedNode"):
 #		MapManager.interact_with(ui_data["linkedNode"], self, {"newText": str(currentTime)})

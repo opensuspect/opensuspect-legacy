@@ -3,6 +3,8 @@ extends Node
 #The task manager is going to assign each task a unique ID, and then assign the ID to a player
 #each player will only be sent their task IDs and the info related to their task IDs
 
+signal task_completed(task_id)
+
 #enum task_type {BINARY, WIN, ITEM_OUTPUT, ITEM_INPUT, ITEM_INPUT_OUTPUT, MAP_OUTPUT}
 
 enum task_state {HIDDEN, NOT_STARTED, IN_PROGRESS, COMPLETED}
@@ -19,16 +21,42 @@ var task_dict: Dictionary = {}
 
 func _ready():
 	randomize()
+	self.set_network_master(1)
 	#print(gen_unique_id())
 
-func complete_task(task_id: int, data: Dictionary = {}) -> bool:
+func complete_task(task_id: int, player_id: int, data: Dictionary = {}) -> bool:
 	print("trying to complete task ", task_id)
 	if not does_task_exist(task_id):
 		return false
 	if not advance_task(task_id, task_state.COMPLETED):
 		return false
-	return get_task_resource(task_id).complete_task(data)
+	if get_task_resource(task_id).complete_task(data):
+		player_tasks[player_id][task_id] = true
+		return true
+	return false
+	
+master func complete_task_remote(task_id: int, player_id: int, data: Dictionary = {}):
+	if get_tree().get_rpc_sender_id() != player_id:
+		assert(false)
+		return
 
+	if not complete_task(task_id, player_id, data):
+		return
+	if player_id != 1:
+		#the client whose task we just completed needs to be notified
+		rpc_id(player_id, "task_completed", task_id, data)
+	else:
+		#we are the server, just notify that we have completed the task
+		emit_signal("task_completed", task_id)
+		
+puppet func task_completed(task_id, data):
+	if not complete_task(Network.get_my_id(), task_id, data):
+		#if the server completed the task, so should we be able to, if we can't
+		#it means that there is a de-sync
+		assert(false)
+		return
+	emit_signal("task_completed", task_id)
+		
 #can't declare new_state as an int, otherwise it would need to default to an int which could cause later problems
 func advance_task(task_id: int, new_state = null) -> bool:
 	if not get_tree().is_network_server():
@@ -75,12 +103,12 @@ func register_task(task_resource: Resource) -> int:
 func assign_task(task_id: int, player_id: int) -> void:
 	if not does_task_exist(task_id):
 		return
-	#create task array for player_id if it doesn't exist
+	#create task dict for player_id if it doesn't exist
 	if not player_tasks.keys().has(player_id):
-		player_tasks[player_id] = []
+		player_tasks[player_id] = {}
 	#add task to list of tasks assigned to player_id
 	if not player_tasks[player_id].has(task_id):
-		player_tasks[player_id].append(task_id)
+		player_tasks[player_id][task_id] = false
 	#add player_id to assigned_players in task resource
 	task_dict[task_id].assign_player(player_id)
 
