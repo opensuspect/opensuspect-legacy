@@ -5,9 +5,12 @@ func _ready():
 	TaskManager.connect("task_completed", self, "_on_task_completed")
 	
 func complete_task(data: Dictionary = {}):
-	TaskManager.rpc_id(1, "complete_task_remote", ui_data["task_id"], Network.get_my_id(), data)
+	TaskManager.rpc_id(1, "complete_task_remote", ui_data["task_text"], Network.get_my_id(), data)
 
-func _on_task_completed(task_id: int):
+func _on_task_completed(task_id: int, player_id: int):
+	if Network.get_my_id() != player_id:
+		return
+	# only close the ui if we have completed the task
 	if ui_data["task_id"] == task_id:
 		base_close()
 
