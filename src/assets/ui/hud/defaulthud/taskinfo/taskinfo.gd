@@ -14,6 +14,8 @@ func _ready():
 	# When new roles are assigned, we know that the tasks are assigned too
 	PlayerManager.connect("roles_assigned", self, "_new_tasks_ready")
 func _on_task_completed(taskID, playerID):
+	if not display_other_player_tasks and Network.get_my_id() != playerID:
+		return
 	var allTasksCompleted = true
 	for taskID in TaskManager.player_tasks[playerID]:
 		if TaskManager.is_task_completed(taskID, playerID):
@@ -40,9 +42,13 @@ func _new_tasks_ready(_playerRoles):
 	tree.set_anchor(MARGIN_RIGHT, 1.0)
 	tree.set_anchor(MARGIN_BOTTOM, 1.0)
 	tree.set_hide_root(true)
-	var treeRoot = createTextNode(tree, "Tasks")
+	var treeRoot = null
+	if display_other_player_tasks:
+		treeRoot = createTextNode(tree, "Tasks")
 	var players = Network.get_peers()
 	for player in players:
+		if not display_other_player_tasks and Network.get_my_id() != player:
+			continue
 		if not player in TaskManager.player_tasks:
 			continue
 		var nl = createTextNode(tree, Network.get_player_name(player), treeRoot)
@@ -58,11 +64,6 @@ func _new_tasks_ready(_playerRoles):
 func _on_Button_pressed():
 	if expanded:
 		self.set_anchor(MARGIN_RIGHT, 0, true)
-		#$ScrollContainer/TaskStatusContainer.set_anchor(MARGIN_RIGHT, 0.5)
-		#rightAnchor = get_size().x
-		#set_size(Vector2(0, get_size().y))
 	else:
 		self.set_anchor(MARGIN_RIGHT, rightAnchor, true)
-		#$ScrollContainer/TaskStatusContainer.set_anchor(MARGIN_RIGHT, rightAnchor)
-		#set_size(Vector2(rightAnchor, get_size().y))
 	expanded = not expanded

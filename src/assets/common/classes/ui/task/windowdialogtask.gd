@@ -21,7 +21,7 @@ func base_open():
 	var task_id = ui_data["task_id"]
 	if not TaskManager.does_task_exist(task_id):
 		return
-	var task_state: int = TaskManager.get_task_state(task_id)
+	var task_state: int = TaskManager.get_task_state(task_id, Network.get_my_id())
 	# don't open if the task is hidden or completed
 	if task_state == TaskManager.task_state.HIDDEN or task_state == TaskManager.task_state.COMPLETED:
 		return

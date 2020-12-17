@@ -29,12 +29,12 @@ var attached_to: Node
 
 #assigned at runtime when registered by TaskManager
 var task_id: int
-var task_data: Dictionary = {}
-
+var _task_data: Dictionary = {}
+var task_data_player: Dictionary = {}
 var task_registered: bool = false
 
-func complete_task(data: Dictionary = {}) -> bool:
-	var temp_interact_data = task_data
+func complete_task(player_id: int, data: Dictionary = {}) -> bool:
+	var temp_interact_data = task_data_player[player_id]
 	for key in data.keys():
 		temp_interact_data[key] = data[key]
 	if map_outputs_on:
@@ -43,20 +43,21 @@ func complete_task(data: Dictionary = {}) -> bool:
 	return true
 
 func assign_player(player_id: int):
-	if not task_data.keys().has("assigned_players"):
-		task_data["assigned_players"] = []
-	if task_data["assigned_players"].has(player_id):
+	if task_data_player.has(player_id):
 		return
-	task_data["assigned_players"].append(player_id)
+	task_data_player[player_id] = _task_data.duplicate(true)
 
 func registered(new_id: int, new_task_data: Dictionary):
 	task_id = new_id
 	for key in new_task_data.keys():
-		task_data[key] = new_task_data[key]
+		_task_data[key] = new_task_data[key]
 	task_registered = true
 
-func get_task_data() -> Dictionary:
-	var temp_task_data = task_data
+func get_task_data(player_id: int= Network.get_my_id()) -> Dictionary:
+	var temp_task_data = _task_data
+	if task_data_player.has(player_id):
+		temp_task_data = task_data_player[player_id]
+		
 	temp_task_data["task_id"] = task_id
 	if task_registered:
 		return temp_task_data
@@ -68,7 +69,7 @@ func get_task_data() -> Dictionary:
 # generate initial data to send to the task manager, should not be called after it is registered
 func gen_task_data() -> Dictionary:
 	if task_registered:
-		return task_data
+		return _task_data
 	var info: Dictionary = {}
 	info["task_text"] = task_text
 #	info["item_inputs"] = item_inputs
@@ -78,17 +79,17 @@ func gen_task_data() -> Dictionary:
 	info["resource"] = self
 	#info["ui_resource"] = ui_res
 	for key in info.keys():
-		task_data[key] = info[key]
+		_task_data[key] = info[key]
 	return info
 
 func get_task_id() -> int:
 	return task_id
 
-func get_task_state() -> int:
-	return task_data["state"]
+func get_task_state(player_id: int) -> int:
+	return task_data_player[player_id]["state"]
 
-func set_task_state(new_state: int) -> bool:
-	task_data["state"] = new_state
+func set_task_state(player_id: int, new_state: int) -> bool:
+	task_data_player[player_id]["state"] = new_state
 	return true
 
 func interact(_from: Node = null, _interact_data: Dictionary = {}):

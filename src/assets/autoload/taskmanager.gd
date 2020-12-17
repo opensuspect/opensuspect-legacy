@@ -32,9 +32,12 @@ func complete_task(task_id: int, player_id: int, data: Dictionary = {}) -> bool:
 	print("trying to complete task ", task_id)
 	if not does_task_exist(task_id):
 		return false
-	if not advance_task(task_id, task_state.COMPLETED):
+	if not advance_task(task_id, player_id, task_state.COMPLETED):
 		return false
-	if get_task_resource(task_id).complete_task(data):
+	if player_id != Network.get_my_id():
+		completed_dict[player_id][task_id] = true
+		return true
+	if get_task_resource(task_id).complete_task(player_id, data):
 		completed_dict[player_id][task_id] = true
 		return true
 	return false
@@ -44,30 +47,27 @@ master func complete_task_remote(task_text: String, player_id: int, data: Dictio
 		assert(false)
 		return
 	var task_id = task_dict_name[task_text]
-	if not complete_task(task_id, player_id, data):
-		return
-	if player_id != 1:
+	if complete_task(task_id, player_id, data):
 		#the client whose task we just completed needs to be notified
-		rpc_id(player_id, "task_completed", task_text, data)
+		if player_id != 1:
+			rpc_id(player_id, "task_completed", task_text, data)
+			emit_signal("task_completed", task_id, player_id)
+		else:
+			#if we're the server, no need to make network calls
+			task_completed(task_text, data)
 
-	emit_signal("task_completed", task_id, player_id)
 		
 puppet func task_completed(task_text: String, data):
 	var task_id = task_dict_name[task_text]
-	if not complete_task(task_id, Network.get_my_id(), data):
-		#if the server completed the task, so should we be able to, if we can't
-		#it means that there is a de-sync
-		assert(false)
-		return
-	emit_signal("task_completed", task_id, Network.get_my_id())
-		
+	var player_id = Network.get_my_id()
+	complete_task(task_id, player_id, data)
+	emit_signal("task_completed", task_id, player_id)
+
 #can't declare new_state as an int, otherwise it would need to default to an int which could cause later problems
-func advance_task(task_id: int, new_state = null) -> bool:
-	#if not get_tree().is_network_server():
-		#return false
+func advance_task(task_id: int, player_id: int, new_state: int) -> bool:
 	if not does_task_exist(task_id):
 		return false
-	var current_state: int = get_task_data(task_id).state
+	var current_state: int = get_task_resource(task_id).get_task_state(player_id)
 
 	#transition if allowed
 	if task_transitions[current_state].empty():
@@ -75,28 +75,26 @@ func advance_task(task_id: int, new_state = null) -> bool:
 		return false
 	if typeof(new_state) == TYPE_INT and task_state.values().has(new_state):
 		#if new_state is a state and the state exists
-		return transition_task(task_id, new_state)
+		return transition_task(task_id, player_id, new_state)
 	#transition task to the first transition listed for that task type in task_transitions
-	return transition_task(task_id, task_transitions[current_state][0])
+	return transition_task(task_id, player_id, task_transitions[current_state][0])
 
-func transition_task(task_id: int, new_state: int) -> bool:
-	#if not get_tree().is_network_server():
-	#	return false
+func transition_task(task_id: int, player_id: int, new_state: int) -> bool:
 	if not does_task_exist(task_id):
 		return false
-	var current_state: int = get_task_state(task_id)
+	var current_state: int = get_task_state(task_id, player_id)
 	#if that task type can't transition from current state to new state
 	if not task_transitions[current_state].has(new_state):
 		return false
 	#transition task
-	return set_task_state(task_id, new_state)
+	return set_task_state(task_id, player_id, new_state)
 
 func register_task(task_resource: Resource) -> int:
 	var new_task_id: int = gen_unique_id()
 	print("registering task with ID ", new_task_id)
 	var new_task_data: Dictionary = task_resource.get_task_data()
 	new_task_data["state"] = task_state.NOT_STARTED
-	new_task_data["assigned_players"] = []
+	#new_task_data["assigned_players"] = {}
 	new_task_data["task_id"] = new_task_id
 	#do stuff with task info here
 	task_dict[new_task_id] = task_resource
@@ -108,8 +106,9 @@ func register_task(task_resource: Resource) -> int:
 	return new_task_id
 	
 #called by the player manager while assigning roles
-#assumes only to be called by the server
 func assign_tasks():
+	if not get_tree().is_network_server():
+		return false
 	var rng = RandomNumberGenerator.new()
 	for id in Network.peers:
 		var tasks_toassign = TaskManager.task_dict
@@ -167,15 +166,15 @@ func get_task_resource(task_id: int) -> Resource:
 		return null
 	return task_dict[task_id]
 	
-func set_task_state(task_id: int, new_state: int) -> bool:
+func set_task_state(task_id: int, player_id: int, new_state: int) -> bool:
 	if not does_task_exist(task_id):
 		return false
-	return get_task_resource(task_id).set_task_state(new_state)
+	return get_task_resource(task_id).set_task_state(player_id, new_state)
 
-func get_task_state(task_id: int):
+func get_task_state(task_id: int, player_id: int):
 	if not does_task_exist(task_id):
 		return null
-	return get_task_resource(task_id).get_task_data()["state"]
+	return get_task_resource(task_id).get_task_state(player_id)
 
 func does_task_exist(task_id: int):
 	return task_dict.keys().has(task_id)
