@@ -114,8 +114,7 @@ func assign_tasks():
 		var tasks_toassign = TaskManager.task_dict
 		for task in tasks_toassign.keys():
 			rng.randomize()
-			#"true" is here for development purposes(we want to get assigned to all tasks)
-			if true or rng.randi_range(-1,0) < 0:
+			if rng.randi_range(-1,0) < 0:
 				assign_task(task, id)
 				print("task assigned,",tasks_toassign[task])
 		if id == 1:

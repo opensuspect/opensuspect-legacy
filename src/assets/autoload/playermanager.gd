@@ -15,9 +15,9 @@ var ournumber
 enum assignStyle {Percent, Amount}
 var style: int = assignStyle.Percent
 var enabledRoles: Array = ["traitor", "detective", "default"]
-var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "mustAssign": false, "team": 1}, 
+var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "mustAssign": true, "team": 1}, 
 						"detective": {"percent": float(1)/7, "amount": 1, "mustAssign": false, "team": 0}, 
-						"default": {"percent": 0, "amount": 0, "mustAssign": true, "team": 0}}
+						"default": {"percent": 0, "amount": 0, "mustAssign": false, "team": 0}}
 var players: Dictionary = {}
 var playerRoles: Dictionary = {}
 var playerColors: Dictionary = {enabledRoles[0]: Color(1,0,0),# traitor

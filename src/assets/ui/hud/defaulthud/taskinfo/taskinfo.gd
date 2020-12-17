@@ -24,7 +24,9 @@ func _on_task_completed(taskID, playerID):
 			allTasksCompleted = false
 	if allTasksCompleted:
 		tasks[playerID]["player_name_label"].set_custom_color(0, Color(0.2, 1.0, 0.2))
-		tasks[playerID]["player_name_label"].set_collapsed(true)
+		# if we are showing other people's tasks, collapse to save space
+		# otherwise, leave open
+		tasks[playerID]["player_name_label"].set_collapsed(display_other_player_tasks)
 
 func createTextNode(tree: Tree, text: String, root: Object = null) -> TreeItem:
 	var node: TreeItem = tree.create_item(root)

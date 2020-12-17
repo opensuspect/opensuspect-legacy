@@ -86,6 +86,9 @@ func get_task_id() -> int:
 	return task_id
 
 func get_task_state(player_id: int) -> int:
+	if not task_data_player.has(player_id):
+		#this player has not been assigned this task
+		return TaskManager.task_state.HIDDEN
 	return task_data_player[player_id]["state"]
 
 func set_task_state(player_id: int, new_state: int) -> bool:
