@@ -122,7 +122,7 @@ func assign_tasks():
 				print("host tasks assigned", TaskManager.player_tasks[id])
 			else:
 				print("host tasks assigned -------")
-		else:
+		elif TaskManager.player_tasks.has(id):
 			var this_peer_tasks = TaskManager.player_tasks[id]
 			#assumes that both the client and the server have the same task name
 			var this_peer_task_names: Array = []
@@ -131,10 +131,9 @@ func assign_tasks():
 				this_peer_task_names.append(get_task_resource(task_id).task_text)
 			
 			rpc_id(id,"get_tasks", this_peer_task_names)
-			if player_tasks.has(id):
-				print("client tasks assigned", TaskManager.player_tasks[id])
-			else:
-				print("client tasks assigned -------")
+			print("client tasks assigned", TaskManager.player_tasks[id])
+		else:
+			print("client tasks assigned -------")
 				
 remote func get_tasks(tasks_get: Array):
 	for task_name in tasks_get:
