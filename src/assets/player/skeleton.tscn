@@ -5,8 +5,8 @@
 [ext_resource path="res://assets/player/textures/characters/customizable/02-body/black-round-eyes.png" type="Texture" id=3]
 [ext_resource path="res://assets/player/textures/characters/customizable/05-pants/white-shirt-red-sweater.png" type="Texture" id=4]
 [ext_resource path="res://assets/player/textures/characters/customizable/04-left-leg/white-shirt-red-sweater.png" type="Texture" id=5]
-[ext_resource path="res://assets/player/textures/characters/customizable/11-hat-hair/hair-bob-black.png" type="Texture" id=6]
-[ext_resource path="res://assets/player/textures/characters/customizable/09-facial-hair/sideburns-eyebrows-1-black.png" type="Texture" id=7]
+[ext_resource path="res://assets/player/textures/characters/customizable/11-hat-hair/short-hair.png" type="Texture" id=6]
+[ext_resource path="res://assets/player/textures/characters/customizable/09-facial-hair/angry-eybrow-sideburns.png" type="Texture" id=7]
 [ext_resource path="res://assets/player/textures/characters/customizable/10-face-wear/glasses.png" type="Texture" id=8]
 [ext_resource path="res://assets/player/textures/characters/customizable/08-right-arm/white-shirt-red-sweater.png" type="Texture" id=9]
 [ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/white-shirt-red-sweater.png" type="Texture" id=10]
@@ -17,7 +17,11 @@
 resource_local_to_scene = true
 shader = ExtResource( 12 )
 shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
-shader_param/skin_color = Color( 0.45098, 0.396078, 0.352941, 1 )
+shader_param/skin_color = Color( 0.760784, 0.647059, 0.560784, 1 )
+shader_param/hair_mask_color = Color( 0, 1, 1, 1 )
+shader_param/hair_color = Color( 0.592157, 0.709804, 0.333333, 1 )
+shader_param/fhair_mask_color = Color( 0, 1, 0, 1 )
+shader_param/fhair_color = Color( 0.368627, 0.298039, 0.298039, 1 )
 shader_param/tolerance = 0.1
 
 [sub_resource type="Animation" id=2]
@@ -2224,11 +2228,13 @@ __meta__ = {
 }
 
 [node name="Skeleton" type="Skeleton2D" parent="."]
+use_parent_material = true
 __meta__ = {
 "_editor_description_": "Player skeleton that controls the deformation of the polygon meshes."
 }
 
 [node name="Spine" type="Bone2D" parent="Skeleton"]
+use_parent_material = true
 position = Vector2( 2.52554, -8.41847 )
 rest = Transform2D( 1, 0, 0, 1, 2.52554, -8.41847 )
 __meta__ = {
@@ -2401,7 +2407,16 @@ __meta__ = {
 "_editor_description_": "Player pants sprite."
 }
 
+[node name="Mouth" type="Sprite" parent="Skeleton/Spine"]
+position = Vector2( -2.5172, -17.5472 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 11 )
+__meta__ = {
+"_editor_description_": "Player mouth sprite."
+}
+
 [node name="FacialHair" type="Sprite" parent="Skeleton/Spine"]
+use_parent_material = true
 position = Vector2( -2.51719, -17.5472 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 7 )
@@ -2418,19 +2433,12 @@ __meta__ = {
 }
 
 [node name="HatHair" type="Sprite" parent="Skeleton/Spine"]
+use_parent_material = true
 position = Vector2( -2.5172, -17.5472 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 6 )
 __meta__ = {
 "_editor_description_": "Player hat/hair sprite."
-}
-
-[node name="Mouth" type="Sprite" parent="Skeleton/Spine"]
-position = Vector2( -2.5172, -17.5472 )
-scale = Vector2( 0.05, 0.05 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_editor_description_": "Player mouth sprite."
 }
 
 [node name="RightLeg" type="Polygon2D" parent="."]
