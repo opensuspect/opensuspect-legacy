@@ -58,8 +58,8 @@ gradient = SubResource( 9 )
 resource_local_to_scene = true
 shader = ExtResource( 6 )
 shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
-shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
-shader_param/tolerance = 0.75
+shader_param/skin_color = Color( 0.584314, 0.513726, 0.443137, 1 )
+shader_param/tolerance = 0.1
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 

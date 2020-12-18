@@ -17,8 +17,8 @@
 resource_local_to_scene = true
 shader = ExtResource( 12 )
 shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
-shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
-shader_param/tolerance = 0.75
+shader_param/skin_color = Color( 0.45098, 0.396078, 0.352941, 1 )
+shader_param/tolerance = 0.1
 
 [sub_resource type="Animation" id=2]
 length = 1.5
@@ -2179,6 +2179,7 @@ parameters/playback = SubResource( 17 )
 parameters/idle_move_blend/blend_position = Vector2( 0, 0 )
 
 [node name="LeftLeg" type="Polygon2D" parent="."]
+use_parent_material = true
 position = Vector2( -19.1778, -51.5955 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 5 )
@@ -2433,6 +2434,7 @@ __meta__ = {
 }
 
 [node name="RightLeg" type="Polygon2D" parent="."]
+use_parent_material = true
 position = Vector2( -19.2102, -51.5166 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 10 )
