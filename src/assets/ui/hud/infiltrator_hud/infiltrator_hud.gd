@@ -1,4 +1,4 @@
-extends Control
+extends ControlBase
 
 # Animator for infiltrator-specific animations
 onready var animator: AnimationPlayer
@@ -12,7 +12,8 @@ onready var kill_button: TextureButton = $KillButton
 onready var reload_button: TextureButton = $ReloadButton
 
 # Loaded with data from call to open_menu function in UIManager
-var ui_data: Dictionary = {}
+# ui_data var now built into the class
+#var ui_data: Dictionary = {}
 
 func _ready() -> void:
 	if ui_data.keys().has("linked_node"):
@@ -35,10 +36,6 @@ func _process(_delta: float) -> void:
 		if animator != null and animator.current_animation == "Reload":
 			progress = animator.current_animation_position / animator.current_animation_length
 		reload_button.material.set_shader_param("progress", progress)
-
-func base_open() -> void:
-	"""For sake of compliance with open_menu."""
-	pass
 
 func _on_Infiltrator_Animator_animation_finished(anim_name: String) -> void:
 	"""

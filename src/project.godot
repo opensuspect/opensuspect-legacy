@@ -9,6 +9,31 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "IPoolable",
+"class": "BackgroundObject",
+"language": "GDScript",
+"path": "res://assets/maps/lobby/background_object.gd"
+}, {
+"base": "Control",
+"class": "ControlBase",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/base/controlbase.gd"
+}, {
+"base": "ControlBase",
+"class": "ControlTask",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/task/controltask.gd"
+}, {
+"base": "Node2D",
+"class": "IPoolable",
+"language": "GDScript",
+"path": "res://assets/common/classes/objectpool/ipoolable.gd"
+}, {
+"base": "Node",
+"class": "PoolManager",
+"language": "GDScript",
+"path": "res://assets/common/classes/objectpool/poolmanager.gd"
+}, {
 "base": "Popup",
 "class": "PopupBase",
 "language": "GDScript",
@@ -40,6 +65,11 @@ _global_script_classes=[ {
 "path": "res://assets/common/classes/ui/task/windowdialogtask.gd"
 } ]
 _global_script_class_icons={
+"BackgroundObject": "",
+"ControlBase": "",
+"ControlTask": "",
+"IPoolable": "",
+"PoolManager": "",
 "PopupBase": "",
 "PopupPanelBase": "",
 "PopupPanelTask": "",
@@ -66,9 +96,12 @@ SceneManager="*res://assets/autoload/scenemanager.gd"
 UIManager="*res://assets/autoload/uimanager.gd"
 MapManager="*res://assets/autoload/mapmanager.gd"
 TaskManager="*res://assets/autoload/taskmanager.gd"
+Helpers="*res://assets/autoload/helpers.gd"
+SaveLoadHandler="*res://assets/autoload/save_load_handler.gd"
 
 [display]
 
+window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
 

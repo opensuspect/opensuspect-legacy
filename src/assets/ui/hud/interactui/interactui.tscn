@@ -10,6 +10,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+menu_name = "interactui"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_top = 1.0
