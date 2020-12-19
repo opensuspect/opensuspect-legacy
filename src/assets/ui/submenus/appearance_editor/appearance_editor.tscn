@@ -54,14 +54,14 @@ colors = PoolColorArray( 0.984314, 0.968627, 0.898039, 1, 0.827451, 0.294118, 0.
 [sub_resource type="GradientTexture" id=10]
 gradient = SubResource( 9 )
 
-[sub_resource type="ShaderMaterial" id=12]
+[sub_resource type="ShaderMaterial" id=11]
 resource_local_to_scene = true
 shader = ExtResource( 6 )
 shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
 shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
 shader_param/tolerance = 0.75
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=11]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
 [node name="AppearanceEditor" type="Control"]
 anchor_right = 1.0
@@ -74,6 +74,8 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+menu_name = "appearance_editor"
+disable_movement = true
 
 [node name="Background" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -185,7 +187,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Skeleton" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer" instance=ExtResource( 5 )]
-material = SubResource( 12 )
+material = SubResource( 11 )
 position = Vector2( 223, 335 )
 scale = Vector2( 5, 5 )
 
@@ -194,7 +196,7 @@ playback_default_blend_time = 0.0
 
 [node name="AnimationTree" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Skeleton/AnimationPlayer" index="0"]
 active = false
-parameters/playback = SubResource( 11 )
+parameters/playback = SubResource( 12 )
 
 [node name="ButtonsHBox" type="HBoxContainer" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox"]
 margin_top = 438.0

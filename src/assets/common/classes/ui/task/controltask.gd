@@ -1,6 +1,6 @@
-extends PopupBase
+extends ControlBase
 
-class_name PopupTask
+class_name ControlTask
 
 func complete_task(data: Dictionary = {}):
 	if TaskManager.complete_task(ui_data["task_id"], data):

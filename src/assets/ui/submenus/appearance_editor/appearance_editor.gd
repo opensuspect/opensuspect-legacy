@@ -1,4 +1,4 @@
-extends Control
+extends ControlBase
 
 # Controls for changing parts
 onready var part_selector_scene: PackedScene = preload("res://assets/ui/submenus/appearance_editor/part_selector.tscn")
@@ -241,7 +241,6 @@ func _close_editor() -> void:
 		close()
 	else:
 		UIManager.close_ui("appearance_editor")
-		UIManager.ui_closed("appearance_editor")
 
 func _on_SkinColorSelector_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:

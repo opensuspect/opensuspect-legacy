@@ -84,6 +84,7 @@ func get_ui(ui_name: String):
 		push_error("get_ui() called with invalid ui name " + ui_name)
 	if ui_controller_node == null:
 		push_error("ui_controller_node is null (not set) in UIManager, should be set when the ui controller is created")
+		return null
 	return ui_controller_node.get_ui(ui_name)
 
 func ui_opened(menuName):

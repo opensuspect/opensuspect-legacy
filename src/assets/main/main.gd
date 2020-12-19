@@ -15,11 +15,13 @@ var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
 var player_data_dict: Dictionary
+var player_spawn_points: Dictionary
 
 signal positions_updated(last_received_input)
 
 func _ready() -> void:
 	set_network_master(1)
+	GameManager.connect("state_changed_priority", self, "state_changed_priority")
 
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree() -> void:
@@ -167,8 +169,15 @@ master func _on_maps_spawn(spawnPositions: Array):
 		spawnPointDict[players.keys()[i]] = spawnPositions[i % spawnPositions.size()]
 		if spawnPointDict[players.keys()[i]] == null:
 			spawnPointDict[players.keys()[i]] = spawn_pos
+	player_spawn_points = spawnPointDict
 	#spawn players
-	rpc("createPlayers", Network.get_player_names(), spawnPointDict)
+	#rpc("createPlayers", Network.get_player_names(), spawnPointDict)
+
+func state_changed_priority(old_state: int, new_state, priority: int):
+	if priority != 5:
+		return
+	if new_state == GameManager.State.Lobby or new_state == GameManager.State.Normal:
+		rpc("createPlayers", Network.get_player_names(), player_spawn_points)
 
 func _on_infiltrator_kill(killer: KinematicBody2D, killed_player: KinematicBody2D) -> void:
 	"""

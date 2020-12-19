@@ -10,10 +10,12 @@ func _ready() -> void:
 	set_network_master(1)
 	switchMap(currentMap)
 # warning-ignore:return_value_discarded
-	GameManager.connect('state_changed', self, '_on_state_change')
+	GameManager.connect("state_changed_priority", self, "_on_state_changed_priority")
 
 # warning-ignore:unused_argument
-func _on_state_change(old_state, new_state) -> void:
+func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
+	if priority != 1:
+		return
 	match new_state:
 		GameManager.State.Lobby:
 			switchMap('lobby')

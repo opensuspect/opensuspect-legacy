@@ -13,6 +13,8 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+menu_name = "pausemenu"
+disable_movement = true
 
 [node name="menu" type="CenterContainer" parent="."]
 anchor_left = 0.5
