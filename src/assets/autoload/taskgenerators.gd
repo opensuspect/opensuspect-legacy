@@ -1,7 +1,7 @@
 extends Node
 
-#the task data(eg. currentTime, targetTime) should be set server side
-#these generators should generate new data every time they are called
+# the task data(eg. currentTime, targetTime) should be set server side
+# these generators should generate new data every time they are called
 var task_data_generators: Dictionary = {
 	"Task system clockset standbutton": funcref(self, "clockset_task_generator"),
 	"Task system clockset": funcref(self, "clockset_task_generator")

@@ -20,7 +20,7 @@ var player_tasks: Dictionary = {}
 #stores task info corresponding to task IDs
 #format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, resource: <InteractTask resource>, assigned_players: [<network IDs of players task is assigned to>]}
 var task_dict: Dictionary = {}
-#format: {<task_text>: *same as the player_tasks*
+#format: {<task_text>: <task_id>
 #used for task resource lookup by name, for network syncing
 var task_dict_name: Dictionary = {}
 
@@ -29,7 +29,8 @@ func _ready():
 	self.set_network_master(1)
 	#print(gen_unique_id())
 
-
+# completes the task on the server, and notifies the client/s that the tasks
+# were compleated
 master func complete_task_remote(task_text: String, player_id: int, data: Dictionary = {}):
 	if get_tree().get_rpc_sender_id() != player_id:
 		assert(false)
@@ -40,21 +41,24 @@ master func complete_task_remote(task_text: String, player_id: int, data: Dictio
 	# TODO Probably should check & filter the data somehow
 	var id = player_id
 	
+	# A special case, for when the server's player compleated a non global task
 	var completed = false
 	if player_id == 1:
 		completed = complete_task(task_id, id, data)
-	# If the task is global, complete it(so that the ui gets updated)
+
 	if is_task_global(task_id):
 		id = GLOBAL_TASK_ID
 		if completed or complete_task(task_id, id, data):
 			rpc("task_completed", task_text, id, data)
 			emit_signal("task_completed", task_id, id)
 	# If the task is not global, just advance it, so that we know that
-	# the client completed it
-	# This does mean that only global tasks will spawn items
+	# the client has completed it
 	elif completed or advance_task(task_id, id, task_state.COMPLETED):
 		rpc_id(player_id, "task_completed", task_text, id, data)
 		emit_signal("task_completed", task_id, id)
+
+# Called on the client that the task was completed
+# or on all the clients if the completed task was global
 func complete_task(task_id: int, player_id: int, data: Dictionary = {}) -> bool:
 	print("trying to complete task ", task_id)
 	if not does_task_exist(task_id):
@@ -65,6 +69,7 @@ func complete_task(task_id: int, player_id: int, data: Dictionary = {}) -> bool:
 		return true
 	return false
 
+# A callback that the server calls when it successfully compleats a task
 puppet func task_completed(task_text: String, player_id: int, data: Dictionary):
 	var task_id = get_task_id_by_name(task_text)
 	if not does_task_exist(task_id):
@@ -72,14 +77,11 @@ puppet func task_completed(task_text: String, player_id: int, data: Dictionary):
 	if is_task_global(task_id):
 		player_id = GLOBAL_TASK_ID
 	if not is_task_completed(task_id, player_id):
-		# hopefuly the PR#264 will allow the server to notify the map node,
-		# so that we don't ever have to complete the tasks on the clientside too
-		# intsead we could just
-		# advance_task(task_id, player_id, task_state.COMPLETED):
 		#warning-ignore:return_value_discarded
 		complete_task(task_id, player_id, data)
 	emit_signal("task_completed", task_id, player_id)
-	
+
+# Clients call this when they want to populate their GUIs
 master func request_task_data(task_text: String, player_id: int):
 	if get_tree().get_rpc_sender_id() != player_id:
 		assert(false)
@@ -94,7 +96,8 @@ master func request_task_data(task_text: String, player_id: int):
 		rpc_id(player_id, "receive_task_data", task_text, task_data)
 	else:
 		receive_task_data(task_text, task_data)
-		
+
+# Callback with the requested task data
 puppet func receive_task_data(task_text: String, task_data: Dictionary):
 	var task_id = get_task_id_by_name(task_text)
 	if not does_task_exist(task_id):
@@ -102,7 +105,7 @@ puppet func receive_task_data(task_text: String, task_data: Dictionary):
 		return
 	emit_signal("receive_task_data", task_id, task_data)
 
-#removes parameters from task data that shouldn't be sent over network
+# removes parameters from task data that shouldn't be sent over network
 func networkfy_task_data(task_data: Dictionary) -> Dictionary:
 	var keys_to_erase = ["task_id", "task_outputs", "attached_node", "resource"]
 	var filtered: Dictionary = task_data.duplicate(true)
@@ -111,6 +114,7 @@ func networkfy_task_data(task_data: Dictionary) -> Dictionary:
 		filtered.erase(key_to_erase)
 	
 	return filtered
+	
 #can't declare new_state as an int, otherwise it would need to default to an int which could cause later problems
 func advance_task(task_id: int, player_id: int, new_state: int) -> bool:
 	if not does_task_exist(task_id):
@@ -146,7 +150,8 @@ func register_task(task_resource: Resource) -> int:
 	new_task_data["task_id"] = new_task_id
 	#do stuff with task info here
 	task_dict[new_task_id] = task_resource
-	# Damjan's syncyng hack fails if two tasks have the same name
+	
+	# Damjan's syncyng hack fails if two tasks have the same text data
 	assert(not task_dict_name.has(task_resource.task_text))
 	
 	task_dict_name[task_resource.task_text] = new_task_id
@@ -154,7 +159,7 @@ func register_task(task_resource: Resource) -> int:
 	print("task registered: ", new_task_data)
 	return new_task_id
 	
-#called by the player manager while assigning roles
+# called by the player manager while assigning roles
 func assign_tasks():
 	if not get_tree().is_network_server():
 		return
@@ -165,15 +170,14 @@ func assign_tasks():
 	#assign global tasks
 	for task in tasks_to_assign:
 		if is_task_global(task):
-			if true or rng.randi_range(-1,0) < 0:
+			if rng.randi_range(-1,0) < 0:
 				assign_task(task, GLOBAL_TASK_ID)
 				print("global task assigned,",tasks_to_assign[task])
 	for id in Network.peers:
 		for task in tasks_to_assign.keys():
 			if is_task_global(task):
 				continue
-				
-			if true or rng.randi_range(-1,0) < 0:
+			if rng.randi_range(-1,0) < 0:
 				assign_task(task, id)
 				print("task assigned,",tasks_to_assign[task])
 				
@@ -186,6 +190,16 @@ func assign_tasks():
 			rpc_id(id,"get_tasks", tasks_to_send)
 			print("client tasks assigned ", tasks_to_send)
 
+
+
+remote func get_tasks(tasks_get: Dictionary):
+	for task_name in tasks_get.keys():
+		assign_task(task_dict_name[task_name], tasks_get[task_name])
+	print("we got our tasks!")
+
+# Converts an player tasks array from to the {task_text: player_id} dict
+# Used to tell the clients what task got assigned to what player
+# can't use task_id, as it is unique for each client
 func player_task_arr_id_to_dict_name(	player_id: int,
 										dict: Dictionary = {}) -> Dictionary:
 	if not player_tasks.has(player_id):
@@ -194,11 +208,6 @@ func player_task_arr_id_to_dict_name(	player_id: int,
 		var task_text = get_task_resource(task_id).task_text
 		dict[task_text] = player_id
 	return dict
-				
-remote func get_tasks(tasks_get: Dictionary):
-	for task_name in tasks_get.keys():
-		assign_task(task_dict_name[task_name], tasks_get[task_name])
-	print("we got our tasks!")
 
 func assign_task(task_id: int, player_id: int) -> void:
 	if not does_task_exist(task_id):
@@ -244,7 +253,6 @@ func is_task_completed(task_id: int, player_id) -> bool: # = Network.get_my_id()
 	if not does_task_exist(task_id):
 		return false
 	return get_task_state(task_id, player_id) == task_state.COMPLETED
-	#return completed_dict[player_id][task_id]
 
 func is_task_global(task_id: int) -> bool:
 	if not does_task_exist(task_id):

@@ -12,13 +12,14 @@ func _ready():
 	#warning-ignore:return_value_discarded
 	TaskManager.connect("task_completed", self, "_on_task_completed")
 	
-	# When new roles are assigned, we know that the tasks are assigned too
+	# When new roles are assigned, tasks are assigned too
 	#warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "_new_tasks_ready")
 	
 func _on_task_completed(_taskID, playerID):
-	if not display_other_player_tasks and Network.get_my_id() != playerID:
-		return
+	if playerID != TaskManager.GLOBAL_TASK_ID:
+		if not display_other_player_tasks and Network.get_my_id() != playerID:
+			return
 	var allTasksCompleted = true
 	for taskID in TaskManager.player_tasks[playerID]:
 		if TaskManager.is_task_completed(taskID, playerID):
