@@ -121,6 +121,11 @@ func roundDown(num, step):
 		return normRound - step
 	return normRound
 
+func getPlayerById(id) -> KinematicBody2D:
+	if players.has(id):
+		return players[id]
+	return null
+
 func get_main_player() -> KinematicBody2D:
 	"""Gets the main player on the local client."""
 	for player in players.values():

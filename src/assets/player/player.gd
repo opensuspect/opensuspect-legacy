@@ -139,6 +139,15 @@ func run_physics(motion):
 	# TODO: provide a delta value to this function and use it here
 	velocity = move_and_slide(velocity)
 
+func customizePlayer(customizationData):
+	"""
+	Customizes the player's character
+	"""
+	if self.has_node("SpritesViewport/Skeleton"):
+		self.get_node("SpritesViewport/Skeleton").applyCustomization(customizationData)
+	elif self.has_node("Skeleton"):
+		self.get_node("Skeleton").applyCustomization(customizationData)
+
 func _physics_process(_delta):
 	if main_player:
 		get_input()
