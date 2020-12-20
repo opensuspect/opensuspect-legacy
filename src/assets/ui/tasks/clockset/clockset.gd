@@ -14,18 +14,20 @@ func _ready():
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
 
 func open():
-	if ui_data.has("currentTime"):
-		currentTime = ui_data["currentTime"]
 # warning-ignore:narrowing_conversion
-	targetTime = round(rand_range(100, 1259))
-	targetTime = roundDown(targetTime, 100) + (targetTime % 100) % 60
-	setClockTime(currentTime)
-	setWatchTime(targetTime)
-	#print("current time: ", currentTime)
+	
+	ui_data_updated()
 
 #func close():
 #	pass
-
+func ui_data_updated():
+	if ui_data.has("currentTime"):
+		currentTime = ui_data["currentTime"]
+	if ui_data.has("targetTime"):
+		targetTime = ui_data["targetTime"]
+	setClockTime(currentTime)
+	setWatchTime(targetTime)
+		
 func checkComplete():
 	updateCurrentTime()
 	if currentTime == targetTime:
@@ -42,7 +44,7 @@ func taskComplete():
 	#hide()
 
 func setClockTime(newTime):
-	hoursNode.value = roundDown(newTime / 100, 1)
+	hoursNode.value = TaskGenerators.roundDown(newTime / 100, 1)
 	minutesNode.value = newTime % 100
 
 func setWatchTime(newTime):
@@ -50,12 +52,6 @@ func setWatchTime(newTime):
 
 func updateCurrentTime():
 	currentTime = (hoursNode.value * 100) + minutesNode.value
-
-func roundDown(num, step):
-	var normRound = stepify(num, step)
-	if normRound > num:
-		return normRound - step
-	return normRound
 
 func _on_hours_value_changed(value):
 	if value == 0:
