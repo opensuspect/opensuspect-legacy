@@ -31,9 +31,7 @@ onready var player_mouth: Sprite
 onready var player_right_leg: Polygon2D
 onready var player_right_arm: Polygon2D
 
-signal appearance_saved
-
-const player_data_path: String = "user://player_data.save"
+const player_data_path: String = "user://character_customization.save"
 
 export (String) var player_parts_prefix := "res://assets/player/textures/characters/customizable"
 export (Array, String) var player_parts_directories := [
@@ -86,8 +84,6 @@ class PlayerClothes extends PartOption:
 
 func _ready() -> void:
 	get_tree().get_root().connect("size_changed", self, "_on_root_size_changed")
-	if get_tree().get_root().has_node("Main"):
-		connect("appearance_saved", get_tree().get_root().get_node("Main"), "_on_appearance_saved")
 
 	# Center cursor in the middle of the skin color picker
 	cursor.position = skin_color_selector.rect_position + (skin_color_selector.rect_size / 2.0)
@@ -364,4 +360,4 @@ func _save() -> void:
 	}
 	
 	SaveLoadHandler.save_data(player_data_path, player_data)
-	emit_signal("appearance_saved")
+	AppearanceManager.changeMyAppearance(player_data)

@@ -7,6 +7,7 @@ func applyCustomization(customizationData):
 	"""
 	Receives the customization data, and applies it to the current instance.
 	"""
+	print("Applying customization on the sprites...")
 	
 	if customizationData.empty():
 		print("Empty customization data received")

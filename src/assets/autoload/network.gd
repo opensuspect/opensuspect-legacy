@@ -88,7 +88,6 @@ func _connected_to_server() -> void:
 	myID = get_tree().get_network_unique_id()
 	print("sending name")
 	rpc_id(1, "receiveName", player_name)
-	AppearanceManager.sendCustomizationToServer()
 	pass #here is where you would put stuff that happens when you connect, such as switching to a lobby scene
 
 func _connection_failed() -> void:

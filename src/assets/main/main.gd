@@ -59,6 +59,7 @@ func connection_handled(id: int, playerName: String) -> void:
 	rpc("checkVersion", version)
 	newnumber = Network.peers.size()
 	rpc_id(id, "receiveNumber", newnumber)
+	#TODO: tell the client to get its customization information ready
 	#tell all existing players to create this player
 	for i in players.keys():
 		if i != id:
@@ -107,6 +108,8 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 		newPlayer.main_player = true
 		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
 		self.connect("positions_updated", newPlayer, "_on_positions_updated")
+	#TODO: instead of doing playercustomization here, we have to ask the server to
+	#send us the customization data of the player to be added
 	newPlayer.customizePlayer(AppearanceManager.getPlayerAppearance(id))
 	players[id] = newPlayer
 	$players.add_child(newPlayer)

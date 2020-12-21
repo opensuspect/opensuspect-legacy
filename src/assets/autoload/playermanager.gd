@@ -121,6 +121,8 @@ func roundDown(num, step):
 		return normRound - step
 	return normRound
 
+#TODO recieve a signal that initiates the application of customization to a player sprite.
+
 func getPlayerById(id) -> KinematicBody2D:
 	if players.has(id):
 		return players[id]
