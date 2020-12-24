@@ -12,7 +12,7 @@ This project is in *very early stage* development.
 Interested to get involved? We'd love to hear from you.
 Join us at [`#opensuspect:matrix.org`](https://matrix.to/#/#opensuspect:matrix.org) on a Matrix client (element.io).
 If you need tech support, use our [`troubleshooting channel`](https://matrix.to/#/!OuHmTdwKPGMJCYeyZH:matrix.org?via=matrix.org&via=privacytools.io).
-**After cloning this repository, you need git-lfs to handle asset storage and other large binary files. See:** https://github.com/opensuspect/opensuspect/wiki/Git-instructions
+**Before cloning this repository, you need to install git-lfs to handle asset storage and other large binary files. See:** https://github.com/opensuspect/opensuspect/wiki/Git-instructions
 
 OpenSuspect is licensed under the GNU GPL v3 (see LICENSE.txt)
 
