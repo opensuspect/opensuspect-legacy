@@ -31,7 +31,7 @@ onready var player_mouth: Sprite
 onready var player_right_leg: Polygon2D
 onready var player_right_arm: Polygon2D
 
-const player_data_path: String = "user://character_customization.save"
+const player_data_path: String = "user://player_data.save"
 
 export (String) var player_parts_prefix := "res://assets/player/textures/characters/customizable"
 export (Array, String) var player_parts_directories := [
@@ -285,7 +285,7 @@ func _load() -> void:
 	Loads the player's saved appearance from player_data.save and applies it to
 	the preview.
 	"""
-	player_data = SaveLoadHandler.load_data(player_data_path)
+	player_data = AppearanceManager.getMyAppearance()
 	if player_data.empty():
 		# Default customization
 		current_customization["Skin Color"] = player_skeleton.material.get_shader_param("skin_color")

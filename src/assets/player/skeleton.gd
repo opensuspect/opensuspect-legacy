@@ -7,10 +7,9 @@ func applyCustomization(customizationData):
 	"""
 	Receives the customization data, and applies it to the current instance.
 	"""
-	print("Applying customization on the sprites...")
 	
 	if customizationData.empty():
-		print("Empty customization data received")
+		print_debug("Empty customization data received")
 		return
 
 	var body: Polygon2D = self.get_node("Body")
@@ -28,6 +27,7 @@ func applyCustomization(customizationData):
 
 	var appearance: Dictionary = customizationData["Appearance"]
 	self.material.set_shader_param("skin_color", Color(appearance["Skin Color"]))
+	body.texture = load(appearance["Body"]["texture_path"])
 	left_leg.texture = load(appearance["Clothes"]["left_leg"]["texture_path"])
 	left_arm.texture = load(appearance["Clothes"]["left_arm"]["texture_path"])
 	right_leg.texture = load(appearance["Clothes"]["right_leg"]["texture_path"])

@@ -9,7 +9,7 @@ var players = {}
 #!!!THIS IS IMPORTANT!!!
 #CHANGE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
 #A way to make up version number: year month date hour of editing this script
-var version = 20122016
+var version = 20122513
 var intruders = 0
 var newnumber
 var spawn_pos = Vector2(0,0)
@@ -23,6 +23,8 @@ func _ready() -> void:
 
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree() -> void:
+	# The appearance customization of current player gets copied to the appearance list
+	AppearanceManager.enableMyAppearance()
 	if Network.connection == Network.Connection.CLIENT_SERVER:
 # warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -59,7 +61,6 @@ func connection_handled(id: int, playerName: String) -> void:
 	rpc("checkVersion", version)
 	newnumber = Network.peers.size()
 	rpc_id(id, "receiveNumber", newnumber)
-	#TODO: tell the client to get its customization information ready
 	#tell all existing players to create this player
 	for i in players.keys():
 		if i != id:
@@ -96,7 +97,7 @@ puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary
 	PlayerManager.players = players
 
 puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = Vector2(0,0)) -> void:
-	print("creating player ", id)
+	print("(main.gd/createPlayer) creating player ", id)
 	if players.keys().has(id):
 		print("not creating player, already exists")
 		return
@@ -108,9 +109,6 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 		newPlayer.main_player = true
 		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
 		self.connect("positions_updated", newPlayer, "_on_positions_updated")
-	#TODO: instead of doing playercustomization here, we have to ask the server to
-	#send us the customization data of the player to be added
-	newPlayer.customizePlayer(AppearanceManager.getPlayerAppearance(id))
 	players[id] = newPlayer
 	$players.add_child(newPlayer)
 	newPlayer.move_to(spawnPoint, Vector2(0,0))
