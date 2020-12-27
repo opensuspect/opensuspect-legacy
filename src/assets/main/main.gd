@@ -179,37 +179,6 @@ func state_changed_priority(old_state: int, new_state, priority: int):
 	if new_state == GameManager.State.Lobby or new_state == GameManager.State.Normal:
 		rpc("createPlayers", Network.get_player_names(), player_spawn_points)
 
-func _on_infiltrator_kill(killer: KinematicBody2D, killed_player: KinematicBody2D) -> void:
-	"""
-	Runs on the infiltrator's Main scene; sends an RPC to the server to indicate
-	that the infiltrator has killed a player, and also sends an RPC to the server
-	to initiate a check whether the win conditions have been achieved.
-	"""
-	var killer_id: int = get_network_id_from_player_node_name(killer.name)
-	var killed_player_id: int = get_network_id_from_player_node_name(killed_player.name)
-	
-	if not players.keys().has(killer_id) or not players.keys().has(killed_player_id):
-		return
-	if get_tree().is_network_server():
-		# Killer is the network server
-		infiltrator_killed_player(killer_id, killed_player_id)
-		#check if a round ends due to passing winning conditions:
-		victory_check()
-	else:
-		rpc_id(1, "infiltrator_killed_player", killer_id, killed_player_id)
-		#ask the server to check if a round ends due to passing winning conditions:
-		rpc_id(1, "victory_check")
-
-remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> void:
-	"""
-	Runs on the server; sends an RPC to every player to indicate that a
-	particular player has been killed.
-	"""
-	if not get_tree().is_network_server():
-		return
-
-	for player_id in players.keys():
-		rpc_id(player_id, "player_killed", killer_id, killed_player_id)
 
 puppetsync func player_killed(killer_id: int, killed_player_id: int) -> void:
 	"""Runs on a client; responsible for actually killing off a player."""
@@ -293,16 +262,7 @@ func elimination_victory_check(main_team: int):
 		return max_team
 	
 	return -1
-
-func get_network_id_from_player_node_name(node_name: String) -> int:
-	"""Fetch a player's network ID from the name of their KinematicBody2D."""
-	var players_dict: Dictionary = PlayerManager.players
-	var players_array: Array = players_dict.values()
-	for index in range(len(players_array)):
-		if players_array[index].name == node_name:
-			return players_dict.keys()[index]
-	return -1
-
+gd
 master func query_player_data() -> void:
 	"""Called from the server; fetches every client's player data."""
 	if not get_tree().is_network_server():
