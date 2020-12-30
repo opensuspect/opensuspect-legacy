@@ -194,8 +194,12 @@ func _on_positions_updated(new_last_received_input: int):
 		run_physics(i[0])
 
 func move_to(new_pos, new_movement):
-	position = new_pos
 	movement = new_movement
+	if main_player:
+		position = new_pos
+	else:
+		$Tween.interpolate_property(self, "position", null, new_pos, 0.1)
+		$Tween.start()
 
 func get_is_alive() -> bool:
 	return not death_handler.is_dead

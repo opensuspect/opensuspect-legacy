@@ -145,5 +145,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_editor_description_": "Handles being killed by infiltrators."
 }
+
+[node name="Tween" type="Tween" parent="."]
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]
