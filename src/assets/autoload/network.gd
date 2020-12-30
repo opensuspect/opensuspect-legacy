@@ -67,6 +67,9 @@ remote func receiveName(newName):
 	print("names: ", names)
 	print(get_tree().is_network_server())
 	rset("names", names)
+	#Send all received customization data to the new player
+	AppearanceManager.sendBulkCustomization(sender)
+	AppearanceManager.queryCustomization(sender)
 	emit_signal("connection_handled", sender, newName)
 
 func _player_connected(id) -> void:

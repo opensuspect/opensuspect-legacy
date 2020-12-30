@@ -26,6 +26,7 @@ func list_directory(path: String, recursive: bool = false) -> Array:
 		else:
 			files.append(file_name)
 		file_name = directory.get_next()
+	files.sort()
 	return files
 
 func map(in_value: float, in_value_min: float, in_value_max: float, out_value_min: float, out_value_max: float) -> float:
