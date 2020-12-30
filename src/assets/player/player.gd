@@ -42,6 +42,7 @@ var last_received_input: int = 0
 var input_queue: Array = []
 
 func _ready():
+	print_debug("(player.gd/_ready)")
 	# Reparent Skeleton Node2D to SpritesViewport
 	remove_child(skeleton)
 	sprites_viewport.add_child(skeleton)
@@ -62,6 +63,8 @@ func _ready():
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "roles_assigned")
+	AppearanceManager.connect("apply_appearance", self, "customizePlayer")
+	customizePlayer(id)
 
 func setName(newName):
 	ourname = newName
@@ -138,6 +141,19 @@ func run_physics(motion):
 		velocity.y = lerp(prev_velocity.y, 0, 0.17)
 	# TODO: provide a delta value to this function and use it here
 	velocity = move_and_slide(velocity)
+
+func customizePlayer(customize_id):
+	"""
+	Customizes the player's character
+	"""
+	if id != customize_id:
+		return
+	var customizationData = AppearanceManager.getPlayerAppearance(id)
+	if customizationData != null:
+		if self.has_node("SpritesViewport/Skeleton"):
+			self.get_node("SpritesViewport/Skeleton").applyCustomization(customizationData)
+		elif self.has_node("Skeleton"):
+			self.get_node("Skeleton").applyCustomization(customizationData)
 
 func _physics_process(_delta):
 	if main_player:

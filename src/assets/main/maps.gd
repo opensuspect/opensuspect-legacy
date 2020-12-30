@@ -7,6 +7,7 @@ signal spawn(position,frommap)
 var currentMap: String = "lobby"
 
 func _ready() -> void:
+	print_debug("(maps.gd/_ready)")
 	set_network_master(1)
 	switchMap(currentMap)
 # warning-ignore:return_value_discarded
@@ -23,7 +24,7 @@ func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -
 			switchMap('test')
 
 func switchMap(newMap: String) -> void:
-	print('switchMap called for ', newMap)
+	print('(maps.gd/switchMap) switchMap called for ', newMap)
 	if not maps.keys().has(newMap):
 		return
 	print("loading map: ", newMap)
