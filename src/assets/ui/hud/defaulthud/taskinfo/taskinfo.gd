@@ -16,13 +16,19 @@ func _ready():
 	#warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "_new_tasks_ready")
 	
-func _on_task_completed(_taskID, playerID):
-	if playerID != TaskManager.GLOBAL_TASK_ID:
+func _on_task_completed(task_info: Dictionary):
+	if not TaskManager.is_task_info_valid(task_info):
+		return
+	var playerID = task_info[TaskManager.PLAYER_ID_KEY]
+	if playerID != TaskManager.GLOBAL_TASK_PLAYER_ID:
 		if not display_other_player_tasks and Network.get_my_id() != playerID:
 			return
 	var allTasksCompleted = true
+	
 	for taskID in TaskManager.player_tasks[playerID]:
-		if TaskManager.is_task_completed(taskID, playerID):
+		var t_info = {	TaskManager.PLAYER_ID_KEY: playerID,
+						TaskManager.TASK_ID_KEY: taskID}
+		if TaskManager.is_task_completed(t_info):
 			tasks[playerID][taskID].set_custom_color(0, Color(0.2, 1.0, 0.2))
 		elif not TaskManager.is_task_global(taskID):
 			allTasksCompleted = false
@@ -52,7 +58,7 @@ func _new_tasks_ready(_playerRoles):
 	if display_other_player_tasks:
 		treeRoot = createTextNode(tree, "Tasks")
 
-	populate_tree(treeRoot, TaskManager.GLOBAL_TASK_ID)
+	populate_tree(treeRoot, TaskManager.GLOBAL_TASK_PLAYER_ID)
 	
 	var players = Network.get_peers()
 	for player in players:
@@ -68,12 +74,14 @@ func populate_tree(treeRoot: TreeItem, player: int):
 	if not tasks.has(player):
 			tasks[player] = {}
 	var playerName = Network.get_player_name(player)
-	if player == TaskManager.GLOBAL_TASK_ID:
+	if player == TaskManager.GLOBAL_TASK_PLAYER_ID:
 		playerName = "Global Tasks"
 	var nl = createTextNode(tree, playerName, treeRoot)
 	tasks[player]["player_name_label"] = nl
 	for taskID in TaskManager.player_tasks[player]:
-		var taskName = TaskManager.get_task_data(taskID)["task_text"]
+		var taskInfo = {TaskManager.TASK_ID_KEY: taskID, 
+						TaskManager.PLAYER_ID_KEY: Network.get_my_id()}
+		var taskName = TaskManager.get_task_data(taskInfo)["task_text"]
 		var l = createTextNode(tree, taskName, nl)
 		tasks[player][taskID] = l
 

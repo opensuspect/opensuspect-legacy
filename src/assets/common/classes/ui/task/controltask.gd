@@ -16,7 +16,7 @@ func _on_task_completed(task_id: int, player_id: int):
 	if not TaskManager.is_task_global(task_id):
 		if Network.get_my_id() != player_id:
 			return
-	elif player_id != TaskManager.GLOBAL_TASK_ID:
+	elif player_id != TaskManager.GLOBAL_TASK_PLAYER_ID:
 		return
 	# only close the ui if we have completed the task
 	if ui_data["task_id"] == task_id:
@@ -42,7 +42,7 @@ func base_open():
 		return
 	var player_id = Network.get_my_id()
 	if TaskManager.is_task_global(task_id):
-		player_id = TaskManager.GLOBAL_TASK_ID
+		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
 	var task_state: int = TaskManager.get_task_state(task_id, player_id)
 	# don't open if the task is hidden or completed
 	if task_state == TaskManager.task_state.HIDDEN or task_state == TaskManager.task_state.COMPLETED:

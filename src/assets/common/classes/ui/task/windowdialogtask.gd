@@ -9,20 +9,26 @@ func _ready():
 	TaskManager.connect("receive_task_data", self, "_on_received_task_data")
 
 func complete_task(data: Dictionary = {}):
-	TaskManager.rpc_id(1, 	"complete_task_remote", ui_data["task_text"],
-							Network.get_my_id(), data)
+	var task_info = {	TaskManager.PLAYER_ID_KEY: Network.get_my_id(),
+						TaskManager.TASK_ID_KEY: ui_data["task_id"]}
+	TaskManager.attempt_complete_task(task_info, data)
 
-func _on_task_completed(task_id: int, player_id: int):
+func _on_task_completed(task_info: Dictionary):
+	if not TaskManager.is_task_info_valid(task_info):
+		return
+	var task_id = task_info[TaskManager.TASK_ID_KEY]
+	var player_id = task_info[TaskManager.PLAYER_ID_KEY]
 	if not TaskManager.is_task_global(task_id):
 		if Network.get_my_id() != player_id:
 			return
-	elif player_id != TaskManager.GLOBAL_TASK_ID:
+	elif player_id != TaskManager.GLOBAL_TASK_PLAYER_ID:
 		return
 	# only close the ui if we have completed the task
 	if ui_data["task_id"] == task_id:
 		base_close()
 
-func _on_received_task_data(task_id: int, task_data: Dictionary):
+func _on_received_task_data(task_data: Dictionary):
+	var task_id = task_data["task_id"]
 	if ui_data["task_id"] != task_id:
 		return
 	for key in task_data.keys():
@@ -42,12 +48,20 @@ func base_open():
 		return
 	var player_id = Network.get_my_id()
 	if TaskManager.is_task_global(task_id):
-		player_id = TaskManager.GLOBAL_TASK_ID
-	var task_state: int = TaskManager.get_task_state(task_id, player_id)
-	# don't open if the task is hidden or completed
-	if task_state == TaskManager.task_state.HIDDEN or task_state == TaskManager.task_state.COMPLETED:
+		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
+	var task_info = {	TaskManager.TASK_ID_KEY: task_id,
+						TaskManager.PLAYER_ID_KEY: player_id}
+	var task_state: int = TaskManager.get_task_state(task_info)
+	# don't open if the task is hidden
+	if task_state == TaskManager.task_state.HIDDEN:
 		return
-	TaskManager.rpc_id(1, "request_task_data", ui_data["task_text"], Network.get_my_id())
+	# or completed
+	elif task_state == TaskManager.task_state.COMPLETED:
+		return
+	# or invalid(means that the task info we provided was invalid)
+	elif task_state == TaskManager.task_state.INVALID:
+		return
+	TaskManager.attempt_request_task_data(task_info)
 	
 	#call base_open() in parent class
 	.base_open()

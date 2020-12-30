@@ -29,13 +29,14 @@ var ui_res: Resource = base_ui_resource.duplicate()
 #node this task is attached to
 var attached_to: Node
 
-#assigned at runtime when registered by TaskManager
-var task_id: int
+#assigned by a programmer when added to the scene
+#needs to be unique
+export var task_id: int = TaskManager.INVALID_TASK_ID
 var task_data: Dictionary = {}
 var task_data_player: Dictionary = {}
 var task_registered: bool = false
 
-func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_ID,
+func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID,
 					data: Dictionary = {}) -> bool:
 
 	var temp_interact_data = task_data_player[player_id]
@@ -46,7 +47,7 @@ func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_ID,
 			resource.interact(attached_to, temp_interact_data)
 	return true
 
-func assign_player(player_id: int = TaskManager.GLOBAL_TASK_ID):
+func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
 	
 	if task_data_player.has(player_id):
 		return
@@ -56,9 +57,7 @@ func assign_player(player_id: int = TaskManager.GLOBAL_TASK_ID):
 	for key in data.keys():
 		task_data_player[player_id][key] = data[key]
 
-func registered(new_id: int, new_task_data: Dictionary):
-	
-	task_id = new_id
+func registered(new_task_data: Dictionary):
 	for key in new_task_data.keys():
 		task_data[key] = new_task_data[key]
 	task_registered = true
@@ -66,7 +65,7 @@ func registered(new_id: int, new_task_data: Dictionary):
 func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
 	
 	if task_registered and is_task_global():
-		player_id = TaskManager.GLOBAL_TASK_ID
+		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
 	
 	var temp_task_data = task_data
 	if task_data_player.has(player_id):
@@ -100,7 +99,7 @@ func gen_task_data() -> Dictionary:
 func get_task_id() -> int:
 	return task_id
 	
-func get_task_state(player_id: int = TaskManager.GLOBAL_TASK_ID) -> int:
+func get_task_state(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> int:
 	if not task_data_player.has(player_id):
 		#this player has not been assigned this task
 		return TaskManager.task_state.HIDDEN
@@ -125,7 +124,7 @@ func init_resource(_from: Node):
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be initiated with no defined node")
-	task_id = TaskManager.register_task(self)
+	TaskManager.register_task(self)
 
 func get_interact_data(_from: Node = null) -> Dictionary:
 	if attached_to == null and _from != null:
