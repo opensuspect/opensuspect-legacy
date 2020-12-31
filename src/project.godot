@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/common/classes/objectpool/ipoolable.gd"
 }, {
+"base": "Resource",
+"class": "MapInfo",
+"language": "GDScript",
+"path": "res://assets/maps/mapinfo/resource/mapinfo.gd"
+}, {
 "base": "Node",
 "class": "PoolManager",
 "language": "GDScript",
@@ -69,6 +74,7 @@ _global_script_class_icons={
 "ControlBase": "",
 "ControlTask": "",
 "IPoolable": "",
+"MapInfo": "",
 "PoolManager": "",
 "PopupBase": "",
 "PopupPanelBase": "",
