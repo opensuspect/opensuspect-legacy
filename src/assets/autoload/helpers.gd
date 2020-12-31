@@ -26,6 +26,7 @@ func list_directory(path: String, recursive: bool = false) -> Array:
 		else:
 			files.append(file_name)
 		file_name = directory.get_next()
+	files.sort()
 	return files
 
 func load_files_in_dir_with_exts(directory: String, exts: PoolStringArray) -> Array:

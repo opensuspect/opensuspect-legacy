@@ -20,6 +20,7 @@ var currentMap: String = "Lobby"
 # is properly added to the scene tree before GameManager continues emitting signals.
 # I'm not sure how to do this, I'm pretty sure reading up on yield woud be helpful
 func _ready() -> void:
+#	print_debug("(maps.gd/_ready)")
 	set_network_master(1)
 	switchMap(currentMap)
 	update_map_info()
@@ -41,7 +42,7 @@ func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -
 			switchMap("Test")
 
 func switchMap(newMap: String) -> void:
-	print("switching to map ", newMap)
+	print("(maps.gd/switchMap) switching to map ", newMap)
 #	print("map_info: ", map_info)
 	if map_info.empty():
 		update_map_info()
