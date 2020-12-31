@@ -15,8 +15,6 @@ var newnumber
 var spawn_pos = Vector2(0,0)
 var player_spawn_points: Dictionary
 
-signal positions_updated(last_received_input)
-
 func _ready() -> void:
 	set_network_master(1)
 	GameManager.connect("state_changed_priority", self, "state_changed_priority")
@@ -35,16 +33,6 @@ func _enter_tree() -> void:
 	elif Network.connection == Network.Connection.CLIENT:
 # warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-
-# Keep the clients' player positions updated
-func _physics_process(_delta: float) -> void:
-	if get_tree().is_network_server():
-		var positions_dict = {}
-		for id in players.keys():
-			positions_dict[id] = [players[id].position, players[id].movement, players[id].velocity]
-		for id in players.keys():
-			if id != 1:
-				rpc_id(id, "update_positions", positions_dict, players[id].input_number)
 
 func main_player_id():
 	"""Returns the id of the main player (the player who is the playable character
@@ -107,8 +95,8 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 	#newPlayer.set_network_master(id)
 	if id == Network.get_my_id():
 		newPlayer.main_player = true
-		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
-		self.connect("positions_updated", newPlayer, "_on_positions_updated")
+		newPlayer.connect("main_player_moved", $players, "_on_main_player_moved")
+		$players.connect("positions_updated", newPlayer, "_on_positions_updated")
 	players[id] = newPlayer
 	$players.add_child(newPlayer)
 	newPlayer.move_to(spawnPoint, Vector2(0,0))
@@ -119,31 +107,6 @@ func deletePlayers() -> void:
 	players.clear()
 	PlayerManager.players.clear()
 
-# Called from client side to tell the server about the player's actions
-remote func player_moved(new_movement: Vector2, velocity: Vector2, last_input: int) -> void:
-	# Should only be run on the server
-	if !get_tree().is_network_server():
-		return
-	var id = get_tree().get_rpc_sender_id()
-	if not players.keys().has(id):
-		return
-	# Check movement validity
-	if new_movement.length() > 1:
-		new_movement = new_movement.normalized()
-	players[id].movement = new_movement
-	players[id].input_number = last_input
-
-# Called from server when the server's players move
-puppet func update_positions(positions_dict: Dictionary, last_received_input: int) -> void:
-	for id in positions_dict.keys():
-		if players.keys().has(id):
-			players[id].move_to(positions_dict[id][0], positions_dict[id][1])
-			players[id].velocity = positions_dict[id][2]
-	emit_signal("positions_updated", last_received_input)
-
-func _on_main_player_moved(movement: Vector2, velocity: Vector2, last_input: int):
-	if not get_tree().is_network_server():
-		rpc_id(1, "player_moved", movement, velocity, last_input)
 
 master func _on_maps_spawn(spawnPositions: Array):
 	if not get_tree().is_network_server():
@@ -164,12 +127,6 @@ func state_changed_priority(old_state: int, new_state, priority: int):
 		return
 	if new_state == GameManager.State.Lobby or new_state == GameManager.State.Normal:
 		rpc("createPlayers", Network.get_player_names(), player_spawn_points)
-
-
-puppetsync func player_killed(killer_id: int, killed_player_id: int) -> void:
-	"""Runs on a client; responsible for actually killing off a player."""
-	var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
-	killed_player_death_handler.die_by(killer_id)
 
 puppetsync func end_round(winner):
 	"""This function is called by the server and when it is, it would need to
@@ -248,6 +205,3 @@ func elimination_victory_check(main_team: int):
 		return max_team
 	
 	return -1
-
-func get_network_id_from_player_node_name(node_name: String) -> int:
-	return $players.get_network_id_from_player_node_name(node_name)

@@ -32,9 +32,9 @@ var _target_player: KinematicBody2D
 func _ready() -> void:
 	if player.main_player:
 		_instantiate_kill_gui()
-	# Get players node and connect kill player signal to it
-	var players_node: YSort = get_tree().get_root().get_node("Main").get_node("players")
-	connect("kill", players_node, "_on_infiltrator_kill")
+	# Get players.gd node and connect kill player signal to it
+	var player_node: YSort = get_tree().get_root().get_node("Main").get_node("players")
+	connect("kill", player_node, "_on_infiltrator_kill")
 
 func _process(delta: float) -> void:
 	if player.main_player:
