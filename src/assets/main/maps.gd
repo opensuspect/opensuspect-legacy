@@ -8,7 +8,7 @@ var map_info_dir: String = "res://assets/maps/mapinfo/"
 
 signal spawn(position,frommap)
 
-var currentMap: String = "lobby"
+var currentMap: String = "Lobby"
 
 func _ready() -> void:
 	set_network_master(1)
@@ -22,6 +22,7 @@ func _ready() -> void:
 
 # warning-ignore:unused_argument
 func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
+	print("maps.gd priority ", priority)
 	if priority != 1:
 		return
 	match new_state:
@@ -31,25 +32,25 @@ func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -
 			switchMap("Test")
 
 func switchMap(newMap: String) -> void:
-	print('switchMap called for ', newMap)
-	print("map_info: ", map_info)
+	print("switching to map ", newMap)
+#	print("map_info: ", map_info)
 	if map_info.empty():
 		update_map_info()
-	print("map_info: ", map_info)
 	if not map_info.keys().has(newMap):
+#		print("Attempting to switch to a map that does not exist, the resource could be missing or it was parsed incorrectly.")
 		push_error("Attempting to switch to a map that does not exist, the resource could be missing or it was parsed incorrectly.")
 		return
 	print("loading map: ", newMap)
 	for i in get_children():
 		i.queue_free()
 	currentMap = newMap
-	var mapClone = instance_map(newMap)
+	var mapClone: Node = instance_map(newMap)
 	add_child(mapClone)
 	emit_signal("spawn", getSpawnPoints())
 
 func instance_map(map_name: String) -> Node:
+#	print("instancing map ", map_name)
 	var map_path: String = map_info[map_name]["scene_path"]
-	print(map_path)
 	var map_scene: PackedScene = load(map_path)
 	var map: Node = map_scene.instance()
 	return map
