@@ -209,14 +209,22 @@ margin_bottom = 472.0
 alignment = 1
 
 [node name="CancelButton" type="Button" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox"]
-margin_right = 221.0
+margin_right = 146.0
 margin_bottom = 34.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Cancel"
 
+[node name="RandomizeButton" type="Button" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox"]
+margin_left = 150.0
+margin_right = 296.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Randomize"
+
 [node name="SaveButton" type="Button" parent="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox"]
-margin_left = 225.0
+margin_left = 300.0
 margin_right = 446.0
 margin_bottom = 34.0
 size_flags_horizontal = 3
@@ -225,6 +233,7 @@ text = "Save"
 [connection signal="gui_input" from="MarginContainer/AppearanceHBox/CustomizationVBox/SkinColorSelector" to="." method="_on_SkinColorSelector_gui_input"]
 [connection signal="item_selected" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/Animations" to="." method="_on_Animations_item_selected"]
 [connection signal="pressed" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox/CancelButton" to="." method="_on_CancelButton_pressed"]
+[connection signal="pressed" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox/RandomizeButton" to="." method="_on_RandomizeButton_pressed"]
 [connection signal="pressed" from="MarginContainer/AppearanceHBox/PreviewButtonsVBox/ButtonsHBox/SaveButton" to="." method="_on_SaveButton_pressed"]
 
 [editable path="MarginContainer/AppearanceHBox/PreviewButtonsVBox/PlayerContainer/Skeleton"]

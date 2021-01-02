@@ -5,10 +5,35 @@ appearance of players so when the actual player nodes (or other nodes
 representing the players) are instanced, the information is available at one
 place.
 """
-const customization_path : String = "user://player_data.save"
+# Location of the saved customization
+const customization_path : String = "user://custom_appearance.save"
+# Variables that manage the in-game appearance of the player character
 var customization_dict: Dictionary
 var my_customization: Dictionary
 var customization_change: bool = true
+# Variables that store the location of files used for appearance editing
+var sprites_dir = "res://assets/player/textures/characters/customizable/"
+var player_parts: Dictionary = {
+	"Clothes": [
+		"01-left-arm",
+		"04-left-leg",
+		"05-pants",
+		"06-right-leg",
+		"07-clothes",
+		"08-right-arm",
+	],
+	"Body": ["02-body"],
+	"Facial Hair": ["09-facial-hair"],
+	"Face Wear": ["10-face-wear"],
+	"Hat/Hair": ["11-hat-hair"],
+	"Mouth": ["03-mouth"],
+}
+var custom_color_files: Dictionary = {
+	"Skin Color": "skin_color", "Hair Color": "hair_color", "Facial Hair Color": "facial_hair_color"
+	}
+var custom_colors: Dictionary = {}
+# The selected colors should be stored as X-Y coordinates on the color map 0-499
+const COLOR_XY = 500
 
 signal apply_appearance(id)
 
@@ -16,10 +41,96 @@ func _ready():
 	"""
 	When this script is ready, it loads the saved customization of the user.
 	"""
+	var color_map
+	for color_map_name in custom_color_files.keys():
+		color_map = Image.new()
+		color_map.load(sprites_dir + custom_color_files[color_map_name] + ".png")
+		custom_colors[color_map_name] = color_map
+	
 	my_customization = SaveLoadHandler.load_data(customization_path)
 	if my_customization.empty():
 		my_customization = randomAppearance()
+
 	GameManager.connect("state_changed_priority", self, "_on_state_changed_priority")
+
+#-------------------------------------------------------------------------------
+# Functions related to handling the low-level appearance modifications such as
+# handling the sprite files, etc.
+#-------------------------------------------------------------------------------
+
+func getFilePaths(part_name, sprite_name):
+	var paths = []
+	var directory: String
+	
+	if not player_parts.has(part_name):
+		return []
+	for directory_num in len(player_parts[part_name]):
+		directory = player_parts[part_name][directory_num]
+		paths.append(sprites_dir + directory + "/" + sprite_name + ".png")
+	return paths
+
+func getPlayerParts():
+	return player_parts
+
+func partFiles(part: String) -> Array:
+	var dirname: String
+	var files: Array = []
+	var available_values: Array = []
+	if not player_parts.has(part):
+		return []
+	dirname = sprites_dir + player_parts[part][0]
+	files = Helpers.list_directory(dirname)
+	available_values = []
+	for file in files:
+		# Skip PNG files. We will instead be modifying the PNG import file
+		# names because PNG resource files aren't saved on export.
+		if not file.ends_with("png"):
+			available_values.append(file.replace(".png.import", ""))
+	return available_values
+
+func colorFromMapXY(color_map, x_rel, y_rel):
+	var max_x: int
+	var max_y: int
+	var x: int
+	var y: int
+	var rgba: Color
+	max_x = color_map.get_width()
+	max_y = color_map.get_height()
+	x = int(x_rel / 1.0 / COLOR_XY * max_x)
+	y = int(y_rel / 1.0 / COLOR_XY * max_y)
+	color_map.lock()
+	rgba = color_map.get_pixel(x, y)
+	color_map.unlock()
+	return rgba
+
+func setColors(customization):
+	var rgba: Color
+	for color_map_name in custom_colors.keys():
+		rgba = colorFromMapXY(custom_colors[color_map_name],
+			customization[color_map_name]["x"],
+			customization[color_map_name]["y"])
+		customization[color_map_name]["r"] = rgba.r
+		customization[color_map_name]["g"] = rgba.g
+		customization[color_map_name]["b"] = rgba.b
+	return customization
+
+func randomAppearance():
+	var available_values: Array = []
+	var customization: Dictionary = {}
+	var colors: Dictionary = {}
+	for part in player_parts.keys():
+		available_values = partFiles(part)
+		customization[part] = Helpers.pick_random(available_values)
+	for color_map_name in custom_colors.keys():
+		colors["x"] = randi() % COLOR_XY
+		colors["y"] = randi() % COLOR_XY
+		customization[color_map_name] = colors.duplicate()
+	return customization
+
+#-------------------------------------------------------------------------------
+# Functions related to handling the high-level appearance modifications during
+# gameplay, including the server-client distribution
+#-------------------------------------------------------------------------------
 
 func enableMyAppearance():
 	setPlayerAppearance(Network.get_my_id(), my_customization)
@@ -50,7 +161,7 @@ func savePlayerAppearance():
 	"""
 	Saves the visual appearance of the player to the file.
 	"""
-	pass
+	SaveLoadHandler.save_data(customization_path, my_customization)
 
 master func queryCustomization(id: int) -> void:
 	"""The server asks a client to send their customization data back."""
@@ -101,9 +212,6 @@ func sendBulkCustomization(id: int):
 		return
 	rpc_id(id, "receiveBulkCustomization", customization_dict)
 
-func randomAppearance():
-	return null
-
 func changeMyAppearance(custmoization_data) -> void:
 	"""Called when the player changes their appearance in-game."""
 	if custmoization_data != null:
@@ -113,7 +221,7 @@ func changeMyAppearance(custmoization_data) -> void:
 		sendCustomizationToServer()
 
 func getMyAppearance() -> Dictionary:
-	return my_customization
+	return my_customization.duplicate()
 
 func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
 	if priority != 5:
