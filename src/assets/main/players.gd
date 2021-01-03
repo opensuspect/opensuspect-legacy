@@ -104,6 +104,7 @@ func _on_infiltrator_kill(killer: KinematicBody2D, killed_player: KinematicBody2
 		rpc_id(1, "infiltrator_killed_player", killer_id, killed_player_id)
 		#ask the server to check if a round ends due to passing winning conditions:
 		get_parent().get_node("winlosscontroller").rpc_id(1, "victory_check")
+		# ^^ we're running the rpc from winlosscontroller because that's where the function is
 remote func infiltrator_killed_player(killer_id: int, killed_player_id: int) -> void:
 	"""
 	Runs on the server; sends an RPC to every player to indicate that a

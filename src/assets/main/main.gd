@@ -53,6 +53,7 @@ func connection_handled(id: int, playerName: String) -> void:
 	for i in players.keys():
 		if i != id:
 			print("telling ", i, " to create player ", id)
+			#tell players to crate new player; running from $players because that's where the function is. rpc is wack man.
 			$players.rpc_id(i, "createPlayer", id, playerName, spawn_pos)
 	#tell new player to create existing players
 	print("telling ", id, " to create players")
