@@ -1,6 +1,43 @@
 extends YSort
 signal positions_updated(last_received_input)
 
+
+#idNameDict should look like {<network ID>: <player name>}
+puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary = {}) -> void:
+	deletePlayers()
+	for i in idNameDict.keys():
+		if spawnPointDict.keys().has(i):
+			#spawn at spawn point
+			createPlayer(i, idNameDict[i], spawnPointDict[i])
+		else:
+			createPlayer(i, idNameDict[i], get_parent().spawn_pos)
+	# Assign Main's players to the PlayerManager singleton so they may be accessed anywhere
+	PlayerManager.players = get_parent().players
+
+puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = Vector2(0,0)) -> void:
+	print("(players.gd/createPlayer) creating player ", id)
+	if get_parent().players.keys().has(id):
+		print("not creating player, already exists")
+		return
+	var newPlayer = get_parent().player_scene.instance()
+	newPlayer.id = id
+	newPlayer.setName(playerName)
+	#newPlayer.set_network_master(id)
+	if id == Network.get_my_id():
+		newPlayer.main_player = true
+		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
+		self.connect("positions_updated", newPlayer, "_on_positions_updated")
+	get_parent().players[id] = newPlayer
+	add_child(newPlayer)
+	newPlayer.move_to(spawnPoint, Vector2(0,0))
+
+func deletePlayers() -> void:
+	for i in get_parent().players.keys():
+		get_parent().players[i].queue_free()
+	get_parent().players.clear()
+	PlayerManager.players.clear()
+
+
 # Called from server when the server's players move
 puppet func update_positions(positions_dict: Dictionary, last_received_input: int) -> void:
 	for id in positions_dict.keys():

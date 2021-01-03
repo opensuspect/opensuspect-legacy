@@ -29,7 +29,7 @@ func _enter_tree() -> void:
 # warning-ignore:return_value_discarded
 		Network.connect("connection_handled", self, "connection_handled")
 		PlayerManager.ournumber = 0
-		createPlayer(Network.get_my_id(), Network.get_player_name())
+		$players.createPlayer(Network.get_my_id(), Network.get_player_name())
 	elif Network.connection == Network.Connection.CLIENT:
 # warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -53,10 +53,10 @@ func connection_handled(id: int, playerName: String) -> void:
 	for i in players.keys():
 		if i != id:
 			print("telling ", i, " to create player ", id)
-			rpc_id(i, "createPlayer", id, playerName, spawn_pos)
+			$players.rpc_id(i, "createPlayer", id, playerName, spawn_pos)
 	#tell new player to create existing players
 	print("telling ", id, " to create players")
-	rpc_id(id, "createPlayers", Network.get_player_names())
+	$players.rpc_id(id, "createPlayers", Network.get_player_names())
 
 puppet func checkVersion(sversion: int) -> void:
 	if version != sversion:
@@ -71,42 +71,6 @@ func _player_disconnected(id):
 	players[id].queue_free() #deletes player node when a player disconnects
 	players.erase(id)
 	PlayerManager.players.erase(id)
-
-#idNameDict should look like {<network ID>: <player name>}
-puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary = {}) -> void:
-	deletePlayers()
-	for i in idNameDict.keys():
-		if spawnPointDict.keys().has(i):
-			#spawn at spawn point
-			createPlayer(i, idNameDict[i], spawnPointDict[i])
-		else:
-			createPlayer(i, idNameDict[i], spawn_pos)
-	# Assign Main's players to the PlayerManager singleton so they may be accessed anywhere
-	PlayerManager.players = players
-
-puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = Vector2(0,0)) -> void:
-	print("(main.gd/createPlayer) creating player ", id)
-	if players.keys().has(id):
-		print("not creating player, already exists")
-		return
-	var newPlayer = player_scene.instance()
-	newPlayer.id = id
-	newPlayer.setName(playerName)
-	#newPlayer.set_network_master(id)
-	if id == Network.get_my_id():
-		newPlayer.main_player = true
-		newPlayer.connect("main_player_moved", $players, "_on_main_player_moved")
-		$players.connect("positions_updated", newPlayer, "_on_positions_updated")
-	players[id] = newPlayer
-	$players.add_child(newPlayer)
-	newPlayer.move_to(spawnPoint, Vector2(0,0))
-
-func deletePlayers() -> void:
-	for i in players.keys():
-		players[i].queue_free()
-	players.clear()
-	PlayerManager.players.clear()
-
 
 master func _on_maps_spawn(spawnPositions: Array):
 	if not get_tree().is_network_server():
@@ -126,5 +90,4 @@ func state_changed_priority(old_state: int, new_state, priority: int):
 	if priority != 5:
 		return
 	if new_state == GameManager.State.Lobby or new_state == GameManager.State.Normal:
-		rpc("createPlayers", Network.get_player_names(), player_spawn_points)
-
+		$players.rpc("createPlayers", Network.get_player_names(), player_spawn_points)
