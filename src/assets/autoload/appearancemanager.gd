@@ -31,6 +31,7 @@ var player_parts: Dictionary = {
 var custom_color_files: Dictionary = {
 	"Skin Color": "skin_color", "Hair Color": "hair_color", "Facial Hair Color": "facial_hair_color"
 	}
+# This will control the color maps for each customizable color
 var custom_colors: Dictionary = {}
 # The selected colors should be stored as X-Y coordinates on the color map 0-499
 const COLOR_XY = 500
@@ -58,7 +59,18 @@ func _ready():
 # handling the sprite files, etc.
 #-------------------------------------------------------------------------------
 
-func getFilePaths(part_name, sprite_name):
+func getColorMap(color_map_name: String):
+	"""Returns the custom color map by the name"""
+	if custom_color_files.has(color_map_name):
+		return custom_colors[color_map_name]
+	return null
+
+func getFilePaths(part_name: String, selection_name: String):
+	"""
+	Returns all the file names that are related to a certain customization of a 
+	part: part_name is the high-level, uniquely customizable part, while selection_name
+	is the name of the selection for the certain part.
+	"""
 	var paths = []
 	var directory: String
 	
@@ -66,13 +78,16 @@ func getFilePaths(part_name, sprite_name):
 		return []
 	for directory_num in len(player_parts[part_name]):
 		directory = player_parts[part_name][directory_num]
-		paths.append(sprites_dir + directory + "/" + sprite_name + ".png")
+		paths.append(sprites_dir + directory + "/" + selection_name + ".png")
 	return paths
 
 func getPlayerParts():
 	return player_parts
 
 func partFiles(part: String) -> Array:
+	"""
+	Returns an array of file names that are available for the part customization
+	"""
 	var dirname: String
 	var files: Array = []
 	var available_values: Array = []
@@ -89,6 +104,10 @@ func partFiles(part: String) -> Array:
 	return available_values
 
 func colorFromMapXY(color_map, x_rel, y_rel):
+	"""
+	Returns the color of the color map at x_rel, y_rel relative coordinates where
+	both x_rel and y_rel are in the range of [0..COLOR_XY]
+	"""
 	var max_x: int
 	var max_y: int
 	var x: int
@@ -104,6 +123,10 @@ func colorFromMapXY(color_map, x_rel, y_rel):
 	return rgba
 
 func setColors(customization):
+	"""
+	Based on the coordinates on the color maps, it adds rgb values to the customization
+	dictionary received.
+	"""
 	var rgba: Color
 	for color_map_name in custom_colors.keys():
 		rgba = colorFromMapXY(custom_colors[color_map_name],

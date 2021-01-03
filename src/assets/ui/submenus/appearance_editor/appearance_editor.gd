@@ -2,15 +2,11 @@ extends ControlBase
 
 # Controls for changing parts
 onready var part_selector_scene: PackedScene = preload("res://assets/ui/submenus/appearance_editor/part_selector.tscn")
+onready var color_selector_scene: PackedScene = preload("res://assets/ui/submenus/appearance_editor/color_selector.tscn")
 
 # Appearance editor nodes
 onready var appearance_hbox: HBoxContainer = $MarginContainer/AppearanceHBox
 onready var customization_vbox: VBoxContainer = appearance_hbox.get_node("CustomizationVBox")
-onready var skin_color_selector: Control = customization_vbox.get_node("SkinColorSelector")
-onready var skin_tone_range: TextureRect = skin_color_selector.get_node("SkinToneRange")
-onready var skin_color_range: TextureRect = skin_color_selector.get_node("SkinColorRange")
-onready var cursor: Sprite = skin_color_selector.get_node("Cursor")
-onready var color_preview: ColorRect = cursor.get_node("ColorPreview")
 onready var preview_buttons_vbox: VBoxContainer = appearance_hbox.get_node("PreviewButtonsVBox")
 onready var player_container: CenterContainer = preview_buttons_vbox.get_node("PlayerContainer")
 onready var buttons_hbox: HBoxContainer = preview_buttons_vbox.get_node("ButtonsHBox")
@@ -50,21 +46,30 @@ var current_customization: Dictionary = {}
 # The shader names
 var custom_color_shaders: Dictionary = {
 	"Skin Color": "skin_color", "Hair Color": "hair_color", "Facial Hair Color": "fhair_color"
-	}
+}
+# It will contain the custom color selector boxes
+var color_selectors: Dictionary = {}
 
 var viewport_texture_data: Image
 
 func _ready() -> void:
 	var part_selector: HBoxContainer
+	var color_selector: Control
 	var sprites: Array
 	
 	get_tree().get_root().connect("size_changed", self, "_on_root_size_changed")
 	
-	# Center cursor in the middle of the skin color picker
-	cursor.position = skin_color_selector.rect_position + (skin_color_selector.rect_size / 2.0)
-	
 	var player_parts = AppearanceManager.getPlayerParts()
 	
+	# Goes through the customizable colors and cretes the color selector UI elements
+	for color_selector_name in custom_color_shaders.keys():
+		color_selector = color_selector_scene.instance()
+		color_selector.get_node("Label").text = color_selector_name
+		color_selector.my_name = color_selector_name
+		color_selector.color_map_image = AppearanceManager.getColorMap(color_selector_name)
+		color_selector.connect("color_changed", self, "_on_choose_color")
+		customization_vbox.add_child(color_selector)
+		color_selectors[color_selector_name] = color_selector
 	# Goes through the customizable body parts and creates the part selector UI elements
 	for part in player_parts.keys():
 		part_selections[part] = AppearanceManager.partFiles(part)
@@ -83,29 +88,18 @@ func _ready() -> void:
 			sprites.append(player_skeleton.get_node(sprite_name))
 		sprite_nodes[part] = sprites
 
-func _choose_skin_color(coords: Vector2) -> void:
-	"""Chooses the player's new skin color if the mouse is within the palette."""
-	var max_x = skin_color_selector.rect_size.x - 1
-	var max_y = skin_color_selector.rect_size.y - 1
-	
-	if coords.x > 1 and coords.x < max_x and coords.y > 1 and coords.y < max_y - 1:
-		cursor.set_position(coords)
-		color_preview.show()
-		var viewport_coords: Vector2 = cursor.get_viewport_transform() * cursor.global_position
-		if viewport_texture_data == null:
-			viewport_texture_data = get_viewport().get_texture().get_data()
-			viewport_texture_data.flip_y()
-			viewport_texture_data.lock()
-		var pixel_color: Color = viewport_texture_data.get_pixelv(viewport_coords)
-		color_preview.color = pixel_color
-		current_customization["Skin Color"]["x"] = int((coords.x - 1) / 1.0 / (max_x - 1) * AppearanceManager.COLOR_XY)
-		current_customization["Skin Color"]["y"] = int((coords.y - 1) / 1.0 / (max_y - 1) * AppearanceManager.COLOR_XY)
-		current_customization["Skin Color"]["r"] = pixel_color.r
-		current_customization["Skin Color"]["g"] = pixel_color.g
-		current_customization["Skin Color"]["b"] = pixel_color.b
-		_update_preview()
-	else:
-		color_preview.hide()
+func _on_choose_color(new_color, part_name):
+	"""Receives the selected color from the color selectors"""
+	current_customization[part_name] = new_color
+	_update_preview()
+
+func _update_ui_elements():
+	for part in part_selectors.keys():
+		part_selectors[part].set_current_part(current_customization[part])
+	for color_selector in color_selectors:
+		color_selectors[color_selector].setColorTo(
+			current_customization[color_selector]["x"],
+			current_customization[color_selector]["y"])
 
 func _update_preview() -> void:
 	"""Updates the player preview with the currently selected customizations."""
@@ -119,6 +113,7 @@ func _update_preview() -> void:
 			current_customization[shader_name]["g"],
 			current_customization[shader_name]["b"])
 		player_skeleton.material.set_shader_param(custom_color_shaders[shader_name], color_for_shader)
+
 	for part in sprite_nodes.keys():
 		file_paths = AppearanceManager.getFilePaths(part, current_customization[part])
 		for sprite_num in len(sprite_nodes[part]):
@@ -139,24 +134,12 @@ func _close_editor() -> void:
 	else:
 		UIManager.close_ui("appearance_editor")
 
-func _on_SkinColorSelector_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-		_choose_skin_color(event.position)
-		if not event.pressed:
-			color_preview.hide()
-	elif event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_LEFT):
-		_choose_skin_color(event.position)
-
 func _on_part_changed(new_part: String, part_name: String) -> void:
 	var part_options: Array = part_selections[part_name]
 	if not part_options.has(new_part):
 		return
 	current_customization[part_name] = new_part
 	_update_preview()
-
-func _on_root_size_changed() -> void:
-	"""Reset the viewport image when the window has been resized."""
-	viewport_texture_data = null
 
 func _on_Animations_item_selected(index: int) -> void:
 	match index:
@@ -180,8 +163,7 @@ func _load() -> void:
 	to the preview.
 	"""
 	current_customization = AppearanceManager.getMyAppearance()
-	for part in part_selectors.keys():
-		part_selectors[part].set_current_part(current_customization[part])
+	_update_ui_elements()
 	_update_preview()
 
 func _save() -> void:
@@ -192,6 +174,5 @@ func _save() -> void:
 func _on_RandomizeButton_pressed():
 	current_customization = AppearanceManager.randomAppearance()
 	current_customization = AppearanceManager.setColors(current_customization)
-	for part in part_selectors.keys():
-		part_selectors[part].set_current_part(current_customization[part])
+	_update_ui_elements()
 	_update_preview()
