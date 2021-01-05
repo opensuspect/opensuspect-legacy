@@ -18,6 +18,8 @@ func _ready():
 # warning-ignore:return_value_discarded
 	UIManager.connect("instance_ui", self, "instance_ui")
 # warning-ignore:return_value_discarded
+	UIManager.connect("update_ui", self, "update_ui")
+# warning-ignore:return_value_discarded
 	UIManager.connect("free_ui", self, "free_ui")
 	var err = config.load("user://settings.cfg")
 	if err == OK:

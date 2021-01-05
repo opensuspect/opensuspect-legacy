@@ -8,6 +8,9 @@ export(String) var ui_name
 #data to pass to the UI node
 export(Dictionary) var ui_data
 
+enum actions {OPEN, INSTANCE, UPDATE, CLOSE}
+export(actions) var action
+
 #changed in the editor via overriding get(), set(), and get_property_list()
 #whether or not to delete and recreate the UI node before opening
 var reinstance: bool = false
@@ -26,8 +29,11 @@ func interact(_from: Node = null, _interact_data: Dictionary = {}):
 func open(_from: Node = null, _interact_data: Dictionary = {}, reinstance: bool = self.reinstance):
 	UIManager.open_ui(ui_name, get_interact_data(_from, _interact_data), reinstance)
 
-func update(_from: Node = null, _interact_data: Dictionary = {}, reinstance: bool = self.reinstance):
-	pass
+func instance(_from: Node = null, _interact_data: Dictionary = {}):
+	UIManager.instance_ui(ui_name, get_interact_data(_from, _interact_data))
+
+func update(_from: Node = null, _interact_data: Dictionary = {}):
+	UIManager.update_ui(ui_name, get_interact_data(_from, _interact_data))
 
 func close(free: bool = false):
 	UIManager.close_ui(ui_name, free)
