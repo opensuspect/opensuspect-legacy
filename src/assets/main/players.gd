@@ -8,6 +8,20 @@ var player_scene = load(player_s)
 #idNameDict should look like {<network ID>: <player name>}
 var spawn_pos = Vector2(0,0)
 
+func _ready():
+	GameManager.connect("state_changed_priority", self, "state_changed_priority")
+
+func tell_all_to_setup_new_player(id, playerName):
+	#tell all existing players to create this player
+	for i in players.keys():
+		if i != id:
+			print("telling ", i, " to create player ", id)
+			#tell players to create new player; running from $players because that's where the function is. rpc is wack man.
+			rpc_id(i, "createPlayer", id, playerName, spawn_pos)
+	#tell new player to create existing players
+	print("telling ", id, " to create players")
+	rpc_id(id, "createPlayers", Network.get_player_names())
+
 puppetsync func createPlayers(idNameDict: Dictionary, spawnPointDict: Dictionary = {}) -> void:
 	deletePlayers()
 	for i in idNameDict.keys():
@@ -125,3 +139,9 @@ puppetsync func player_killed(killer_id: int, killed_player_id: int) -> void:
 	"""Runs on a client; responsible for actually killing off a player."""
 	var killed_player_death_handler: Node2D = players[killed_player_id].get_node("DeathHandler")
 	killed_player_death_handler.die_by(killer_id)
+
+func state_changed_priority(old_state: int, new_state, priority: int):
+	if priority != 5:
+		return
+	if new_state == GameManager.State.Lobby or new_state == GameManager.State.Normal:
+		rpc("createPlayers", Network.get_player_names(), get_parent().player_spawn_points)

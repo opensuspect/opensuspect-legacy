@@ -11,7 +11,6 @@ var player_spawn_points: Dictionary
 
 func _ready() -> void:
 	set_network_master(1)
-	GameManager.connect("state_changed_priority", self, "state_changed_priority")
 
 # Gets called when the title scene sets this scene as the main scene
 func _enter_tree() -> void:
@@ -43,15 +42,7 @@ func connection_handled(id: int, playerName: String) -> void:
 	rpc("checkVersion", version)
 	newnumber = Network.peers.size()
 	rpc_id(id, "receiveNumber", newnumber)
-	#tell all existing players to create this player
-	for i in $players.players.keys():
-		if i != id:
-			print("telling ", i, " to create player ", id)
-			#tell players to crate new player; running from $players because that's where the function is. rpc is wack man.
-			$players.rpc_id(i, "createPlayer", id, playerName, $players.spawn_pos)
-	#tell new player to create existing players
-	print("telling ", id, " to create players")
-	$players.rpc_id(id, "createPlayers", Network.get_player_names())
+	$players.tell_all_to_setup_new_player(id, playerName)
 
 puppet func checkVersion(sversion: int) -> void:
 	if version != sversion:
@@ -78,11 +69,3 @@ master func _on_maps_spawn(spawnPositions: Array):
 		if spawnPointDict[$players.players.keys()[i]] == null:
 			spawnPointDict[$players.players.keys()[i]] = $players.spawn_pos
 	player_spawn_points = spawnPointDict
-	#spawn players
-	#rpc("createPlayers", Network.get_player_names(), spawnPointDict)
-
-func state_changed_priority(old_state: int, new_state, priority: int):
-	if priority != 5:
-		return
-	if new_state == GameManager.State.Lobby or new_state == GameManager.State.Normal:
-		$players.rpc("createPlayers", Network.get_player_names(), player_spawn_points)
