@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "MapInfo",
 "language": "GDScript",
-"path": "res://assets/maps/mapinfo/resource/mapinfo.gd"
+"path": "res://assets/common/classes/resources/mapinfo/mapinfo.gd"
 }, {
 "base": "Node",
 "class": "PoolManager",
