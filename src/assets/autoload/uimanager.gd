@@ -33,12 +33,13 @@ var ui_controller_node: Node
 signal open_ui(ui_name, ui_data, reinstance)
 signal close_ui(ui_name, free)
 signal instance_ui(ui_name, ui_data)
+signal update_ui(ui_name, ui_data)
 signal free_ui(ui_name)
 
 func _ready():
-#	print(get_method_list())
-	print(Helpers.get_absolute_path_to(self))
-	print(get_node(Helpers.get_absolute_path_to(self)))
+	print(Helpers.object_has_method_with_arg(self, "open_ui", "ui_name"))
+#	print(Helpers.get_absolute_path_to(self))
+#	print(get_node(Helpers.get_absolute_path_to(self)))
 	configfile = ConfigFile.new()
 	configfile.load(filepath)
 	check_keybinds(configfile)
@@ -73,6 +74,11 @@ func instance_ui(ui_name: String, ui_data: Dictionary = {}):
 	if not ui_list.keys().has(ui_name):
 		push_error("instance_ui() called with invalid ui name " + ui_name)
 	emit_signal("instance_ui", ui_name, ui_data)
+
+func update_ui(ui_name: String, ui_data: Dictionary = {}):
+	if not ui_list.keys().has(ui_name):
+		push_error("update_ui() called with invalid ui name " + ui_name)
+	emit_signal("update_ui", ui_name, ui_data)
 
 func free_ui(ui_name: String):
 	if not ui_list.keys().has(ui_name):
