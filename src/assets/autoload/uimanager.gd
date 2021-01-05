@@ -36,6 +36,9 @@ signal instance_ui(ui_name, ui_data)
 signal free_ui(ui_name)
 
 func _ready():
+#	print(get_method_list())
+	print(Helpers.get_absolute_path_to(self))
+	print(get_node(Helpers.get_absolute_path_to(self)))
 	configfile = ConfigFile.new()
 	configfile.load(filepath)
 	check_keybinds(configfile)

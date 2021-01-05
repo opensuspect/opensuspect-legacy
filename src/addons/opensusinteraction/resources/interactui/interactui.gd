@@ -23,6 +23,15 @@ func interact(_from: Node = null, _interact_data: Dictionary = {}):
 	else:
 		UIManager.open_ui(ui_name, get_interact_data(_from, _interact_data), reinstance)
 
+func open(_from: Node = null, _interact_data: Dictionary = {}, reinstance: bool = self.reinstance):
+	UIManager.open_ui(ui_name, get_interact_data(_from, _interact_data), reinstance)
+
+func update(_from: Node = null, _interact_data: Dictionary = {}, reinstance: bool = self.reinstance):
+	pass
+
+func close(free: bool = false):
+	UIManager.close_ui(ui_name, free)
+
 func init_resource(_from: Node = null):
 	pass
 

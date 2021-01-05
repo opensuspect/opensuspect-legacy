@@ -34,6 +34,7 @@ func map(in_value: float, in_value_min: float, in_value_max: float, out_value_mi
 
 func get_absolute_path_to(node: Node, subname: String = ""):
 	var path: String = get_tree().get_root().get_path_to(node)
+	path = "/root/" + path
 	if subname != "":
 		path = path + ":" + subname
 	return NodePath(path)
