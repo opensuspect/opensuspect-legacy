@@ -33,7 +33,7 @@ master func victory_check():
 	#TODO
 	#Here, all other victory conditions should be checked.
 	if victorious != -1:
-		for player_id in get_parent().players.keys():
+		for player_id in get_parent().get_node("players").players.keys():
 			rpc_id(player_id, "end_round", victorious)
 
 func elimination_victory_check(main_team: int):

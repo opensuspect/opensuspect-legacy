@@ -1,18 +1,12 @@
 extends Node2D
 
 export (int) var MAX_PLAYERS = 10
-export (String, FILE, "*.tscn") var player_s = "res://assets/player/player.tscn"
-var player_scene = load(player_s)
-#onready var player_scene = preload(player_s)
-# Used on both sides, to keep track of all players.
-var players = {}
 #!!!THIS IS IMPORTANT!!!
 #CHANGE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
 #A way to make up version number: year month date hour of editing this script
-var version = 20122513
+var version = 210108
 var intruders = 0
 var newnumber
-var spawn_pos = Vector2(0,0)
 var player_spawn_points: Dictionary
 
 func _ready() -> void:
@@ -37,8 +31,8 @@ func _enter_tree() -> void:
 func main_player_id():
 	"""Returns the id of the main player (the player who is the playable character
 	on this instance)"""
-	for player_id in players.keys():
-		if players[player_id].main_player:
+	for player_id in $players.players.keys():
+		if $players.players[player_id].main_player:
 			return player_id
 	return -1
 
@@ -50,11 +44,11 @@ func connection_handled(id: int, playerName: String) -> void:
 	newnumber = Network.peers.size()
 	rpc_id(id, "receiveNumber", newnumber)
 	#tell all existing players to create this player
-	for i in players.keys():
+	for i in $players.players.keys():
 		if i != id:
 			print("telling ", i, " to create player ", id)
 			#tell players to crate new player; running from $players because that's where the function is. rpc is wack man.
-			$players.rpc_id(i, "createPlayer", id, playerName, spawn_pos)
+			$players.rpc_id(i, "createPlayer", id, playerName, $players.spawn_pos)
 	#tell new player to create existing players
 	print("telling ", id, " to create players")
 	$players.rpc_id(id, "createPlayers", Network.get_player_names())
@@ -69,20 +63,20 @@ puppet func receiveNumber(number: int) -> void:
 	PlayerManager.ournumber = number
 
 func _player_disconnected(id):
-	players[id].queue_free() #deletes player node when a player disconnects
-	players.erase(id)
+	$players.players[id].queue_free() #deletes player node when a player disconnects
+	$players.players.erase(id)
 	PlayerManager.players.erase(id)
 
 master func _on_maps_spawn(spawnPositions: Array):
 	if not get_tree().is_network_server():
 		return
-	spawn_pos = spawnPositions[0]
+	$players.spawn_pos = spawnPositions[0]
 	#generate spawn point dict
 	var spawnPointDict: Dictionary = {}
-	for i in players.keys().size():
-		spawnPointDict[players.keys()[i]] = spawnPositions[i % spawnPositions.size()]
-		if spawnPointDict[players.keys()[i]] == null:
-			spawnPointDict[players.keys()[i]] = spawn_pos
+	for i in $players.players.keys().size():
+		spawnPointDict[$players.players.keys()[i]] = spawnPositions[i % spawnPositions.size()]
+		if spawnPointDict[$players.players.keys()[i]] == null:
+			spawnPointDict[$players.players.keys()[i]] = $players.spawn_pos
 	player_spawn_points = spawnPointDict
 	#spawn players
 	#rpc("createPlayers", Network.get_player_names(), spawnPointDict)
