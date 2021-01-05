@@ -17,6 +17,9 @@ var player_tasks: Dictionary = {}
 #format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, resource: <InteractTask resource>, assigned_players: [<network IDs of players task is assigned to>]}
 var task_dict: Dictionary = {}
 
+signal recievesync
+
+
 func _ready():
 	randomize()
 	#print(gen_unique_id())
@@ -118,3 +121,6 @@ func gen_unique_id() -> int:
 func reset_tasks() -> void:
 	player_tasks = {}
 	task_dict = {}
+
+
+	

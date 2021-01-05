@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/ui/tasks/container/container.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/tasks/container/final.png" type="Texture" id=2]
+
+[node name="conatiner" type="MarginContainer"]
+margin_left = 128.0
+margin_top = 48.0
+margin_right = 859.0
+margin_bottom = 587.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+slots = 8
+
+[node name="background" type="TextureRect" parent="."]
+margin_right = 731.0
+margin_bottom = 539.0
+texture = ExtResource( 2 )
+
+[node name="upperoverlay" type="Control" parent="background"]
+margin_right = 728.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="name" type="Label" parent="background/upperoverlay"]
+margin_right = 680.0
+margin_bottom = 24.0
+text = "Container"
+align = 1
+
+[node name="closebutton" type="Button" parent="background/upperoverlay"]
+margin_left = 704.0
+margin_right = 728.0
+margin_bottom = 28.0
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="conatainergrid" type="GridContainer" parent="background"]
+margin_left = 32.0
+margin_top = 112.0
+margin_right = 696.0
+margin_bottom = 492.0
+custom_constants/vseparation = 200
+custom_constants/hseparation = 92
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="background/upperoverlay/closebutton" to="." method="_on_closebutton_pressed"]

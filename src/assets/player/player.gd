@@ -194,3 +194,4 @@ func move_to(new_pos, new_movement):
 
 func get_is_alive() -> bool:
 	return not death_handler.is_dead
+	

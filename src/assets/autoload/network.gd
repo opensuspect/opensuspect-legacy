@@ -171,7 +171,7 @@ func get_player_name(id: int = myID) -> String:
 func get_peers() -> Array:
 	return peers
 
-# warning-ignore:unused_argument
+
 func _on_state_changed(old_state, new_state) -> void:
 	match new_state:
 		GameManager.State.Normal:

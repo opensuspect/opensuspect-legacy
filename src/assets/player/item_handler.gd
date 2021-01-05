@@ -17,7 +17,6 @@ const item_pickup_mouse_threshold: float = 50.0
 var _target_item: Item
 # The current item in the player's hand
 var picked_up_item: Item
-
 func _ready() -> void:
 	player.get_node("DeathHandler").connect("dead", self, "_on_Player_dead")
 
