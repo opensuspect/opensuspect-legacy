@@ -62,7 +62,7 @@ func _ready():
 	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
-	PlayerManager.connect("roles_assigned", self, "roles_assigned")
+#	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 	AppearanceManager.connect("apply_appearance", self, "customizePlayer")
 	customizePlayer(id)
 
