@@ -25,8 +25,12 @@ light_mode = 2
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
-shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
-shader_param/tolerance = 0.75
+shader_param/skin_color = Color( 0.423529, 0.266667, 0.101961, 1 )
+shader_param/hair_mask_color = Color( 0, 1, 1, 1 )
+shader_param/hair_color = Color( 1, 1, 1, 1 )
+shader_param/fhair_mask_color = Color( 0, 1, 0, 1 )
+shader_param/fhair_color = Color( 1, 1, 1, 1 )
+shader_param/tolerance = 0.1
 
 [sub_resource type="ShaderMaterial" id=6]
 resource_local_to_scene = true
