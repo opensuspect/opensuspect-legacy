@@ -82,10 +82,10 @@ func update_ui(ui_name: String, ui_data: Dictionary = {}):
 	var current_ui = get_ui(ui_name)
 	if ui_data != {} and current_ui.get("ui_data") != null:
 		current_ui.ui_data = ui_data
-	#call close on a lower class, handles ui system integration
+	#call update on a lower class, handles ui system integration
 	if current_ui.has_method("base_update"):
 		current_ui.base_update()
-	#call close on the inherited class, most likely the script attached to a given task or menu
+	#call update on the inherited class, most likely the script attached to a given task or menu
 	if current_ui.has_method("update"):
 		current_ui.update()
 

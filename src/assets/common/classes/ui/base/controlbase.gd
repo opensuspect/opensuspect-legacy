@@ -13,7 +13,6 @@ func _init():
 
 #called by ui system
 func base_open():
-	print(filename)
 	show()
 
 #called by self or ui system

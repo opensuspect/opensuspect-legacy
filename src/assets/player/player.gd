@@ -62,6 +62,9 @@ func _ready():
 	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
+	# connecting this signal causes the player node to receive it during round
+	# switching and before the new player nodes are spawned
+	# players should probably be deleted in the cleanup phase
 #	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 	AppearanceManager.connect("apply_appearance", self, "customizePlayer")
 	customizePlayer(id)
