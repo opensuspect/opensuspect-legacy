@@ -76,10 +76,10 @@ func _selectSkinColor(coords: Vector2):
 		customization["g"] = pixel_color.g
 		customization["b"] = pixel_color.b
 		emit_signal("color_changed", customization, my_name)
-		if coords.y < max_y - 75:
-			preview_border.rect_position.y = 15
+		if coords.y < max_y - 35:
+			preview_border.rect_position.y = 10
 		else:
-			preview_border.rect_position.y = -75
+			preview_border.rect_position.y = -40
 	else:
 		preview_border.hide()
 

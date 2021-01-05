@@ -23,20 +23,20 @@ texture = ExtResource( 1 )
 
 [node name="PreviewBorder" type="ColorRect" parent="ColorMapBox/Cursor"]
 visible = false
-margin_left = 15.0
-margin_top = 15.0
-margin_right = 75.0
-margin_bottom = 75.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 40.0
+margin_bottom = 40.0
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ColorPreview" type="ColorRect" parent="ColorMapBox/Cursor/PreviewBorder"]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 55.0
-margin_bottom = 55.0
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 27.0
+margin_bottom = 27.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
