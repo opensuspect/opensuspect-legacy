@@ -102,7 +102,11 @@ func sendBulkCustomization(id: int):
 	rpc_id(id, "receiveBulkCustomization", customization_dict)
 
 func randomAppearance():
-	return null
+	"""
+	TODO: actually make it random. rightnow it's a preset
+	"""
+	print("appearancemanager.gd/randomappearance: loading data")
+	return SaveLoadHandler.load_data("res://assets/common/settings/player_data.save")
 
 func changeMyAppearance(custmoization_data) -> void:
 	"""Called when the player changes their appearance in-game."""
