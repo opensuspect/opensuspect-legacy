@@ -57,9 +57,10 @@ func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
 	for key in data.keys():
 		task_data_player[player_id][key] = data[key]
 
-func registered(new_task_data: Dictionary):
+func registered(new_task_id: int, new_task_data: Dictionary):
 	for key in new_task_data.keys():
 		task_data[key] = new_task_data[key]
+	task_id = new_task_id
 	task_registered = true
 
 func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:

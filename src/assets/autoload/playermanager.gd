@@ -33,7 +33,7 @@ func _ready():
 
 # warning-ignore:unused_argument
 func state_changed_priority(old_state: int, new_state: int, priority: int):
-	if priority != 2:
+	if priority != 3:
 		return
 	match new_state:
 		GameManager.State.Normal:

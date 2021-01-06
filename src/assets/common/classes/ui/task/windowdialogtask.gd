@@ -9,27 +9,26 @@ func _ready():
 	TaskManager.connect("receive_task_data", self, "_on_received_task_data")
 
 func complete_task(data: Dictionary = {}):
-	var task_info = {	TaskManager.PLAYER_ID_KEY: Network.get_my_id(),
-						TaskManager.TASK_ID_KEY: ui_data["task_id"]}
-	TaskManager.attempt_complete_task(task_info, data)
+	var taskInfo = TaskManager.gen_task_info(ui_data["task_id"])
+	TaskManager.attempt_complete_task(taskInfo, data)
 
-func _on_task_completed(task_info: Dictionary):
-	if not TaskManager.is_task_info_valid(task_info):
+func _on_task_completed(taskInfo: Dictionary):
+	if not TaskManager.is_task_info_valid(taskInfo):
 		return
-	var task_id = task_info[TaskManager.TASK_ID_KEY]
-	var player_id = task_info[TaskManager.PLAYER_ID_KEY]
-	if not TaskManager.is_task_global(task_id):
-		if Network.get_my_id() != player_id:
+	var taskId = taskInfo[TaskManager.TASK_ID_KEY]
+	var playerId = taskInfo[TaskManager.PLAYER_ID_KEY]
+	if not TaskManager.is_task_global(taskId):
+		if Network.get_my_id() != playerId:
 			return
-	elif player_id != TaskManager.GLOBAL_TASK_PLAYER_ID:
+	elif playerId != TaskManager.GLOBAL_TASK_PLAYER_ID:
 		return
 	# only close the ui if we have completed the task
-	if ui_data["task_id"] == task_id:
+	if ui_data["task_id"] == taskId:
 		base_close()
 
 func _on_received_task_data(task_data: Dictionary):
-	var task_id = task_data["task_id"]
-	if ui_data["task_id"] != task_id:
+	var taskId = task_data["task_id"]
+	if ui_data["task_id"] != taskId:
 		return
 	for key in task_data.keys():
 		ui_data[key] = task_data[key]
@@ -43,25 +42,25 @@ func ui_data_updated():
 func base_open():
 	if not ui_data.keys().has("task_id"):
 		return
-	var task_id = ui_data["task_id"]
-	if not TaskManager.does_task_exist(task_id):
+	var taskId = ui_data["task_id"]
+	if not TaskManager.does_task_exist(taskId):
 		return
-	var player_id = Network.get_my_id()
-	if TaskManager.is_task_global(task_id):
-		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
-	var task_info = {	TaskManager.TASK_ID_KEY: task_id,
-						TaskManager.PLAYER_ID_KEY: player_id}
-	var task_state: int = TaskManager.get_task_state(task_info)
+	var playerId = Network.get_my_id()
+	if TaskManager.is_task_global(taskId):
+		playerId = TaskManager.GLOBAL_TASK_PLAYER_ID
+	
+	var taskInfo = TaskManager.gen_task_info(taskId, playerId)
+	var taskState: int = TaskManager.get_task_state(taskInfo)
 	# don't open if the task is hidden
-	if task_state == TaskManager.task_state.HIDDEN:
+	if taskState == TaskManager.task_state.HIDDEN:
 		return
 	# or completed
-	elif task_state == TaskManager.task_state.COMPLETED:
+	elif taskState == TaskManager.task_state.COMPLETED:
 		return
 	# or invalid(means that the task info we provided was invalid)
-	elif task_state == TaskManager.task_state.INVALID:
+	elif taskState == TaskManager.task_state.INVALID:
 		return
-	TaskManager.attempt_request_task_data(task_info)
+	TaskManager.attempt_request_task_data(taskInfo)
 	
 	#call base_open() in parent class
 	.base_open()

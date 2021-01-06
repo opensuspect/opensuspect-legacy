@@ -22,7 +22,12 @@ var player_tasks: Dictionary = {}
 #format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, resource: <InteractTask resource>, assigned_players: [<network IDs of players task is assigned to>]}
 var task_dict: Dictionary = {}
 
+var node_path_resource: Dictionary = {}
+
 func _ready():
+	#warning-ignore:return_value_discarded
+	GameManager.connect("state_changed_priority", self, "_tasks_registered")
+	randomize()
 	self.set_network_master(1)
 
 const PLAYER_ID_KEY = "player_id"
@@ -177,21 +182,64 @@ func transition_task(task_info: Dictionary, new_state: int) -> bool:
 	return set_task_state(task_info, new_state)
 
 func register_task(task_resource: Resource):
-	var new_task_data: Dictionary = task_resource.get_task_data()
-	new_task_data["state"] = task_state.NOT_STARTED
-	var task_id = task_resource.get_task_id()
-	# ensures that the programmer has assigned a unique ID to every task
-	if does_task_exist(task_id):
-		push_error("Task ID " + String(task_id) + " already registered")
-		assert(false)
+	var path = Helpers.get_absolute_path_to(task_resource.attached_to)
+	node_path_resource[path] = task_resource
+	
+	if not get_tree().is_network_server():
 		return
 	
+	var task_id = task_resource.get_task_id()
+
+	if task_id == INVALID_TASK_ID:
+		task_id = gen_unique_id()
+		#node_path_id[path] = task_id
+	
+	var new_task_data: Dictionary = task_resource.get_task_data()
+	new_task_data["state"] = task_state.NOT_STARTED
+	if not assign_task_data(task_resource, task_id, new_task_data):
+		assert(false)
+		return
+
+func _tasks_registered(_old_state, new_state, priority):
+	if not get_tree().is_network_server():
+		return
+	if new_state != GameManager.State.Normal:
+		return
+	if priority != 2:
+		return
+	var registered_tasks = []
+	for task_resource in task_dict.values():
+		var task = {}
+		task["path"] = Helpers.get_absolute_path_to(task_resource.attached_to)
+		task["task_id"] = task_resource.get_task_id()
+		task["task_data"] = task_resource.get_task_data()
+		registered_tasks.append(task)
+	rpc("assign_task_data_client", registered_tasks)
+	
+puppet func assign_task_data_client(registered_tasks: Array):
+	for task in registered_tasks:
+		var path = task["path"]
+		var task_id = task["task_id"]
+		var task_data = task["task_data"]
+		if not node_path_resource.has(path):
+			assert(false)
+			continue
+		var task_resource: Resource = node_path_resource[path]
+		if not assign_task_data(task_resource, task_id, task_data):
+			assert(false)
+			continue
+
+func assign_task_data(task_resource: Resource, task_id: int, new_data: Dictionary) -> bool:
 	print("registering task with ID ", task_id)
 	#do stuff with task info here
+	if task_dict.has(task_id):
+		push_error("Task ID " + String(task_id) + " already registered")
+		return false
 	task_dict[task_id] = task_resource
 
-	task_resource.registered(new_task_data)
-	print("task registered: ", new_task_data)
+	task_resource.registered(task_id, new_data)
+	print("task registered: ", new_data)
+	return true
 	
 # called by the player manager while assigning roles
 func assign_tasks():
@@ -205,7 +253,7 @@ func assign_tasks():
 	for task in tasks_to_assign:
 		if is_task_global(task):
 			if rng.randi_range(-1,0) < 0:
-				assign_task({TASK_ID_KEY: task, PLAYER_ID_KEY: GLOBAL_TASK_PLAYER_ID})
+				assign_task(gen_task_info(task, GLOBAL_TASK_PLAYER_ID))
 				print("global task assigned,",tasks_to_assign[task])
 	# assign regular tasks
 	for id in Network.peers:
@@ -213,7 +261,7 @@ func assign_tasks():
 			if is_task_global(task):
 				continue
 			if rng.randi_range(-1,0) < 0:
-				assign_task({TASK_ID_KEY: task, PLAYER_ID_KEY: id})
+				assign_task(gen_task_info(task, id))
 				print("task assigned,",tasks_to_assign[task])
 
 		var tasks_to_send 	= get_tasks_to_send(id)
@@ -241,7 +289,7 @@ func get_player_tasks(player_id: int) -> Array:
 	if not player_tasks.has(player_id):
 		return arr
 	for task_id in player_tasks[player_id]:
-		arr.append({TASK_ID_KEY: task_id, PLAYER_ID_KEY: player_id})
+		arr.append(gen_task_info(task_id, player_id))
 	return arr
 
 func assign_task(task_info: Dictionary) -> void:
@@ -323,6 +371,22 @@ func is_task_info_valid(info: Dictionary, keys: Array = [PLAYER_ID_KEY, TASK_ID_
 			return false
 		
 	return true
+
+func gen_unique_id() -> int:
+	#task IDs only need to be somewhat random, they MUST be unique
+	var used_ids: Array = task_dict.keys() + Network.get_peers()
+	var new_id: int = randi()
+	while used_ids.has(new_id):
+		new_id = randi()
+	return new_id
+
+func gen_task_info(task_id: int, player_id: int = Network.get_my_id()) -> Dictionary:
+	var task_info = {TASK_ID_KEY: task_id, PLAYER_ID_KEY: player_id}
+	if not is_task_info_valid(task_info):
+		push_error("Can't generate an invalid task_info " + String(task_info))
+		assert(false)
+		return {}
+	return task_info
 
 func reset_tasks() -> void:
 	player_tasks = {}
