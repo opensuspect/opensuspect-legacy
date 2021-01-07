@@ -51,6 +51,7 @@ func _ready():
 	my_customization = SaveLoadHandler.load_data(customization_path)
 	if my_customization.empty():
 		my_customization = randomAppearance()
+	my_customization = setColors(my_customization)
 
 	GameManager.connect("state_changed_priority", self, "_on_state_changed_priority")
 
