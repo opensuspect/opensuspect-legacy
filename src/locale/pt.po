@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-11-13 20:23+0100\n"
-"PO-Revision-Date: 2021-01-08 23:10\n"
+"PO-Revision-Date: 2021-01-09 01:10\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -136,7 +136,7 @@ msgstr "IDIOMA"
 
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:96
 msgid "LEAVE"
-msgstr "SAIR"
+msgstr "DEIXAR"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:62
 #: ../../src/assets/ui/submenus/settings/settings.gd:64
