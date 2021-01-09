@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-11-13 20:23+0100\n"
-"PO-Revision-Date: 2021-01-09 01:10\n"
+"PO-Revision-Date: 2021-01-09 09:30\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -24,7 +24,7 @@ msgstr "SALA DE ESPERA"
 
 #: ../../src/assets/maps/test/test.tscn:57
 msgid "clockset task"
-msgstr "tarefas"
+msgstr "relógio de tarefas"
 
 #: ../../src/assets/maps/test/test.tscn:69
 msgid "735"
@@ -128,7 +128,7 @@ msgstr "CRIAR JOGO"
 
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:48
 msgid "RESUME"
-msgstr "RESUMO"
+msgstr "CONTINUAR"
 
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:84
 msgid "LANGUAGE"
@@ -136,7 +136,7 @@ msgstr "IDIOMA"
 
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:96
 msgid "LEAVE"
-msgstr "DEIXAR"
+msgstr "DEIXAR PARTIDA"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:62
 #: ../../src/assets/ui/submenus/settings/settings.gd:64
