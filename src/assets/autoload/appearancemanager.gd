@@ -42,10 +42,12 @@ func _ready():
 	"""
 	When this script is ready, it loads the saved customization of the user.
 	"""
-	var color_map
+	var color_map: Image
+	var texture: StreamTexture
 	for color_map_name in custom_color_files.keys():
 		color_map = Image.new()
-		color_map.load(sprites_dir + custom_color_files[color_map_name] + ".png")
+		texture = load(sprites_dir + custom_color_files[color_map_name] + ".png")
+		color_map = texture.get_data()
 		custom_colors[color_map_name] = color_map
 	
 	my_customization = SaveLoadHandler.load_data(customization_path)
