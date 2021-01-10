@@ -12,6 +12,7 @@ This project is in *very early stage* development.
 Interested to get involved? We'd love to hear from you.
 Join us at [`#opensuspect:matrix.org`](https://matrix.to/#/#opensuspect:matrix.org) on a Matrix client (element.io).
 If you need tech support, use our [`troubleshooting channel`](https://matrix.to/#/!OuHmTdwKPGMJCYeyZH:matrix.org?via=matrix.org&via=privacytools.io).
+**Before cloning this repository, you need to install git-lfs to handle asset storage and other large binary files. See:** https://github.com/opensuspect/opensuspect/wiki/Git-instructions
 
 OpenSuspect is licensed under the GNU GPL v3 (see LICENSE.txt)
 
@@ -55,9 +56,7 @@ The exact way the abovementioned goals would be reached is part of the ongoing d
 
 Before contributing to the discussion, please, make sure you read through our quickly evolving documentation to see which topics are still up for debate.
 
-## Requirements for contributors
-After cloning the repository, you need git-lfs to handle asset storage and other large binary files.
-
+### Contributing
 Please join our [`NextCloud instance`](https://nextcloud.opensuspect.com) under the same username, you use on Matrix, where most of the coordination will happen.
 
 Important Matrix (Element) rooms for contributors:

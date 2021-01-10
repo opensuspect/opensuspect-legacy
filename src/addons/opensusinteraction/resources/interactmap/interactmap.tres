@@ -10,3 +10,4 @@ interact_with = NodePath("")
 interact_data = {
 
 }
+advanced/network_sync = false

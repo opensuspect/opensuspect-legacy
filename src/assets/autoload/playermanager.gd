@@ -32,7 +32,7 @@ signal roles_assigned
 func _ready():
 	set_network_master(1)
 # warning-ignore:return_value_discarded
-	GameManager.connect("state_changed", self, "state_changed")
+	GameManager.connect("state_changed_priority", self, "state_changed_priority")
 
 func assigntasks():
 	for id in Network.peers:
@@ -54,7 +54,9 @@ remote func gettasks(tasksget):
 	print("we got our tasks!")
 
 # warning-ignore:unused_argument
-func state_changed(old_state, new_state):
+func state_changed_priority(old_state: int, new_state: int, priority: int):
+	if priority != 2:
+		return
 	match new_state:
 		GameManager.State.Normal:
 			assignRoles(Network.get_peers())
@@ -118,6 +120,13 @@ func roundDown(num, step):
 	if normRound > num:
 		return normRound - step
 	return normRound
+
+#TODO recieve a signal that initiates the application of customization to a player sprite.
+
+func getPlayerById(id) -> KinematicBody2D:
+	if players.has(id):
+		return players[id]
+	return null
 
 func get_main_player() -> KinematicBody2D:
 	"""Gets the main player on the local client."""

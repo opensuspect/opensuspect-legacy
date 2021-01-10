@@ -26,20 +26,24 @@ height = 50.0
 [sub_resource type="CanvasItemMaterial" id=5]
 light_mode = 2
 
-[sub_resource type="ShaderMaterial" id=8]
+[sub_resource type="ShaderMaterial" id=6]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
-shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
-shader_param/tolerance = 0.75
+shader_param/skin_color = Color( 0.423529, 0.266667, 0.101961, 1 )
+shader_param/hair_mask_color = Color( 0, 1, 1, 1 )
+shader_param/hair_color = Color( 1, 1, 1, 1 )
+shader_param/fhair_mask_color = Color( 0, 1, 0, 1 )
+shader_param/fhair_color = Color( 1, 1, 1, 1 )
+shader_param/tolerance = 0.1
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=7]
 resource_local_to_scene = true
 shader = ExtResource( 5 )
 shader_param/line_color = Color( 1, 1, 1, 0 )
 shader_param/line_thickness = 5.0
 
-[sub_resource type="ViewportTexture" id=7]
+[sub_resource type="ViewportTexture" id=8]
 viewport_path = NodePath("SpritesViewport")
 
 [node name="Player" type="KinematicBody2D" groups=[
@@ -110,7 +114,7 @@ __meta__ = {
 }
 
 [node name="Skeleton" parent="." instance=ExtResource( 2 )]
-material = SubResource( 8 )
+material = SubResource( 6 )
 
 [node name="SpritesViewport" type="Viewport" parent="."]
 size = Vector2( 1024, 600 )
@@ -140,10 +144,10 @@ __meta__ = {
 }
 
 [node name="ViewportTextureTarget" type="Sprite" parent="."]
-material = SubResource( 6 )
+material = SubResource( 7 )
 position = Vector2( 0, -25 )
 scale = Vector2( 0.2, 0.2 )
-texture = SubResource( 7 )
+texture = SubResource( 8 )
 __meta__ = {
 "_editor_description_": "The Sprite that the viewport tex ture of SpritesViewport will be rendered to."
 }

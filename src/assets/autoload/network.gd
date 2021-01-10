@@ -21,7 +21,7 @@ func _ready() -> void:
 	# give the server access to puppet functions and variables
 	set_network_master(1)
 # warning-ignore:return_value_discarded
-	GameManager.connect('state_changed', self, '_on_state_changed')
+	GameManager.connect("state_changed_priority", self, "_on_state_changed_priority")
 
 func client_server(port: int, playerName: String) -> void:
 	print("Starting server on port ", port, " with host player name ", playerName)
@@ -67,6 +67,9 @@ remote func receiveName(newName):
 	print("names: ", names)
 	print(get_tree().is_network_server())
 	rset("names", names)
+	#Send all received customization data to the new player
+	AppearanceManager.sendBulkCustomization(sender)
+	AppearanceManager.queryCustomization(sender)
 	emit_signal("connection_handled", sender, newName)
 
 func _player_connected(id) -> void:
@@ -172,7 +175,9 @@ func get_peers() -> Array:
 	return peers
 
 # warning-ignore:unused_argument
-func _on_state_changed(old_state, new_state) -> void:
+func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
+	if priority != 0:
+		return
 	match new_state:
 		GameManager.State.Normal:
 			print('Network manager refusing further connections')
