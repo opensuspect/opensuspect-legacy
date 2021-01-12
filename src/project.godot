@@ -98,7 +98,6 @@ MapManager="*res://assets/autoload/mapmanager.gd"
 TaskManager="*res://assets/autoload/taskmanager.gd"
 Helpers="*res://assets/autoload/helpers.gd"
 SaveLoadHandler="*res://assets/autoload/save_load_handler.gd"
-TaskGenerators="*res://assets/autoload/taskgenerators.gd"
 
 [display]
 

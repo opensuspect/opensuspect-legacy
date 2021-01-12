@@ -5,6 +5,8 @@ extends Resource
 
 export(String) var task_text
 
+export(int) var random_numbers = 0
+
 var item_inputs_on: bool
 var item_inputs: PoolStringArray
 
@@ -53,9 +55,13 @@ func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
 		return
 	task_data_player[player_id] = task_data.duplicate(true)
 	var task_text = task_data["task_text"]
-	var data: Dictionary = TaskGenerators.call_generator(task_text)
-	for key in data.keys():
-		task_data_player[player_id][key] = data[key]
+	var data = []
+	assert(random_numbers >= 0)
+	randomize()
+	for i in range(random_numbers):
+		data.append(randi())
+	#var data: Dictionary = TaskGenerators.call_generator(task_text)
+	task_data_player[player_id]["task_data"] = data
 
 func registered(new_task_id: int, new_task_data: Dictionary):
 	for key in new_task_data.keys():
