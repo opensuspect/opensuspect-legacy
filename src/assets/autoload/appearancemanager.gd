@@ -45,7 +45,6 @@ func _ready():
 	var color_map: Image
 	var texture: StreamTexture
 	for color_map_name in custom_color_files.keys():
-		color_map = Image.new()
 		texture = load(sprites_dir + custom_color_files[color_map_name] + ".png")
 		color_map = texture.get_data()
 		custom_colors[color_map_name] = color_map
@@ -118,8 +117,8 @@ func colorFromMapXY(color_map, x_rel, y_rel):
 	var rgba: Color
 	max_x = color_map.get_width()
 	max_y = color_map.get_height()
-	x = int(x_rel / 1.0 / COLOR_XY * max_x)
-	y = int(y_rel / 1.0 / COLOR_XY * max_y)
+	x = int(float(x_rel) / COLOR_XY * max_x)
+	y = int(float(y_rel) / COLOR_XY * max_y)
 	color_map.lock()
 	rgba = color_map.get_pixel(x, y)
 	color_map.unlock()
@@ -189,18 +188,18 @@ func savePlayerAppearance():
 	"""
 	SaveLoadHandler.save_data(customization_path, my_customization)
 
-master func queryCustomization(id: int) -> void:
+func queryCustomization(id: int) -> void:
 	"""The server asks a client to send their customization data back."""
 	if not get_tree().is_network_server():
 		return
 	rpc_id(id, "sendCustomizationToServer")
 
-remote func sendCustomizationToServer() -> void:
+puppet func sendCustomizationToServer() -> void:
 	"""Sends the actual customization data of the main player to the server."""
 	print("I am ", Network.get_my_id(), ", sending my customization data to the server")
 	rpc_id(1, "receiveCustomizationFromClient", customization_dict[Network.get_my_id()])
 
-remotesync func receiveCustomizationFromClient(custmoization_data: Dictionary) -> void:
+master func receiveCustomizationFromClient(custmoization_data: Dictionary) -> void:
 	"""
 	Confirms that player data has been received on the server from the client.
 	Sends this player data to all the other clients along with its own player data.
@@ -223,7 +222,7 @@ puppet func receiveCustomizationFromServer(id: int, custmoization_data: Dictiona
 		return
 	setPlayerAppearance(id, custmoization_data)
 
-remote func receiveBulkCustomization(received_customizatios: Dictionary):
+puppet func receiveBulkCustomization(received_customizatios: Dictionary):
 	"""Receives multiple customization data from the server and merges it with
 	the local dictionary"""
 	if get_tree().get_rpc_sender_id() != 1:

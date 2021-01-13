@@ -40,19 +40,19 @@ func setColorTo(x_rel, y_rel):
 	var max_x = self.rect_size.x - 1
 	var max_y = self.rect_size.y - 1 - color_map_y
 	var coord: Vector2
-	coord.x = int(x_rel / 1.0 / AppearanceManager.COLOR_XY * max_x)
-	coord.y = int(y_rel / 1.0 / AppearanceManager.COLOR_XY * max_y)
+	coord.x = int(float(x_rel) / AppearanceManager.COLOR_XY * max_x)
+	coord.y = int(float(y_rel) / AppearanceManager.COLOR_XY * max_y)
 	cursor.set_position(coord)
 
 func _on_ColorSelector_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-		_selectSkinColor(event.position)
+		_selectColor(event.position)
 		if not event.pressed:
 			preview_border.hide()
 	elif event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_LEFT):
-		_selectSkinColor(event.position)
+		_selectColor(event.position)
 
-func _selectSkinColor(coords: Vector2):
+func _selectColor(coords: Vector2):
 	var max_x = self.rect_size.x - 1
 	var max_y = self.rect_size.y - 1 - color_map_y
 	var colormap_coords: Vector2
@@ -63,8 +63,8 @@ func _selectSkinColor(coords: Vector2):
 	if coords.x >= 0 and coords.x < max_x and coords.y >= 0 and coords.y < max_y:
 		cursor.set_position(coords)
 		preview_border.show()
-		customization["x"] = int(coords.x / 1.0 / (max_x) * AppearanceManager.COLOR_XY)
-		customization["y"] = int(coords.y / 1.0 / (max_y) * AppearanceManager.COLOR_XY)
+		customization["x"] = int(float(coords.x) / max_x * AppearanceManager.COLOR_XY)
+		customization["y"] = int(float(coords.y) / max_y * AppearanceManager.COLOR_XY)
 		coord_rel.x = customization["x"]
 		coord_rel.y = customization["y"]
 		colormap_coords =  coords / 1.0 / colormap.scale
