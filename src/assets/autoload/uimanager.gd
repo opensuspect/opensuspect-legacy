@@ -99,7 +99,7 @@ func ui_closed(menuName):
 # warning-ignore:unused_argument
 func state_changed(old_state, new_state):
 	if new_state == GameManager.State.Normal:
-		pass
+		open_ui("rolescreen")
 	if new_state == GameManager.State.Start:
 		open_uis = []
 
