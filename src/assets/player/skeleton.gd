@@ -1,40 +1,55 @@
 extends Node2D
 
+# This dictionary contains the names of the nodes that will need to load the sprites
+var player_sprite_names: Dictionary = {
+	"Clothes": [
+		"LeftArm",
+		"LeftLeg",
+		"Skeleton/Spine/Pants",
+		"RightLeg",
+		"Skeleton/Spine/Clothes",
+		"RightArm"
+	],
+	"Body": ["Body"],
+	"Facial Hair": ["Skeleton/Spine/FacialHair"],
+	"Face Wear": ["Skeleton/Spine/FaceWear"],
+	"Hat/Hair": ["Skeleton/Spine/HatHair"],
+	"Mouth": ["Skeleton/Spine/Mouth"],
+}
+# This will contain the reference to the node instances showing the sprites
+var sprite_nodes: Dictionary = {}
+# The shader names
+var custom_color_shaders: Dictionary = {
+	"Skin Color": "skin_color", "Hair Color": "hair_color", "Facial Hair Color": "fhair_color"
+	}
+
 func _ready():
-	pass
+	var sprites: Array
+	
+	# Assign the nodes of the character to the variables for easy access
+	for part in player_sprite_names.keys():
+		sprites = []
+		for sprite_name in player_sprite_names[part]:
+			sprites.append(self.get_node(sprite_name))
+		sprite_nodes[part] = sprites
 
 func applyCustomization(customizationData):
 	"""
 	Receives the customization data, and applies it to the current instance.
 	"""
-	
 	if customizationData.empty():
 		print_debug("Empty customization data received")
 		return
-
-	var body: Polygon2D = self.get_node("Body")
-	var left_leg: Polygon2D = self.get_node("LeftLeg")
-	var left_arm: Polygon2D = self.get_node("LeftArm")
-	var right_leg: Polygon2D = self.get_node("RightLeg")
-	var right_arm: Polygon2D = self.get_node("RightArm")
-	var spine: Bone2D = self.get_node("Skeleton/Spine")
-	var clothes: Sprite = spine.get_node("Clothes")
-	var pants: Sprite = spine.get_node("Pants")
-	var facial_hair: Sprite = spine.get_node("FacialHair")
-	var face_wear: Sprite = spine.get_node("FaceWear")
-	var hat_hair: Sprite = spine.get_node("HatHair")
-	var mouth: Sprite = spine.get_node("Mouth")
-
-	var appearance: Dictionary = customizationData["Appearance"]
-	self.material.set_shader_param("skin_color", Color(appearance["Skin Color"]))
-	body.texture = load(appearance["Body"]["texture_path"])
-	left_leg.texture = load(appearance["Clothes"]["left_leg"]["texture_path"])
-	left_arm.texture = load(appearance["Clothes"]["left_arm"]["texture_path"])
-	right_leg.texture = load(appearance["Clothes"]["right_leg"]["texture_path"])
-	right_arm.texture = load(appearance["Clothes"]["right_arm"]["texture_path"])
-	clothes.texture = load(appearance["Clothes"]["clothes"]["texture_path"])
-	pants.texture = load(appearance["Clothes"]["pants"]["texture_path"])
-	facial_hair.texture = load(appearance["Facial Hair"]["texture_path"])
-	face_wear.texture = load(appearance["Face Wear"]["texture_path"])
-	hat_hair.texture = load(appearance["Hat/Hair"]["texture_path"])
-	mouth.texture = load(appearance["Mouth"]["texture_path"])
+	var color_for_shader: Color
+	var file_paths: Array
+	for shader_name in custom_color_shaders.keys():
+		color_for_shader = Color(
+			customizationData[shader_name]["r"],
+			customizationData[shader_name]["g"],
+			customizationData[shader_name]["b"])
+		self.material.set_shader_param(custom_color_shaders[shader_name], color_for_shader)
+	for part in sprite_nodes.keys():
+		file_paths = AppearanceManager.getFilePaths(part, customizationData[part])
+		for sprite_num in len(sprite_nodes[part]):
+			# TODO: only run this if the texture has to be changed
+			sprite_nodes[part][sprite_num].texture = load(file_paths[sprite_num])
