@@ -1,10 +1,15 @@
 extends Control
 
+const NAME_LABEL_KEY = "player_name_label"
 var expanded = true
 var rightAnchor: float
 
 var tasks: Dictionary = {}
 var tree: Tree = null
+# for now only the server can display other people's tasks
+# was usefull for debuggng. If you want to make this into a feature
+# I advise moving this variable to TaskManager autoload, while making sure that
+# all of the tasks are acctually sent over to all of the clients 
 export var display_other_player_tasks := true
 
 func _ready():
@@ -20,23 +25,32 @@ func _on_task_completed(task_info: Dictionary):
 	if not TaskManager.is_task_info_valid(task_info):
 		return
 	var playerID = task_info[TaskManager.PLAYER_ID_KEY]
-	if playerID != TaskManager.GLOBAL_TASK_PLAYER_ID:
-		if not display_other_player_tasks and Network.get_my_id() != playerID:
-			return
+	
+	if not tasks.has(playerID):
+		assert(false)
+		return
+		
 	var allTasksCompleted = true
 	
 	for taskID in TaskManager.player_tasks[playerID]:
+		if not tasks[playerID].has(taskID):
+			assert(false)
+			continue
+
 		var t_info = {	TaskManager.PLAYER_ID_KEY: playerID,
 						TaskManager.TASK_ID_KEY: taskID}
+		
 		if TaskManager.is_task_completed(t_info):
 			tasks[playerID][taskID].set_custom_color(0, Color(0.2, 1.0, 0.2))
-		elif not TaskManager.is_task_global(taskID):
+		else:
 			allTasksCompleted = false
+
 	if allTasksCompleted:
-		tasks[playerID]["player_name_label"].set_custom_color(0, Color(0.2, 1.0, 0.2))
-		# if we are showing other people's tasks, collapse to save space
-		# otherwise, leave open
-		tasks[playerID]["player_name_label"].set_collapsed(display_other_player_tasks)
+		if not tasks[playerID].has(NAME_LABEL_KEY):
+			assert(false)
+			return
+		tasks[playerID][NAME_LABEL_KEY].set_custom_color(0, Color(0.2, 1.0, 0.2))
+		tasks[playerID][NAME_LABEL_KEY].set_collapsed(true)
 
 func createTextNode(rootTree: Tree, text: String, root: Object = null) -> TreeItem:
 	var node: TreeItem = rootTree.create_item(root)
@@ -54,15 +68,13 @@ func _new_tasks_ready(_playerRoles):
 	tree.set_anchor(MARGIN_RIGHT, 1.0)
 	tree.set_anchor(MARGIN_BOTTOM, 1.0)
 	tree.set_hide_root(true)
-	var treeRoot = null
-	if display_other_player_tasks:
-		treeRoot = createTextNode(tree, "Tasks")
+	var treeRoot = createTextNode(tree, "Tasks")
 
 	populate_tree(treeRoot, TaskManager.GLOBAL_TASK_PLAYER_ID)
 	
 	var players = Network.get_peers()
 	for player in players:
-		if not display_other_player_tasks and Network.get_my_id() != player:
+		if not display_other_player_tasks and player != Network.get_my_id():
 			continue
 		populate_tree(treeRoot, player)
 		
@@ -73,11 +85,17 @@ func populate_tree(treeRoot: TreeItem, player: int):
 		return
 	if not tasks.has(player):
 			tasks[player] = {}
-	var playerName = Network.get_player_name(player)
+	# The local player should see their tasks listed under "personal tasks" group
+	var playerName = "Personal Tasks"
+	# Or if the task is global, it should be listed under "Global Tasks" group
 	if player == TaskManager.GLOBAL_TASK_PLAYER_ID:
 		playerName = "Global Tasks"
+	# Or, if these tasks belong to some other player, list them under
+	# the group named by their name 
+	elif player != Network.get_my_id():
+		playerName = Network.get_player_name(player)
 	var nl = createTextNode(tree, playerName, treeRoot)
-	tasks[player]["player_name_label"] = nl
+	tasks[player][NAME_LABEL_KEY] = nl
 	for taskID in TaskManager.player_tasks[player]:
 		var taskInfo = {TaskManager.TASK_ID_KEY: taskID, 
 						TaskManager.PLAYER_ID_KEY: Network.get_my_id()}
