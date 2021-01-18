@@ -118,6 +118,7 @@ func getMyAppearance() -> Dictionary:
 func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
 	if priority != 5:
 		return
+	print("(appearancemanager.gd/_on_state_changed_priority)")
 	if new_state == GameManager.State.Lobby:
 		customization_change = true
 		enableMyAppearance()

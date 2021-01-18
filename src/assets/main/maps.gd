@@ -44,6 +44,7 @@ func _ready() -> void:
 func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
 	if priority != 1:
 		return
+	print("(maps.gd/_on_state_changed_priority)")
 	match new_state:
 		GameManager.State.Lobby:
 			switchMap("Lobby")

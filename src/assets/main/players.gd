@@ -143,5 +143,6 @@ puppetsync func player_killed(killer_id: int, killed_player_id: int) -> void:
 func state_changed_priority(old_state: int, new_state, priority: int):
 	if priority != 5:
 		return
+	print("(players.gd/state_changed_priority)")
 	if new_state == GameManager.State.Lobby or new_state == GameManager.State.Normal:
 		rpc("createPlayers", Network.get_player_names(), get_parent().player_spawn_points)

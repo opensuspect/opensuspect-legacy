@@ -1,6 +1,5 @@
 [gd_scene load_steps=38 format=2]
 
-
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/maps/common/interactables/standbutton/standbutton.tscn" type="PackedScene" id=3]
@@ -12,7 +11,6 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interact/interact.gd" type="Script" id=9]
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=10]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=11]
-[ext_resource path="res://assets/common/shaders/outline.shader" type="Shader" id=12]
 [ext_resource path="res://assets/items/battery.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/items/wrench.tscn" type="PackedScene" id=14]
 [ext_resource path="res://assets/maps/map.gd" type="Script" id=15]
@@ -25,6 +23,7 @@ interact_with = NodePath("../testdoor")
 interact_data = {
 
 }
+advanced/network_sync = false
 
 [sub_resource type="Resource" id=2]
 resource_local_to_scene = true
@@ -73,8 +72,9 @@ interact_with = NodePath("clocktext")
 interact_data = {
 
 }
+advanced/network_sync = false
 
-[sub_resource type="Resource" id=23]
+[sub_resource type="Resource" id=7]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 10 )
@@ -82,10 +82,10 @@ interact_with = NodePath("clocktext")
 interact_data = {
 
 }
+advanced/network_sync = false
 
-[sub_resource type="Resource" id=7]
+[sub_resource type="Resource" id=8]
 resource_local_to_scene = true
-resource_name = "InteractUI"
 script = ExtResource( 11 )
 ui_name = "clockset"
 ui_data = {
@@ -94,18 +94,16 @@ ui_data = {
 advanced/reinstance = false
 advanced/only_instance = false
 
-[sub_resource type="Resource" id=8]
-resource_local_to_scene = true
-resource_name = "InteractTask"
-script = ExtResource( 8 )
-task_text = "Task system clockset standbutton"
-ui_resource = SubResource( 7 )
-outputs/toggle_map_interactions = true
-outputs/output_map_interactions = [ SubResource( 23 ) ]
-
 [sub_resource type="Resource" id=9]
 resource_local_to_scene = true
-resource_name = "InteractUI"
+script = ExtResource( 8 )
+task_text = "Task system clockset standbutton"
+ui_resource = SubResource( 8 )
+outputs/toggle_map_interactions = true
+outputs/output_map_interactions = [ SubResource( 7 ) ]
+
+[sub_resource type="Resource" id=10]
+resource_local_to_scene = true
 script = ExtResource( 11 )
 ui_name = ""
 ui_data = {
@@ -114,16 +112,15 @@ ui_data = {
 advanced/reinstance = false
 advanced/only_instance = false
 
-[sub_resource type="Resource" id=10]
+[sub_resource type="Resource" id=11]
 resource_local_to_scene = true
-resource_name = "Interact"
 script = ExtResource( 9 )
 interact_type = 0
-task_resource = SubResource( 8 )
-ui_resource = SubResource( 9 )
+task_resource = SubResource( 9 )
+ui_resource = SubResource( 10 )
 map_resource = SubResource( 6 )
 
-[sub_resource type="Resource" id=11]
+[sub_resource type="Resource" id=12]
 resource_local_to_scene = true
 script = ExtResource( 11 )
 ui_name = "clockset"
@@ -133,17 +130,17 @@ ui_data = {
 advanced/reinstance = false
 advanced/only_instance = false
 
-[sub_resource type="Resource" id=12]
+[sub_resource type="Resource" id=13]
 resource_local_to_scene = true
 script = ExtResource( 10 )
 interact_with = NodePath("")
 interact_data = {
 
 }
+advanced/network_sync = false
 
-[sub_resource type="Resource" id=13]
+[sub_resource type="Resource" id=14]
 resource_local_to_scene = true
-resource_name = "InteractUI"
 script = ExtResource( 11 )
 ui_name = ""
 ui_data = {
@@ -152,14 +149,14 @@ ui_data = {
 advanced/reinstance = false
 advanced/only_instance = false
 
-[sub_resource type="Resource" id=14]
+[sub_resource type="Resource" id=15]
 resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = ""
-ui_resource = SubResource( 13 )
+ui_resource = SubResource( 14 )
 outputs/toggle_map_interactions = false
 
-[sub_resource type="Resource" id=15]
+[sub_resource type="Resource" id=16]
 resource_local_to_scene = true
 script = ExtResource( 11 )
 ui_name = "chatbox"
@@ -169,23 +166,24 @@ ui_data = {
 advanced/reinstance = false
 advanced/only_instance = false
 
-[sub_resource type="Resource" id=16]
+[sub_resource type="Resource" id=17]
 resource_local_to_scene = true
 script = ExtResource( 9 )
 interact_type = 1
-task_resource = SubResource( 14 )
-ui_resource = SubResource( 15 )
-map_resource = SubResource( 12 )
+task_resource = SubResource( 15 )
+ui_resource = SubResource( 16 )
+map_resource = SubResource( 13 )
 
-[sub_resource type="Resource" id=17]
+[sub_resource type="Resource" id=18]
 resource_local_to_scene = true
 script = ExtResource( 10 )
 interact_with = NodePath("")
 interact_data = {
 
 }
+advanced/network_sync = false
 
-[sub_resource type="Resource" id=22]
+[sub_resource type="Resource" id=19]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 10 )
@@ -193,10 +191,10 @@ interact_with = NodePath("Label")
 interact_data = {
 
 }
+advanced/network_sync = false
 
-[sub_resource type="Resource" id=18]
+[sub_resource type="Resource" id=20]
 resource_local_to_scene = true
-resource_name = "InteractUI"
 script = ExtResource( 11 )
 ui_name = "clockset"
 ui_data = {
@@ -205,15 +203,15 @@ ui_data = {
 advanced/reinstance = false
 advanced/only_instance = false
 
-[sub_resource type="Resource" id=19]
+[sub_resource type="Resource" id=21]
 resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = "Task system clockset"
-ui_resource = SubResource( 18 )
+ui_resource = SubResource( 20 )
 outputs/toggle_map_interactions = true
-outputs/output_map_interactions = [ SubResource( 22 ) ]
+outputs/output_map_interactions = [ SubResource( 19 ) ]
 
-[sub_resource type="Resource" id=20]
+[sub_resource type="Resource" id=22]
 resource_local_to_scene = true
 script = ExtResource( 11 )
 ui_name = ""
@@ -223,25 +221,13 @@ ui_data = {
 advanced/reinstance = false
 advanced/only_instance = false
 
-[sub_resource type="Resource" id=21]
+[sub_resource type="Resource" id=23]
 resource_local_to_scene = true
 script = ExtResource( 9 )
 interact_type = 0
-task_resource = SubResource( 19 )
-ui_resource = SubResource( 20 )
-map_resource = SubResource( 17 )
-
-[sub_resource type="ShaderMaterial" id=21]
-resource_local_to_scene = true
-shader = ExtResource( 12 )
-shader_param/line_color = Color( 1, 1, 0, 0 )
-shader_param/line_thickness = 5.0
-
-[sub_resource type="ShaderMaterial" id=22]
-resource_local_to_scene = true
-shader = ExtResource( 12 )
-shader_param/line_color = Color( 1, 1, 0, 0 )
-shader_param/line_thickness = 5.0
+task_resource = SubResource( 21 )
+ui_resource = SubResource( 22 )
+map_resource = SubResource( 18 )
 
 [node name="test" type="YSort"]
 script = ExtResource( 15 )
@@ -264,7 +250,7 @@ interact_on_exit = true
 
 [node name="standbutton2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -350 )
-interact_resource = SubResource( 10 )
+interact_resource = SubResource( 11 )
 only_main_player = true
 
 [node name="clocktext2" type="Label" parent="standbutton2"]
@@ -290,11 +276,11 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-interact_resource = SubResource( 11 )
+interact_resource = SubResource( 12 )
 
 [node name="interactpoint" parent="." instance=ExtResource( 5 )]
 position = Vector2( -450, 0 )
-interact_resource = SubResource( 16 )
+interact_resource = SubResource( 17 )
 display_text = "Interact chat"
 
 [node name="Polygon2D" type="Polygon2D" parent="interactpoint"]
@@ -328,10 +314,9 @@ __meta__ = {
 
 [node name="tasktest" parent="." instance=ExtResource( 5 )]
 position = Vector2( 450, 0 )
-interact_resource = SubResource( 21 )
+interact_resource = SubResource( 23 )
 display_text = "task test"
 
-[node name="SpawnPoints" type="Node2D" parent="."]
 [node name="Label" type="Label" parent="tasktest"]
 margin_right = 40.0
 margin_bottom = 22.0
@@ -340,6 +325,8 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SpawnPoints" type="Node2D" parent="."]
 
 [node name="Position2D" type="Position2D" parent="SpawnPoints"]
 position = Vector2( -100, 0 )
@@ -440,19 +427,19 @@ scale = Vector2( 3, 19 )
 [node name="Items" type="YSort" parent="Interactive"]
 
 [node name="Wrench" parent="Interactive/Items" instance=ExtResource( 14 )]
-material = SubResource( 21 )
+material = null
 position = Vector2( 55.4992, 31.1132 )
 
 [node name="Wrench2" parent="Interactive/Items" instance=ExtResource( 14 )]
-material = SubResource( 21 )
+material = null
 position = Vector2( -53.8174, -40.363 )
 
 [node name="Battery" parent="Interactive/Items" instance=ExtResource( 13 )]
-material = SubResource( 22 )
+material = null
 position = Vector2( 155.052, -40.363 )
 
 [node name="Battery2" parent="Interactive/Items" instance=ExtResource( 13 )]
-material = SubResource( 22 )
+material = null
 position = Vector2( -96.3763, 93.3395 )
 
 [node name="Props" type="YSort" parent="."]

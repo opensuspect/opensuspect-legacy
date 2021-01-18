@@ -57,6 +57,7 @@ remote func gettasks(tasksget):
 func state_changed_priority(old_state: int, new_state: int, priority: int):
 	if priority != 2:
 		return
+	print("(playermanager.gd/state_changed_priority)")
 	match new_state:
 		GameManager.State.Normal:
 			assignRoles(Network.get_peers())

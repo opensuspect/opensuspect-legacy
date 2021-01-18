@@ -7,8 +7,6 @@ onready var main: Node2D
 # >>>>>>> main
 signal interacted_with
 
-var _current_map: Node setget set_current_map, get_current_map
-
 func _ready():
 	set_network_master(1)
 
@@ -97,17 +95,9 @@ func parse_from_networking(dict: Dictionary):
 # <<<<<<< HEAD
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
-func state_changed(old_state, new_state):
-	match new_state:
-		GameManager.State.Normal:
-			var map: Node = get_tree().get_root().get_node("Main/maps").get_child(0)
-			set_current_map(map)
 
 func get_current_map() -> Node:
-	return _current_map
-
-func set_current_map(map: Node) -> void:
-	_current_map = map
+	return get_tree().get_root().get_node("Main/maps").get_child(0)
 
 # =======
 func gen_node_keys(dict: Dictionary) -> Array:
