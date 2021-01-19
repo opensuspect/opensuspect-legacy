@@ -81,11 +81,11 @@ func roles_assigned(playerRoles: Dictionary):
 func _checkRole(role: String) -> void:
 	"""Performs certain functions depending on the passed in role parameter."""
 	match role:
-		"traitor":
+		"infiltrator":
 			set_collision_layer_bit(3, true)
 			if not has_node("Infiltrator"):
 				add_child(infiltrator_scene.instance())
-		"detective":
+		"agent":
 			if has_node("Infiltrator"):
 				get_node("Infiltrator").queue_free()
 		"default":
@@ -95,12 +95,12 @@ func _checkRole(role: String) -> void:
 
 func changeNameColor(role: String):
 	match role:
-		"traitor":
-			if PlayerManager.ourrole == "traitor":
-				setNameColor(PlayerManager.playerColors["traitor"])
-		"detective":
-			#not checking if our role is detective because everyone should see detectives
-			setNameColor(PlayerManager.playerColors["detective"])
+		"infiltrator":
+			if PlayerManager.ourrole == "infiltrator":
+				setNameColor(PlayerManager.playerColors["infiltrator"])
+		"agent":
+			#not checking if our role is agent because everyone should see agents
+			setNameColor(PlayerManager.playerColors["agent"])
 		"default":
 			setNameColor(PlayerManager.playerColors["default"])
 

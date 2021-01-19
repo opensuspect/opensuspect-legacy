@@ -28,24 +28,24 @@ func _on_roles_assigned(player_roles : Dictionary):
 
 	display_timer.start()
 	PlayerManager.inMenu = true
-	var we_are_traitor = PlayerManager.ourrole == "traitor"
-	if we_are_traitor:
-		# makes _generate_info return only traitor PlayerInfo
-		var only_traitor_dict: Dictionary = {
-			"traitor": PlayerManager.playerColors["traitor"]}
-		_create_info(player_roles, only_traitor_dict)
+	var we_are_infiltrator = PlayerManager.ourrole == "infiltrator"
+	if we_are_infiltrator:
+		# makes _generate_info return only infiltrator PlayerInfo
+		var only_infiltrator_dict: Dictionary = {
+			"infiltrator": PlayerManager.playerColors["infiltrator"]}
+		_create_info(player_roles, only_infiltrator_dict)
 
-		team_label.text = "Traitor"
-		team_label.set("custom_colors/font_color", PlayerManager.playerColors["traitor"])
+		team_label.text = "Infiltrator"
+		team_label.set("custom_colors/font_color", PlayerManager.playerColors["infiltrator"])
 	else:
 		# _generate_info will return everyone's PlayerInfo
 		var everyone_dict: Dictionary = {
-			"traitor": PlayerManager.playerColors["default"], # we are camouflaging the traitors
+			"infiltrator": PlayerManager.playerColors["default"], # we are camouflaging the infiltrators
 			"default": PlayerManager.playerColors["default"],
-			"detective": PlayerManager.playerColors["detective"]}
+			"agent": PlayerManager.playerColors["agent"]}
 		_create_info(player_roles, everyone_dict)
-		team_label.text = "Good guys"
-		team_label.set("custom_colors/font_color", PlayerManager.playerColors["detective"])
+		team_label.text = "Agent"
+		team_label.set("custom_colors/font_color", PlayerManager.playerColors["agent"])
 
 	self.show()
 

@@ -14,14 +14,14 @@ var ournumber
 #in case of tie (check main.gd for details).
 enum assignStyle {Percent, Amount}
 var style: int = assignStyle.Percent
-var enabledRoles: Array = ["traitor", "detective", "default"]
-var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "mustAssign": true, "team": 1}, 
-						"detective": {"percent": float(1)/7, "amount": 1, "mustAssign": false, "team": 0}, 
+var enabledRoles: Array = ["infiltrator", "agent", "default"]
+var roles: Dictionary = {"infiltrator": {"percent": float(2)/7, "amount": 1, "mustAssign": true, "team": 1}, 
+						"agent": {"percent": float(1)/7, "amount": 1, "mustAssign": false, "team": 0}, 
 						"default": {"percent": 0, "amount": 0, "mustAssign": false, "team": 0}}
 var players: Dictionary = {}
 var playerRoles: Dictionary = {}
-var playerColors: Dictionary = {enabledRoles[0]: Color(1,0,0),# traitor
-								enabledRoles[1]: Color(0,0,1),# detective
+var playerColors: Dictionary = {enabledRoles[0]: Color(1,0,0),# infiltrator
+								enabledRoles[1]: Color(0,0,1),# agent
 								enabledRoles[2]: Color(1,1,1)}# default
 var rng = RandomNumberGenerator.new()
 signal roles_assigned
