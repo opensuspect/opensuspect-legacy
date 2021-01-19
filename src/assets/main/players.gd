@@ -46,6 +46,9 @@ puppetsync func createPlayer(id: int, playerName: String, spawnPoint: Vector2 = 
 		newPlayer.main_player = true
 		newPlayer.connect("main_player_moved", self, "_on_main_player_moved")
 		self.connect("positions_updated", newPlayer, "_on_positions_updated")
+		var player_item_handler: ItemHandler = newPlayer.get_node("ItemHandler")
+		player_item_handler.connect("main_player_picked_up_item", self, "_on_main_player_picked_up_item")
+		player_item_handler.connect("main_player_dropped_item", self, "_on_main_player_dropped_item")
 	players[id] = newPlayer
 	add_child(newPlayer)
 	newPlayer.move_to(spawnPoint, Vector2(0,0))
@@ -146,3 +149,46 @@ func state_changed_priority(old_state: int, new_state, priority: int):
 	print("(players.gd/state_changed_priority)")
 	if new_state == GameManager.State.Lobby or new_state == GameManager.State.Normal:
 		rpc("createPlayers", Network.get_player_names(), get_parent().player_spawn_points)
+
+
+#---------------------------------------------------------------
+# Items related stuff, maybe should have their own script?
+#---------------------------------------------------------------
+
+func _on_main_player_picked_up_item(item_path: String) -> void:
+	"""Runs when the main player sends a request to pick up an item."""
+	rpc_id(1, "player_picked_up_item", item_path)
+
+func _on_main_player_dropped_item() -> void:
+	"""Runs when the main player sends a request to drop an item."""
+	rpc_id(1, "player_dropped_item")
+
+remotesync func player_picked_up_item(item_path: String) -> void:
+	"""Runs on the server; RPCs all clients to have a player pick up an item."""
+	if not get_tree().is_network_server():
+		return
+	var id: int = get_tree().get_rpc_sender_id()
+	if not players.keys().has(id):
+		return
+	rpc("pick_up_item", id, item_path)
+
+remotesync func player_dropped_item() -> void:
+	"""Runs on the server; RPCs all clients to have a player drop an item."""
+	if not get_tree().is_network_server():
+		return
+	var id: int = get_tree().get_rpc_sender_id()
+	if not players.keys().has(id):
+		return
+	rpc("drop_item", id)
+
+puppetsync func pick_up_item(id: int, item_path: String) -> void:
+	"""Actually have a player pick up an item."""
+	var player_item_handler: ItemHandler = players[id].item_handler
+	var found_item: Item = get_tree().get_root().get_node(item_path)
+	player_item_handler.pick_up(found_item)
+
+puppetsync func drop_item(id: int) -> void:
+	"""Actually have a player drop an item."""
+	var player_item_handler: ItemHandler = players[id].item_handler
+	var item: Item = player_item_handler.picked_up_item
+	player_item_handler.drop(item)
