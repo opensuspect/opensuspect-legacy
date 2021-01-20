@@ -28,6 +28,12 @@ func _on_roles_assigned(player_roles : Dictionary):
 
 	display_timer.start()
 	PlayerManager.inMenu = true
+	""" 
+	TODO: 
+	Make this more flexible, and use a dictionary to make it easier to add more roles. We can't have a separate variable for each role like this or it will be very difficult to add more.
+
+	"""
+
 	var we_are_infiltrator = PlayerManager.ourrole == "infiltrator"
 	if we_are_infiltrator:
 		# makes _generate_info return only infiltrator PlayerInfo
@@ -40,12 +46,12 @@ func _on_roles_assigned(player_roles : Dictionary):
 	else:
 		# _generate_info will return everyone's PlayerInfo
 		var everyone_dict: Dictionary = {
-			"infiltrator": PlayerManager.playerColors["default"], # we are camouflaging the infiltrators
-			"default": PlayerManager.playerColors["default"],
-			"agent": PlayerManager.playerColors["agent"]}
+			"infiltrator": PlayerManager.playerColors["agent"], # we are camouflaging the infiltrators
+			"agent": PlayerManager.playerColors["agent"],
+			"detective": PlayerManager.playerColors["detective"]}
 		_create_info(player_roles, everyone_dict)
-		team_label.text = "Agent"
-		team_label.set("custom_colors/font_color", PlayerManager.playerColors["agent"])
+		team_label.text = "Detective"
+		team_label.set("custom_colors/font_color", PlayerManager.playerColors["detective"])
 
 	self.show()
 

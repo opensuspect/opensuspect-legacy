@@ -85,10 +85,10 @@ func _checkRole(role: String) -> void:
 			set_collision_layer_bit(3, true)
 			if not has_node("Infiltrator"):
 				add_child(infiltrator_scene.instance())
-		"agent":
+		"detective":
 			if has_node("Infiltrator"):
 				get_node("Infiltrator").queue_free()
-		"default":
+		"agent":
 			set_collision_layer_bit(2, true)
 			if has_node("Infiltrator"):
 				get_node("Infiltrator").queue_free()
@@ -98,11 +98,11 @@ func changeNameColor(role: String):
 		"infiltrator":
 			if PlayerManager.ourrole == "infiltrator":
 				setNameColor(PlayerManager.playerColors["infiltrator"])
+		"detective":
+			#not checking if our role is detective because everyone should see detectives
+			setNameColor(PlayerManager.playerColors["detective"])
 		"agent":
-			#not checking if our role is agent because everyone should see agents
 			setNameColor(PlayerManager.playerColors["agent"])
-		"default":
-			setNameColor(PlayerManager.playerColors["default"])
 
 func setNameColor(newColor: Color):
 	$Label.set("custom_colors/font_color", newColor)
