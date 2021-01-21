@@ -41,8 +41,11 @@ resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 8 )
 task_text = ""
+random_numbers = 0
+task_id = -1
 ui_resource = SubResource( 2 )
 outputs/toggle_map_interactions = false
+is_task_global = false
 
 [sub_resource type="Resource" id=4]
 resource_local_to_scene = true
@@ -98,9 +101,12 @@ advanced/only_instance = false
 resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = "Task system clockset standbutton"
+random_numbers = 2
+task_id = -1
 ui_resource = SubResource( 8 )
 outputs/toggle_map_interactions = true
 outputs/output_map_interactions = [ SubResource( 7 ) ]
+is_task_global = true
 
 [sub_resource type="Resource" id=10]
 resource_local_to_scene = true
@@ -153,8 +159,11 @@ advanced/only_instance = false
 resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = ""
+random_numbers = 0
+task_id = -1
 ui_resource = SubResource( 14 )
 outputs/toggle_map_interactions = false
+is_task_global = false
 
 [sub_resource type="Resource" id=16]
 resource_local_to_scene = true
@@ -207,9 +216,12 @@ advanced/only_instance = false
 resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = "Task system clockset"
+random_numbers = 2
+task_id = -1
 ui_resource = SubResource( 20 )
 outputs/toggle_map_interactions = true
 outputs/output_map_interactions = [ SubResource( 19 ) ]
+is_task_global = false
 
 [sub_resource type="Resource" id=22]
 resource_local_to_scene = true

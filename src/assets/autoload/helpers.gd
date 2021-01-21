@@ -101,6 +101,9 @@ func map(in_value: float, in_value_min: float, in_value_max: float, out_value_mi
 	"""Map a value from an input range to an output range."""
 	return (in_value - in_value_min) * (out_value_max - out_value_min) / (in_value_max - in_value_min) + out_value_min
 
+func filename_to_label(filename: String) -> String:
+	return filename.replace("_", " ").replace("-", " and ")
+
 func get_absolute_path_to(node: Node, subname: String = ""):
 	var path: String = get_tree().get_root().get_path_to(node)
 	if subname != "":

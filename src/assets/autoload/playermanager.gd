@@ -6,9 +6,6 @@ extends Node
 var inMenu = false
 var ourrole
 var ournumber
-var tasks = [-1]
-var taskstoassign
-var assignedtasks
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
 #mustAssign specifies if the role is mandatory to have, team specifies a team number which
@@ -34,34 +31,16 @@ func _ready():
 # warning-ignore:return_value_discarded
 	GameManager.connect("state_changed_priority", self, "state_changed_priority")
 
-func assigntasks():
-	for id in Network.peers:
-		taskstoassign = tasks
-		for task in taskstoassign:
-			if task == -1:
-				rng.randomize()
-				taskstoassign[task] = rng.randi_range(-1,0)
-				print("task assigned,",taskstoassign[task])
-		if id == 1:
-			assignedtasks = taskstoassign
-			print("host tasks assigned",taskstoassign)
-		else:
-			rpc_id(id,"gettasks",taskstoassign)
-			print("client tasks assigned",taskstoassign)
-
-remote func gettasks(tasksget):
-	assignedtasks = tasksget
-	print("we got our tasks!")
-
 # warning-ignore:unused_argument
 func state_changed_priority(old_state: int, new_state: int, priority: int):
-	if priority != 2:
+	if priority != 3:
 		return
 	print("(playermanager.gd/state_changed_priority)")
 	match new_state:
 		GameManager.State.Normal:
 			assignRoles(Network.get_peers())
 		GameManager.State.Lobby:
+			TaskManager.reset_tasks()
 			#revoke special roles when players move to lobby
 			for i in playerRoles.keys():
 				playerRoles[i] = "default"
@@ -77,7 +56,7 @@ func assignRoles(players: Array):
 	toAssign.shuffle()
 	#print(toAssign)
 	var playerAmount = toAssign.size()
-	assigntasks()
+	TaskManager.assign_tasks()
 
 	#if using percent, find how many of each role to assign
 	if style == assignStyle.Percent:
