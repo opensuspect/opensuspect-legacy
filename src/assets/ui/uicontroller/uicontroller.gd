@@ -21,6 +21,8 @@ func _ready():
 	UIManager.connect("update_ui", self, "update_ui")
 # warning-ignore:return_value_discarded
 	UIManager.connect("free_ui", self, "free_ui")
+# warning-ignore:return_value_discarded
+	UIManager.connect("close_all_ui", self, "close_all_ui")
 	var err = config.load("user://settings.cfg")
 	if err == OK:
 		$ColorblindRect.material.set_shader_param(
@@ -94,6 +96,10 @@ func free_ui(ui_name: String):
 	if current_ui == null:
 		return
 	current_ui.queue_free()
+
+func close_all_ui(free: bool = false):
+	for ui in UIManager.open_uis:
+		close_ui(ui, free)
 
 func get_ui(ui_name: String):
 	update_instanced_uis()

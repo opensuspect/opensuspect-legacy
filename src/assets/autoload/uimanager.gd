@@ -35,6 +35,7 @@ signal close_ui(ui_name, free)
 signal instance_ui(ui_name, ui_data)
 signal update_ui(ui_name, ui_data)
 signal free_ui(ui_name)
+signal close_all_ui()
 
 func _ready():
 	configfile = ConfigFile.new()
@@ -81,6 +82,9 @@ func free_ui(ui_name: String):
 	if not ui_list.keys().has(ui_name):
 		push_error("free_ui() called with invalid ui name " + ui_name)
 	emit_signal("free_ui", ui_name)
+
+func close_all_ui(free: bool = false):
+	emit_signal("close_all_ui", free)
 
 func get_ui(ui_name: String):
 	if not ui_list.keys().has(ui_name):
