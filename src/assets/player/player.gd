@@ -52,7 +52,7 @@ func _ready():
 	skeleton.move_child(item_handler, 6)
 	item_transform.remote_path = item_transform.get_path_to(item_handler)
 
-	print_debug("(player.gd/_ready)")
+	#print_debug("(player.gd/_ready)")
 	# Reparent Skeleton Node2D to SpritesViewport
 	remove_child(skeleton)
 	sprites_viewport.add_child(skeleton)

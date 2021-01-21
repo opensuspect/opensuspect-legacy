@@ -41,6 +41,9 @@ func _input(event: InputEvent) -> void:
 
 func _exit_tree() -> void:
 	# Drop the player's item when a player node is destroyed, e.g. when they disconnect
+	if get_child_count() == 0:
+		return
+	# print("(itemhandler.gd/_exit_tree)")
 	emit_signal("main_player_dropped_item")
 
 func _get_target() -> void:
@@ -68,6 +71,7 @@ func pick_up(item: Item) -> void:
 	"""Pick up an item."""
 	if item == null:
 		return
+	# print("(item_handler.gd/pick_up)")
 	item.holding_player = player
 	picked_up_item = item
 	item.picking_up()
@@ -78,6 +82,7 @@ func drop(item: Item) -> void:
 	"""Drop an item."""
 	if item == null:
 		return
+	# print("(item_handler.gd/drop)")
 	remove_child(item)
 	picked_up_item = null
 	item.dropped()

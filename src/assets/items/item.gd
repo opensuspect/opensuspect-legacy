@@ -17,7 +17,7 @@ func _ready() -> void:
 
 	# Wait another frame for map to finish setting up
 	yield(get_tree(), "idle_frame")
-	print("(items.gd/_ready)")
+	# print("(items.gd/_ready)")
 	map_items = MapManager.get_current_map().items
 
 func _physics_process(delta: float) -> void:

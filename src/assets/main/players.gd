@@ -157,10 +157,12 @@ func state_changed_priority(old_state: int, new_state, priority: int):
 
 func _on_main_player_picked_up_item(item_path: String) -> void:
 	"""Runs when the main player sends a request to pick up an item."""
+	# print("(players.gd/_on_main_player_picked_up_item) ", item_path)
 	rpc_id(1, "player_picked_up_item", item_path)
 
 func _on_main_player_dropped_item() -> void:
 	"""Runs when the main player sends a request to drop an item."""
+	# print("(players.gd/_on_main_player_dropped_item)")
 	rpc_id(1, "player_dropped_item")
 
 remotesync func player_picked_up_item(item_path: String) -> void:
@@ -170,6 +172,7 @@ remotesync func player_picked_up_item(item_path: String) -> void:
 	var id: int = get_tree().get_rpc_sender_id()
 	if not players.keys().has(id):
 		return
+	# print("(players.gd/player_picked_up_item) player=", id, " item=", item_path)
 	rpc("pick_up_item", id, item_path)
 
 remotesync func player_dropped_item() -> void:
@@ -179,16 +182,19 @@ remotesync func player_dropped_item() -> void:
 	var id: int = get_tree().get_rpc_sender_id()
 	if not players.keys().has(id):
 		return
+	# print("(players.gd/player_dropped_item) player=", id)
 	rpc("drop_item", id)
 
 puppetsync func pick_up_item(id: int, item_path: String) -> void:
 	"""Actually have a player pick up an item."""
 	var player_item_handler: ItemHandler = players[id].item_handler
 	var found_item: Item = get_tree().get_root().get_node(item_path)
+	# print("(players.gd/player_picked_up_item) player=", id, " item=", item_path)
 	player_item_handler.pick_up(found_item)
 
 puppetsync func drop_item(id: int) -> void:
 	"""Actually have a player drop an item."""
 	var player_item_handler: ItemHandler = players[id].item_handler
 	var item: Item = player_item_handler.picked_up_item
+	# print("(players.gd/player_dropped_item) player=", id)
 	player_item_handler.drop(item)
