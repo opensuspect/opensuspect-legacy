@@ -24,7 +24,7 @@ length = 10.0
 ]]
 script = ExtResource( 2 )
 __meta__ = {
-"_editor_description_": "Node that gets instantiated as a child of a player when they are assigned the role of \"traitor\"."
+"_editor_description_": "Node that gets instantiated as a child of a player when they are assigned the role of \"infiltrator\"."
 }
 ui_interact_resource = SubResource( 1 )
 
