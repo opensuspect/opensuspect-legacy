@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/ui/hud/defaulthud/taskinfo/taskinfo.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 0.15
+anchor_bottom = 0.2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+display_other_player_tasks = false
+
+[node name="Button" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+text = "Tasks"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
