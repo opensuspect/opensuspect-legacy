@@ -6,15 +6,9 @@ onready var display_timer: Timer = $DisplayTimer
 onready var team_label: Label = $CenterContainer/TeamLabel
 onready var player_info_container: HBoxContainer = $PlayerInfoContainer
 
-var mutex: Mutex = Mutex.new()
 func _ready():
-	# we need to get notified if new roles get assigned
-	# usually happens on the client
 	# warning-ignore:return_value_discarded
 	PlayerManager.connect("roles_assigned", self, "_on_roles_assigned")
-	# we have to call this in case the roles had already been assigned
-	# usually happens on the server
-	_on_roles_assigned(PlayerManager.playerRoles)
 	# warning-ignore:return_value_discarded
 	display_timer.connect("timeout", self, "_clean_up")
 	
@@ -30,17 +24,8 @@ func reset():
 func _on_roles_assigned(player_roles: Dictionary):
 	if GameManager.state != GameManager.State.Normal:
 		return
-	# wait here in case that the signal gets emmited, but the call
-	# from _ready() hasn't compleated yet
-	mutex.lock()
-	# a funny thing is observed here.
-	# if you comment out reset() and uncomment _clean_up()
-	# the server side functions as before, whereas on the client side
-	# the rolescreen just blinks(as is the expected behaviour)
-	# _clean_up()
 	reset()
 	populate_player_info_container(player_roles)
-	mutex.unlock()
 
 func populate_player_info_container(player_roles: Dictionary):
 	display_timer.start()
