@@ -174,6 +174,14 @@ func get_player_name(id: int = myID) -> String:
 func get_peers() -> Array:
 	return peers
 
+func reset():
+	peers = []
+	names = {}
+	server = null
+	client = null
+	myID = 1
+	player_name = ""
+
 # warning-ignore:unused_argument
 func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
 	if priority != 0:
@@ -185,3 +193,5 @@ func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -
 		GameManager.State.Lobby:
 			print('Network manager allowing connections')
 			get_tree().set_refuse_new_network_connections(false)
+		GameManager.State.Start:
+			reset()
