@@ -201,11 +201,11 @@ func register_task(task_resource: Resource):
 		return
 
 func _tasks_registered(_old_state, new_state, priority):
+	if priority != 2:
+		return
 	if not get_tree().is_network_server():
 		return
 	if new_state != GameManager.State.Normal:
-		return
-	if priority != 2:
 		return
 	var registered_tasks = []
 	for task_resource in task_dict.values():
