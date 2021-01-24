@@ -64,17 +64,8 @@ master func _on_maps_spawn(spawnPositions: Array):
 	$players.spawn_pos = spawnPositions[0]
 	#generate spawn point dict
 	var spawnPointDict: Dictionary = {}
-# <<<<<<< HEAD (from Jngo's PR with the items and inventory)
-#	for i in players.keys().size():
-#		spawnPointDict[players.keys()[i]] = spawnPositions[i % spawnPositions.size()]
-#		if spawnPointDict[players.keys()[i]] == null:
-#			spawnPointDict[players.keys()[i]] = spawn_pos
-#	#spawn players
-#	rpc("createPlayers", Network.get_player_names(), spawnPointDict)
-# =======
 	for i in $players.players.keys().size():
 		spawnPointDict[$players.players.keys()[i]] = spawnPositions[i % spawnPositions.size()]
 		if spawnPointDict[$players.players.keys()[i]] == null:
 			spawnPointDict[$players.players.keys()[i]] = $players.spawn_pos
 	player_spawn_points = spawnPointDict
-# >>>>>>> main

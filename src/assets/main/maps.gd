@@ -1,22 +1,15 @@
 extends Node2D
 
-# <<<<<<< HEAD (Jngo's item handler stuff)
-# const maps_path: String = "res://assets/maps/"
-# =======
 #var maps: Dictionary = {"lobby": {"dir": preload("res://assets/maps/lobby/lobby.tscn")}, "test": {"dir": preload("res://assets/maps/test/test.tscn")}}
 var map_info: Dictionary = {}
 
 var map_info_dir: String = "res://assets/maps/mapinfo/"
-#const MapInfo = preload("res://assets/maps/mapinfo/mapinforesource/mapinfo.gd")
-# >>>>>>> main
+
 
 signal spawn(position, frommap)
 
-# <<<<<<< HEAD (Jngo's item handler stuff)
-# var current_map: Node
-# =======
 var currentMap: String = "Lobby"
-# >>>>>>> main
+
 
 # TODO
 # decouple main.gd from map loading
@@ -61,18 +54,8 @@ func switchMap(newMap: String) -> void:
 		push_error("Attempting to switch to a map that does not exist, the resource could be missing or it was parsed incorrectly.")
 		return
 	print("loading map: ", newMap)
-# <<<<<<< HEAD
-#	var map_scene: PackedScene = load(map_path) 
 	for i in get_children():
 		i.queue_free()
-# <<<<<<< HEAD
-#	var map_clone = map_scene.instance()
-#	current_map = map_clone
-#	add_child(map_clone)
-#	print("Setting current map")
-#	MapManager.set_current_map(current_map)
-#	emit_signal("spawn", get_spawn_points())
-# =======
 	currentMap = newMap
 	var mapClone: Node = instance_map(newMap)
 	# consistent name makes it easier to get spawnpoints, we should really be 

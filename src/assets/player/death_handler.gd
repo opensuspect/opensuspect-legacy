@@ -31,9 +31,7 @@ func die_by(killer_id: int) -> void:
 		player.skeleton.scale.x *= -1
 	player.set_movement_disabled(true)
 	player.anim_fsm.travel("death")
-# <<<<<<< HEAD (Jngo's PR introduced this line)
 	emit_signal("dead")
-# =======
 	# disable collisions/enable noclip
 	player.collision_mask = 0
 	# make the player sprite show on top of walls no matter what, avoids janky y-sorting

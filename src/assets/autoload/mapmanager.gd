@@ -1,10 +1,7 @@
 extends Node
 
-# <<<<<<< HEAD
 onready var main: Node2D
 
-# =======
-# >>>>>>> main
 signal interacted_with
 
 func _ready():
@@ -92,18 +89,15 @@ func parse_from_networking(dict: Dictionary):
 		return_dict[key] = Helpers.get_node_or_null_from_root(return_dict[key])
 	return return_dict
 
-# <<<<<<< HEAD
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
 
 func get_current_map() -> Node:
 	return get_tree().get_root().get_node("Main/maps").get_child(0)
 
-# =======
 func gen_node_keys(dict: Dictionary) -> Array:
 	var node_keys: Array = []
 	for key in dict.keys():
 		if dict[key] is Node:
 			node_keys.append(key)
 	return node_keys
-# >>>>>>> main
