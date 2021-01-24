@@ -22,7 +22,7 @@ func _enter_tree() -> void:
 # warning-ignore:return_value_discarded
 		Network.connect("connection_handled", self, "connection_handled")
 		PlayerManager.ournumber = 0
-		$players.createPlayer(Network.get_my_id(), Network.get_player_name())
+		#$players.createPlayer(Network.get_my_id(), Network.get_player_name())
 	elif Network.connection == Network.Connection.CLIENT:
 # warning-ignore:return_value_discarded
 		get_tree().connect("network_peer_disconnected", self, "_player_disconnected")

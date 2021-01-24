@@ -1,18 +1,21 @@
 [gd_scene load_steps=31 format=2]
 
-[ext_resource path="res://assets/player/textures/characters/customizable/01-left-arm/white-shirt-red-sweater.png" type="Texture" id=1]
-[ext_resource path="res://assets/player/textures/characters/customizable/07-clothes/white-shirt-red-sweater.png" type="Texture" id=2]
-[ext_resource path="res://assets/player/textures/characters/customizable/02-body/black-round-eyes.png" type="Texture" id=3]
-[ext_resource path="res://assets/player/textures/characters/customizable/05-pants/white-shirt-red-sweater.png" type="Texture" id=4]
-[ext_resource path="res://assets/player/textures/characters/customizable/04-left-leg/white-shirt-red-sweater.png" type="Texture" id=5]
-[ext_resource path="res://assets/player/textures/characters/customizable/11-hat-hair/short-hair.png" type="Texture" id=6]
-[ext_resource path="res://assets/player/textures/characters/customizable/09-facial-hair/angry-eybrow-sideburns.png" type="Texture" id=7]
+[ext_resource path="res://assets/player/textures/characters/customizable/01-left-arm/white_shirt-red_sweater.png" type="Texture" id=1]
+[ext_resource path="res://assets/player/textures/characters/customizable/07-clothes/white_shirt-red_sweater.png" type="Texture" id=2]
+[ext_resource path="res://assets/player/textures/characters/customizable/02-body/black_round_eyes-big_nose.png" type="Texture" id=3]
+[ext_resource path="res://assets/player/textures/characters/customizable/05-pants/white_shirt-red_sweater.png" type="Texture" id=4]
+[ext_resource path="res://assets/player/textures/characters/customizable/04-left-leg/white_shirt-red_sweater.png" type="Texture" id=5]
+[ext_resource path="res://assets/player/textures/characters/customizable/11-hat-hair/hair_short.png" type="Texture" id=6]
+[ext_resource path="res://assets/player/textures/characters/customizable/09-facial-hair/sideburns_eyebrows_1.png" type="Texture" id=7]
 [ext_resource path="res://assets/player/textures/characters/customizable/10-face-wear/glasses.png" type="Texture" id=8]
-[ext_resource path="res://assets/player/textures/characters/customizable/08-right-arm/white-shirt-red-sweater.png" type="Texture" id=9]
-[ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/white-shirt-red-sweater.png" type="Texture" id=10]
-[ext_resource path="res://assets/player/textures/characters/customizable/03-mouth/mouth-smile.png" type="Texture" id=11]
+[ext_resource path="res://assets/player/textures/characters/customizable/08-right-arm/white_shirt-red_sweater.png" type="Texture" id=9]
+[ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/white_shirt-red_sweater.png" type="Texture" id=10]
+[ext_resource path="res://assets/player/textures/characters/customizable/03-mouth/smile.png" type="Texture" id=11]
 [ext_resource path="res://assets/common/shaders/skin_color_key.shader" type="Shader" id=12]
 [ext_resource path="res://assets/player/skeleton.gd" type="Script" id=13]
+
+
+
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true

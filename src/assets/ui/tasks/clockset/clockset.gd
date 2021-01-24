@@ -18,6 +18,7 @@ func open():
 	
 	ui_data_updated()
 
+
 func ui_data_updated():
 	if ui_data.has("task_data") and ui_data["task_data"] is Array:
 		if ui_data["task_data"].size() > 0:
@@ -36,7 +37,7 @@ func checkComplete():
 func taskComplete():
 	.complete_task({"newText": str(currentTime)})
 
-func setClockTime(newTime):
+func setClockTime(newTime: int):
 	hoursNode.value = roundDown(newTime / 100, 1)
 	minutesNode.value = newTime % 100
 
@@ -85,15 +86,19 @@ func _on_ampm_value_changed(value):
 	
 # returns a valid time(from 00:00 to 12:59)
 # num can be any value
-func normalise_time(num: int):
+func normalise_time(num: int) -> int:
 	num = num % 1259
-	return roundDown(num, 100) + (num % 100) % 60
+	num = roundDown(num, 100) + (num % 100) % 60
+	if num < 100:
+		# this is military time, so can't have values smaller than 100
+		num += 1200
+	return num
 	
-func roundDown(num, step):
+func roundDown(num, step) -> int:
 	var normRound = stepify(num, step)
 	if normRound > num:
 		return normRound - step
-	return normRound
+	return int(normRound)
 
 #so you can't type into the spinboxes
 func _on_hours_focus_entered():

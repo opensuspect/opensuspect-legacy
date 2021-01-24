@@ -8,6 +8,8 @@ OpenSuspect is an open source online social deduction game, like mafia.
 
 OpenSuspect aims to be easily modifiable, however, our first maps are going to be focused around cold war themes.
 
+OpenSuspect uses the [`Godot Engine`](https://godotengine.org/).
+
 This project is in *very early stage* development.
 Interested to get involved? We'd love to hear from you.
 Join us at [`#opensuspect:matrix.org`](https://matrix.to/#/#opensuspect:matrix.org) on a Matrix client (element.io).
@@ -38,8 +40,8 @@ The main aims of the game:
 * multiplayer up to 15 players,
 * in game text chat,
 * role assignment,
-* tasks to perform for a clean victory of the "home team",
-* sabotage system for a clean victory of the "traitor team",
+* tasks to perform for a clean victory of the "agent team",
+* sabotage system for a clean victory of the "infiltrator team",
 * kill system,
 * mechanics for meetings,
 * unique miscellaneous map features (e.g. intercom system, environmental kills),

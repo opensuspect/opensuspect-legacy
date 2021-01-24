@@ -69,8 +69,10 @@ master func complete_task_remote(task_info: Dictionary, task_data: Dictionary = 
 	# If the task is not global, just advance it, so that we know that
 	# the client has completed it
 	elif completed or advance_task(task_info, task_state.COMPLETED):
-		rpc_id(task_info[PLAYER_ID_KEY], "task_completed", task_info, task_data)
-		emit_signal("task_completed", task_info)
+		if task_info[PLAYER_ID_KEY] == 1:
+			emit_signal("task_completed", task_info)
+		else:
+			rpc_id(task_info[PLAYER_ID_KEY], "task_completed", task_info, task_data)
 
 # Called on the client that the task was completed
 # or on all the clients if the completed task was global
@@ -90,9 +92,8 @@ func complete_task(task_info: Dictionary, data: Dictionary = {}) -> bool:
 		return false
 	if not advance_task(task_info, task_state.COMPLETED):
 		return false
-	if get_task_resource(task_id).complete_task(player_id, data): 
-		return true
-	return false
+
+	return get_task_resource(task_id).complete_task(player_id, data)
 
 # A callback that the server calls when it successfully compleats a task
 puppet func task_completed(task_info: Dictionary, data: Dictionary):
@@ -251,10 +252,11 @@ func assign_tasks():
 	var tasks_to_assign = TaskManager.task_dict
 	# assign global tasks
 	for task in tasks_to_assign:
-		if is_task_global(task):
-			if rng.randi_range(-1,0) < 0:
-				assign_task(gen_task_info(task, GLOBAL_TASK_PLAYER_ID))
-				print("global task assigned,",tasks_to_assign[task])
+		if not is_task_global(task):
+			continue
+		if rng.randi_range(-1,0) < 0:
+			assign_task(gen_task_info(task, GLOBAL_TASK_PLAYER_ID))
+			print("global task assigned,",tasks_to_assign[task])
 	# assign regular tasks
 	for id in Network.peers:
 		for task in tasks_to_assign.keys():
