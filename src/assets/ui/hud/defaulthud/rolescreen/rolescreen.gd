@@ -30,10 +30,8 @@ func _on_roles_assigned(player_roles: Dictionary):
 func populate_player_info_container(player_roles: Dictionary):
 	display_timer.start()
 
-  """ 
-	TODO: 
-	Make this more flexible, and use a dictionary to make it easier to add more roles. We can't have a separate variable for each role like this or it will be very difficult to add more.
-	"""
+	# TODO: Make this more flexible, and use a dictionary to make it easier to add more roles.
+	# We can't have a separate variable for each role like this or it will be very difficult to add more.
 
 	var we_are_infiltrator = PlayerManager.ourrole == "infiltrator"
 	if we_are_infiltrator:
@@ -72,7 +70,7 @@ func _create_info(player_roles: Dictionary, role_colors: Dictionary) -> void:
 	var player_group_members = get_tree().get_nodes_in_group("players")
 	var player_sprite_collection: Dictionary = {}
 	for player in player_group_members:
-		if player_roles.has(player.id):
+		if filtered_ids.has(player.id):
 			var skeleton: Node2D = player.get_node("SpritesViewport/Skeleton")
 			skeleton = skeleton.duplicate()
 			skeleton.use_parent_material = false
