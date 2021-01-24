@@ -10,8 +10,9 @@ ui_name = "killui"
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = true
+advanced/free_on_close = false
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 60.0

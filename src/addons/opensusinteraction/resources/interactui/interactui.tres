@@ -10,5 +10,6 @@ ui_name = ""
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false

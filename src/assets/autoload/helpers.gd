@@ -87,6 +87,7 @@ func filename_to_label(filename: String) -> String:
 
 func get_absolute_path_to(node: Node, subname: String = ""):
 	var path: String = get_tree().get_root().get_path_to(node)
+	path = "/root/" + path
 	if subname != "":
 		path = path + ":" + subname
 	return NodePath(path)
@@ -105,3 +106,36 @@ func get_node_property_from_root(path: NodePath):
 	var node = get_node_from_root(path)
 	var subnames = path.get_concatenated_subnames()
 	return node.get_indexed(subnames)
+
+func object_has_method_with_args(object: Object, method: String, args: Array) -> bool:
+	var method_args: Array = get_object_method_arg_names(object, method)
+	for arg in args:
+		if not method_args.has(arg):
+			return false
+	return true
+
+func object_has_method_with_arg(object: Object, method: String, arg: String) -> bool:
+	var method_args: Array = get_object_method_arg_names(object, method)
+	var arg_names
+	return method_args.has(arg)
+
+func get_object_method_arg_amount(object: Object, method: String) -> int:
+	return get_object_method_args(object, method).size()
+
+func get_object_method_arg_names(object: Object, method: String) -> Array:
+	var method_args: Array = get_object_method_args(object, method)
+	var arg_names: Array = []
+	for arg in method_args:
+		arg_names.append(arg["name"])
+	print(arg_names)
+	return arg_names
+
+func get_object_method_args(object: Object, method: String) -> Array:
+	var object_methods: Array = object.get_method_list()
+	for method_data in object_methods:
+		if method_data["name"] != method:
+			continue
+		print(method_data)
+		print(method_data["args"])
+		return method_data["args"]
+	return []
