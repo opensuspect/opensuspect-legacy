@@ -18,7 +18,11 @@ func _ready():
 # warning-ignore:return_value_discarded
 	UIManager.connect("instance_ui", self, "instance_ui")
 # warning-ignore:return_value_discarded
+	UIManager.connect("update_ui", self, "update_ui")
+# warning-ignore:return_value_discarded
 	UIManager.connect("free_ui", self, "free_ui")
+# warning-ignore:return_value_discarded
+	UIManager.connect("close_all_ui", self, "close_all_ui")
 	var err = config.load("user://settings.cfg")
 	if err == OK:
 		$ColorblindRect.material.set_shader_param(
@@ -73,11 +77,29 @@ func instance_ui(ui_name: String, ui_data: Dictionary = {}):
 	instanced_uis[ui_name] = new_ui
 	add_child(new_ui)
 
+func update_ui(ui_name: String, ui_data: Dictionary = {}):
+	update_instanced_uis()
+	if not instanced_uis.has(ui_name):
+		return
+	var current_ui = get_ui(ui_name)
+	if ui_data != {} and current_ui.get("ui_data") != null:
+		current_ui.ui_data = ui_data
+	#call update on a lower class, handles ui system integration
+	if current_ui.has_method("base_update"):
+		current_ui.base_update()
+	#call update on the inherited class, most likely the script attached to a given task or menu
+	if current_ui.has_method("update"):
+		current_ui.update()
+
 func free_ui(ui_name: String):
 	var current_ui = get_ui(ui_name)
 	if current_ui == null:
 		return
 	current_ui.queue_free()
+
+func close_all_ui(free: bool = false):
+	for ui in UIManager.open_uis:
+		close_ui(ui, free)
 
 func get_ui(ui_name: String):
 	update_instanced_uis()

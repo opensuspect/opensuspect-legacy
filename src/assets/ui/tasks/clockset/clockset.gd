@@ -14,34 +14,30 @@ func _ready():
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
 
 func open():
-	if ui_data.has("currentTime"):
-		currentTime = ui_data["currentTime"]
 # warning-ignore:narrowing_conversion
-	targetTime = round(rand_range(100, 1259))
-	targetTime = roundDown(targetTime, 100) + (targetTime % 100) % 60
+	
+	ui_data_updated()
+
+
+func ui_data_updated():
+	if ui_data.has("task_data") and ui_data["task_data"] is Array:
+		if ui_data["task_data"].size() > 0:
+			targetTime = normalise_time(ui_data["task_data"][0])
+		if ui_data["task_data"].size() > 1:
+			currentTime = normalise_time(ui_data["task_data"][1])
+	
 	setClockTime(currentTime)
 	setWatchTime(targetTime)
-	#print("current time: ", currentTime)
-
-#func close():
-#	pass
-
+		
 func checkComplete():
 	updateCurrentTime()
 	if currentTime == targetTime:
 		taskComplete()
 
 func taskComplete():
-	#theoretically this is where it would hook into the task manager
-	#gotcha!
-	PlayerManager.assignedtasks[0] = 1
-#	print("clockset task complete")
-#	if ui_data.keys().has("linkedNode"):
-#		MapManager.interact_with(ui_data["linkedNode"], self, {"newText": str(currentTime)})
 	.complete_task({"newText": str(currentTime)})
-	#hide()
 
-func setClockTime(newTime):
+func setClockTime(newTime: int):
 	hoursNode.value = roundDown(newTime / 100, 1)
 	minutesNode.value = newTime % 100
 
@@ -50,12 +46,6 @@ func setWatchTime(newTime):
 
 func updateCurrentTime():
 	currentTime = (hoursNode.value * 100) + minutesNode.value
-
-func roundDown(num, step):
-	var normRound = stepify(num, step)
-	if normRound > num:
-		return normRound - step
-	return normRound
 
 func _on_hours_value_changed(value):
 	if value == 0:
@@ -93,6 +83,22 @@ func _on_ampm_value_changed(value):
 		#added spaces so the number doesn't show up in spinbox
 		ampmNode.prefix = "PM" + "     "
 	checkComplete()
+	
+# returns a valid time(from 00:00 to 12:59)
+# num can be any value
+func normalise_time(num: int) -> int:
+	num = num % 1259
+	num = roundDown(num, 100) + (num % 100) % 60
+	if num < 100:
+		# this is military time, so can't have values smaller than 100
+		num += 1200
+	return num
+	
+func roundDown(num, step) -> int:
+	var normRound = stepify(num, step)
+	if normRound > num:
+		return normRound - step
+	return int(normRound)
 
 #so you can't type into the spinboxes
 func _on_hours_focus_entered():

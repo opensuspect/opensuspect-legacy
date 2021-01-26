@@ -5,6 +5,8 @@ extends Resource
 
 export(String) var task_text
 
+export(int) var random_numbers = 0
+
 var item_inputs_on: bool
 var item_inputs: PoolStringArray
 
@@ -17,6 +19,8 @@ var map_outputs: Array
 var task_outputs_on: bool
 var task_outputs: Array
 
+var is_task_global: bool = false
+
 #needed to instance new unique resources in editor
 var base_ui_resource: Resource = ResourceLoader.load("res://addons/opensusinteraction/resources/interactui/interactui.tres")
 var base_map_resource:Resource = ResourceLoader.load("res://addons/opensusinteraction/resources/interactmap/interactmap.tres")
@@ -27,14 +31,17 @@ var ui_res: Resource = base_ui_resource.duplicate()
 #node this task is attached to
 var attached_to: Node
 
-#assigned at runtime when registered by TaskManager
-var task_id: int
+#assigned by a programmer when added to the scene
+#needs to be unique
+export var task_id: int = TaskManager.INVALID_TASK_ID
 var task_data: Dictionary = {}
-
+var task_data_player: Dictionary = {}
 var task_registered: bool = false
 
-func complete_task(data: Dictionary = {}) -> bool:
-	var temp_interact_data = task_data
+func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID,
+					data: Dictionary = {}) -> bool:
+
+	var temp_interact_data = task_data_player[player_id]
 	for key in data.keys():
 		temp_interact_data[key] = data[key]
 	if map_outputs_on:
@@ -42,21 +49,35 @@ func complete_task(data: Dictionary = {}) -> bool:
 			resource.interact(attached_to, temp_interact_data)
 	return true
 
-func assign_player(player_id: int):
-	if not task_data.keys().has("assigned_players"):
-		task_data["assigned_players"] = []
-	if task_data["assigned_players"].has(player_id):
+func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
+	
+	if task_data_player.has(player_id):
 		return
-	task_data["assigned_players"].append(player_id)
+	task_data_player[player_id] = task_data.duplicate(true)
+	var task_text = task_data["task_text"]
+	var data = []
+	assert(random_numbers >= 0)
+	randomize()
+	for i in range(random_numbers):
+		data.append(randi())
+	#var data: Dictionary = TaskGenerators.call_generator(task_text)
+	task_data_player[player_id]["task_data"] = data
 
-func registered(new_id: int, new_task_data: Dictionary):
-	task_id = new_id
+func registered(new_task_id: int, new_task_data: Dictionary):
 	for key in new_task_data.keys():
 		task_data[key] = new_task_data[key]
+	task_id = new_task_id
 	task_registered = true
 
-func get_task_data() -> Dictionary:
+func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
+	
+	if task_registered and is_task_global():
+		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
+	
 	var temp_task_data = task_data
+	if task_data_player.has(player_id):
+		temp_task_data = task_data_player[player_id]
+		
 	temp_task_data["task_id"] = task_id
 	if task_registered:
 		return temp_task_data
@@ -76,6 +97,7 @@ func gen_task_data() -> Dictionary:
 	info["task_outputs"] = task_outputs
 	info["attached_node"] = attached_to
 	info["resource"] = self
+	info["is_task_global"] = is_task_global
 	#info["ui_resource"] = ui_res
 	for key in info.keys():
 		task_data[key] = info[key]
@@ -83,14 +105,20 @@ func gen_task_data() -> Dictionary:
 
 func get_task_id() -> int:
 	return task_id
+	
+func get_task_state(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> int:
+	if not task_data_player.has(player_id):
+		#this player has not been assigned this task
+		return TaskManager.task_state.HIDDEN
+	return task_data_player[player_id]["state"]
 
-func get_task_state() -> int:
-	return task_data["state"]
-
-func set_task_state(new_state: int) -> bool:
-	task_data["state"] = new_state
+func set_task_state(player_id: int, new_state: int) -> bool:
+	task_data_player[player_id]["state"] = new_state
 	return true
 
+func is_task_global() -> bool:
+	return task_data["is_task_global"]
+	
 func interact(_from: Node = null, _interact_data: Dictionary = {}):
 	if attached_to == null and _from != null:
 		attached_to = _from
@@ -103,7 +131,7 @@ func init_resource(_from: Node):
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be initiated with no defined node")
-	task_id = TaskManager.register_task(self)
+	TaskManager.register_task(self)
 
 func get_interact_data(_from: Node = null) -> Dictionary:
 	if attached_to == null and _from != null:
@@ -169,6 +197,11 @@ func _set(property, value):
 				#print(task_outputs)
 				task_outputs[-1] = NodePath("")#base_task_resource.duplicate()
 			property_list_changed_notify()
+	
+		"is_task_global":
+			is_task_global = value
+			property_list_changed_notify()
+			
 	return true
 
 #overrides get(), allows for export var groups and display properties that don't
@@ -197,6 +230,9 @@ func _get(property):
 			return task_outputs_on
 		"outputs/output_tasks":
 			return task_outputs
+		
+		"is_task_global":
+			return is_task_global
 
 #overrides get_property_list(), tells editor to show more properties in inspector
 func _get_property_list():
@@ -271,4 +307,11 @@ func _get_property_list():
 #		"hint": PROPERTY_HINT_DIR,
 #		"hint_string": ""
 #		})
+
+	property_list.append({
+		"name": "is_task_global",
+		"type": TYPE_BOOL,
+		"usage": PROPERTY_USAGE_DEFAULT,
+		"hint": PROPERTY_HINT_NONE,
+		})
 	return property_list
