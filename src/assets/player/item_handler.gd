@@ -78,21 +78,20 @@ func pick_up(item: Item) -> void:
 	item.holding_player = player
 	picked_up_item = item
 	item.picking_up()
-	if player.has_node("Infiltrator"):
-		player.get_node("Infiltrator").enable_killing(false)
 
 func drop(item: Item) -> void:
 	"""Drop an item."""
 	if item == null:
 		return
 	# print("(item_handler.gd/drop)")
-	pickup_timer.start(1)
+	pickup_timer.start()
 	pickup_enabled = false
 	remove_child(item)
 	picked_up_item = null
 	item.dropped()
-	if player.has_node("Infiltrator"):
-		player.get_node("Infiltrator").enable_killing(true)
+
+func has_item() -> bool:
+	return not picked_up_item == null
 
 func _on_timer_timeout() -> void:
 	pickup_enabled = true

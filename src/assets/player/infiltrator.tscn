@@ -30,7 +30,7 @@ __meta__ = {
 ui_interact_resource = SubResource( 1 )
 
 [node name="KillCooldownTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 2.0
 one_shot = true
 __meta__ = {
 "_editor_description_": "Cooldown between kills (unused for now)."
