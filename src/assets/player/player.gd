@@ -69,7 +69,10 @@ func _ready():
 	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
-	PlayerManager.connect("roles_assigned", self, "roles_assigned")
+	# connecting this signal causes the player node to receive it during round
+	# switching and before the new player nodes are spawned
+	# players should probably be deleted in the cleanup phase
+#	PlayerManager.connect("roles_assigned", self, "roles_assigned")
 	AppearanceManager.connect("apply_appearance", self, "customizePlayer")
 	customizePlayer(id)
 
@@ -92,28 +95,28 @@ func roles_assigned(playerRoles: Dictionary):
 func _checkRole(role: String) -> void:
 	"""Performs certain functions depending on the passed in role parameter."""
 	match role:
-		"traitor":
+		"infiltrator":
 			set_collision_layer_bit(3, true)
 			if not has_node("Infiltrator"):
 				add_child(infiltrator_scene.instance())
 		"detective":
 			if has_node("Infiltrator"):
 				get_node("Infiltrator").queue_free()
-		"default":
+		"agent":
 			set_collision_layer_bit(2, true)
 			if has_node("Infiltrator"):
 				get_node("Infiltrator").queue_free()
 
 func changeNameColor(role: String):
 	match role:
-		"traitor":
-			if PlayerManager.ourrole == "traitor":
-				setNameColor(PlayerManager.playerColors["traitor"])
+		"infiltrator":
+			if PlayerManager.ourrole == "infiltrator":
+				setNameColor(PlayerManager.playerColors["infiltrator"])
 		"detective":
 			#not checking if our role is detective because everyone should see detectives
 			setNameColor(PlayerManager.playerColors["detective"])
-		"default":
-			setNameColor(PlayerManager.playerColors["default"])
+		"agent":
+			setNameColor(PlayerManager.playerColors["agent"])
 
 func setNameColor(newColor: Color):
 	$Label.set("custom_colors/font_color", newColor)

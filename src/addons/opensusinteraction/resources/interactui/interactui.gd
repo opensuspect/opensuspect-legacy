@@ -8,20 +8,40 @@ export(String) var ui_name
 #data to pass to the UI node
 export(Dictionary) var ui_data
 
+enum actions {OPEN, INSTANCE, UPDATE, CLOSE}
+export(actions) var action
+
 #changed in the editor via overriding get(), set(), and get_property_list()
 #whether or not to delete and recreate the UI node before opening
 var reinstance: bool = false
 
-var only_instance: bool = false
+var free_on_close: bool = false
 
 var interact_data: Dictionary = {}
 
 #called to execute the interaction this resource is customized for
 func interact(_from: Node = null, _interact_data: Dictionary = {}):
-	if only_instance:
-		UIManager.instance_ui(ui_name, get_interact_data(_from, _interact_data))
-	else:
-		UIManager.open_ui(ui_name, get_interact_data(_from, _interact_data), reinstance)
+	match action:
+		actions.OPEN:
+			open(_from, _interact_data)
+		actions.INSTANCE:
+			instance(_from, _interact_data)
+		actions.UPDATE:
+			update(_from, _interact_data)
+		actions.CLOSE:
+			close()
+
+func open(_from: Node = null, _interact_data: Dictionary = {}, reinstance: bool = self.reinstance):
+	UIManager.open_ui(ui_name, get_interact_data(_from, _interact_data), reinstance)
+
+func instance(_from: Node = null, _interact_data: Dictionary = {}):
+	UIManager.instance_ui(ui_name, get_interact_data(_from, _interact_data))
+
+func update(_from: Node = null, _interact_data: Dictionary = {}):
+	UIManager.update_ui(ui_name, get_interact_data(_from, _interact_data))
+
+func close(free: bool = free_on_close):
+	UIManager.close_ui(ui_name, free)
 
 func init_resource(_from: Node = null):
 	pass
@@ -52,8 +72,8 @@ func _set(property, value):
 	match property:
 		"advanced/reinstance":
 			reinstance = value
-		"advanced/only_instance":
-			only_instance = value
+		"advanced/free_on_close":
+			free_on_close = value
 
 #overrides get(), allows for export var groups and display properties that don't
 #match actual var names
@@ -61,8 +81,8 @@ func _get(property):
 	match property:
 		"advanced/reinstance":
 			return reinstance
-		"advanced/only_instance":
-			return only_instance
+		"advanced/free_on_close":
+			return free_on_close
 
 #overrides get_property_list(), tells editor to show more vars in inspector
 func _get_property_list():
@@ -74,7 +94,7 @@ func _get_property_list():
 		"usage": PROPERTY_USAGE_DEFAULT,
 		"hint": PROPERTY_HINT_NONE,
 		})
-	property_list.append({"name": "advanced/only_instance",
+	property_list.append({"name": "advanced/free_on_close",
 		"type": TYPE_BOOL,
 		"usage": PROPERTY_USAGE_DEFAULT,
 		"hint": PROPERTY_HINT_NONE,

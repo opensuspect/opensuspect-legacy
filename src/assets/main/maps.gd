@@ -23,8 +23,7 @@ var currentMap: String = "Lobby"
 func _ready() -> void:
 #	print_debug("(maps.gd/_ready)")
 	set_network_master(1)
-
-	switchMap(currentMap)
+#	switchMap(currentMap)
 	update_map_info()
 # warning-ignore:return_value_discarded
 	GameManager.connect("state_changed_priority", self, "_on_state_changed_priority")
