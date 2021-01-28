@@ -1,7 +1,6 @@
 extends Node
 
-# warning-ignore:unused_signal
-signal scene_changed #TODO: actually emit this signal
+signal scene_changed(old_scene, new_scene)
 
 func _ready() -> void:
 # warning-ignore:return_value_discarded

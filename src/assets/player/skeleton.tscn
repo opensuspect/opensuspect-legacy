@@ -2326,6 +2326,9 @@ __meta__ = {
 "_editor_description_": "Bone that controls the player's right hand."
 }
 
+[node name="ItemTransform" type="RemoteTransform2D" parent="Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand"]
+update_scale = false
+
 [node name="LeftUpperLeg" type="Bone2D" parent="Skeleton/Spine"]
 position = Vector2( 3.53507, 1.61536 )
 rest = Transform2D( 1, 0, 0, 1, 3.53507, 1.61536 )

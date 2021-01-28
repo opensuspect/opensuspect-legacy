@@ -1,14 +1,21 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
 
-[node name="Map" type="Node2D"]
+[ext_resource path="res://assets/maps/map.gd" type="Script" id=1]
 
-[node name="PlayerSpawnpoints" type="Node2D" parent="."]
+[node name="Map" type="YSort"]
+script = ExtResource( 1 )
 
-[node name="Props" type="Node2D" parent="."]
+[node name="SpawnPoints" type="YSort" parent="."]
 
-[node name="Interactive" type="Node2D" parent="."]
+[node name="Props" type="YSort" parent="."]
 
-[node name="Ground" type="Node2D" parent="."]
+[node name="Corpses" type="YSort" parent="Props"]
+
+[node name="Interactive" type="YSort" parent="."]
+
+[node name="Items" type="YSort" parent="Interactive"]
+
+[node name="Ground" type="YSort" parent="."]
 
 [node name="GroundTiles" type="TileMap" parent="Ground"]
 format = 1

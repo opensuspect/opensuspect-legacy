@@ -81,13 +81,19 @@ func _create_info(player_roles: Dictionary, role_colors: Dictionary) -> void:
 			var tree: AnimationTree = skeleton.get_node("AnimationPlayer/AnimationTree")
 			tree.set("parameters/idle_move_blend/blend_position", Vector2.ZERO)
 			player_sprite_collection[player.id] = skeleton.duplicate()
+			# ItemHandler gets reparented to Skeleton on player ready, which
+			# causes issues so we remove it
+			if player_sprite_collection[player.id].has_node("ItemHandler"):
+				var item_handler: ItemHandler = player_sprite_collection[player.id].get_node("ItemHandler")
+				player_sprite_collection[player.id].remove_child(item_handler)
+				item_handler.queue_free()
 
 	var player_info_nodes: Dictionary = {}
 	for id in filtered_ids:
 		var y_offset = 0
 		if player_index % 2 == 0:
 			y_offset = 20
-		
+
 		var player_info: VBoxContainer = player_info_scene.instance()
 		player_info.get_node("Label").text = Network.get_player_name(id)
 		var center_container: CenterContainer = player_info.get_node("CenterContainer")

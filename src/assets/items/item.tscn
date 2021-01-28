@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/items/item.gd" type="Script" id=1]
+[ext_resource path="res://assets/common/shaders/outline.shader" type="Shader" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "hover"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpritePosition:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 2.5 ), Vector2( 0, -2.5 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpritePosition:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = ExtResource( 2 )
+shader_param/line_color = Color( 1, 1, 0, 0 )
+shader_param/line_thickness = 5.0
+
+[node name="Item" type="KinematicBody2D" groups=[
+"items",
+]]
+input_pickable = true
+collision_layer = 16
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": "Base scene for items."
+}
+
+[node name="ItemCollision" type="CollisionShape2D" parent="."]
+__meta__ = {
+"_editor_description_": "The item's collision shape."
+}
+
+[node name="ItemAnimator" type="AnimationPlayer" parent="."]
+anims/hover = SubResource( 1 )
+anims/idle = SubResource( 2 )
+__meta__ = {
+"_editor_description_": "Animates the item."
+}
+
+[node name="SpritePosition" type="Position2D" parent="."]
+use_parent_material = true
+position = Vector2( 0, 2.5 )
+__meta__ = {
+"_editor_description_": "Node to be animated."
+}
+
+[node name="ItemSprite" type="AnimatedSprite" parent="SpritePosition"]
+material = SubResource( 3 )
+offset = Vector2( 0, -25 )
+__meta__ = {
+"_editor_description_": "The item's sprite."
+}
+
+[node name="MouseArea" type="Area2D" parent="SpritePosition"]
+__meta__ = {
+"_editor_description_": "Area within which mouse events are detected."
+}
+
+[node name="MouseCollision" type="CollisionShape2D" parent="SpritePosition/MouseArea"]
+[connection signal="mouse_entered" from="SpritePosition/MouseArea" to="." method="_on_MouseArea_mouse_entered"]
+[connection signal="mouse_exited" from="SpritePosition/MouseArea" to="." method="_on_MouseArea_mouse_exited"]
