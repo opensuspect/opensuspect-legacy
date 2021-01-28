@@ -4,11 +4,12 @@ extends Node2D
 var map_info: Dictionary = {}
 
 var map_info_dir: String = "res://assets/maps/mapinfo/"
-#const MapInfo = preload("res://assets/maps/mapinfo/mapinforesource/mapinfo.gd")
 
-signal spawn(position,frommap)
+
+signal spawn(position, frommap)
 
 var currentMap: String = "Lobby"
+
 
 # TODO
 # decouple main.gd from map loading
@@ -35,6 +36,7 @@ func _ready() -> void:
 func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
 	if priority != 1:
 		return
+	print("(maps.gd/_on_state_changed_priority)")
 	match new_state:
 		GameManager.State.Lobby:
 			switchMap("Lobby")
@@ -60,6 +62,11 @@ func switchMap(newMap: String) -> void:
 	# the map system, when we start giving each map it's own script/make a map class.
 	mapClone.name = newMap
 	add_child(mapClone)
+	# the actual map to be used should be in position 0 under the "map" node, and
+	# the actual removal of the previous map's node under the "map" node is not
+	# soon enough for the item handling to work properly, so we have to put the
+	# actual current map to position 0 manually.
+	move_child(mapClone, 0)
 	emit_signal("spawn", getSpawnPoints())
 
 func instance_map(map_name: String) -> Node:
@@ -71,9 +78,9 @@ func instance_map(map_name: String) -> Node:
 
 func getSpawnPoints() -> Array:
 	var spawnPointArray: Array = []
-	if not get_node(str(currentMap + "/spawnpoints")):
+	if not get_node(str(currentMap + "/SpawnPoints")):
 		return [Vector2(0,0)]
-	for i in get_node(str(currentMap + "/spawnpoints")).get_children():
+	for i in get_node(str(currentMap + "/SpawnPoints")).get_children():
 		spawnPointArray.append(i.global_position)
 	#print(spawnPointArray)
 	return spawnPointArray

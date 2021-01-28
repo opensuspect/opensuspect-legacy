@@ -10,8 +10,9 @@ ui_name = "killui"
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = true
+advanced/free_on_close = false
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 60.0
@@ -29,7 +30,7 @@ __meta__ = {
 ui_interact_resource = SubResource( 1 )
 
 [node name="KillCooldownTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 2.0
 one_shot = true
 __meta__ = {
 "_editor_description_": "Cooldown between kills (unused for now)."

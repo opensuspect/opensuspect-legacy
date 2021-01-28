@@ -8,13 +8,31 @@ func pick_random(array: Array):
 	return array[random_index]
 
 func string_join(string_array: Array, separator: String) -> String:
+	"""Join an array of strings together, separated by 'separator'"""
 	var combined_string: String = ""
 	for index in range(len(string_array) - 1):
 		combined_string += string_array[index] + separator
 	combined_string += string_array[-1]
 	return combined_string
 
+func find_file(file_name: String, start_path: String = "res://", recursive: bool = true) -> String:
+	"""Find file 'file_name' starting at directory 'start_path' recursively."""
+	var directory := Directory.new()
+	assert(directory.open(start_path) == OK)
+	directory.list_dir_begin(true)
+	var file: String = directory.get_next()
+	while file != "":
+		if file == file_name:
+			return start_path + ("" if start_path.ends_with("/") else "/") + file
+		if directory.current_is_dir() and recursive:
+			var recursive_file: String = find_file(file_name, start_path + ("" if start_path.ends_with("/") else "/") + file, recursive)
+			if recursive_file != "":
+				return recursive_file
+		file = directory.get_next()
+	return ""
+
 func list_directory(path: String, recursive: bool = false) -> Array:
+	"""Return an Array of all the files in directory 'path' recursively."""
 	var directory := Directory.new()
 	assert(directory.open(path) == OK)
 	var files: Array = []
@@ -80,6 +98,7 @@ func is_valid_file_name(file_name: String, ext: String = "") -> bool:
 	return true
 
 func map(in_value: float, in_value_min: float, in_value_max: float, out_value_min: float, out_value_max: float) -> float:
+	"""Map a value from an input range to an output range."""
 	return (in_value - in_value_min) * (out_value_max - out_value_min) / (in_value_max - in_value_min) + out_value_min
 
 func filename_to_label(filename: String) -> String:
@@ -87,6 +106,7 @@ func filename_to_label(filename: String) -> String:
 
 func get_absolute_path_to(node: Node, subname: String = ""):
 	var path: String = get_tree().get_root().get_path_to(node)
+	path = "/root/" + path
 	if subname != "":
 		path = path + ":" + subname
 	return NodePath(path)
@@ -105,3 +125,36 @@ func get_node_property_from_root(path: NodePath):
 	var node = get_node_from_root(path)
 	var subnames = path.get_concatenated_subnames()
 	return node.get_indexed(subnames)
+
+func object_has_method_with_args(object: Object, method: String, args: Array) -> bool:
+	var method_args: Array = get_object_method_arg_names(object, method)
+	for arg in args:
+		if not method_args.has(arg):
+			return false
+	return true
+
+func object_has_method_with_arg(object: Object, method: String, arg: String) -> bool:
+	var method_args: Array = get_object_method_arg_names(object, method)
+	var arg_names
+	return method_args.has(arg)
+
+func get_object_method_arg_amount(object: Object, method: String) -> int:
+	return get_object_method_args(object, method).size()
+
+func get_object_method_arg_names(object: Object, method: String) -> Array:
+	var method_args: Array = get_object_method_args(object, method)
+	var arg_names: Array = []
+	for arg in method_args:
+		arg_names.append(arg["name"])
+	print(arg_names)
+	return arg_names
+
+func get_object_method_args(object: Object, method: String) -> Array:
+	var object_methods: Array = object.get_method_list()
+	for method_data in object_methods:
+		if method_data["name"] != method:
+			continue
+		print(method_data)
+		print(method_data["args"])
+		return method_data["args"]
+	return []

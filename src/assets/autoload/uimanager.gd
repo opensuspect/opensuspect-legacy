@@ -33,7 +33,9 @@ var ui_controller_node: Node
 signal open_ui(ui_name, ui_data, reinstance)
 signal close_ui(ui_name, free)
 signal instance_ui(ui_name, ui_data)
+signal update_ui(ui_name, ui_data)
 signal free_ui(ui_name)
+signal close_all_ui()
 
 func _ready():
 	configfile = ConfigFile.new()
@@ -73,10 +75,18 @@ func instance_ui(ui_name: String, ui_data: Dictionary = {}):
 		push_error("instance_ui() called with invalid ui name " + ui_name)
 	emit_signal("instance_ui", ui_name, ui_data)
 
+func update_ui(ui_name: String, ui_data: Dictionary = {}):
+	if not ui_list.keys().has(ui_name):
+		push_error("update_ui() called with invalid ui name " + ui_name)
+	emit_signal("update_ui", ui_name, ui_data)
+
 func free_ui(ui_name: String):
 	if not ui_list.keys().has(ui_name):
 		push_error("free_ui() called with invalid ui name " + ui_name)
 	emit_signal("free_ui", ui_name)
+
+func close_all_ui(free: bool = false):
+	emit_signal("close_all_ui", free)
 
 func get_ui(ui_name: String):
 	if not ui_list.keys().has(ui_name):
