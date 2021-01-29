@@ -1,4 +1,4 @@
-extends Control
+extends ControlBase
 
 onready var player_info_scene: PackedScene = preload("res://assets/ui/hud/defaulthud/rolescreen/player_info.tscn")
 
@@ -11,28 +11,27 @@ func _ready():
 	PlayerManager.connect("roles_assigned", self, "_on_roles_assigned")
 	# warning-ignore:return_value_discarded
 	display_timer.connect("timeout", self, "_clean_up")
-
+	
 func _clean_up():
-	for id in PlayerManager.players:
-		PlayerManager.players[id].set_movement_disabled(false)
-	self.hide()
-	PlayerManager.inMenu = false
+	reset()
+	UIManager.close_ui("rolescreen")
+
+func reset():
+	display_timer.stop()
 	for player_info in player_info_container.get_children():
 		player_info.queue_free()
 
-func _on_roles_assigned(player_roles : Dictionary):
-	# just in case the timer didn't fire
-	_clean_up()
+func _on_roles_assigned(player_roles: Dictionary):
 	if GameManager.state != GameManager.State.Normal:
 		return
+	reset()
+	populate_player_info_container(player_roles)
 
+func populate_player_info_container(player_roles: Dictionary):
 	display_timer.start()
-	PlayerManager.inMenu = true
-	""" 
-	TODO: 
-	Make this more flexible, and use a dictionary to make it easier to add more roles. We can't have a separate variable for each role like this or it will be very difficult to add more.
 
-	"""
+	# TODO: Make this more flexible, and use a dictionary to make it easier to add more roles.
+	# We can't have a separate variable for each role like this or it will be very difficult to add more.
 
 	var we_are_infiltrator = PlayerManager.ourrole == "infiltrator"
 	if we_are_infiltrator:
@@ -53,9 +52,6 @@ func _on_roles_assigned(player_roles : Dictionary):
 		team_label.text = "Detective"
 		team_label.set("custom_colors/font_color", PlayerManager.playerColors["detective"])
 
-	self.show()
-
-const PLAYER_SPACE_WIDTH = 100
 # player_roles - only players with player roles contained as keys
 # in role_colors will be processed
 #
@@ -74,13 +70,14 @@ func _create_info(player_roles: Dictionary, role_colors: Dictionary) -> void:
 	var player_group_members = get_tree().get_nodes_in_group("players")
 	var player_sprite_collection: Dictionary = {}
 	for player in player_group_members:
-		if player_roles.has(player.id):
+		if filtered_ids.has(player.id):
 			var skeleton: Node2D = player.get_node("SpritesViewport/Skeleton")
+			skeleton = skeleton.duplicate()
 			skeleton.use_parent_material = false
 			skeleton.scale = Vector2.ONE * 3.0
 			var tree: AnimationTree = skeleton.get_node("AnimationPlayer/AnimationTree")
 			tree.set("parameters/idle_move_blend/blend_position", Vector2.ZERO)
-			player_sprite_collection[player.id] = skeleton.duplicate()
+			player_sprite_collection[player.id] = skeleton
 			# ItemHandler gets reparented to Skeleton on player ready, which
 			# causes issues so we remove it
 			if player_sprite_collection[player.id].has_node("ItemHandler"):
@@ -88,7 +85,6 @@ func _create_info(player_roles: Dictionary, role_colors: Dictionary) -> void:
 				player_sprite_collection[player.id].remove_child(item_handler)
 				item_handler.queue_free()
 
-	var player_info_nodes: Dictionary = {}
 	for id in filtered_ids:
 		var y_offset = 0
 		if player_index % 2 == 0:

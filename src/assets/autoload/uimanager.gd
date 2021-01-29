@@ -51,8 +51,10 @@ func _ready():
 			else:
 				keybinds[key] = null
 	set_game_binds()
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 	GameManager.connect("state_changed", self, "state_changed")
+	# warning-ignore:return_value_discarded
+	GameManager.connect("state_changed_priority", self, "state_changed_priority")
 
 #ui data is data to pass to the ui, such as a task identifier
 #reinstance is whether or not to recreate the corresponding ui node if it already exists
@@ -108,11 +110,15 @@ func ui_closed(menuName):
 
 # warning-ignore:unused_argument
 func state_changed(old_state, new_state):
-	if new_state == GameManager.State.Normal:
-		pass
 	if new_state == GameManager.State.Start:
 		open_uis = []
-
+	
+func state_changed_priority(old_state, new_state, priority):
+	if priority != 0:
+		return
+	if new_state == GameManager.State.Normal:
+		# needs to call _on_ready to connect signals, before roles are assigned
+		open_ui("rolescreen")
 func in_ui() -> bool:
 	return not open_uis.empty()
 

@@ -14,8 +14,8 @@ var priority_amount: int = 6
 # 0 : Switching main scenes in scenemanager.gd and toggling accept/refuse connections in network.gd
 #     Priority 0 should be reserved for cleanup and extremely essential functions.
 # 1 : Switching map in maps.gd
-# 2 : Assigning roles in playermanager.gd
-# 3 : N/A
+# 2 : Tasks get sent to clients in taskmanager.gd
+# 3 : Assigning roles in playermanager.gd
 # 4 : N/A
 # 5 : Spawning players in main.gd
 
