@@ -37,6 +37,7 @@ interact_with = NodePath("..")
 interact_data = {
 
 }
+advanced/network_sync = false
 
 [sub_resource type="Resource" id=3]
 resource_local_to_scene = true
@@ -46,16 +47,20 @@ ui_name = ""
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=4]
 resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 4 )
 task_text = ""
+random_numbers = 0
+task_id = -1
 ui_resource = SubResource( 3 )
 outputs/toggle_map_interactions = false
+is_task_global = false
 
 [sub_resource type="Resource" id=5]
 resource_local_to_scene = true
@@ -65,8 +70,9 @@ ui_name = ""
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=6]
 resource_local_to_scene = true

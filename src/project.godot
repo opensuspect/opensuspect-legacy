@@ -39,10 +39,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/common/classes/objectpool/ipoolable.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "Item",
+"language": "GDScript",
+"path": "res://assets/items/item.gd"
+}, {
+"base": "Node2D",
+"class": "ItemHandler",
+"language": "GDScript",
+"path": "res://assets/player/item_handler.gd"
+}, {
 "base": "Resource",
 "class": "MapInfo",
 "language": "GDScript",
 "path": "res://assets/common/classes/resources/mapinfo/mapinfo.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://assets/player/player.gd"
 }, {
 "base": "Node",
 "class": "PoolManager",
@@ -86,7 +101,10 @@ _global_script_class_icons={
 "ControlBase": "",
 "ControlTask": "",
 "IPoolable": "",
+"Item": "",
+"ItemHandler": "",
 "MapInfo": "",
+"Player": "",
 "PoolManager": "",
 "PopupBase": "",
 "PopupPanelBase": "",
@@ -115,7 +133,7 @@ UIManager="*res://assets/autoload/uimanager.gd"
 MapManager="*res://assets/autoload/mapmanager.gd"
 TaskManager="*res://assets/autoload/taskmanager.gd"
 Helpers="*res://assets/autoload/helpers.gd"
-SaveLoadHandler="*res://assets/autoload/save_load_handler.gd"
+SaveLoadHandler="*res://assets/autoload/saveloadhandler.gd"
 AppearanceManager="*res://assets/autoload/appearancemanager.gd"
 
 [display]
@@ -181,6 +199,11 @@ reload={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
  ]
 }
+interact={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [input_devices]
 
@@ -192,6 +215,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_2="players"
 2d_physics/layer_3="scientists"
 2d_physics/layer_4="infiltrators"
+2d_physics/layer_5="interactive"
 2d_physics/layer_6="corpse"
 
 [locale]

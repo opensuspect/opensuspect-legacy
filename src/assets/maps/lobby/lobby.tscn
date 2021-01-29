@@ -292,37 +292,37 @@ position = Vector2( 0, 44.5359 )
 [node name="WallSide4" parent="walls/RightWall" instance=ExtResource( 4 )]
 position = Vector2( 0, -7.33086 )
 
-[node name="spawnpoints" type="Node2D" parent="."]
+[node name="SpawnPoints" type="Node2D" parent="."]
 position = Vector2( -14.9662, -2.92566 )
 
-[node name="Position2D" type="Position2D" parent="spawnpoints"]
+[node name="Position2D" type="Position2D" parent="SpawnPoints"]
 position = Vector2( -208.342, -36.1611 )
 
-[node name="Position2D2" type="Position2D" parent="spawnpoints"]
+[node name="Position2D2" type="Position2D" parent="SpawnPoints"]
 position = Vector2( -94.8338, -36.1611 )
 
-[node name="Position2D3" type="Position2D" parent="spawnpoints"]
+[node name="Position2D3" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 15.9662, -36.6703 )
 
-[node name="Position2D4" type="Position2D" parent="spawnpoints"]
+[node name="Position2D4" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 124.359, -36.6703 )
 
-[node name="Position2D5" type="Position2D" parent="spawnpoints"]
+[node name="Position2D5" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 233.894, -36.6703 )
 
-[node name="Position2D6" type="Position2D" parent="spawnpoints"]
+[node name="Position2D6" type="Position2D" parent="SpawnPoints"]
 position = Vector2( -208.342, 32.9257 )
 
-[node name="Position2D7" type="Position2D" parent="spawnpoints"]
+[node name="Position2D7" type="Position2D" parent="SpawnPoints"]
 position = Vector2( -96.8542, 32.9257 )
 
-[node name="Position2D8" type="Position2D" parent="spawnpoints"]
+[node name="Position2D8" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 14.7414, 34.0745 )
 
-[node name="Position2D9" type="Position2D" parent="spawnpoints"]
+[node name="Position2D9" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 124.359, 34.0745 )
 
-[node name="Position2D10" type="Position2D" parent="spawnpoints"]
+[node name="Position2D10" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 234.578, 34.0745 )
 
 [node name="SunLight" type="Light2D" parent="."]

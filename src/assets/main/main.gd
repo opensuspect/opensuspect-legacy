@@ -4,8 +4,8 @@ export (int) var MAX_PLAYERS = 10
 #!!!THIS IS IMPORTANT!!!
 #CHANGE THIS VARIABLE BY ONE EVERY COMMIT TO PREVENT OLD CLIENTS FROM TRYING TO CONNECT TO SERVERS!!!
 #A way to make up version number: year month date hour of editing this script
-var version = 210108
-var intruders = 0
+var version = 21012000
+var intruders = 0 # NiceMicro's question: is this value ever referenced anywhere?
 var newnumber
 var player_spawn_points: Dictionary
 
