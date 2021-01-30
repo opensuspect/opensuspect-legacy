@@ -19,8 +19,6 @@ func set_in_hand(ui_data_pass, index:int):#This the crucial function
 puppetsync func set_path():#Give the item its location so it cna remove itself and add to other location
 	var item = frontend.get_child(1)
 	var self_path = get_parent().get_path()
-	print(get_parent().get_path())
-	print(item.get_path())
 	item.item_location = self_path
 	item.item_from_container = true
 
