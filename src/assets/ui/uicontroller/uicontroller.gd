@@ -23,6 +23,9 @@ func _ready():
 	UIManager.connect("free_ui", self, "free_ui")
 # warning-ignore:return_value_discarded
 	UIManager.connect("close_all_ui", self, "close_all_ui")
+# warning-ignore:return_value_discarded
+	UIManager.connect("pre_ins", self, "pre_ins")
+	
 	var err = config.load("user://settings.cfg")
 	if err == OK:
 		$ColorblindRect.material.set_shader_param(
@@ -127,3 +130,16 @@ func get_child_node_names() -> Array:
 	for i in get_children():
 		name_list.append(i.name)
 	return name_list
+
+func pre_ins(ui_name: String):
+	update_instanced_uis()
+	if not ui_list.keys().has(ui_name):
+		return
+	var new_ui = ui_list[ui_name].scene.instance()
+	new_ui.name = ui_name
+	instanced_uis[ui_name] = new_ui
+	add_child(new_ui)
+	if new_ui.has_method("base_close"):
+		new_ui.base_close()
+	if new_ui.has_method("close"):
+		new_ui.close()

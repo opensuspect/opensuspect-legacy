@@ -11,10 +11,11 @@ var can_pickup_with_mouse: bool
 var holding_player: Player
 var being_held: bool
 var being_picked_up: bool
+var item_location:NodePath #The location of the item
+var item_from_container:bool #Checks item is from container or not
+
 
 func _ready() -> void:
-	$ItemAnimator.play("hover")
-
 	# Wait another frame for map to finish setting up
 	yield(get_tree(), "idle_frame")
 	# print("(items.gd/_ready)")
@@ -34,7 +35,11 @@ func picked_up() -> void:
 	"""Item is picked up."""
 	set_collision_layer_bit(4, false)
 	being_held = true
-	map_items.remove_child(self)
+	if item_from_container:
+		var path = get_tree().get_root().get_node(item_location)
+		path.remove_child(self)
+	else:
+		map_items.remove_child(self)
 	holding_player.item_handler.add_child(self)
 	position = Vector2.ZERO
 
