@@ -17,7 +17,9 @@ var ui_list: Dictionary = {
 						"appearance_editor": {"scene": preload("res://assets/ui/submenus/appearance_editor/appearance_editor.tscn")},
 						
 						#task UI
-						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")}
+						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")},
+						"gasvalve": {"scene": preload("res://assets/ui/tasks/gasvalve/gasvalve.tscn")},
+						"mainframecoolant": {"scene": preload("res://assets/ui/tasks/mainframecoolant/mainframecoolant.tscn")}
 						}
 
 var current_ui: Control
@@ -56,40 +58,48 @@ func _ready():
 	# warning-ignore:return_value_discarded
 	GameManager.connect("state_changed_priority", self, "state_changed_priority")
 
+func is_ui_name_valid(ui_name: String) -> bool:
+	return ui_list.keys().has(ui_name)
+
 #ui data is data to pass to the ui, such as a task identifier
 #reinstance is whether or not to recreate the corresponding ui node if it already exists
 func open_ui(ui_name: String, ui_data: Dictionary = {}, reinstance: bool = false):
 	#print("signalling to open ", menuName)
-	if not ui_list.keys().has(ui_name):
+	if not is_ui_name_valid(ui_name):
 		push_error("open_ui() called with invalid ui name " + ui_name)
+		assert(false)
 	emit_signal("open_ui", ui_name, ui_data, reinstance)
 
 func close_ui(ui_name: String, free: bool = false):
-	if not ui_list.keys().has(ui_name):
+	if not is_ui_name_valid(ui_name):
 		push_error("close_ui() called with invalid ui name " + ui_name)
+		assert(false)
 	emit_signal("close_ui", ui_name, free)
 
 func instance_ui(ui_name: String, ui_data: Dictionary = {}):
 	print("instance ui ", ui_name)
-	if not ui_list.keys().has(ui_name):
+	if not is_ui_name_valid(ui_name):
 		push_error("instance_ui() called with invalid ui name " + ui_name)
+		assert(false)
 	emit_signal("instance_ui", ui_name, ui_data)
 
 func update_ui(ui_name: String, ui_data: Dictionary = {}):
-	if not ui_list.keys().has(ui_name):
+	if not is_ui_name_valid(ui_name):
 		push_error("update_ui() called with invalid ui name " + ui_name)
+		assert(false)
 	emit_signal("update_ui", ui_name, ui_data)
 
 func free_ui(ui_name: String):
-	if not ui_list.keys().has(ui_name):
+	if not is_ui_name_valid(ui_name):
 		push_error("free_ui() called with invalid ui name " + ui_name)
+		assert(false)
 	emit_signal("free_ui", ui_name)
 
 func close_all_ui(free: bool = false):
 	emit_signal("close_all_ui", free)
 
 func get_ui(ui_name: String):
-	if not ui_list.keys().has(ui_name):
+	if not is_ui_name_valid(ui_name):
 		push_error("get_ui() called with invalid ui name " + ui_name)
 	if ui_controller_node == null:
 		push_error("ui_controller_node is null (not set) in UIManager, should be set when the ui controller is created")

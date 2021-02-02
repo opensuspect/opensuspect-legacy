@@ -19,11 +19,14 @@ var task_transitions: Dictionary = {task_state.HIDDEN: [task_state.NOT_STARTED],
 
 var player_tasks: Dictionary = {}
 #stores task info corresponding to task IDs
-#format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, resource: <InteractTask resource>, assigned_players: [<network IDs of players task is assigned to>]}
+#format: {<task id>: Resource(interacttask.gd)
 var task_dict: Dictionary = {}
 
-var node_path_resource: Dictionary = {}
+# Contains path to object mapping for tasks.
+var task_path_dict: Dictionary = {}
 
+# used for task dependencies
+var name_task_dict: Dictionary = {}
 func _ready():
 	#warning-ignore:return_value_discarded
 	GameManager.connect("state_changed_priority", self, "_tasks_registered")
@@ -55,25 +58,44 @@ master func complete_task_remote(task_info: Dictionary, task_data: Dictionary = 
 	
 	# TODO Probably should validate the task_data
 	
-	# A special case, for when the server's player compleated a task
-	var completed = false
-	if task_info[PLAYER_ID_KEY] == 1:
-		completed = complete_task(task_info, task_data)
-
 	var task_id = task_info[TASK_ID_KEY]
+	# A special case, for when the server's player compleated a task
+	if task_info[PLAYER_ID_KEY] == 1 and not is_task_global(task_id):
+		if complete_task_server_player(task_info, task_data):
+			emit_signal("task_completed", task_info)
+		return
+			
 	if is_task_global(task_id):
 		task_info[PLAYER_ID_KEY] = GLOBAL_TASK_PLAYER_ID
-		if completed or complete_task(task_info, task_data):
+		# global tasks get completed on every client
+		if complete_task(task_info, task_data):
 			rpc("task_completed", task_info, task_data)
 			emit_signal("task_completed", task_info)
 	# If the task is not global, just advance it, so that we know that
 	# the client has completed it
-	elif completed or advance_task(task_info, task_state.COMPLETED):
-		if task_info[PLAYER_ID_KEY] == 1:
-			emit_signal("task_completed", task_info)
-		else:
-			rpc_id(task_info[PLAYER_ID_KEY], "task_completed", task_info, task_data)
+	elif advance_task(task_info, task_state.COMPLETED):
+		rpc_id(task_info[PLAYER_ID_KEY], "task_completed", task_info, task_data)
 
+# Completes a task only for the player playing on the server
+# and only if the task isn't global
+func complete_task_server_player(task_info: Dictionary, task_data: Dictionary = {}) -> bool:
+	if not is_task_info_valid(task_info):
+		push_error("provided task_info is not valid" + String(task_info))
+		assert(false)
+		return false
+		
+	# don't handle the task if
+	# this is not the player playing on the server machine
+	if task_info[PLAYER_ID_KEY] != 1:
+		assert(false)
+		return false
+	# this is a global task. Global tasks are handled in complete_task_remote
+	if is_task_global(task_info[TASK_ID_KEY]):
+		assert(false)
+		return false
+	
+	return complete_task(task_info, task_data)
+	
 # Called on the client that the task was completed
 # or on all the clients if the completed task was global
 func complete_task(task_info: Dictionary, data: Dictionary = {}) -> bool:
@@ -182,10 +204,22 @@ func transition_task(task_info: Dictionary, new_state: int) -> bool:
 	#transition task
 	return set_task_state(task_info, new_state)
 
+
+func register_potential_task_dependency(task):
+	if not get_tree().is_network_server():
+		return
+	assert(task.has_method("get_task_name"))
+	# Tasks with no names can't be dependent on
+	# This is so that not all tasks must have a name
+	if task.get_task_name() == "":
+		return
+	# Ony one  task with the same name is allowed
+	assert(not name_task_dict.has(task.get_task_name()))
+	name_task_dict[task.get_task_name()] = task
+	
 func register_task(task_resource: Resource):
 	var path = Helpers.get_absolute_path_to(task_resource.attached_to)
-	node_path_resource[path] = task_resource
-	
+	task_path_dict[path] = task_resource
 	if not get_tree().is_network_server():
 		return
 	
@@ -193,13 +227,13 @@ func register_task(task_resource: Resource):
 
 	if task_id == INVALID_TASK_ID:
 		task_id = gen_unique_id()
-		#node_path_id[path] = task_id
 	
 	var new_task_data: Dictionary = task_resource.get_task_data()
 	new_task_data["state"] = task_state.NOT_STARTED
-	if not assign_task_data(task_resource, task_id, new_task_data):
-		assert(false)
-		return
+	var is_assigned = assign_task_data(task_resource, task_id, new_task_data)
+	# the task data should be assigned
+	assert(is_assigned)
+	register_potential_task_dependency(task_resource)
 
 func _tasks_registered(_old_state, new_state, priority):
 	if priority != 2:
@@ -208,8 +242,10 @@ func _tasks_registered(_old_state, new_state, priority):
 		return
 	if new_state != GameManager.State.Normal:
 		return
+		
 	var registered_tasks = []
 	for task_resource in task_dict.values():
+		task_resource.validate_prerequisite_identifiers(name_task_dict)
 		var task = {}
 		task["path"] = Helpers.get_absolute_path_to(task_resource.attached_to)
 		task["task_id"] = task_resource.get_task_id()
@@ -219,13 +255,14 @@ func _tasks_registered(_old_state, new_state, priority):
 	
 puppet func assign_task_data_client(registered_tasks: Array):
 	for task in registered_tasks:
+		# we can't send this task over the network if it has no path
+		if not task_path_dict.has(task["path"]):
+			assert(false)
+			continue
 		var path = task["path"]
 		var task_id = task["task_id"]
 		var task_data = task["task_data"]
-		if not node_path_resource.has(path):
-			assert(false)
-			continue
-		var task_resource: Resource = node_path_resource[path]
+		var task_resource: Resource = task_path_dict[path]
 		if not assign_task_data(task_resource, task_id, task_data):
 			assert(false)
 			continue
@@ -341,8 +378,9 @@ func does_task_exist(task_id: int):
 func is_task_completed(task_info: Dictionary) -> bool:
 	if not is_task_info_valid(task_info):
 		return false
-	var task_state = get_task_state(task_info)
-	return task_state == TaskManager.task_state.COMPLETED
+	var task_id = task_info[TASK_ID_KEY]
+	var player_id = task_info[PLAYER_ID_KEY]
+	return get_task_resource(task_id).is_complete(player_id)
 
 func is_task_global(task_id: int) -> bool:
 	if not does_task_exist(task_id):
@@ -389,14 +427,12 @@ func gen_task_info(task_id: int, player_id: int = Network.get_my_id()) -> Dictio
 		assert(false)
 		return {}
 	return task_info
-
+	
 func reset_tasks() -> void:
 	player_tasks = {}
 	task_dict = {}
-	#task_dict_name = {}
-	
-	
-	
+	task_path_dict = {}
+	name_task_dict = {}
 	
 func is_valid_rpc_sender(player_id: int) -> bool:
 	var rpc_sender = get_tree().get_rpc_sender_id()
