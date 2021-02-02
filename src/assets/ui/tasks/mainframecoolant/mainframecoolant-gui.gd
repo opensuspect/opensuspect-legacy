@@ -7,7 +7,7 @@ onready var tempProgress: ProgressBar = $CurrentTemp/ProgressBar
 # item at 1 causes the heat to stay at it's current level
 # item at 2 causes the heat to dissipate(slowly)
 var options 		= ["Idle", "Normal", "High"]
-var optionValues	= [1, 		0,			-0.7]
+var optionValues	= [10, 		0,			-7]
 func _ready():
 	for item in options:
 		fanOptionList.add_item(item)

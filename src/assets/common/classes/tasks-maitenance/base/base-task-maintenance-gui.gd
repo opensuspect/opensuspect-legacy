@@ -6,6 +6,8 @@ var backend: BaseMaintenanceTask = null
 func _ready():
 	# warning-ignore:return_value_discarded
 	self.connect("popup_hide", self, "_on_popup_hide")
+	# uicontroller populates the self.name field in its instance_ui method
+	assert(UIManager.is_ui_name_valid(self.name))
 
 func _on_popup_hide():
 	# depends on the node name being the same as the name in UIManager.ui_list

@@ -7,6 +7,15 @@ export(String) var task_text
 
 export(int) var random_numbers = 0
 
+# Tasks that have to be completed for this task to be eligible for completion
+# user supplied array of Strings
+export(Array) var prerequisite_names = []
+
+# Valid NodePaths and taskIDs from prerequisite_tasks_identifiers
+# have their task object retrieved, in TaskManager._tasks_registered()
+# and are put into this array
+var prerequisite_task_objects: Array = []
+
 var item_inputs_on: bool
 var item_inputs: PoolStringArray
 
@@ -113,11 +122,24 @@ func get_task_state(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> int:
 	return task_data_player[player_id]["state"]
 
 func set_task_state(player_id: int, new_state: int) -> bool:
+	if new_state == TaskManager.task_state.COMPLETED:
+		# check if the prerequisite tasks are completed, before advancing
+		for task in prerequisite_task_objects:
+			# Global tasks are registered with TaskManager.GLOBAL_TASK_PLAYER_ID
+			# in that case, we need to replace the actual player id with that one
+			var tmp_id = player_id
+			if task.is_task_global():
+				tmp_id = TaskManager.GLOBAL_TASK_PLAYER_ID
+			if not task.is_complete(tmp_id):
+				return false
 	task_data_player[player_id]["state"] = new_state
 	return true
 
 func is_task_global() -> bool:
 	return task_data["is_task_global"]
+	
+func is_complete(player_id: int) -> bool:
+	return get_task_state(player_id) == TaskManager.task_state.COMPLETED
 	
 func interact(_from: Node = null, _interact_data: Dictionary = {}):
 	if attached_to == null and _from != null:
@@ -133,13 +155,40 @@ func init_resource(_from: Node):
 		push_error("InteractTask resource trying to be initiated with no defined node")
 	TaskManager.register_task(self)
 
+func validate_prerequisite_identifiers(task_name_dict: Dictionary):
+	""" Called from TaskManager, when all tasks have been registered """
+	for name in prerequisite_names:
+		# check user input
+		if not name is String:
+			assert(false)
+			continue
+			
+		var task = task_name_dict.get(name)
+		if task == null:
+			# Did you set the dependent task name correctly?
+			assert(false)
+			continue
+			
+		if not task.has_method("is_complete"):
+			assert(false)
+			continue
+		
+		if not task.has_method("is_task_global"):
+			assert(false)
+			continue
+			
+		prerequisite_task_objects.append(task)
+
+func get_task_name() -> String:
+	return String(task_id)
+	
 func get_interact_data(_from: Node = null) -> Dictionary:
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be used with no defined node")
 	return gen_task_data()
-
+	
 func _init():
 	#print("task init ", task_name)
 	#ensures customizing this resource won't change other resources

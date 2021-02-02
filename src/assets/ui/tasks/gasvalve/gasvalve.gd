@@ -92,3 +92,9 @@ func get_update_gui_dict():
 			"minAcceptedRange": minAcceptedRange,
 			"maxAcceptedRange": maxAcceptedRange}
 
+# returns true if the output is in between idealOutput +- acceptedRange
+func is_complete(_playerId) -> bool:
+	var upperBound = outputPressure < (idealOutput + acceptedRange)
+	var lowerBound = outputPressure > (idealOutput - acceptedRange)
+	return upperBound and lowerBound
+	

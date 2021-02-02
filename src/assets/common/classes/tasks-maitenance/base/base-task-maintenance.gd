@@ -60,6 +60,14 @@ So, to create the GasValve task that NiceMicro made:
 # as defined in UIManager.menus
 export var frontendMenuName: String
 
+# used in regular tasks to make them able to complete
+# only when our output is nominal
+# name it the same as frontend name for simplicity
+var taskName: String = frontendMenuName
+func get_task_name() -> String:
+	#return taskName
+	return frontendMenuName
+	
 var frontend
 
 # peers that have opened a gui on their end
@@ -104,23 +112,27 @@ master func _unregister_peer(caller_id: int):
 		# no peers left, no need to waste processing power and network bandwidth
 		$Timer.set_has_peers(false)
 	
-
-
 var last_timer_fire: float
+
 func _ready():
 	set_network_master(1)
-	# Supply the menu that should be opened when the user interacts with the task
-	assert(self.frontendMenuName != null and not self.frontendMenuName.empty())
+	
+	# Make sure that the ui menu name exists
+	assert(UIManager.is_ui_name_valid(self.frontendMenuName))
 	#warning-ignore:return_value_discarded
 	MapManager.connect("interacted_with", self, "interacted_with")
+	
 	# only the server should start the timer
 	if Network.is_network_master():
 		# timer is used to save processing power,
 		# no need to update tasks every frame
 		#warning-ignore:return_value_discarded
 		$Timer.connect("timeout", self, "_timer_update")
-		
-
+	
+	# TODO make this wait for the idle frame, so that the child
+	# of this class gets constructed, so that taskName gets populated
+	#yield(somethng)
+	TaskManager.register_potential_task_dependency(self)
 	
 func interacted_with(interactNode, _from, _interact_data):
 	if interactNode != self:
@@ -163,20 +175,40 @@ func _timer_update():
 	if not peers.empty():
 		rpc("_update_gui", get_update_gui_dict())
 	
-remotesync func _update_gui(gui_update_dict: Dictionary):
+puppetsync func _update_gui(gui_update_dict: Dictionary):
 	if frontend != null:
 		frontend.update_gui(gui_update_dict)
 
 # All of the logic goes into this method
 # the $Timer calls this if we are the server
 func update(_delta):
+	# Never can be called on base class
+	# Did you forget to assign the script to the maintenance task scene instance?
+	assert(false) 
 	pass
-	#assert(false) # Never can be called on base class
 	
 func get_update_gui_dict():
-	assert(false) # Never can be called on base class
+	# Never can be called on base class
+	# Did you forget to assign the script to the maintenance task scene instance?
+	assert(false)
 	return {}
 	
 func _handle_input_from_gui(_new_input_data: Dictionary):
-	assert(false) # Never can be called on base class
+	# Never can be called on base class
+	# Did you forget to assign the script to the maintenance task scene instance?
+	assert(false)
+	pass
 	
+# called by the regular tasks to check if this task's values are in the nominal range
+# player_id can be the player trying to complete the regular task, or
+# TaskManager.GLOBAL_TASK_PLAYER_ID, in case the global task is being completed
+func is_complete(player_id):
+	# Never can be called on base class
+	# Did you forget to assign the script to the maintenance task scene instance?
+	assert(false)
+	pass
+
+# maintenance tasks are global by default, but the taskmanager needs all tasks
+# that can be dependant on to implement this method
+func is_task_global() -> bool:
+	return true

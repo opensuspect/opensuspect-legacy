@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://assets/items/wrench.tscn" type="PackedScene" id=14]
 [ext_resource path="res://assets/maps/map.gd" type="Script" id=15]
 [ext_resource path="res://assets/maps/common/interactables/maintenancetask/maintenancetask.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/ui/tasks/mainframecoolant/mainframecoolant.gd" type="Script" id=17]
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
@@ -45,6 +46,7 @@ resource_name = "InteractTask"
 script = ExtResource( 8 )
 task_text = ""
 random_numbers = 0
+prerequisite_names = [  ]
 task_id = -1
 ui_resource = SubResource( 2 )
 outputs/toggle_map_interactions = false
@@ -107,7 +109,8 @@ resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = "Task system clockset standbutton"
 random_numbers = 2
-task_id = -1
+prerequisite_names = [ "mainframecoolant" ]
+task_id = 333
 ui_resource = SubResource( 8 )
 outputs/toggle_map_interactions = true
 outputs/output_map_interactions = [ SubResource( 7 ) ]
@@ -116,7 +119,7 @@ is_task_global = true
 [sub_resource type="Resource" id=10]
 resource_local_to_scene = true
 script = ExtResource( 11 )
-ui_name = ""
+ui_name = "clockset"
 ui_data = {
 
 }
@@ -168,6 +171,7 @@ resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = ""
 random_numbers = 0
+prerequisite_names = [  ]
 task_id = -1
 ui_resource = SubResource( 14 )
 outputs/toggle_map_interactions = false
@@ -227,6 +231,7 @@ resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = "Task system clockset"
 random_numbers = 2
+prerequisite_names = [ "333", "gasvalve" ]
 task_id = -1
 ui_resource = SubResource( 20 )
 outputs/toggle_map_interactions = true
@@ -478,4 +483,5 @@ frontendMenuName = "gasvalve"
 
 [node name="MainframeCoolant" parent="MaintenanceTasks" instance=ExtResource( 16 )]
 position = Vector2( 0, 125 )
+script = ExtResource( 17 )
 frontendMenuName = "mainframecoolant"

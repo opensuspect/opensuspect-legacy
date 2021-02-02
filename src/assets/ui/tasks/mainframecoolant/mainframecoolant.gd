@@ -11,12 +11,13 @@ var multiplier = 0
 
 func update(delta):
 	currentTemp += (heatBuildup * multiplier) * delta
+	# don't go below the ideal temp
 	if currentTemp < idealTemp and multiplier < 0:
 		multiplier = 0
-	if currentTemp > maxTemp and multiplier > 0:
-		output_high_critical()
 	if currentTemp > warnTemp:
 		output_high() 
+	if currentTemp > maxTemp and multiplier > 0:
+		output_high_critical()
 		
 func get_update_gui_dict():
 	return {"temp": currentTemp}
@@ -27,3 +28,5 @@ func _handle_input_from_gui(_new_input_data: Dictionary):
 	assert(multiplier is int or multiplier is float)
 	multiplier = mp
 	
+func is_complete(player_id):
+	return currentTemp < warnTemp
