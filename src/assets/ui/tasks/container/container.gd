@@ -4,8 +4,6 @@ onready var grid = $background/conatainergrid
 
 const slot_scene = preload("res://assets/ui/tasks/container/itemslot.tscn")
 
-var pressed:bool= false
-
 export(int) var slots 
 #var slots_data:Array
 
@@ -14,14 +12,18 @@ func _ready():
 	if grid.get_child(0) == null:
 		rpc_id(1,"set_slot_server")
 #Connects with GameManager to record game transition
+# warning-ignore:return_value_discarded
 	GameManager.connect('state_changed', self, '_on_state_changed')
 
-
 func _process(_delta):#Called every frame to check interaction status
-	if ui_data.has("bool"):
+	if not ui_data.empty():
 		rpc_id(1, "pass_data_server", ui_data)
 
 func _on_closebutton_pressed():#Resets the data which is passed
+	for key in ui_data.keys():
+		if typeof(key) == TYPE_INT:
+			var player = ui_data[key]
+			get_tree().get_root().get_node(player).can_pickup = true
 	UIManager.close_ui("container")
 	rpc_id(1, "reset_server")
 

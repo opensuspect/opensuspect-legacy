@@ -14,7 +14,6 @@ var being_picked_up: bool
 var item_location:NodePath #The location of the item
 var item_from_container:bool #Checks item is from container or not
 
-
 func _ready() -> void:
 	# Wait another frame for map to finish setting up
 	yield(get_tree(), "idle_frame")
@@ -55,6 +54,8 @@ func dropped() -> void:
 	global_position = holding_player.global_position - map_items.global_position
 	being_held = false
 	holding_player = null
+	if item_from_container:
+		item_from_container = false
 	set_collision_layer_bit(4, true)
 
 func _on_MouseArea_mouse_entered() -> void:

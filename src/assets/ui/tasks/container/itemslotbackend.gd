@@ -14,6 +14,8 @@ func set_in_hand(ui_data_pass, index:int):#This the crucial function
 		for key in ui_data_pass.keys():
 			if typeof(key) == TYPE_INT:#Filters the ui_data
 				var player = ui_data_pass[key]
+				if get_tree().get_root().get_node(player).item_handler.get_child_count() > 0:
+					get_tree().get_root().get_node(player).item_handler.drop_item_external()
 				get_tree().get_root().get_node(player).item_handler._test_pickup(item)
 
 puppetsync func set_path():#Give the item its location so it cna remove itself and add to other location

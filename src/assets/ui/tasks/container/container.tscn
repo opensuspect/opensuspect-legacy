@@ -52,5 +52,4 @@ columns = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="mouse_entered" from="." to="." method="_on_conatiner_mouse_entered"]
 [connection signal="pressed" from="background/upperoverlay/closebutton" to="." method="_on_closebutton_pressed"]

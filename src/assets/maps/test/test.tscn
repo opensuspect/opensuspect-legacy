@@ -11,11 +11,12 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interact/interact.gd" type="Script" id=9]
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=10]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=11]
-[ext_resource path="res://assets/maps/test/Container.gd" type="Script" id=12]
+[ext_resource path="res://assets/maps/test/container_area.gd" type="Script" id=12]
 [ext_resource path="res://assets/items/battery.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/items/wrench.tscn" type="PackedScene" id=14]
 [ext_resource path="res://assets/maps/map.gd" type="Script" id=15]
 [ext_resource path="res://assets/player/textures/characters/black/black-proto-1.png" type="Texture" id=16]
+
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
