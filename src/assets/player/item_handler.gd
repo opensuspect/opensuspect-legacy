@@ -134,6 +134,3 @@ func _on_Player_dead() -> void:
 		_target_item.get_node("SpritePosition/ItemSprite").material.set_shader_param("line_color", Color.transparent)
 	in_pickup_range = []
 	_target_item = null
-
-func drop_item_external():
-	emit_signal("main_player_dropped_item")

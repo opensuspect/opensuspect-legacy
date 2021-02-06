@@ -111,4 +111,4 @@ func load_map_info_resources() -> Array:
 	return resources
 
 func init_all_tasks():
-	UIManager.pre_ins("container")
+	UIManager.pre_instance("container")

@@ -24,7 +24,7 @@ func _ready():
 # warning-ignore:return_value_discarded
 	UIManager.connect("close_all_ui", self, "close_all_ui")
 # warning-ignore:return_value_discarded
-	UIManager.connect("pre_ins", self, "pre_ins")
+	UIManager.connect("pre_instance", self, "pre_instance")
 	
 	var err = config.load("user://settings.cfg")
 	if err == OK:
@@ -131,15 +131,9 @@ func get_child_node_names() -> Array:
 		name_list.append(i.name)
 	return name_list
 
-func pre_ins(ui_name: String):
+func pre_instance(ui_name: String):#Make the ui to be in active state when a game is started
 	update_instanced_uis()
-	if not ui_list.keys().has(ui_name):
+	if instanced_uis.keys().has(ui_name):
 		return
-	var new_ui = ui_list[ui_name].scene.instance()
-	new_ui.name = ui_name
-	instanced_uis[ui_name] = new_ui
-	add_child(new_ui)
-	if new_ui.has_method("base_close"):
-		new_ui.base_close()
-	if new_ui.has_method("close"):
-		new_ui.close()
+	instance_ui(ui_name)
+	close_ui(ui_name)
