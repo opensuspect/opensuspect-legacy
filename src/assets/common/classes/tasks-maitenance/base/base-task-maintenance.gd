@@ -26,8 +26,11 @@ class_name BaseMaintenanceTask
 #			this function will get called so you can act upon it.
 #			You choose what the dict is going to contain in your gui script
 #================
-#	2. IMPORTANT Set the just created script as the script for the instanced 
-#				 assets/common/classes/tasks-maintenance/maintenancetask.tscn
+#	2. IMPORTANT instance child scene 
+#		assets/common/classes/tasks-maintenance/maintenancetask.tscn
+#		Set the script that inherited this script(that you wrote)
+#		as the script for the instanced maintenancetask.tscn
+#				 
 #		* make sure to move the instanced scene away from 0,0 coordinate,
 #		  otherwise, it will open when the game starts 
 #================

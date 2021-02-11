@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -12,9 +12,11 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=10]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=11]
 [ext_resource path="res://assets/ui/tasks/gasvalve/gasvalve.gd" type="Script" id=12]
-[ext_resource path="res://assets/common/classes/tasks-maitenance/maintenancetask.tscn" type="PackedScene" id=13]
-[ext_resource path="res://assets/ui/tasks/mainframecoolant/mainframecoolant.gd" type="Script" id=14]
-
+[ext_resource path="res://assets/items/battery.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/items/wrench.tscn" type="PackedScene" id=14]
+[ext_resource path="res://assets/maps/map.gd" type="Script" id=15]
+[ext_resource path="res://assets/common/classes/tasks-maitenance/maintenancetask.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/ui/tasks/mainframecoolant/mainframecoolant.gd" type="Script" id=17]
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
@@ -24,6 +26,7 @@ interact_with = NodePath("../testdoor")
 interact_data = {
 
 }
+advanced/network_sync = false
 
 [sub_resource type="Resource" id=2]
 resource_local_to_scene = true
@@ -33,16 +36,20 @@ ui_name = ""
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=3]
 resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 8 )
 task_text = ""
+random_numbers = 0
+task_id = -1
 ui_resource = SubResource( 2 )
 outputs/toggle_map_interactions = false
+is_task_global = false
 
 [sub_resource type="Resource" id=4]
 resource_local_to_scene = true
@@ -52,8 +59,9 @@ ui_name = ""
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=5]
 resource_local_to_scene = true
@@ -72,6 +80,7 @@ interact_with = NodePath("clocktext")
 interact_data = {
 
 }
+advanced/network_sync = false
 
 [sub_resource type="Resource" id=7]
 resource_local_to_scene = true
@@ -81,6 +90,7 @@ interact_with = NodePath("clocktext")
 interact_data = {
 
 }
+advanced/network_sync = false
 
 [sub_resource type="Resource" id=8]
 resource_local_to_scene = true
@@ -89,16 +99,20 @@ ui_name = "clockset"
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=9]
 resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = "Task system clockset standbutton"
+random_numbers = 2
+task_id = -1
 ui_resource = SubResource( 8 )
 outputs/toggle_map_interactions = true
 outputs/output_map_interactions = [ SubResource( 7 ) ]
+is_task_global = true
 
 [sub_resource type="Resource" id=10]
 resource_local_to_scene = true
@@ -107,8 +121,9 @@ ui_name = ""
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=11]
 resource_local_to_scene = true
@@ -125,8 +140,9 @@ ui_name = "clockset"
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=13]
 resource_local_to_scene = true
@@ -135,6 +151,7 @@ interact_with = NodePath("")
 interact_data = {
 
 }
+advanced/network_sync = false
 
 [sub_resource type="Resource" id=14]
 resource_local_to_scene = true
@@ -143,15 +160,19 @@ ui_name = ""
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=15]
 resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = ""
+random_numbers = 0
+task_id = -1
 ui_resource = SubResource( 14 )
 outputs/toggle_map_interactions = false
+is_task_global = false
 
 [sub_resource type="Resource" id=16]
 resource_local_to_scene = true
@@ -160,8 +181,9 @@ ui_name = "chatbox"
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=17]
 resource_local_to_scene = true
@@ -178,6 +200,7 @@ interact_with = NodePath("")
 interact_data = {
 
 }
+advanced/network_sync = false
 
 [sub_resource type="Resource" id=19]
 resource_local_to_scene = true
@@ -187,6 +210,7 @@ interact_with = NodePath("Label")
 interact_data = {
 
 }
+advanced/network_sync = false
 
 [sub_resource type="Resource" id=20]
 resource_local_to_scene = true
@@ -195,16 +219,20 @@ ui_name = "clockset"
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=21]
 resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = "Task system clockset"
+random_numbers = 2
+task_id = -1
 ui_resource = SubResource( 20 )
 outputs/toggle_map_interactions = true
 outputs/output_map_interactions = [ SubResource( 19 ) ]
+is_task_global = false
 
 [sub_resource type="Resource" id=22]
 resource_local_to_scene = true
@@ -213,8 +241,9 @@ ui_name = ""
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=23]
 resource_local_to_scene = true
@@ -225,19 +254,7 @@ ui_resource = SubResource( 22 )
 map_resource = SubResource( 18 )
 
 [node name="test" type="YSort"]
-
-[node name="Node2D" type="Node2D" parent="."]
-z_index = -100
-
-[node name="ColorRect" type="ColorRect" parent="Node2D"]
-margin_left = -1117.67
-margin_top = -710.188
-margin_right = 1424.33
-margin_bottom = 302.812
-color = Color( 0.239216, 0.239216, 0.239216, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource( 15 )
 
 [node name="Sprite2" type="Sprite" parent="."]
 light_mask = -2147483647
@@ -333,18 +350,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="spawnpoints" type="Node2D" parent="."]
+[node name="SpawnPoints" type="Node2D" parent="."]
 
-[node name="Position2D" type="Position2D" parent="spawnpoints"]
+[node name="Position2D" type="Position2D" parent="SpawnPoints"]
 position = Vector2( -100, 0 )
 
-[node name="Position2D2" type="Position2D" parent="spawnpoints"]
+[node name="Position2D2" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 0, -100 )
 
-[node name="Position2D3" type="Position2D" parent="spawnpoints"]
+[node name="Position2D3" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 100, 0 )
 
-[node name="Position2D4" type="Position2D" parent="spawnpoints"]
+[node name="Position2D4" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 0, 100 )
 
 [node name="walls" type="YSort" parent="."]
@@ -429,16 +446,38 @@ scale = Vector2( 12, 3 )
 position = Vector2( 600, 0 )
 scale = Vector2( 3, 19 )
 
-[node name="Corpses" type="YSort" parent="."]
+[node name="Interactive" type="YSort" parent="."]
 
-[node name="MaintenanceTasks" type="Node" parent="."]
+[node name="Items" type="YSort" parent="Interactive"]
 
-[node name="GasTask" parent="MaintenanceTasks" instance=ExtResource( 13 )]
+[node name="Wrench" parent="Interactive/Items" instance=ExtResource( 14 )]
+material = null
+position = Vector2( 55.4992, 31.1132 )
+
+[node name="Wrench2" parent="Interactive/Items" instance=ExtResource( 14 )]
+material = null
+position = Vector2( -53.8174, -40.363 )
+
+[node name="Battery" parent="Interactive/Items" instance=ExtResource( 13 )]
+material = null
+position = Vector2( 155.052, -40.363 )
+
+[node name="Battery2" parent="Interactive/Items" instance=ExtResource( 13 )]
+material = null
+position = Vector2( -96.3763, 93.3395 )
+
+[node name="Props" type="YSort" parent="."]
+
+[node name="Corpses" type="YSort" parent="Props"]
+
+[node name="MaintenanceTasks" type="Node2D" parent="."]
+
+[node name="gasvalve" parent="MaintenanceTasks" instance=ExtResource( 16 )]
 position = Vector2( 0, 100 )
 script = ExtResource( 12 )
 frontendMenuName = "gasvalve"
 
-[node name="MainframeCooling" parent="MaintenanceTasks" instance=ExtResource( 13 )]
-position = Vector2( 150, 20 )
-script = ExtResource( 14 )
+[node name="mainframecooling" parent="MaintenanceTasks" instance=ExtResource( 16 )]
+position = Vector2( 100, 50 )
+script = ExtResource( 17 )
 frontendMenuName = "mainframecoolant"

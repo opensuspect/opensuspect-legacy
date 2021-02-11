@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/items/item.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/items/textures/battery.png" type="Texture" id=2]
+[ext_resource path="res://assets/common/shaders/outline.shader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 3 )
+shader_param/line_color = Color( 1, 1, 0, 0 )
+shader_param/line_thickness = 5.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 9.5, 4.4 )
+
+[sub_resource type="Shader" id=3]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform vec4 line_color: hint_color = vec4(1.0);
+uniform float line_thickness: hint_range(0.0, 1024.0) = 1.0;
+
+void fragment()
+{
+	vec2 size = TEXTURE_PIXEL_SIZE * line_thickness / 2.0;
+
+	float l = texture(TEXTURE, UV + vec2(-size.x, 0)).a;
+	float u = texture(TEXTURE, UV + vec2(0, size.y)).a;
+	float r = texture(TEXTURE, UV + vec2(size.x, 0)).a;
+	float d = texture(TEXTURE, UV + vec2(0, -size.y)).a;
+	float lu = texture(TEXTURE, UV + vec2(-size.x, size.y)).a;
+	float ru = texture(TEXTURE, UV + vec2(size.x, size.y)).a;
+	float ld = texture(TEXTURE, UV + vec2(-size.x, -size.y)).a;
+	float rd = texture(TEXTURE, UV + vec2(size.x, -size.y)).a;
+
+	vec4 color = texture(TEXTURE, UV);
+	float outline = min(1.0, l+r+u+d+lu+ru+ld+rd) - color.a;
+	float inline = (1.0 - l * r * u * d * lu * ru * rd * ld) * color.a;
+
+	vec4 outlined_result = mix(color, line_color, outline + inline);
+	COLOR = mix(color, outlined_result, outlined_result.a);
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = SubResource( 3 )
+shader_param/line_color = Color( 1, 1, 0, 0 )
+shader_param/line_thickness = 5.0
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 8.0
+height = 12.0
+
+[node name="Battery" instance=ExtResource( 1 )]
+material = SubResource( 1 )
+position = Vector2( -0.0936432, 0 )
+
+[node name="ItemCollision" parent="." index="0"]
+rotation = 2.35619
+shape = SubResource( 2 )
+
+[node name="SpritePosition" parent="." index="2"]
+position = Vector2( 0, 0 )
+
+[node name="ItemSprite" parent="SpritePosition" index="0"]
+material = SubResource( 4 )
+rotation = 2.35619
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 5 )
+offset = Vector2( 0, 0 )
+
+[node name="MouseCollision" parent="SpritePosition/MouseArea" index="0"]
+rotation = 0.785398
+shape = SubResource( 6 )

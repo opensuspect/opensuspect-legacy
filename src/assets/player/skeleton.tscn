@@ -1,24 +1,32 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
-[ext_resource path="res://assets/player/textures/characters/customizable/01-left-arm/white-shirt-red-sweater.png" type="Texture" id=1]
-[ext_resource path="res://assets/player/textures/characters/customizable/07-clothes/white-shirt-red-sweater.png" type="Texture" id=2]
-[ext_resource path="res://assets/player/textures/characters/customizable/02-body/body.png" type="Texture" id=3]
-[ext_resource path="res://assets/player/textures/characters/customizable/05-pants/white-shirt-red-sweater.png" type="Texture" id=4]
-[ext_resource path="res://assets/player/textures/characters/customizable/04-left-leg/white-shirt-red-sweater.png" type="Texture" id=5]
-[ext_resource path="res://assets/player/textures/characters/customizable/11-hat-hair/red-hair-bob.png" type="Texture" id=6]
-[ext_resource path="res://assets/player/textures/characters/customizable/09-facial-hair/red-eyebrow-sideburn.png" type="Texture" id=7]
+[ext_resource path="res://assets/player/textures/characters/customizable/01-left-arm/white_shirt-red_sweater.png" type="Texture" id=1]
+[ext_resource path="res://assets/player/textures/characters/customizable/07-clothes/white_shirt-red_sweater.png" type="Texture" id=2]
+[ext_resource path="res://assets/player/textures/characters/customizable/02-body/black_round_eyes-big_nose.png" type="Texture" id=3]
+[ext_resource path="res://assets/player/textures/characters/customizable/05-pants/white_shirt-red_sweater.png" type="Texture" id=4]
+[ext_resource path="res://assets/player/textures/characters/customizable/04-left-leg/white_shirt-red_sweater.png" type="Texture" id=5]
+[ext_resource path="res://assets/player/textures/characters/customizable/11-hat-hair/hair_short.png" type="Texture" id=6]
+[ext_resource path="res://assets/player/textures/characters/customizable/09-facial-hair/sideburns_eyebrows_1.png" type="Texture" id=7]
 [ext_resource path="res://assets/player/textures/characters/customizable/10-face-wear/glasses.png" type="Texture" id=8]
-[ext_resource path="res://assets/player/textures/characters/customizable/08-right-arm/white-shirt-red-sweater.png" type="Texture" id=9]
-[ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/white-shirt-red-sweater.png" type="Texture" id=10]
-[ext_resource path="res://assets/player/textures/characters/customizable/03-mouth/mouth-smile.png" type="Texture" id=11]
+[ext_resource path="res://assets/player/textures/characters/customizable/08-right-arm/white_shirt-red_sweater.png" type="Texture" id=9]
+[ext_resource path="res://assets/player/textures/characters/customizable/06-right-leg/white_shirt-red_sweater.png" type="Texture" id=10]
+[ext_resource path="res://assets/player/textures/characters/customizable/03-mouth/smile.png" type="Texture" id=11]
 [ext_resource path="res://assets/common/shaders/skin_color_key.shader" type="Shader" id=12]
+[ext_resource path="res://assets/player/skeleton.gd" type="Script" id=13]
+
+
+
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 12 )
 shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
-shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
-shader_param/tolerance = 0.75
+shader_param/skin_color = Color( 0.760784, 0.647059, 0.560784, 1 )
+shader_param/hair_mask_color = Color( 0, 1, 1, 1 )
+shader_param/hair_color = Color( 0.592157, 0.709804, 0.333333, 1 )
+shader_param/fhair_mask_color = Color( 0, 1, 0, 1 )
+shader_param/fhair_color = Color( 0.368627, 0.298039, 0.298039, 1 )
+shader_param/tolerance = 0.1
 
 [sub_resource type="Animation" id=2]
 length = 1.5
@@ -2160,6 +2168,7 @@ graph_offset = Vector2( -311, 172 )
 
 [node name="Skeleton" type="Node2D"]
 material = SubResource( 1 )
+script = ExtResource( 13 )
 __meta__ = {
 "_editor_description_": "Node to hold the polygon sprites and the skeleton."
 }
@@ -2179,6 +2188,7 @@ parameters/playback = SubResource( 17 )
 parameters/idle_move_blend/blend_position = Vector2( 0, 0 )
 
 [node name="LeftLeg" type="Polygon2D" parent="."]
+use_parent_material = true
 position = Vector2( -19.1778, -51.5955 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 5 )
@@ -2214,7 +2224,7 @@ scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 3 )
 skeleton = NodePath("../Skeleton")
 polygon = PoolVector2Array( 340, 100, 420, 100, 550, 100, 610, 100, 610, 550, 610, 640, 610, 710, 610, 790, 610, 850, 610, 890, 550, 890, 420, 890, 340, 890, 240, 890, 140, 890, 140, 850, 140, 790, 140, 710, 140, 640, 140, 550, 140, 100, 320, 550, 470, 550, 470, 570, 320, 570, 320, 530, 470, 530, 320, 640, 470, 640, 470, 620, 320, 620, 320, 660, 470, 660, 320, 710, 470, 710, 470, 690, 320, 690, 320, 730, 470, 730, 320, 790, 320, 770, 470, 770, 470, 790, 470, 810, 320, 810, 220, 230, 360, 160, 400, 160, 550, 230, 230, 550, 560, 550, 560, 640, 230, 640, 230, 710, 230, 790, 230, 850, 560, 850, 560, 790, 560, 710, 320, 850, 470, 850 )
-uv = PoolVector2Array( 340, 100, 420, 100, 550, 100, 610, 100, 610, 550, 610, 640, 610, 710, 610, 790, 610, 850, 610, 890, 550, 890, 420, 890, 340, 890, 240, 890, 140, 890, 140, 850, 140, 790, 140, 710, 140, 640, 140, 550, 140, 100, 330, 550, 410, 550, 410, 570, 330, 570, 330, 520, 410, 520, 330, 640, 410, 640, 410, 630, 330, 620, 330, 660, 410, 660, 330, 710, 410, 710, 410, 690, 330, 690, 330, 730, 410, 730, 330, 790, 330, 780, 400, 770, 410, 790, 410, 810, 330, 810, 220, 230, 360, 160, 400, 160, 550, 230, 230, 550, 560, 550, 560, 640, 230, 640, 230, 710, 230, 790, 230, 850, 560, 850, 560, 790, 560, 710, 320, 850, 470, 850 )
+uv = PoolVector2Array( 340, 100, 420, 100, 550, 100, 610, 100, 610, 550, 610, 640, 610, 710, 610, 790, 610, 850, 610, 890, 550, 890, 420, 890, 340, 890, 240, 890, 140, 890, 140, 850, 140, 790, 140, 710, 140, 640, 140, 550, 140, 100, 320, 550, 470, 550, 470, 570, 320, 570, 320, 530, 470, 530, 320, 640, 470, 640, 470, 620, 320, 620, 320, 660, 470, 660, 320, 710, 470, 710, 470, 690, 320, 690, 320, 730, 470, 730, 320, 790, 320, 770, 470, 770, 470, 790, 470, 810, 320, 810, 220, 230, 360, 160, 400, 160, 550, 230, 230, 550, 560, 550, 560, 640, 230, 640, 230, 710, 230, 790, 230, 850, 560, 850, 560, 790, 560, 710, 320, 850, 470, 850 )
 polygons = [ PoolIntArray( 20, 45, 46, 0 ), PoolIntArray( 0, 1, 47, 46 ), PoolIntArray( 1, 47, 48, 2 ), PoolIntArray( 48, 2, 3 ), PoolIntArray( 48, 50, 4, 3 ), PoolIntArray( 50, 51, 5, 4 ), PoolIntArray( 51, 58, 6, 5 ), PoolIntArray( 58, 57, 7, 6 ), PoolIntArray( 57, 56, 8, 7 ), PoolIntArray( 56, 10, 9, 8 ), PoolIntArray( 56, 60, 11, 10 ), PoolIntArray( 60, 59, 12, 11 ), PoolIntArray( 59, 55, 13, 12 ), PoolIntArray( 55, 15, 14, 13 ), PoolIntArray( 54, 55, 15, 16 ), PoolIntArray( 54, 53, 17, 16 ), PoolIntArray( 17, 18, 52, 53 ), PoolIntArray( 18, 19, 49, 52 ), PoolIntArray( 49, 45, 20, 19 ), PoolIntArray( 45, 25, 46 ), PoolIntArray( 46, 47, 26, 25 ), PoolIntArray( 47, 48, 50, 26 ), PoolIntArray( 25, 49, 45 ), PoolIntArray( 25, 21, 49 ), PoolIntArray( 25, 26, 22, 21 ), PoolIntArray( 22, 50, 26 ), PoolIntArray( 22, 23, 24, 21 ), PoolIntArray( 23, 50, 22 ), PoolIntArray( 24, 49, 21 ), PoolIntArray( 24, 30, 52, 49 ), PoolIntArray( 24, 30, 29, 23 ), PoolIntArray( 23, 29, 51, 50 ), PoolIntArray( 29, 28, 51 ), PoolIntArray( 28, 32, 51 ), PoolIntArray( 28, 27, 30, 29 ), PoolIntArray( 28, 32, 31, 27 ), PoolIntArray( 31, 52, 27 ), PoolIntArray( 27, 30, 52 ), PoolIntArray( 31, 36, 53, 52 ), PoolIntArray( 31, 36, 35, 32 ), PoolIntArray( 36, 33, 34, 35 ), PoolIntArray( 35, 58, 51, 32 ), PoolIntArray( 35, 34, 58 ), PoolIntArray( 34, 38, 58 ), PoolIntArray( 34, 33, 37, 38 ), PoolIntArray( 33, 53, 36 ), PoolIntArray( 37, 53, 33 ), PoolIntArray( 37, 40, 54, 53 ), PoolIntArray( 37, 38, 41, 40 ), PoolIntArray( 41, 57, 58, 38 ), PoolIntArray( 41, 42, 57 ), PoolIntArray( 42, 43, 57 ), PoolIntArray( 42, 39, 40, 41 ), PoolIntArray( 42, 43, 44, 39 ), PoolIntArray( 44, 54, 39 ), PoolIntArray( 39, 40, 54 ), PoolIntArray( 44, 59, 55, 54 ), PoolIntArray( 44, 59, 60, 43 ), PoolIntArray( 43, 57, 56, 60 ) ]
 bones = [ NodePath("Spine"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/Spine0"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1 ), NodePath("Spine/Spine0/Spine1"), PoolRealArray( 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 ), NodePath("Spine/Spine0/Spine1/Spine2"), PoolRealArray( 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0 ), NodePath("Spine/Spine0/Spine1/Spine2/Neck"), PoolRealArray( 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/Spine0/Spine1/Spine2/Neck/Head"), PoolRealArray( 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/LeftUpperArm"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/LeftUpperArm/LeftLowerArm"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/LeftUpperArm/LeftLowerArm/LeftHand"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/RightUpperArm"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/RightUpperArm/RightLowerArm"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/RightUpperArm/RightLowerArm/RightHand"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/LeftUpperLeg"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/LeftUpperLeg/LeftLowerLeg"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/LeftUpperLeg/LeftLowerLeg/LeftFoot"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/LeftUpperLeg/LeftLowerLeg/LeftFoot/LeftToe"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/RightUpperLeg"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/RightUpperLeg/RightLowerLeg"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/RightUpperLeg/RightLowerLeg/RightFoot"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ), NodePath("Spine/RightUpperLeg/RightLowerLeg/RightFoot/RightToe"), PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ) ]
 internal_vertex_count = 40
@@ -2223,11 +2233,13 @@ __meta__ = {
 }
 
 [node name="Skeleton" type="Skeleton2D" parent="."]
+use_parent_material = true
 __meta__ = {
-"_editor_description_": "Player skeleton that controls the deformation of the poiygon meshes."
+"_editor_description_": "Player skeleton that controls the deformation of the polygon meshes."
 }
 
 [node name="Spine" type="Bone2D" parent="Skeleton"]
+use_parent_material = true
 position = Vector2( 2.52554, -8.41847 )
 rest = Transform2D( 1, 0, 0, 1, 2.52554, -8.41847 )
 __meta__ = {
@@ -2313,6 +2325,9 @@ __meta__ = {
 "_edit_bone_": true,
 "_editor_description_": "Bone that controls the player's right hand."
 }
+
+[node name="ItemTransform" type="RemoteTransform2D" parent="Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand"]
+update_scale = false
 
 [node name="LeftUpperLeg" type="Bone2D" parent="Skeleton/Spine"]
 position = Vector2( 3.53507, 1.61536 )
@@ -2400,7 +2415,16 @@ __meta__ = {
 "_editor_description_": "Player pants sprite."
 }
 
+[node name="Mouth" type="Sprite" parent="Skeleton/Spine"]
+position = Vector2( -2.5172, -17.5472 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 11 )
+__meta__ = {
+"_editor_description_": "Player mouth sprite."
+}
+
 [node name="FacialHair" type="Sprite" parent="Skeleton/Spine"]
+use_parent_material = true
 position = Vector2( -2.51719, -17.5472 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 7 )
@@ -2417,6 +2441,7 @@ __meta__ = {
 }
 
 [node name="HatHair" type="Sprite" parent="Skeleton/Spine"]
+use_parent_material = true
 position = Vector2( -2.5172, -17.5472 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 6 )
@@ -2424,15 +2449,8 @@ __meta__ = {
 "_editor_description_": "Player hat/hair sprite."
 }
 
-[node name="Mouth" type="Sprite" parent="Skeleton/Spine"]
-position = Vector2( -2.5172, -17.5472 )
-scale = Vector2( 0.05, 0.05 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_editor_description_": "Player mouth sprite."
-}
-
 [node name="RightLeg" type="Polygon2D" parent="."]
+use_parent_material = true
 position = Vector2( -19.2102, -51.5166 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 10 )

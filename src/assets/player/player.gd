@@ -1,11 +1,15 @@
 extends KinematicBody2D
+class_name Player
 
 onready var death_handler: Node2D = $DeathHandler
 onready var infiltrator_scene: PackedScene = load("res://assets/player/infiltrator.tscn")
+onready var item_handler: Node2D = $ItemHandler
+onready var item_pickup_range: Area2D = $ItemPickupRange
 onready var skeleton: Node2D = $Skeleton
 onready var animator: AnimationPlayer = skeleton.get_node("AnimationPlayer")
 onready var animation_tree: AnimationTree = animator.get_node("AnimationTree")
 onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("parameters/playback")
+onready var item_transform: RemoteTransform2D = skeleton.get_node("Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand/ItemTransform")
 onready var sprites_viewport: Viewport = $SpritesViewport
 
 signal main_player_moved(position, velocity, input_number)
@@ -42,13 +46,17 @@ var last_received_input: int = 0
 var input_queue: Array = []
 
 func _ready():
+	# Reparent ItemHandler to Skeleton Node2D
+	remove_child(item_handler)
+	skeleton.add_child(item_handler)
+	skeleton.move_child(item_handler, 6)
+	item_transform.remote_path = item_transform.get_path_to(item_handler)
+
+	#print_debug("(player.gd/_ready)")
 	# Reparent Skeleton Node2D to SpritesViewport
 	remove_child(skeleton)
 	sprites_viewport.add_child(skeleton)
-	
-	# Set the sprite material for every player to be a duplicate of their
-	# initial material so that outlines may be modified independently.
-	#sprite.set_material(sprite.material.duplicate())
+
 	#TEMPORARIALLY DISABLED FOR GLASSES GUY
 	if "--server" in OS.get_cmdline_args():
 		main_player = false
@@ -61,7 +69,16 @@ func _ready():
 	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
-	PlayerManager.connect("roles_assigned", self, "roles_assigned")
+	# connecting this signal causes the player node to receive it during round
+	# switching and before the new player nodes are spawned
+	# players should probably be deleted in the cleanup phase
+#	PlayerManager.connect("roles_assigned", self, "roles_assigned")
+	AppearanceManager.connect("apply_appearance", self, "customizePlayer")
+	customizePlayer(id)
+
+func _input(event: InputEvent) -> void:
+	# Item Handler does not receive input as a child of a Viewport
+	item_handler._input(event)
 
 func setName(newName):
 	ourname = newName
@@ -78,28 +95,28 @@ func roles_assigned(playerRoles: Dictionary):
 func _checkRole(role: String) -> void:
 	"""Performs certain functions depending on the passed in role parameter."""
 	match role:
-		"traitor":
+		"infiltrator":
 			set_collision_layer_bit(3, true)
 			if not has_node("Infiltrator"):
 				add_child(infiltrator_scene.instance())
 		"detective":
 			if has_node("Infiltrator"):
 				get_node("Infiltrator").queue_free()
-		"default":
+		"agent":
 			set_collision_layer_bit(2, true)
 			if has_node("Infiltrator"):
 				get_node("Infiltrator").queue_free()
 
 func changeNameColor(role: String):
 	match role:
-		"traitor":
-			if PlayerManager.ourrole == "traitor":
-				setNameColor(PlayerManager.playerColors["traitor"])
+		"infiltrator":
+			if PlayerManager.ourrole == "infiltrator":
+				setNameColor(PlayerManager.playerColors["infiltrator"])
 		"detective":
 			#not checking if our role is detective because everyone should see detectives
 			setNameColor(PlayerManager.playerColors["detective"])
-		"default":
-			setNameColor(PlayerManager.playerColors["default"])
+		"agent":
+			setNameColor(PlayerManager.playerColors["agent"])
 
 func setNameColor(newColor: Color):
 	$Label.set("custom_colors/font_color", newColor)
@@ -122,7 +139,7 @@ func get_input():
 
 func animate(current_velocity: Vector2) -> void:
 	"""
-	Set the blend between the idle and move animations in the animation tree's 
+	Set the blend between the idle and move animations in the animation tree's
 	root state machine based on the player's current velocity.
 	"""
 	var blend_position := Vector2(0, current_velocity.length() / speed)
@@ -138,6 +155,19 @@ func run_physics(motion):
 		velocity.y = lerp(prev_velocity.y, 0, 0.17)
 	# TODO: provide a delta value to this function and use it here
 	velocity = move_and_slide(velocity)
+
+func customizePlayer(customize_id):
+	"""
+	Customizes the player's character
+	"""
+	if id != customize_id:
+		return
+	var customizationData = AppearanceManager.getPlayerAppearance(id)
+	if customizationData != null:
+		if self.has_node("SpritesViewport/Skeleton"):
+			self.get_node("SpritesViewport/Skeleton").applyCustomization(customizationData)
+		elif self.has_node("Skeleton"):
+			self.get_node("Skeleton").applyCustomization(customizationData)
 
 func _physics_process(_delta):
 	if main_player:

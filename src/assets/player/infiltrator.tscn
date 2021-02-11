@@ -3,21 +3,21 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/infiltrator.gd" type="Script" id=2]
 
-[sub_resource type="Resource" id=3]
+[sub_resource type="Resource" id=1]
 resource_local_to_scene = true
 script = ExtResource( 1 )
 ui_name = "killui"
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = true
+advanced/free_on_close = false
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=2]
 radius = 60.0
 
-[sub_resource type="Animation" id=2]
-resource_name = "Reload"
+[sub_resource type="Animation" id=3]
 length = 10.0
 
 [node name="Infiltrator" type="Node2D" groups=[
@@ -25,12 +25,12 @@ length = 10.0
 ]]
 script = ExtResource( 2 )
 __meta__ = {
-"_editor_description_": "Node that gets instantiated as a child of a player when they are assigned the role of \"traitor\"."
+"_editor_description_": "Node that gets instantiated as a child of a player when they are assigned the role of \"infiltrator\"."
 }
-ui_interact_resource = SubResource( 3 )
+ui_interact_resource = SubResource( 1 )
 
 [node name="KillCooldownTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 2.0
 one_shot = true
 __meta__ = {
 "_editor_description_": "Cooldown between kills (unused for now)."
@@ -44,13 +44,13 @@ __meta__ = {
 }
 
 [node name="KillCollision" type="CollisionShape2D" parent="KillArea"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 __meta__ = {
 "_editor_description_": "The collision of the area where a player may be killed."
 }
 
 [node name="Animator" type="AnimationPlayer" parent="."]
-anims/Reload = SubResource( 2 )
+anims/Reload = SubResource( 3 )
 __meta__ = {
 "_editor_description_": "AnimationPlayer responsible for controller Infiltrator specific animations."
 }

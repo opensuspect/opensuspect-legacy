@@ -1,13 +1,14 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/skeleton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/player/death_handler.gd" type="Script" id=3]
 [ext_resource path="res://assets/common/shaders/skin_color_key.shader" type="Shader" id=4]
+[ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=5]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
 [ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
-[ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=17]
 [ext_resource path="res://assets/player/camera.gd" type="Script" id=27]
+[ext_resource path="res://assets/player/item_handler.gd" type="Script" id=28]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 100.0
@@ -18,23 +19,31 @@ light_mode = 2
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 12.0
 
-[sub_resource type="CanvasItemMaterial" id=4]
-light_mode = 2
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 25.0
+height = 50.0
 
-[sub_resource type="ShaderMaterial" id=5]
-resource_local_to_scene = true
-shader = ExtResource( 4 )
-shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
-shader_param/skin_color = Color( 0.827451, 0.705882, 0.580392, 1 )
-shader_param/tolerance = 0.75
+[sub_resource type="CanvasItemMaterial" id=5]
+light_mode = 2
 
 [sub_resource type="ShaderMaterial" id=6]
 resource_local_to_scene = true
-shader = ExtResource( 17 )
+shader = ExtResource( 4 )
+shader_param/skin_mask_color = Color( 1, 0, 1, 1 )
+shader_param/skin_color = Color( 0.423529, 0.266667, 0.101961, 1 )
+shader_param/hair_mask_color = Color( 0, 1, 1, 1 )
+shader_param/hair_color = Color( 1, 1, 1, 1 )
+shader_param/fhair_mask_color = Color( 0, 1, 0, 1 )
+shader_param/fhair_color = Color( 1, 1, 1, 1 )
+shader_param/tolerance = 0.1
+
+[sub_resource type="ShaderMaterial" id=7]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
 shader_param/line_color = Color( 1, 1, 1, 0 )
 shader_param/line_thickness = 5.0
 
-[sub_resource type="ViewportTexture" id=7]
+[sub_resource type="ViewportTexture" id=8]
 viewport_path = NodePath("SpritesViewport")
 
 [node name="Player" type="KinematicBody2D" groups=[
@@ -49,7 +58,7 @@ gravity_vec = Vector2( 0, 0 )
 gravity = 0.0
 linear_damp = 0.0
 angular_damp = 0.0
-collision_layer = 0
+collision_layer = 2
 collision_mask = 16
 script = ExtResource( 16 )
 
@@ -64,6 +73,14 @@ shape = SubResource( 1 )
 material = SubResource( 2 )
 rotation = 1.5708
 shape = SubResource( 3 )
+
+[node name="ItemPickupRange" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 16
+
+[node name="PickupRangeCollision" type="CollisionShape2D" parent="ItemPickupRange"]
+rotation = 1.5708
+shape = SubResource( 4 )
 
 [node name="MainLight" type="Light2D" parent="."]
 position = Vector2( -0.37458, -0.226169 )
@@ -85,7 +102,7 @@ drag_margin_bottom = 0.65
 script = ExtResource( 27 )
 
 [node name="Label" type="Label" parent="."]
-material = SubResource( 4 )
+material = SubResource( 5 )
 margin_left = -250.0
 margin_top = -75.0
 margin_right = 250.0
@@ -97,17 +114,17 @@ __meta__ = {
 }
 
 [node name="Skeleton" parent="." instance=ExtResource( 2 )]
-material = SubResource( 5 )
-use_parent_material = true
+material = SubResource( 6 )
 
 [node name="SpritesViewport" type="Viewport" parent="."]
-size = Vector2( 300, 300 )
+size = Vector2( 1024, 600 )
 transparent_bg = true
 handle_input_locally = false
 disable_3d = true
 usage = 0
 render_target_v_flip = true
 render_target_update_mode = 3
+physics_object_picking = true
 __meta__ = {
 "_editor_description_": "The viewport that will contain and render the player polygon sprites and Skeleton2D animations."
 }
@@ -115,23 +132,22 @@ __meta__ = {
 [node name="SpritesCamera" type="Camera2D" parent="SpritesViewport"]
 offset = Vector2( 0, -25 )
 current = true
-zoom = Vector2( 0.25, 0.25 )
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
+zoom = Vector2( 0.2, 0.2 )
 smoothing_enabled = true
 drag_margin_left = 0.65
 drag_margin_top = 0.65
 drag_margin_right = 0.65
 drag_margin_bottom = 0.65
+editor_draw_screen = false
 __meta__ = {
 "_editor_description_": "The camera that will render the player sprites within the sprites viewport."
 }
 
 [node name="ViewportTextureTarget" type="Sprite" parent="."]
-material = SubResource( 6 )
-position = Vector2( 0, -20 )
-scale = Vector2( 0.25, 0.25 )
-texture = SubResource( 7 )
+material = SubResource( 7 )
+position = Vector2( 0, -25 )
+scale = Vector2( 0.2, 0.2 )
+texture = SubResource( 8 )
 __meta__ = {
 "_editor_description_": "The Sprite that the viewport tex ture of SpritesViewport will be rendered to."
 }
@@ -141,5 +157,16 @@ script = ExtResource( 3 )
 __meta__ = {
 "_editor_description_": "Handles being killed by infiltrators."
 }
+
+[node name="ItemHandler" type="Node2D" parent="."]
+position = Vector2( -5.98463, -9.05569 )
+script = ExtResource( 28 )
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="PickUp" type="Timer" parent="Timers"]
+one_shot = true
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]
+[connection signal="body_entered" from="ItemPickupRange" to="ItemHandler" method="_on_ItemPickupRange_body_entered"]
+[connection signal="body_exited" from="ItemPickupRange" to="ItemHandler" method="_on_ItemPickupRange_body_exited"]
