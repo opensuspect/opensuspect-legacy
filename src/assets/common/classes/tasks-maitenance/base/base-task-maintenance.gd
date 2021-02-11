@@ -1,61 +1,55 @@
 extends Node
 class_name BaseMaintenanceTask
 
-"""
-To create a maintenance task:
-	1. write a script that inherrits this script, and implement the required methods:
-		* update(delta) the only optinal func to inherit. gets called periodicaly to run your task logic
-			@delta can be 0.1ms or 2 seconds(in order to preserve bandwidth)
-			it is determened by the timer in maintenancetask.tscn
-				+ wait time no peers is the update interval(in seconds) when no one on the network has a gui open
-				+ wait time peers is the update interwal when at least one person on the network has the gui open
-		* these are supposed to be called by your update(delta) when appropriate
-		  but I haven't figured out how to properly implement them
-		  perhaps the best thing would be to override them for custom behaviour
-		  and to call the base class, so the call can propagate to the network
-			* output_low
-			* output_high
-			* output_low_critical
-			* output_high_critical
-		
-		* get_update_gui_dict() -> Dictionary
-			@return a dict that your gui script will parse in order to update its contents
-		 
-		* _handle_input_from_gui(_new_input_data: Dictionary)
-			@_new_input_data when the user of your gui clicks some buttons
-			this function will get called so you can act upon it.
-			You choose what the dict is going to contain in your gui script
-================
-	2. IMPORTANT Set the just created script as the script for the instanced maintenancetask.tscn
-================
-	
-	3. Create a scene that represents your gui,
-		and create a script that inherits BaseMaintenanceTaskGui.
-		Override the required methods:
-			*update_gui(params: Dictionary)
-			@params the parameters that are generated in get_update_gui_dict()
-		
-			* When the user has changed their input data, call 
-			backend.input_from_gui(_new_input_data: Dictionary)
-			it handles the networking stuff, and calls the
-			_handle_input_from_gui(_new_input_data: Dictionary) method,
-			that you overwrote in your child of BaseMaintenanceTask
-			
-			
-------------------------------
 
-So, to create the GasValve task that NiceMicro made:
-	1. add an empty node on the map(this is so the standbutton becomes visible)
-	2. instance src/assets/maps/interactables/maintenancetask/maintenancetask.tscn
-		as the child of the empty node(ideally there should be one empty node for all the tasks)
-	3. set Frontend Menu Name to the one set in UIManager.ui_list
-	4. IMPORTANT: Load the following script:
-		src/assets/common/classes/tasks-maintenance/taskgass.gd
-		to be the script of the node you created in step 2.
-	5. UIManager.ui_list already contains the required entry to activate the gastask ui
-		"gasvalve": {"scene": preload("res://assets/ui/tasks/gasvalve/gasvalve.tscn")}
-		but when writing your own task, you would add your own tscn)
-"""
+#To create a maintenance task:
+#	1. write a script that inherrits this script, and implement the required methods:
+#		* update(delta) the only optinal func to inherit. gets called periodicaly to run your task logic
+#			@delta can be 0.1ms or 2 seconds(in order to preserve bandwidth)
+#			it is determened by the timer in maintenancetask.tscn
+#				+ wait time no peers is the update interval(in seconds) when no one on the network has a gui open
+#				+ wait time peers is the update interwal when at least one person on the network has the gui open
+#		* these are supposed to be called by your update(delta) when appropriate
+#		  but I haven't figured out how to properly implement them
+#		  perhaps the best thing would be to override them for custom behaviour
+#		  and to call the base class, so the call can propagate to the network
+#			* output_low
+#			* output_high
+#			* output_low_critical
+#			* output_high_critical
+#		
+#		* get_update_gui_dict() -> Dictionary
+#			@return a dict that your gui script will parse in order to update its contents
+#		 
+#		* _handle_input_from_gui(_new_input_data: Dictionary)
+#			@_new_input_data when the user of your gui clicks some buttons
+#			this function will get called so you can act upon it.
+#			You choose what the dict is going to contain in your gui script
+#================
+#	2. IMPORTANT Set the just created script as the script for the instanced 
+#				 assets/common/classes/tasks-maintenance/maintenancetask.tscn
+#		* make sure to move the instanced scene away from 0,0 coordinate,
+#		  otherwise, it will open when the game starts 
+#================
+#	
+#	3. Create a scene that represents your gui,
+#		and create a script that inherits BaseMaintenanceTaskGui.
+#		Override the required methods:
+#			*update_gui(params: Dictionary)
+#			@params the parameters that are generated in get_update_gui_dict()
+#		
+#			* When the user has changed their input data, call 
+#			send_input_to_backend(_new_input_data: Dictionary)
+#			it handles the networking stuff, and calls the
+#			_handle_input_from_gui(_new_input_data: Dictionary) method,
+#			that you overwrote in your child of BaseMaintenanceTask
+#	
+#	4. in the UIManager, edit the ui_list dictionary to add this new scene as a
+#		value to it. The key you used should be supplied to the maintenance task
+#		instance you created in step 2; under frontendMenuName  
+#			
+#------------------------------
+
 # the name of the gui that should represent this task to the user
 # as defined in UIManager.menus
 export var frontendMenuName: String
@@ -109,8 +103,9 @@ master func _unregister_peer(caller_id: int):
 var last_timer_fire: float
 func _ready():
 	set_network_master(1)
-	# Supply the menu that should be opened when the user interacts with the task
-	assert(self.frontendMenuName != null and not self.frontendMenuName.empty())
+	# Make sure that the ui menu name exists
+	# Did you assign it in the editor?
+	assert(UIManager.is_ui_name_valid(self.frontendMenuName))
 	#warning-ignore:return_value_discarded
 	MapManager.connect("interacted_with", self, "interacted_with")
 	# only the server should start the timer
@@ -173,10 +168,16 @@ func update(_delta):
 	pass
 	#assert(false) # Never can be called on base class
 	
-func get_update_gui_dict():
-	assert(false) # Never can be called on base class
+func get_update_gui_dict() -> Dictionary:
+	# Never can be called on base class
+	# Did you forget to assign the specific maintenance task(child of this node)
+	# script to the maintenance task scene instance?
+	assert(false)
 	return {}
 	
 func _handle_input_from_gui(_new_input_data: Dictionary):
-	assert(false) # Never can be called on base class
+	# Never can be called on base class
+	# Did you forget to assign the script to the maintenance task scene instance?
+	assert(false)
+	pass
 	

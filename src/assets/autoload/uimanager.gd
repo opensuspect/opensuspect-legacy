@@ -162,3 +162,6 @@ func check_keybinds(configfile):
 		return 0
 	else:
 		write_keybinds()
+		
+func is_ui_name_valid(ui_name: String) -> bool:
+	return ui_list.keys().has(ui_name)

@@ -12,8 +12,9 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=10]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=11]
 [ext_resource path="res://assets/ui/tasks/gasvalve/gasvalve.gd" type="Script" id=12]
-[ext_resource path="res://assets/maps/common/interactables/maintenancetask/maintenancetask.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/common/classes/tasks-maitenance/maintenancetask.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/ui/tasks/mainframecoolant/mainframecoolant.gd" type="Script" id=14]
+
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
