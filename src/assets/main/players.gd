@@ -172,6 +172,11 @@ remotesync func player_picked_up_item(item_path: String) -> void:
 	var id: int = get_tree().get_rpc_sender_id()
 	if not players.keys().has(id):
 		return
+	# Before RPC'ing the other clients, we test whether the item can be picked up.
+	# Currently, it is only checking if pickup is enabled for the player, but
+	# doesn't check distance etc.
+	if not players[id].item_handler.isPickupEnabled():
+		return
 	# print("(players.gd/player_picked_up_item) player=", id, " item=", item_path)
 	rpc("pick_up_item", id, item_path)
 
