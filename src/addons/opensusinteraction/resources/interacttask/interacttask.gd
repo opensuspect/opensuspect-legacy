@@ -38,6 +38,28 @@ var task_data: Dictionary = {}
 var task_data_player: Dictionary = {}
 var task_registered: bool = false
 
+# properties added to the editor with script
+# shown property: script property
+var custom_properties: Dictionary = {
+	"ui_resource": "ui_res", 
+	
+	"inputs/toggle_items": "item_inputs_on", 
+	"inputs/input_items": "item_inputs", 
+	
+	"outputs/toggle_items": "item_outputs_on", 
+	"outputs/output_items": "item_outputs", 
+	
+	"outputs/toggle_map_interactions": "map_outputs_on", 
+	"outputs/output_map_interactions": "map_outputs", 
+	
+	"outputs/toggle_tasks": "task_outputs_on", 
+	"outputs/output_tasks": "task_outputs",
+	 
+	"is_task_global": "is_task_global"
+}
+
+var custom_properties_to_show: PoolStringArray = ["ui_resource", "outputs/toggle_map_interactions", "outputs/output_map_interactions", "is_task_global"]
+
 func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID,
 					data: Dictionary = {}) -> bool:
 
@@ -161,157 +183,46 @@ func _set(property, value):
 			else:
 				#create new ui interact resource
 				ui_res = base_ui_resource.duplicate()
-
-		"inputs/toggle_items":
-			item_inputs_on = value
-			property_list_changed_notify()
-
-		"inputs/input_items":
-			item_inputs = value
-
-		"outputs/toggle_items":
-			item_outputs_on = value
-			property_list_changed_notify()
-
-		"outputs/output_items":
-			item_outputs = value
-
-		"outputs/toggle_map_interactions":
-			map_outputs_on = value
-			property_list_changed_notify()
-
+			return true
 		"outputs/output_map_interactions":
 			map_outputs = value
 			if map_outputs.size() > 0 and map_outputs[-1] == null:
 				#print(map_outputs)
 				map_outputs[-1] = base_map_resource.duplicate()
 			property_list_changed_notify()
+			return true
 
-		"outputs/toggle_tasks":
-			task_outputs_on = value
-			property_list_changed_notify()
-
-		"outputs/output_tasks":
-			task_outputs = value
-			if task_outputs.size() > 0 and task_outputs[-1] == null:
-				#print(task_outputs)
-				task_outputs[-1] = NodePath("")#base_task_resource.duplicate()
-			property_list_changed_notify()
-	
-		"is_task_global":
-			is_task_global = value
-			property_list_changed_notify()
-			
+	if property in custom_properties.keys():
+		set(custom_properties[property], value)
 	return true
 
 #overrides get(), allows for export var groups and display properties that don't
 #match actual var names
 func _get(property):
-	match property:
-		"ui_resource":
-			return ui_res
-
-		"inputs/toggle_items":
-			return item_inputs_on
-		"inputs/input_items":
-			return item_inputs
-
-		"outputs/toggle_items":
-			return item_outputs_on
-		"outputs/output_items":
-			return item_outputs
-
-		"outputs/toggle_map_interactions":
-			return map_outputs_on
-		"outputs/output_map_interactions":
-			return map_outputs
-
-		"outputs/toggle_tasks":
-			return task_outputs_on
-		"outputs/output_tasks":
-			return task_outputs
-		
-		"is_task_global":
-			return is_task_global
+	if property in custom_properties.keys():
+		return get(custom_properties[property])
 
 #overrides get_property_list(), tells editor to show more properties in inspector
 func _get_property_list():
 	var property_list: Array = []
 
-	property_list.append({"name": "ui_resource",
-		"type": TYPE_OBJECT,
-		"usage": PROPERTY_USAGE_DEFAULT,
-		"hint": PROPERTY_HINT_RESOURCE_TYPE,
-		})
+	for property in custom_properties_to_show:
+		if is_property_added(property, property_list):
+			continue
+		var entry: Dictionary = {}
+		var type: int = typeof(get(custom_properties[property]))
+		if type == TYPE_OBJECT:
+			var property_class: String = get(custom_properties[property]).get_class()
+			entry["hint"] = PROPERTY_HINT_RESOURCE_TYPE
+			entry["hint_string"] = property_class
+		entry["name"] = property
+		entry["type"] = type
+		property_list.append(entry)
 
-	#item input toggle
-#	property_list.append({
-#		"name": "inputs/toggle_items",
-#		"type": TYPE_BOOL,
-#		"usage": PROPERTY_USAGE_DEFAULT,
-#		"hint": PROPERTY_HINT_NONE,
-#		})
-#	#item input array field
-#	if item_inputs_on:
-#		property_list.append({
-#		"name": "inputs/input_items",
-#		"type": TYPE_STRING_ARRAY,
-#		"usage": PROPERTY_USAGE_DEFAULT,
-#		"hint": PROPERTY_HINT_NONE,
-#		})
-
-	#item output toggle
-#	property_list.append({
-#		"name": "outputs/toggle_items",
-#		"type": TYPE_BOOL,
-#		"usage": PROPERTY_USAGE_DEFAULT,
-#		"hint": PROPERTY_HINT_NONE,
-#		})
-#	#item output array field
-#	if item_outputs_on:
-#		property_list.append({
-#		"name": "outputs/output_items",
-#		"type": TYPE_STRING_ARRAY,
-#		"usage": PROPERTY_USAGE_DEFAULT,
-#		"hint": PROPERTY_HINT_NONE,
-#		})
-
-	#item output toggle
-	property_list.append({
-		"name": "outputs/toggle_map_interactions",
-		"type": TYPE_BOOL,
-		"usage": PROPERTY_USAGE_DEFAULT,
-		"hint": PROPERTY_HINT_NONE,
-		})
-	#item output array field
-	if map_outputs_on:
-		property_list.append({
-		"name": "outputs/output_map_interactions",
-		"type": TYPE_ARRAY,
-		"usage": PROPERTY_USAGE_DEFAULT,
-		"hint": PROPERTY_HINT_NONE,
-		})
-
-	#task output toggle
-#	property_list.append({
-#		"name": "outputs/toggle_tasks",
-#		"type": TYPE_BOOL,
-#		"usage": PROPERTY_USAGE_DEFAULT,
-#		"hint": PROPERTY_HINT_NONE,
-#		})
-#	if task_outputs_on:
-#		property_list.append({
-#		"name": "outputs/output_tasks",
-#		"type": TYPE_ARRAY,
-#		"usage": PROPERTY_USAGE_DEFAULT,
-#		"hint": PROPERTY_HINT_DIR,
-#		"hint_string": ""
-#		})
-
-	property_list.append({
-		"name": "is_task_global",
-		"type": TYPE_BOOL,
-		"usage": PROPERTY_USAGE_DEFAULT,
-		"hint": PROPERTY_HINT_NONE,
-		})
 	return property_list
+
+func is_property_added(property: String, array: Array):
+	for dict in array:
+		if dict.name == property:
+			return true
+	return false
