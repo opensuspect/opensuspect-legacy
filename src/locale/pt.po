@@ -3,10 +3,10 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-11-13 20:23+0100\n"
-"PO-Revision-Date: 2021-01-08 17:10\n"
+"PO-Revision-Date: 2021-01-09 21:50\n"
 "Last-Translator: \n"
-"Language-Team: Spanish\n"
-"Language: es_ES\n"
+"Language-Team: Portuguese, Brazilian\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "X-Crowdin-Project-ID: 2\n"
-"X-Crowdin-Language: es\n"
+"X-Crowdin-Language: pt-BR\n"
 "X-Crowdin-File: /main/src/locale/en.po\n"
 "X-Crowdin-File-ID: 8\n"
 
 #: ../../src/assets/maps/lobby/lobby.tscn:39
 msgid "LOBBY"
-msgstr "LOBY"
+msgstr "SALA DE ESPERA"
 
 #: ../../src/assets/maps/test/test.tscn:57
 msgid "clockset task"
-msgstr ""
+msgstr "tarefa ajustar hora"
 
 #: ../../src/assets/maps/test/test.tscn:69
 msgid "735"
@@ -32,23 +32,23 @@ msgstr "735"
 
 #: ../../src/assets/maps/test/test.tscn:89
 msgid "Interact chat"
-msgstr ""
+msgstr "Bate-papo interativo"
 
 #: ../../src/assets/maps/test/test.tscn:101
 msgid "spooky empty room "
-msgstr "cuarto espantoso vacío "
+msgstr "sala vazia assustadora "
 
 #: ../../src/assets/player/player.tscn:120
 msgid "Pog"
-msgstr ""
+msgstr "Pog"
 
 #: ../../src/assets/ui/hud/defaulthud/defaulthud.tscn:18
 msgid "Chat"
-msgstr ""
+msgstr "Bate-papo"
 
 #: ../../src/assets/ui/hud/defaulthud/defaulthud.tscn:29
 msgid "Start Game"
-msgstr "Comenzar juego"
+msgstr "Iniciar Jogo"
 
 #: ../../src/assets/ui/lobbyui/chatbox/chatbox.tscn:64
 msgid "Send"
@@ -60,27 +60,27 @@ msgstr ""
 
 #: ../../src/assets/ui/mainmenu/mainmenu.tscn:90
 msgid "PLAY"
-msgstr "JUGAR"
+msgstr "JOGAR"
 
 #: ../../src/assets/ui/mainmenu/mainmenu.tscn:112
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:60
 msgid "APPEARANCE"
-msgstr "APARIENCIA"
+msgstr "APARÊNCIA"
 
 #: ../../src/assets/ui/mainmenu/mainmenu.tscn:134
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:72
 msgid "SETTINGS"
-msgstr "AJUSTES"
+msgstr "CONFIGURAÇÕES"
 
 #: ../../src/assets/ui/mainmenu/mainmenu.tscn:157
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:108
 msgid "QUIT"
-msgstr "SALIR"
+msgstr "SAIR"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:33
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:114
 msgid "Port"
-msgstr "Puerto"
+msgstr "Porta"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:40
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:121
@@ -90,21 +90,21 @@ msgstr "42420"
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:55
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:134
 msgid "Name"
-msgstr "Nombre"
+msgstr "Nome"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:67
 msgid "CREATE"
-msgstr "CREAR"
+msgstr "CRIAR"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:73
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:152
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:186
 msgid "BACK"
-msgstr "ATRÁS"
+msgstr "VOLTAR"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:94
 msgid "Hostname"
-msgstr "Nombre del host"
+msgstr "Hostname"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:101
 msgid "localhost"
@@ -120,15 +120,15 @@ msgstr "TUTORIAL"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:172
 msgid "JOIN GAME"
-msgstr "UNIRSE A UNA PARTIDA"
+msgstr "JUNTE-SE NO JOGO"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:179
 msgid "CREATE GAME"
-msgstr "CREAR PARTIDA"
+msgstr "CRIAR JOGO"
 
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:48
 msgid "RESUME"
-msgstr ""
+msgstr "CONTINUAR"
 
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:84
 msgid "LANGUAGE"
@@ -136,7 +136,7 @@ msgstr "IDIOMA"
 
 #: ../../src/assets/ui/pausemenu/pausemenu.tscn:96
 msgid "LEAVE"
-msgstr ""
+msgstr "DEIXAR PARTIDA"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:62
 #: ../../src/assets/ui/submenus/settings/settings.gd:64
@@ -145,19 +145,19 @@ msgstr "Vídeo"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:62
 msgid "Fullscreen"
-msgstr "Pantalla completa"
+msgstr "Tela cheia"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:64
 msgid "Colorblind mode"
-msgstr ""
+msgstr "Modo daltônico"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:66
 msgid "Sound"
-msgstr "Sonido"
+msgstr "Som"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:67
 msgid "Locale"
-msgstr ""
+msgstr "Localidade"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:67
 msgid "Language"
@@ -166,15 +166,15 @@ msgstr "Idioma"
 #: ../../src/assets/ui/submenus/settings/keybind/keybind.tscn:28
 #: ../../src/assets/ui/submenus/settings/settings.gd:81
 msgid "Back"
-msgstr "Volver"
+msgstr "Voltar"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:85
 msgid "Keybinds"
-msgstr ""
+msgstr "Teclas"
 
 #: ../../src/assets/ui/submenus/settings/keybind/keybind.tscn:38
 msgid "Save"
-msgstr "Guardar"
+msgstr "Salvar"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:42
 msgid ":"
