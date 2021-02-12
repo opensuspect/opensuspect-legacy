@@ -40,6 +40,7 @@ var task_registered: bool = false
 
 # relationships between shown property names and the actual script property name
 # properties in this dict are NOT automatically added to editor, they must also be in custom_properties_to_show
+# if you want the editor property name to be the same as the script variable name, you do not need to add it to custom_properties
 # shown property name: script property name
 var custom_properties: Dictionary = {
 	"ui_resource": "ui_res", 
@@ -58,6 +59,7 @@ var custom_properties: Dictionary = {
 }
 
 # properties to add to the editor with script
+# if you want the editor property name to be the same as the script variable name, you do not need to add it to custom_properties
 var custom_properties_to_show: PoolStringArray = ["ui_resource", "outputs/toggle_map_interactions", "outputs/output_map_interactions", "is_task_global"]
 
 func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID,
