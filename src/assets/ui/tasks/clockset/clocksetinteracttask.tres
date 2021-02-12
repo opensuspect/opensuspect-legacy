@@ -7,7 +7,7 @@
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 2 )
-ui_name = ""
+ui_name = "clockset"
 ui_data = {
 
 }

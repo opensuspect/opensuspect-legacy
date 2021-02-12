@@ -135,12 +135,16 @@ func gen_task_data() -> Dictionary:
 	info["resource"] = self
 	info["is_task_global"] = is_task_global
 	#info["ui_resource"] = ui_res
-	print(_gen_task_data())
+	var virt_info: Dictionary = _gen_task_data()
+	for key in virt_info:
+		info[key] = virt_info[key]
+	print(virt_info)
 	for key in info.keys():
 		task_data[key] = info[key]
 	return info
 
 func _gen_task_data() -> Dictionary:
+	print("base _gen_task_data")
 	return {}
 
 func get_task_id() -> int:
@@ -164,7 +168,17 @@ func interact(_from: Node = null, _interact_data: Dictionary = {}):
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be used with no defined node")
+	# if nothing is explicitly returned, _interact() will return null and will not trigger this
+	# this check is so an inheriting script can override interact behavior past this point, 
+	# 	by declaring _interact() and returning false
+	# this could be used to cancel the interaction or to implement custom behavior, 
+	# 	like triggering a map interaction instead of opening a UI
+	if _interact(_from, _interact_data) == false:
+		return
 	ui_res.interact(_from, get_task_data())
+
+func _interact(_from: Node = null, _interact_data: Dictionary = {}):
+	pass
 
 func init_resource(_from: Node):
 	if attached_to == null and _from != null:
