@@ -113,6 +113,45 @@ puppet func task_completed(task_info: Dictionary, data: Dictionary):
 		complete_task(task_info, data)
 	emit_signal("task_completed", task_info)
 
+# used to allow task resources to talk to each other over the network
+# needs some kind of check to make sure each call is valid, at least make sure the client sending the rpc is assigned to the task
+# using remote keyword because it's easier, and theoretically each individual task would want to handle network sync differently
+func task_rset(property: String, value, task_id: int):
+	var res = get_task_resource(task_id)
+	if res == null:
+		return
+	rpc("receive_network_set", property, value, task_id)
+
+func task_rset_id(id: int, property: String, value, task_id: int):
+	var res = get_task_resource(task_id)
+	if res == null:
+		return
+	rpc_id(id, "receive_network_set", property, value, task_id)
+
+remote func receive_task_rset(property: String, value, task_id: int):
+	var res = get_task_resource(task_id)
+	if res == null:
+		return
+	res.receive_logic_set(property, value)
+
+func task_rpc(function: String, args: Array, task_id: int):
+	var res = get_task_resource(task_id)
+	if res == null:
+		return
+	rpc("receive_network_call", function, args, task_id)
+
+func task_rpc_id(id: int, function: String, args: Array, task_id: int):
+	var res = get_task_resource(task_id)
+	if res == null:
+		return
+	rpc_id(id, "receive_network_call", function, args, task_id)
+
+remote func receive_task_rpc(function: String, args: Array, task_id: int):
+	var res = get_task_resource(task_id)
+	if res == null:
+		return
+	res.receive_logic_call(function, args)
+
 # Clients run this when they want to populate their GUIs
 func attempt_request_task_data(task_info: Dictionary):
 	if not is_task_info_valid(task_info):

@@ -23,7 +23,7 @@ func _enter_tree():
 	#add custom resources
 	add_custom_type("Interact", "Resource", interact_resource_script, object_icon)
 	add_custom_type("InteractMap", "Resource", interactmap_resource_script, object_icon)
-	add_custom_type("InteractTask", "Resource", task_resource_script, object_icon)
+	#add_custom_type("InteractTask", "Resource", task_resource_script, object_icon)
 	add_custom_type("InteractUI", "Resource", interactui_resource_script, object_icon)
 
 func _exit_tree():

@@ -1,7 +1,7 @@
 tool
 extends Resource
 
-#class_name InteractTask
+class_name InteractTask
 
 export(String) var task_text
 
@@ -91,6 +91,18 @@ func registered(new_task_id: int, new_task_data: Dictionary):
 	task_id = new_task_id
 	task_registered = true
 
+#func task_rset(property: String, value):
+#	TaskManager.send_network_set(property, value, task_id)
+
+#func receive_task_rset(property: String, value):
+#	set(property, value)
+
+#func task_rpc(function: String, args: Array):
+#	TaskManager.send_network_call(function, args, task_id)
+
+#func receive_task_rpc(function: String, args: Array):
+#	call(function, args)
+
 func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
 	
 	if task_registered and is_task_global():
@@ -121,9 +133,13 @@ func gen_task_data() -> Dictionary:
 	info["resource"] = self
 	info["is_task_global"] = is_task_global
 	#info["ui_resource"] = ui_res
+	print(_gen_task_data())
 	for key in info.keys():
 		task_data[key] = info[key]
 	return info
+
+func _gen_task_data() -> Dictionary:
+	return {}
 
 func get_task_id() -> int:
 	return task_id
