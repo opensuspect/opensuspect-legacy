@@ -38,8 +38,9 @@ var task_data: Dictionary = {}
 var task_data_player: Dictionary = {}
 var task_registered: bool = false
 
-# properties added to the editor with script
-# shown property: script property
+# relationships between shown property names and the actual script property name
+# properties in this dict are NOT automatically added to editor, they must also be in custom_properties_to_show
+# shown property name: script property name
 var custom_properties: Dictionary = {
 	"ui_resource": "ui_res", 
 	
@@ -53,11 +54,10 @@ var custom_properties: Dictionary = {
 	"outputs/output_map_interactions": "map_outputs", 
 	
 	"outputs/toggle_tasks": "task_outputs_on", 
-	"outputs/output_tasks": "task_outputs",
-	 
-	"is_task_global": "is_task_global"
+	"outputs/output_tasks": "task_outputs"
 }
 
+# properties to add to the editor with script
 var custom_properties_to_show: PoolStringArray = ["ui_resource", "outputs/toggle_map_interactions", "outputs/output_map_interactions", "is_task_global"]
 
 func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID,
@@ -186,9 +186,9 @@ func _set(property, value):
 			return true
 		"outputs/output_map_interactions":
 			map_outputs = value
-			if map_outputs.size() > 0 and map_outputs[-1] == null:
-				#print(map_outputs)
-				map_outputs[-1] = base_map_resource.duplicate()
+			for i in map_outputs.size():
+				if map_outputs[i] == null:
+					map_outputs[i] = base_map_resource.duplicate()
 			property_list_changed_notify()
 			return true
 
@@ -210,9 +210,9 @@ func _get_property_list():
 		if is_property_added(property, property_list):
 			continue
 		var entry: Dictionary = {}
-		var type: int = typeof(get(custom_properties[property]))
+		var type: int = typeof(get(property))
 		if type == TYPE_OBJECT:
-			var property_class: String = get(custom_properties[property]).get_class()
+			var property_class: String = get(property).get_class()
 			entry["hint"] = PROPERTY_HINT_RESOURCE_TYPE
 			entry["hint_string"] = property_class
 		entry["name"] = property
