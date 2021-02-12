@@ -62,9 +62,15 @@ var custom_properties: Dictionary = {
 # if you want the editor property name to be the same as the script variable name, you do not need to add it to custom_properties
 var custom_properties_to_show: PoolStringArray = ["ui_resource", "outputs/toggle_map_interactions", "outputs/output_map_interactions", "is_task_global"]
 
-func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID,
+func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID, 
 					data: Dictionary = {}) -> bool:
-
+	# I'm adding a virtual function in case we add some base checks here, so you could
+	# 	add custom behavior while retaining the checks
+	# this is similar behavior to assign_player(), registered(), gen_task_data(), etc.
+	# if you want fully custom behavior, override this function instead
+	var virt_return  = _complete_task(player_id, data)
+	if virt_return is bool:
+		return virt_return
 	var temp_interact_data = task_data_player[player_id]
 	for key in data.keys():
 		temp_interact_data[key] = data[key]
@@ -73,9 +79,22 @@ func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID,
 			resource.interact(attached_to, temp_interact_data)
 	return true
 
+# not defined to return a bool so this script can know if this function was overridden
+# 	or not
+# while overriding, return any bool to immediately stop the execution of complete_task()
+# returning a bool will also give said bool to whatever called complete_task()
+func _complete_task(player_id: int, data: Dictionary):
+	pass
+
 func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
-	
 	if task_data_player.has(player_id):
+		return
+	# if nothing is explicitly returned, _assign_player() will return null and will not trigger this
+	# this check is so an extending script can override interact behavior (while retaining the
+	#	above checks) by declaring _assign_player() and returning false. If you want fully custom 
+	# 	behavior, override this function instead
+	# used to add custom behavior when a player is assigned to this task
+	if _assign_player(player_id) == false:
 		return
 	task_data_player[player_id] = task_data.duplicate(true)
 	var task_text = task_data["task_text"]
@@ -87,11 +106,18 @@ func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
 	#var data: Dictionary = TaskGenerators.call_generator(task_text)
 	task_data_player[player_id]["task_data"] = data
 
+func _assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
+	pass
+
 func registered(new_task_id: int, new_task_data: Dictionary):
+	_registered(new_task_id, new_task_data)
 	for key in new_task_data.keys():
 		task_data[key] = new_task_data[key]
 	task_id = new_task_id
 	task_registered = true
+
+func _registered(new_task_id: int, new_task_data: Dictionary):
+	pass
 
 #func task_rset(property: String, value):
 #	TaskManager.send_network_set(property, value, task_id)
@@ -106,7 +132,6 @@ func registered(new_task_id: int, new_task_data: Dictionary):
 #	call(function, args)
 
 func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
-	
 	if task_registered and is_task_global():
 		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
 	
@@ -138,13 +163,12 @@ func gen_task_data() -> Dictionary:
 	var virt_info: Dictionary = _gen_task_data()
 	for key in virt_info:
 		info[key] = virt_info[key]
-	print(virt_info)
 	for key in info.keys():
 		task_data[key] = info[key]
 	return info
 
+# meant to be overridden in an extending script to allow adding custom data to task_info
 func _gen_task_data() -> Dictionary:
-	print("base _gen_task_data")
 	return {}
 
 func get_task_id() -> int:
@@ -162,21 +186,23 @@ func set_task_state(player_id: int, new_state: int) -> bool:
 
 func is_task_global() -> bool:
 	return task_data["is_task_global"]
-	
+
 func interact(_from: Node = null, _interact_data: Dictionary = {}):
 	if attached_to == null and _from != null:
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be used with no defined node")
 	# if nothing is explicitly returned, _interact() will return null and will not trigger this
-	# this check is so an inheriting script can override interact behavior past this point, 
-	# 	by declaring _interact() and returning false
+	# this check is so an extending script can override interact behavior (while retaining the
+	#	above checks) by declaring _interact() and returning false. If you want fully custom 
+	# 	behavior, override this function instead
 	# this could be used to cancel the interaction or to implement custom behavior, 
 	# 	like triggering a map interaction instead of opening a UI
 	if _interact(_from, _interact_data) == false:
 		return
 	ui_res.interact(_from, get_task_data())
 
+# meant to be overridden by an extending script to allow custom behavior when interacted with
 func _interact(_from: Node = null, _interact_data: Dictionary = {}):
 	pass
 
@@ -185,8 +211,22 @@ func init_resource(_from: Node):
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be initiated with no defined node")
+	# if nothing is explicitly returned, _init_resource() will return null and will not trigger this
+	# this check is so an inheriting script can override initiation behavior while retaining the
+	#	above checks. If you want fully custom behavior, override this function instead
+	# I can't think of any reason you wouldn't want to register with the task manager, 
+	# 	but the ability to do so couldn't hurt
+	# calling the virtual function here also allows the custom script to add custom behavior
+	if _init_resource(_from) == false:
+		return
 	TaskManager.register_task(self)
 
+# meant to be overridden by an extending script to allow custom behavior on resource init
+func _init_resource(_from: Node):
+	pass
+
+# not adding a virtual function for this because the same thing is accomplished by
+# overriding _gen_interact_data()
 func get_interact_data(_from: Node = null) -> Dictionary:
 	if attached_to == null and _from != null:
 		attached_to = _from
