@@ -69,6 +69,8 @@ func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID,
 	# this is similar behavior to assign_player(), registered(), gen_task_data(), etc.
 	# if you want fully custom behavior, override this function instead
 	var virt_return  = _complete_task(player_id, data)
+	# if virt_function is not a bool, it means the extending script either didn't override
+	# 	or doesn't want to break out of this function, so we shouldn't cancel the actions below
 	if virt_return is bool:
 		return virt_return
 	var temp_interact_data = task_data_player[player_id]
@@ -79,10 +81,10 @@ func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID,
 			resource.interact(attached_to, temp_interact_data)
 	return true
 
-# not defined to return a bool so this script can know if this function was overridden
+# not defined to return a bool so complete_task() can know if this function was overridden
 # 	or not
-# while overriding, return any bool to immediately stop the execution of complete_task()
-# returning a bool will also give said bool to whatever called complete_task()
+# while overriding, return any bool to break out of complete_task(), which will return
+# 	said bool to whatever called complete_task(), most likely the task manager
 func _complete_task(player_id: int, data: Dictionary):
 	pass
 
@@ -216,7 +218,7 @@ func init_resource(_from: Node):
 	#	above checks. If you want fully custom behavior, override this function instead
 	# I can't think of any reason you wouldn't want to register with the task manager, 
 	# 	but the ability to do so couldn't hurt
-	# calling the virtual function here also allows the custom script to add custom behavior
+	# calling the virtual function here also allows the extending script to add custom behavior
 	if _init_resource(_from) == false:
 		return
 	TaskManager.register_task(self)
