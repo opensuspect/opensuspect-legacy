@@ -4,6 +4,8 @@ extends InteractTask
 var target_time: int = 433
 var current_time: int = 630
 
+signal times_updated(target, current, task_res)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -11,10 +13,22 @@ func _ready():
 func _init_resource(_from: Node):
 	target_time = gen_rand_time()
 	current_time = gen_rand_time()
+	emit_signal("times_updated", target_time, current_time, self)
 
 func _gen_task_data() -> Dictionary:
-	print("clockset gen task data")
-	return {}
+	var data: Dictionary = {}
+	data["target_time"] = target_time
+	data["current_time"] = current_time
+	return data
+
+func _registered(_new_task_id: int, new_task_data: Dictionary):
+	# calling is_network_server() on task manager because the function does not
+	# 	exist in resources
+	if TaskManager.get_tree().is_network_server():
+		return
+	for property in ["target_time", "current_time"]:
+		if new_task_data.has(property):
+			set(property, new_task_data[property])
 
 func is_complete() -> bool:
 	return target_time == current_time
@@ -30,6 +44,19 @@ func get_current_time() -> int:
 
 func gen_rand_time() -> int:
 	return normalise_time(randi())
+
+func _sync_task():
+	send_times(target_time, current_time)
+
+func send_times(target: int, current: int):
+	print("sending times out to network")
+	task_rpc("receive_times", [target, current])
+
+func receive_times(target: int, current: int):
+	print("received times, target: ", target, " current: ", current)
+	target_time = target
+	current_time = current
+	emit_signal("times_updated", target_time, current_time, self)
 
 # returns a valid time(from 00:00 to 12:59)
 # num can be any value

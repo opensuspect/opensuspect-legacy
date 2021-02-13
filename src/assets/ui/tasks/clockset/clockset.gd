@@ -10,19 +10,28 @@ func _ready():
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
 
 func open():
+	var res: Resource = get_res()
+	if not res.is_connected("times_updated", self, "times_updated"):
+# warning-ignore:return_value_discarded
+		res.connect("times_updated", self, "times_updated")
 	ui_data_updated()
 
 func ui_data_updated():
 	setClockTime(getCurrentTime())
 	setWatchTime(getTargetTime())
+	checkComplete()
 
 func checkComplete():
 	updateCurrentTime()
 	if get_res().is_complete():
 		taskComplete()
+		hide()
 
 func taskComplete():
 	.complete_task({"newText": str(getCurrentTime())})
+
+func sync_task():
+	get_res().sync_task()
 
 func setClockTime(newTime: int):
 # warning-ignore:integer_division
@@ -43,7 +52,7 @@ func getCurrentTime() -> int:
 	return get_res().get_current_time()
 
 func get_res() -> Resource:
-	return ui_data["resource"]
+	return TaskManager.get_task_resource(ui_data[TaskManager.TASK_ID_KEY])
 
 func _on_hours_value_changed(value):
 	if value == 0:
@@ -98,6 +107,13 @@ func roundDown(num, step) -> int:
 		return normRound - step
 	return int(normRound)
 
+func times_updated(_target: int, _current: int, task_res: Resource):
+	# if the current task data matches the resource this signal is from
+	# this should prevent weirdness if multiple tasks are using this ui
+	if task_res != get_res():
+		return
+	ui_data_updated()
+
 #so you can't type into the spinboxes
 func _on_hours_focus_entered():
 	grab_focus()
@@ -107,3 +123,6 @@ func _on_minutes_focus_entered():
 
 func _on_ampm_focus_entered():
 	grab_focus()
+
+func _on_clockset_popup_hide():
+	sync_task()

@@ -31,9 +31,7 @@ var ui_res: Resource = base_ui_resource.duplicate()
 #node this task is attached to
 var attached_to: Node
 
-#assigned by a programmer when added to the scene
-#needs to be unique
-export var task_id: int = TaskManager.INVALID_TASK_ID
+var task_id: int = TaskManager.INVALID_TASK_ID
 var task_data: Dictionary = {}
 var task_data_player: Dictionary = {}
 var task_registered: bool = false
@@ -124,6 +122,15 @@ func registered(new_task_id: int, new_task_data: Dictionary):
 	task_registered = true
 
 func _registered(new_task_id: int, new_task_data: Dictionary):
+	pass
+
+# while this function doesn't add any functionality, it does provide a constant
+# 	function to call, and we could easily add checks later
+func sync_task():
+	_sync_task()
+
+# to be overridden by an extending script
+func _sync_task():
 	pass
 
 func task_rset(property: String, value):

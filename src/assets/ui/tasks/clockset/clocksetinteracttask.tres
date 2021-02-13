@@ -29,10 +29,10 @@ advanced/free_on_close = false
 [resource]
 resource_local_to_scene = true
 script = ExtResource( 1 )
-task_text = ""
+task_text = "standbutton clockset task"
 random_numbers = 0
 task_id = -1
 ui_resource = SubResource( 1 )
 outputs/toggle_map_interactions = true
 outputs/output_map_interactions = [ SubResource( 2 ) ]
-is_task_global = false
+is_task_global = true
