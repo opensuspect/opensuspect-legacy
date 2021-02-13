@@ -189,10 +189,6 @@ func get_task_state(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> int:
 		return TaskManager.task_state.HIDDEN
 	return task_data_player[player_id]["state"]
 
-func set_task_state(player_id: int, new_state: int) -> bool:
-	task_data_player[player_id]["state"] = new_state
-	return true
-
 func transition(new_state: int, player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> bool:
 	# to add custom behavior/checks before the state is officially changed
 	# if _transition() returns false, interpret it to mean the extending script

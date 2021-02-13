@@ -24,14 +24,14 @@ var task_dict: Dictionary = {}
 
 var node_path_resource: Dictionary = {}
 
+const PLAYER_ID_KEY = "player_id"
+const TASK_ID_KEY = "task_id"
+
 func _ready():
 	#warning-ignore:return_value_discarded
 	GameManager.connect("state_changed_priority", self, "_tasks_registered")
 	randomize()
 	self.set_network_master(1)
-
-const PLAYER_ID_KEY = "player_id"
-const TASK_ID_KEY = "task_id"
 
 # GUIs should run this when they think that they have finished the task
 func attempt_complete_task(task_info: Dictionary, task_data: Dictionary):
@@ -68,7 +68,7 @@ master func complete_task_remote(task_info: Dictionary, task_data: Dictionary = 
 			emit_signal("task_completed", task_info)
 	# If the task is not global, just advance it, so that we know that
 	# the client has completed it
-	elif completed or advance_task(task_info, task_state.COMPLETED):
+	elif completed:# or advance_task(task_info, task_state.COMPLETED):
 		if task_info[PLAYER_ID_KEY] == 1:
 			emit_signal("task_completed", task_info)
 		else:
@@ -76,6 +76,7 @@ master func complete_task_remote(task_info: Dictionary, task_data: Dictionary = 
 
 # Called on the client that the task was completed
 # or on all the clients if the completed task was global
+#func complete_task(task_info: Dictionary, data: Dictionary = {}) -> bool:
 func complete_task(task_info: Dictionary, data: Dictionary = {}) -> bool:
 	if not is_task_info_valid(task_info):
 		push_error("provided task_info is not valid")
@@ -90,8 +91,8 @@ func complete_task(task_info: Dictionary, data: Dictionary = {}) -> bool:
 	print("trying to complete task ", task_id)
 	if not does_task_exist(task_id):
 		return false
-	if not advance_task(task_info, task_state.COMPLETED):
-		return false
+#	if not advance_task(task_info, task_state.COMPLETED):
+#		return false
 
 	return get_task_resource(task_id).complete_task(player_id, data)
 
@@ -190,26 +191,6 @@ func networkfy_task_data(task_data: Dictionary) -> Dictionary:
 		filtered.erase(key_to_erase)
 	
 	return filtered
-	
-#can't declare new_state as an int, otherwise it would need to default to an int which could cause later problems
-func advance_task(task_info: Dictionary, new_state: int) -> bool:
-	if not is_task_info_valid(task_info):
-		return false
-	var task_id = task_info[TASK_ID_KEY]
-	var player_id = task_info[PLAYER_ID_KEY]
-	if not does_task_exist(task_id):
-		return false
-	var current_state: int = get_task_resource(task_id).get_task_state(player_id)
-
-	#transition if allowed
-	if task_transitions[current_state].empty():
-		#if there are no transitions allowed, ex. a completed task
-		return false
-	if typeof(new_state) == TYPE_INT and task_state.values().has(new_state):
-		#if new_state is a state and the state exists
-		return transition_task(task_info, new_state)
-	#transition task to the first transition listed for that task type in task_transitions
-	return transition_task(task_info, task_transitions[current_state][0])
 
 func transition_task(task_info: Dictionary, new_state: int) -> bool:
 	if not is_task_info_valid(task_info):
@@ -218,8 +199,11 @@ func transition_task(task_info: Dictionary, new_state: int) -> bool:
 	#if that task type can't transition from current state to new state
 	if not task_transitions[current_state].has(new_state):
 		return false
+	var task_id = task_info[TASK_ID_KEY]
+	var player_id = task_info[PLAYER_ID_KEY]
 	#transition task
-	return set_task_state(task_info, new_state)
+	return get_task_resource(task_id).transition(new_state, player_id)
+	#return set_task_state(task_info, new_state)
 
 func register_task(task_resource: Resource):
 	var path = Helpers.get_absolute_path_to(task_resource.attached_to)
@@ -359,13 +343,6 @@ func get_task_resource(task_id: int) -> Resource:
 	if not does_task_exist(task_id):
 		return null
 	return task_dict[task_id]
-	
-func set_task_state(task_info: Dictionary, new_state: int) -> bool:
-	if not is_task_info_valid(task_info):
-		return false
-	var task_id = task_info[TASK_ID_KEY]
-	var player_id = task_info[PLAYER_ID_KEY]
-	return get_task_resource(task_id).set_task_state(player_id, new_state)
 
 func get_task_state(task_info: Dictionary) -> int:
 	if not is_task_info_valid(task_info):

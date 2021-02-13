@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=9 format=2]
 
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=1]
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.tres" type="Resource" id=2]
 [ext_resource path="res://addons/opensusinteraction/resources/interact/interact.gd" type="Script" id=3]
+[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=4]
 [ext_resource path="res://addons/opensusinteraction/resources/interacttask/interacttask.gd" type="Script" id=5]
 
 [sub_resource type="Resource" id=1]
@@ -15,6 +16,18 @@ interact_data = {
 }
 advanced/network_sync = false
 
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+resource_name = "InteractUI"
+script = ExtResource( 4 )
+ui_name = ""
+ui_data = {
+
+}
+action = 0
+advanced/reinstance = false
+advanced/free_on_close = false
+
 [sub_resource type="Resource" id=3]
 resource_local_to_scene = true
 resource_name = "InteractTask"
@@ -22,6 +35,10 @@ script = ExtResource( 5 )
 task_text = ""
 random_numbers = 0
 task_id = -1
+ui_resource = SubResource( 2 )
+outputs/toggle_map_interactions = false
+outputs/output_map_interactions = [  ]
+is_task_global = false
 
 [resource]
 resource_local_to_scene = true
