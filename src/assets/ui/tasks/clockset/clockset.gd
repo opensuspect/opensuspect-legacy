@@ -1,9 +1,5 @@
 extends WindowDialogTask
 
-#var ui_data: Dictionary = {}
-var targetTime: int = 433
-var currentTime: int = 630
-
 onready var hoursNode: Node = get_node("clock/hours")
 onready var minutesNode: Node = get_node("clock/minutes")
 onready var ampmNode: Node = get_node("clock/ampm")
@@ -14,30 +10,22 @@ func _ready():
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
 
 func open():
-# warning-ignore:narrowing_conversion
-	
 	ui_data_updated()
 
-
 func ui_data_updated():
-	if ui_data.has("task_data") and ui_data["task_data"] is Array:
-		if ui_data["task_data"].size() > 0:
-			targetTime = normalise_time(ui_data["task_data"][0])
-		if ui_data["task_data"].size() > 1:
-			currentTime = normalise_time(ui_data["task_data"][1])
-	
-	setClockTime(currentTime)
-	setWatchTime(targetTime)
-		
+	setClockTime(getCurrentTime())
+	setWatchTime(getTargetTime())
+
 func checkComplete():
 	updateCurrentTime()
-	if currentTime == targetTime:
+	if get_res().is_complete():
 		taskComplete()
 
 func taskComplete():
-	.complete_task({"newText": str(currentTime)})
+	.complete_task({"newText": str(getCurrentTime())})
 
 func setClockTime(newTime: int):
+# warning-ignore:integer_division
 	hoursNode.value = roundDown(newTime / 100, 1)
 	minutesNode.value = newTime % 100
 
@@ -45,7 +33,17 @@ func setWatchTime(newTime):
 	$watch/watchface.showTime(newTime)
 
 func updateCurrentTime():
-	currentTime = (hoursNode.value * 100) + minutesNode.value
+	var time = (hoursNode.value * 100) + minutesNode.value
+	get_res().set_current_time(time)
+
+func getTargetTime() -> int:
+	return get_res().get_target_time()
+
+func getCurrentTime() -> int:
+	return get_res().get_current_time()
+
+func get_res() -> Resource:
+	return ui_data["resource"]
 
 func _on_hours_value_changed(value):
 	if value == 0:

@@ -94,8 +94,8 @@ func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
 	if task_data_player.has(player_id):
 		return
 	# if nothing is explicitly returned, _assign_player() will return null and will not trigger this
-	# this check is so an extending script can override interact behavior (while retaining the
-	#	above checks) by declaring _assign_player() and returning false. If you want fully custom 
+	# this allows an extending script to override interact behavior (while retaining the above checks)
+	# 	by declaring _assign_player() and returning false. If you want fully custom 
 	# 	behavior, override this function instead
 	# used to add custom behavior when a player is assigned to this task
 	if _assign_player(player_id) == false:
@@ -126,17 +126,27 @@ func registered(new_task_id: int, new_task_data: Dictionary):
 func _registered(new_task_id: int, new_task_data: Dictionary):
 	pass
 
-#func task_rset(property: String, value):
-#	TaskManager.send_network_set(property, value, task_id)
+func task_rset(property: String, value):
+	TaskManager.task_rset(property, value, task_id)
 
-#func receive_task_rset(property: String, value):
-#	set(property, value)
+func task_rset_id(id: int, property: String, value):
+	TaskManager.task_rset_id(id, property, value, task_id)
 
-#func task_rpc(function: String, args: Array):
-#	TaskManager.send_network_call(function, args, task_id)
+func receive_task_rset(property: String, value):
+	set(property, value)
 
-#func receive_task_rpc(function: String, args: Array):
-#	call(function, args)
+# args must be in the form of an array because you can't create functions with variable
+# 	arg amounts in gdscript
+func task_rpc(function: String, args: Array):
+	TaskManager.task_rpc(function, args, task_id)
+
+func task_rpc_id(id: int, function: String, args: Array):
+	TaskManager.task_rpc_id(id, function, args, task_id)
+
+func receive_task_rpc(function: String, args: Array):
+	# using callv instead of call because it will translate the array into
+	# 	individual arguments
+	callv(function, args)
 
 func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
 	if task_registered and is_task_global():
@@ -156,8 +166,8 @@ func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
 
 # generate initial data to send to the task manager, should not be called after it is registered
 func gen_task_data() -> Dictionary:
-	if task_registered:
-		return task_data
+#	if task_registered:
+#		return task_data
 	var info: Dictionary = {}
 	info["task_text"] = task_text
 #	info["item_inputs"] = item_inputs
@@ -219,6 +229,8 @@ func interact(_from: Node = null, _interact_data: Dictionary = {}):
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be used with no defined node")
+	if not task_data_player.has(Network.get_my_id()) and not task_data_player.has(TaskManager.GLOBAL_TASK_PLAYER_ID):
+		return
 	# if nothing is explicitly returned, _interact() will return null and will not trigger this
 	# this check is so an extending script can override interact behavior (while retaining the
 	#	above checks) by declaring _interact() and returning false. If you want fully custom 

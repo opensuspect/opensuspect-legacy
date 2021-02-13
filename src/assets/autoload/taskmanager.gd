@@ -135,6 +135,8 @@ remote func receive_task_rset(property: String, value, task_id: int):
 		return
 	res.receive_logic_set(property, value)
 
+# args must be in the form of an array because you can't create functions with variable
+# 	arg amounts in gdscript
 func task_rpc(function: String, args: Array, task_id: int):
 	var res = get_task_resource(task_id)
 	if res == null:

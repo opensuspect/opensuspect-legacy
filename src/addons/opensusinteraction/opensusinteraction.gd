@@ -29,5 +29,5 @@ func _enter_tree():
 func _exit_tree():
 	remove_custom_type("Interact")
 	remove_custom_type("InteractMap")
-	remove_custom_type("InteractTask")
+	#remove_custom_type("InteractTask")
 	remove_custom_type("InteractUI")
