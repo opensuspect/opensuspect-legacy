@@ -62,6 +62,8 @@ var custom_properties: Dictionary = {
 # if you want the editor property name to be the same as the script variable name, you do not need to add it to custom_properties
 var custom_properties_to_show: PoolStringArray = ["ui_resource", "outputs/toggle_map_interactions", "outputs/output_map_interactions", "is_task_global"]
 
+signal transitioned(old_state, new_state, player_id)
+
 func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID, 
 					data: Dictionary = {}) -> bool:
 	# I'm adding a virtual function in case we add some base checks here, so you could
@@ -69,8 +71,8 @@ func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID,
 	# this is similar behavior to assign_player(), registered(), gen_task_data(), etc.
 	# if you want fully custom behavior, override this function instead
 	var virt_return  = _complete_task(player_id, data)
-	# if virt_function is not a bool, it means the extending script either didn't override
-	# 	or doesn't want to break out of this function, so we shouldn't cancel the actions below
+	# if virt_return is not a bool, it means the extending script either didn't override or
+	# 	doesn't want to break out of this function, so we shouldn't cancel the actions below
 	if virt_return is bool:
 		return virt_return
 	var temp_interact_data = task_data_player[player_id]
@@ -108,6 +110,9 @@ func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
 	#var data: Dictionary = TaskGenerators.call_generator(task_text)
 	task_data_player[player_id]["task_data"] = data
 
+# overridden to add custom behavior for when a player is assigned to this task while
+# 	retaining the checks implemented in assign_player()
+# return false to break out of assign_player() early (before any actions are taken)
 func _assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
 	pass
 
@@ -162,6 +167,8 @@ func gen_task_data() -> Dictionary:
 	info["resource"] = self
 	info["is_task_global"] = is_task_global
 	#info["ui_resource"] = ui_res
+	# so you can override _gen_task_data() and non-destructively add data
+	# if you want to remove data, you'd have to override this function
 	var virt_info: Dictionary = _gen_task_data()
 	for key in virt_info:
 		info[key] = virt_info[key]
@@ -185,6 +192,28 @@ func get_task_state(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> int:
 func set_task_state(player_id: int, new_state: int) -> bool:
 	task_data_player[player_id]["state"] = new_state
 	return true
+
+func transition(new_state: int, player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> bool:
+	# to add custom behavior/checks before the state is officially changed
+	# if _transition() returns false, interpret it to mean the extending script
+	# 	doesn't want to transition
+	# to remove behavior after this point, you must override this function (make sure
+	# 	to emit the "transitioned" signal)
+	var virt_return = _transition(new_state, player_id)
+	if virt_return is bool and virt_return == false:
+		return false
+	var old_state = task_data_player[player_id]["state"]
+	task_data_player[player_id]["state"] = new_state
+	emit_signal("transitioned", old_state, new_state, player_id)
+	return true
+
+# override to add custom behavior/checks before the state is officially changed
+# this is especially useful if you want to cancel the transition as it would be
+# 	much harder to retroactively undo it
+# return false to break out of transition() early (this will also cause transition()
+# 	to return false to whatever called it, most likely task manager or itself)
+func _transition(new_state: int, player_id: int):
+	pass
 
 func is_task_global() -> bool:
 	return task_data["is_task_global"]
