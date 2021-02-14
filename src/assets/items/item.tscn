@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/items/item.gd" type="Script" id=1]
-[ext_resource path="res://assets/common/shaders/outline.shader" type="Shader" id=2]
+[ext_resource path="res://assets/common/shaders/items.shader" type="Shader" id=2]
 
-[sub_resource type="Animation" id=1]
-resource_name = "hover"
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 2 )
+shader_param/line_color = Color( 1, 1, 1, 1 )
+shader_param/line_thickness = 5.0
+
+[sub_resource type="Animation" id=2]
 length = 4.0
 loop = true
 tracks/0/type = "value"
@@ -20,8 +25,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 2.5 ), Vector2( 0, -2.5 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "idle"
+[sub_resource type="Animation" id=3]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpritePosition:position")
@@ -36,7 +40,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="ShaderMaterial" id=4]
 resource_local_to_scene = true
 shader = ExtResource( 2 )
 shader_param/line_color = Color( 1, 1, 0, 0 )
@@ -45,6 +49,7 @@ shader_param/line_thickness = 5.0
 [node name="Item" type="KinematicBody2D" groups=[
 "items",
 ]]
+material = SubResource( 1 )
 input_pickable = true
 collision_layer = 16
 script = ExtResource( 1 )
@@ -58,8 +63,8 @@ __meta__ = {
 }
 
 [node name="ItemAnimator" type="AnimationPlayer" parent="."]
-anims/hover = SubResource( 1 )
-anims/idle = SubResource( 2 )
+anims/hover = SubResource( 2 )
+anims/idle = SubResource( 3 )
 __meta__ = {
 "_editor_description_": "Animates the item."
 }
@@ -72,7 +77,7 @@ __meta__ = {
 }
 
 [node name="ItemSprite" type="AnimatedSprite" parent="SpritePosition"]
-material = SubResource( 3 )
+material = SubResource( 4 )
 offset = Vector2( 0, -25 )
 __meta__ = {
 "_editor_description_": "The item's sprite."
