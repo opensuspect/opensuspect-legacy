@@ -140,6 +140,95 @@ func sync_task():
 func _sync_task():
 	pass
 
+# generate initial data to send to the task manager, should not be called after it is registered
+func gen_task_data() -> Dictionary:
+#	if task_registered:
+#		return task_data
+	var info: Dictionary = {}
+	info["task_text"] = task_text
+#	info["item_inputs"] = item_inputs
+#	info["item_outputs"] = item_outputs
+	info["task_outputs"] = task_outputs
+	info["attached_node"] = attached_to
+	info["resource"] = self
+	info["is_task_global"] = is_task_global
+	#info["ui_resource"] = ui_res
+	# so you can override _gen_task_data() and non-destructively add data
+	# if you want to remove data, you'd have to override this function
+	var virt_info: Dictionary = _gen_task_data()
+	for key in virt_info:
+		info[key] = virt_info[key]
+	for key in info.keys():
+		task_data[key] = info[key]
+	return info
+
+# meant to be overridden in an extending script to allow adding custom data to task_info
+func _gen_task_data() -> Dictionary:
+	return {}
+
+func transition(new_state: int, player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> bool:
+	# to add custom behavior/checks before the state is officially changed
+	# if _transition() returns false, interpret it to mean the extending script
+	# 	doesn't want to transition
+	# to remove behavior after this point, you must override this function (make sure
+	# 	to emit the "transitioned" signal)
+	var virt_return = _transition(new_state, player_id)
+	if virt_return is bool and virt_return == false:
+		return false
+	var old_state = task_data_player[player_id]["state"]
+	task_data_player[player_id]["state"] = new_state
+	emit_signal("transitioned", old_state, new_state, player_id)
+	return true
+
+# override to add custom behavior/checks before the state is officially changed
+# this is especially useful if you want to cancel the transition as it would be
+# 	much harder to retroactively undo it
+# return false to break out of transition() early (this will also cause transition()
+# 	to return false to whatever called it, most likely task manager or itself)
+func _transition(new_state: int, player_id: int):
+	pass
+
+func interact(_from: Node = null, _interact_data: Dictionary = {}):
+	if attached_to == null and _from != null:
+		attached_to = _from
+	if attached_to == null:
+		push_error("InteractTask resource trying to be used with no defined node")
+	if not task_data_player.has(Network.get_my_id()) and not task_data_player.has(TaskManager.GLOBAL_TASK_PLAYER_ID):
+		return
+	# if nothing is explicitly returned, _interact() will return null and will not trigger this
+	# this check is so an extending script can override interact behavior (while retaining the
+	#	above checks) by declaring _interact() and returning false. If you want fully custom 
+	# 	behavior, override this function instead
+	# this could be used to cancel the interaction or to implement custom behavior, 
+	# 	like triggering a map interaction instead of opening a UI
+	if _interact(_from, _interact_data) == false:
+		return
+	ui_res.interact(_from, get_task_data())
+
+# meant to be overridden by an extending script to allow custom behavior when interacted with
+func _interact(_from: Node = null, _interact_data: Dictionary = {}):
+	pass
+
+func init_resource(_from: Node):
+	if attached_to == null and _from != null:
+		attached_to = _from
+	if attached_to == null:
+		push_error("InteractTask resource trying to be initiated with no defined node")
+	# if nothing is explicitly returned, _init_resource() will return null and will not trigger this
+	# this check is so an inheriting script can override initiation behavior while retaining the
+	#	above checks. If you want fully custom behavior, override this function instead
+	# I can't think of any reason you wouldn't want to register with the task manager, 
+	# 	but the ability to do so couldn't hurt
+	# calling the virtual function here also allows the extending script to add custom behavior
+	# 	before it is formally registered
+	if _init_resource(_from) == false:
+		return
+	TaskManager.register_task(self)
+
+# meant to be overridden by an extending script to allow custom behavior on resource init
+func _init_resource(_from: Node):
+	pass
+
 func add_networked_func(function: String, rpc_mode: int):
 	networked_functions[function] = rpc_mode
 
@@ -201,6 +290,15 @@ func is_valid_sender(sender: int, rpc_mode: int) -> bool:
 func get_rpc_sender_id() -> int:
 	return TaskManager.get_tree().get_rpc_sender_id()
 
+# not adding a virtual function for this because the same thing is accomplished by
+# overriding _gen_interact_data()
+func get_interact_data(_from: Node = null) -> Dictionary:
+	if attached_to == null and _from != null:
+		attached_to = _from
+	if attached_to == null:
+		push_error("InteractTask resource trying to be used with no defined node")
+	return gen_task_data()
+
 func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
 	if task_registered and is_task_global():
 		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
@@ -217,32 +315,6 @@ func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
 		temp_task_data[key] = generated_task_data[key]
 	return temp_task_data
 
-# generate initial data to send to the task manager, should not be called after it is registered
-func gen_task_data() -> Dictionary:
-#	if task_registered:
-#		return task_data
-	var info: Dictionary = {}
-	info["task_text"] = task_text
-#	info["item_inputs"] = item_inputs
-#	info["item_outputs"] = item_outputs
-	info["task_outputs"] = task_outputs
-	info["attached_node"] = attached_to
-	info["resource"] = self
-	info["is_task_global"] = is_task_global
-	#info["ui_resource"] = ui_res
-	# so you can override _gen_task_data() and non-destructively add data
-	# if you want to remove data, you'd have to override this function
-	var virt_info: Dictionary = _gen_task_data()
-	for key in virt_info:
-		info[key] = virt_info[key]
-	for key in info.keys():
-		task_data[key] = info[key]
-	return info
-
-# meant to be overridden in an extending script to allow adding custom data to task_info
-func _gen_task_data() -> Dictionary:
-	return {}
-
 func get_task_id() -> int:
 	return task_id
 	
@@ -252,80 +324,8 @@ func get_task_state(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> int:
 		return TaskManager.task_state.HIDDEN
 	return task_data_player[player_id]["state"]
 
-func transition(new_state: int, player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> bool:
-	# to add custom behavior/checks before the state is officially changed
-	# if _transition() returns false, interpret it to mean the extending script
-	# 	doesn't want to transition
-	# to remove behavior after this point, you must override this function (make sure
-	# 	to emit the "transitioned" signal)
-	var virt_return = _transition(new_state, player_id)
-	if virt_return is bool and virt_return == false:
-		return false
-	var old_state = task_data_player[player_id]["state"]
-	task_data_player[player_id]["state"] = new_state
-	emit_signal("transitioned", old_state, new_state, player_id)
-	return true
-
-# override to add custom behavior/checks before the state is officially changed
-# this is especially useful if you want to cancel the transition as it would be
-# 	much harder to retroactively undo it
-# return false to break out of transition() early (this will also cause transition()
-# 	to return false to whatever called it, most likely task manager or itself)
-func _transition(new_state: int, player_id: int):
-	pass
-
 func is_task_global() -> bool:
 	return task_data["is_task_global"]
-
-func interact(_from: Node = null, _interact_data: Dictionary = {}):
-	if attached_to == null and _from != null:
-		attached_to = _from
-	if attached_to == null:
-		push_error("InteractTask resource trying to be used with no defined node")
-	if not task_data_player.has(Network.get_my_id()) and not task_data_player.has(TaskManager.GLOBAL_TASK_PLAYER_ID):
-		return
-	# if nothing is explicitly returned, _interact() will return null and will not trigger this
-	# this check is so an extending script can override interact behavior (while retaining the
-	#	above checks) by declaring _interact() and returning false. If you want fully custom 
-	# 	behavior, override this function instead
-	# this could be used to cancel the interaction or to implement custom behavior, 
-	# 	like triggering a map interaction instead of opening a UI
-	if _interact(_from, _interact_data) == false:
-		return
-	ui_res.interact(_from, get_task_data())
-
-# meant to be overridden by an extending script to allow custom behavior when interacted with
-func _interact(_from: Node = null, _interact_data: Dictionary = {}):
-	pass
-
-func init_resource(_from: Node):
-	if attached_to == null and _from != null:
-		attached_to = _from
-	if attached_to == null:
-		push_error("InteractTask resource trying to be initiated with no defined node")
-	# if nothing is explicitly returned, _init_resource() will return null and will not trigger this
-	# this check is so an inheriting script can override initiation behavior while retaining the
-	#	above checks. If you want fully custom behavior, override this function instead
-	# I can't think of any reason you wouldn't want to register with the task manager, 
-	# 	but the ability to do so couldn't hurt
-	# calling the virtual function here also allows the extending script to add custom behavior
-	# 	before it is formally registered
-	if _init_resource(_from) == false:
-		return
-	TaskManager.register_task(self)
-
-# meant to be overridden by an extending script to allow custom behavior on resource init
-func _init_resource(_from: Node):
-	pass
-
-# not adding a virtual function for this because the same thing is accomplished by
-# overriding _gen_interact_data()
-func get_interact_data(_from: Node = null) -> Dictionary:
-	if attached_to == null and _from != null:
-		attached_to = _from
-	if attached_to == null:
-		push_error("InteractTask resource trying to be used with no defined node")
-	return gen_task_data()
 
 func _init():
 	#print("task init ", task_name)
