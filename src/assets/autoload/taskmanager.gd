@@ -131,7 +131,9 @@ func task_rset_id(id: int, property: String, value, task_id: int):
 		return
 	rpc_id(id, "receive_task_rset", property, value, task_id)
 
-remote func receive_task_rset(property: String, value, task_id: int):
+# remotesync so it is easier to add sync functionality to task resources
+# not puppet so task resources can handle networking their own way
+remotesync func receive_task_rset(property: String, value, task_id: int):
 	print("task rset received")
 	var res = get_task_resource(task_id)
 	if res == null:
@@ -154,7 +156,9 @@ func task_rpc_id(id: int, function: String, args: Array, task_id: int):
 		return
 	rpc_id(id, "receive_task_rpc", function, args, task_id)
 
-remote func receive_task_rpc(function: String, args: Array, task_id: int):
+# remotesync so it is easier to add sync functionality to task resources
+# not puppet so task resources can handle networking their own way
+remotesync func receive_task_rpc(function: String, args: Array, task_id: int):
 	print("task rpc received")
 	var res = get_task_resource(task_id)
 	if res == null:

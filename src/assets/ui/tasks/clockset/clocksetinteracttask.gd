@@ -6,9 +6,8 @@ var current_time: int = 630
 
 signal times_updated(target, current, task_res)
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func _init():
+	add_networked_func("receive_times", MultiplayerAPI.RPC_MODE_REMOTE)
 
 func _init_resource(_from: Node):
 	target_time = gen_rand_time()

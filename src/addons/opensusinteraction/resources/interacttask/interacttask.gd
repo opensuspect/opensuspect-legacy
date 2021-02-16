@@ -36,6 +36,12 @@ var task_data: Dictionary = {}
 var task_data_player: Dictionary = {}
 var task_registered: bool = false
 
+var network_master: int = 1
+# function name: rpc mode (puppet, remote, etc.)
+var networked_functions: Dictionary = {}
+# var name: rpc mode (puppet, remote, etc.)
+var networked_properties: Dictionary = {}
+
 # relationships between shown property names and the actual script property name
 # properties in this dict are NOT automatically added to editor, they must also be in custom_properties_to_show
 # if you want the editor property name to be the same as the script variable name, you do not need to add it to custom_properties
@@ -126,12 +132,19 @@ func _registered(new_task_id: int, new_task_data: Dictionary):
 
 # while this function doesn't add any functionality, it does provide a constant
 # 	function to call, and we could easily add checks later
+# I'm thinking that this could be called by task UIs
 func sync_task():
 	_sync_task()
 
 # to be overridden by an extending script
 func _sync_task():
 	pass
+
+func add_networked_func(function: String, rpc_mode: int):
+	networked_functions[function] = rpc_mode
+
+func add_networked_property(property: String, rpc_mode: int):
+	networked_properties[property] = rpc_mode
 
 func task_rset(property: String, value):
 	TaskManager.task_rset(property, value, task_id)
@@ -140,6 +153,12 @@ func task_rset_id(id: int, property: String, value):
 	TaskManager.task_rset_id(id, property, value, task_id)
 
 func receive_task_rset(property: String, value):
+	if not property in networked_properties:
+		return
+	var sender: int = get_rpc_sender_id()
+	var rpc_mode: int = networked_properties[property]
+	if not is_valid_sender(sender, rpc_mode):
+		return
 	set(property, value)
 
 # args must be in the form of an array because you can't create functions with variable
@@ -151,9 +170,36 @@ func task_rpc_id(id: int, function: String, args: Array):
 	TaskManager.task_rpc_id(id, function, args, task_id)
 
 func receive_task_rpc(function: String, args: Array):
+	if not function in networked_functions:
+		return
+	var sender: int = get_rpc_sender_id()
+	var rpc_mode: int = networked_functions[function]
+	if not is_valid_sender(sender, rpc_mode):
+		return
 	# using callv instead of call because it will translate the array into
 	# 	individual arguments
 	callv(function, args)
+
+# function to see if we should accept an rpc/rset
+func is_valid_sender(sender: int, rpc_mode: int) -> bool:
+	var my_id: int = Network.get_my_id()
+	match rpc_mode:
+		MultiplayerAPI.RPC_MODE_REMOTE:
+			return my_id != sender
+		MultiplayerAPI.RPC_MODE_MASTER:
+			return my_id == network_master
+		MultiplayerAPI.RPC_MODE_PUPPET:
+			return my_id != network_master
+		MultiplayerAPI.RPC_MODE_REMOTESYNC:
+			return true
+		MultiplayerAPI.RPC_MODE_MASTERSYNC:
+			return my_id == network_master
+		MultiplayerAPI.RPC_MODE_PUPPETSYNC:
+			return my_id != network_master
+	return false
+
+func get_rpc_sender_id() -> int:
+	return TaskManager.get_tree().get_rpc_sender_id()
 
 func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
 	if task_registered and is_task_global():
@@ -263,6 +309,7 @@ func init_resource(_from: Node):
 	# I can't think of any reason you wouldn't want to register with the task manager, 
 	# 	but the ability to do so couldn't hurt
 	# calling the virtual function here also allows the extending script to add custom behavior
+	# 	before it is formally registered
 	if _init_resource(_from) == false:
 		return
 	TaskManager.register_task(self)
