@@ -56,7 +56,7 @@ func _sync_task():
 	send_times(target_time, current_time)
 
 func send_times(target: int, current: int):
-	print("sending times out to network")
+	#print("sending times out to network")
 	task_rpc("receive_times", [target, current])
 
 func receive_times(target: int, current: int):

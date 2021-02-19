@@ -125,14 +125,12 @@ puppet func deny_task_completed(task_info: Dictionary, data: Dictionary):
 # 	because it could change what get_rpc_sender_id() returns, even if the function isn't
 # 	set to sync in the InteractTask script
 func task_rset(property: String, value, task_id: int):
-	print("task rset")
 	var res = get_task_resource(task_id)
 	if res == null:
 		return
 	rpc("receive_task_rset", property, value, task_id)
 
 func task_rset_id(id: int, property: String, value, task_id: int):
-	print("task rset")
 	var res = get_task_resource(task_id)
 	if res == null:
 		return
@@ -141,7 +139,6 @@ func task_rset_id(id: int, property: String, value, task_id: int):
 # remotesync so it is easier to add sync functionality to task resources
 # not puppet so task resources can handle networking their own way
 remotesync func receive_task_rset(property: String, value, task_id: int):
-	print("task rset received")
 	var res = get_task_resource(task_id)
 	if res == null:
 		return
@@ -150,14 +147,12 @@ remotesync func receive_task_rset(property: String, value, task_id: int):
 # args must be in the form of an array because you can't create functions with variable
 # 	arg amounts in gdscript
 func task_rpc(function: String, args: Array, task_id: int):
-	print("task rpc")
 	var res = get_task_resource(task_id)
 	if res == null:
 		return
 	rpc("receive_task_rpc", function, args, task_id)
 
 func task_rpc_id(id: int, function: String, args: Array, task_id: int):
-	print("task rpc")
 	var res = get_task_resource(task_id)
 	if res == null:
 		return
@@ -166,7 +161,6 @@ func task_rpc_id(id: int, function: String, args: Array, task_id: int):
 # remotesync so it is easier to add sync functionality to task resources
 # not puppet so task resources can handle networking their own way
 remotesync func receive_task_rpc(function: String, args: Array, task_id: int):
-	print("task rpc received")
 	var res = get_task_resource(task_id)
 	if res == null:
 		return
