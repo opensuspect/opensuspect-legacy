@@ -153,6 +153,7 @@ func assign_player(player_id: int):
 func _assign_player(player_id: int):
 	pass
 
+# called by the task manager when it has registered this task
 func registered(new_task_id: int, new_task_data: Dictionary):
 	_registered(new_task_id, new_task_data)
 	for key in new_task_data.keys():
@@ -160,6 +161,7 @@ func registered(new_task_id: int, new_task_data: Dictionary):
 	task_id = new_task_id
 	task_registered = true
 
+# override to add custom behavior upon being registered by the task manager
 func _registered(new_task_id: int, new_task_data: Dictionary):
 	pass
 
