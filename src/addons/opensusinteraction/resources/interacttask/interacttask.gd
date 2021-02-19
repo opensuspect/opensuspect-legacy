@@ -5,6 +5,8 @@ class_name InteractTask
 
 export(String) var task_text
 
+export(int) var random_numbers = 0
+
 var item_inputs_on: bool
 var item_inputs: PoolStringArray
 
@@ -146,6 +148,13 @@ func assign_player(player_id: int):
 		return
 	task_data_player[player_id] = task_data.duplicate(true)
 	var task_text = task_data["task_text"]
+	var data = []
+	assert(random_numbers >= 0)
+	randomize()
+	for i in range(random_numbers):
+		data.append(randi())
+	#var data: Dictionary = TaskGenerators.call_generator(task_text)
+	task_data_player[player_id]["task_data"] = data
 
 # overridden to add custom behavior for when a player is assigned to this task while
 # 	retaining the checks implemented in assign_player()
