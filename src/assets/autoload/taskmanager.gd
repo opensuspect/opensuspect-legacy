@@ -55,6 +55,9 @@ func task_completed(task_info: Dictionary, data: Dictionary):
 
 # RPCed in complete_task() to confirm that the task is actually completed and to sync
 master func attempt_complete_task(task_info: Dictionary, task_data: Dictionary):
+	# should only be run on the server
+	if not get_tree().is_network_server():
+		return
 	if not is_task_info_valid(task_info):
 		push_error("not sending rpc to server; task_info is not valid")
 		assert(false)
@@ -103,7 +106,7 @@ func complete_task(task_info: Dictionary, data: Dictionary = {}):
 		push_error("not sending rpc to server; task cannot be completed")
 		return
 	
-	attempt_complete_task(task_info, data)
+	rpc_id(1, "attempt_complete_task", task_info, data)
 
 # A callback that the server calls when it successfully completes a task
 puppetsync func confirm_task_completed(task_info: Dictionary, data: Dictionary):

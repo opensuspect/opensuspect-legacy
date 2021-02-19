@@ -21,6 +21,8 @@ func _sync_task():
 	send_times(target_time, current_time)
 
 func _init_resource(_from: Node):
+	if not get_tree().is_network_server():
+		return
 	target_time = gen_rand_time()
 	current_time = gen_rand_time()
 	emit_signal("times_updated", target_time, current_time, self)

@@ -95,6 +95,8 @@ func _complete_task(player_id: int, data: Dictionary):
 func can_complete_task(player_id: int = Network.get_my_id(), data: Dictionary = {}) -> bool:
 	if not is_player_assigned(player_id):
 		return false
+	if is_task_completed():
+		return false
 	var virt_return = _can_complete_task(player_id, data)
 	if not virt_return is bool:
 		return true
@@ -354,9 +356,14 @@ func is_valid_sender(sender: int, rpc_mode: int) -> bool:
 
 # for consistency with using network functions in nodes
 func get_rpc_sender_id() -> int:
-	# must go through TaskManager because resources do not have access to the scene tree
+	return get_tree().get_rpc_sender_id()
+
+# to make it easier to access the scene tree to get specific data (like rpc sender id
+# 	and to call is_network_server())
+func get_tree() -> SceneTree:
+	# going through TaskManager because resources do not have access to the scene tree
 	# 	by themselves
-	return TaskManager.get_tree().get_rpc_sender_id()
+	return TaskManager.get_tree()
 
 # not adding a virtual function for this because the same thing is accomplished by
 # overriding _gen_interact_data()
