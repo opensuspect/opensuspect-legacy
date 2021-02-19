@@ -253,7 +253,7 @@ func _tasks_registered(_old_state, new_state, priority):
 		task["task_data"] = task_resource.get_task_data()
 		registered_tasks.append(task)
 	rpc("assign_task_data_client", registered_tasks)
-	
+
 puppet func assign_task_data_client(registered_tasks: Array):
 	for task in registered_tasks:
 		var path = task["path"]

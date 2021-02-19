@@ -9,10 +9,16 @@ signal times_updated(target, current, task_res)
 func _init():
 	add_networked_func("receive_times", MultiplayerAPI.RPC_MODE_REMOTE)
 
+func _complete_task(player_id: int, data: Dictionary):
+	sync_task()
+
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
 func _can_complete_task(player_id: int, data: Dictionary):
 	return target_time == current_time
+
+func _sync_task():
+	send_times(target_time, current_time)
 
 func _init_resource(_from: Node):
 	target_time = gen_rand_time()
@@ -51,9 +57,6 @@ func get_current_time() -> int:
 
 func gen_rand_time() -> int:
 	return normalise_time(randi())
-
-func _sync_task():
-	send_times(target_time, current_time)
 
 func send_times(target: int, current: int):
 	#print("sending times out to network")

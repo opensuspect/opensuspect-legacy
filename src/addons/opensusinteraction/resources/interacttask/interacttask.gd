@@ -120,6 +120,7 @@ func task_completed(player_id: int, data: Dictionary):
 	# 	behavior, override this function instead
 	if _task_completed(player_id, data) == false:
 		return
+	transition(TaskManager.task_state.COMPLETED)
 	var temp_interact_data = get_task_data(player_id)
 	for key in data.keys():
 		temp_interact_data[key] = data[key]
