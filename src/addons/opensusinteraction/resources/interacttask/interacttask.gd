@@ -67,39 +67,69 @@ var custom_properties: Dictionary = {
 var custom_properties_to_show: PoolStringArray = ["ui_resource", "outputs/toggle_map_interactions", "outputs/output_map_interactions", "is_task_global"]
 
 signal transitioned(old_state, new_state, player_id)
+signal task_completed(player_id, data)
 
+# mainly serves as a constant function the TaskManager can call to attempt to complete
+# 	a task, custom checks should be added in _complete_task()
 func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID, 
-					data: Dictionary = {}) -> bool:
+					data: Dictionary = {}) -> void:
 	# I'm adding a virtual function in case we add some base checks here, so you could
 	# 	add custom behavior while retaining the checks
 	# this is similar behavior to assign_player(), registered(), gen_task_data(), etc.
 	# if you want fully custom behavior, override this function instead
-	var virt_return  = _complete_task(player_id, data)
-	# if virt_return is not a bool, it means the extending script either didn't override or
-	# 	doesn't want to break out of this function, so we shouldn't cancel the actions below
-	if virt_return is bool:
-		return virt_return
+	if _complete_task(player_id, data) == false:
+		return
+	# we might want to add some default behavior here later
+
+# override to add custom behavior when an attempt is made to complete the task
+func _complete_task(player_id: int, data: Dictionary):
+	pass
+
+# mainly serves as a constant function the TaskManager can call to see if the task is
+# 	unofficially completed (all requirements are met, like the time being set correctly
+# 	in the clockset task), custom checks can be added in _can_complete_task()
+func can_complete_task(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID, data: Dictionary = {}) -> bool:
+	if not is_player_assigned(player_id):
+		return false
+	return _can_complete_task(player_id, data)
+
+# while overriding, you must return a bool (whether or not the task will be completed) which
+# 	will be relayed to whatever called can_complete_task() (most likely TaskManager)
+# this is to add custom checks to see if the task is completed or not
+func _can_complete_task(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID, data: Dictionary = {}) -> bool:
+	return true
+
+# called when a task completion is verified by the server, in Among Us the delay in this step
+# 	is hidden by having the UI stay open until the confirmation is received. I believe this
+# 	is what currently happens in opensuspect as of 2/18/2021 - TheSecondReal0
+# task must be completed somehow during this function, to avoid desync
+func task_completed(player_id: int, data: Dictionary):
+	# if nothing is explicitly returned, _task_completed() will return null and will not trigger this
+	# this allows an extending script to override behavior while retaining the above checks
+	# 	by defining _task_completed() and returning false. If you want fully custom 
+	# 	behavior, override this function instead
+	if _task_completed(player_id, data) == false:
+		return
 	var temp_interact_data = task_data_player[player_id]
 	for key in data.keys():
 		temp_interact_data[key] = data[key]
 	if map_outputs_on:
 		for resource in map_outputs:
 			resource.interact(attached_to, temp_interact_data)
-	return true
+	emit_signal("task_completed", player_id, temp_interact_data)
+#	complete_task(player_id, data)
 
-# not defined to return a bool so complete_task() can know if this function was overridden
-# 	or not
-# while overriding, return any bool to break out of complete_task(), which will return
-# 	said bool to whatever called complete_task(), most likely the task manager
-func _complete_task(player_id: int, data: Dictionary):
+# overridden to add custom behavior when the task is completed
+# return false while overriding to break execution of task_completed()
+func _task_completed(player_id: int, data: Dictionary):
 	pass
 
 func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
 	if task_data_player.has(player_id):
 		return
 	# if nothing is explicitly returned, _assign_player() will return null and will not trigger this
-	# this allows an extending script to override interact behavior (while retaining the above checks)
-	# 	by declaring _assign_player() and returning false. If you want fully custom 
+	# this allows an extending script to override behavior while retaining the above checks
+	# 	by defining _assign_player() and returning false. If you want fully custom 
 	# 	behavior, override this function instead
 	# used to add custom behavior when a player is assigned to this task
 	if _assign_player(player_id) == false:
@@ -235,6 +265,10 @@ func add_networked_func(function: String, rpc_mode: int):
 func add_networked_property(property: String, rpc_mode: int):
 	networked_properties[property] = rpc_mode
 
+# for consistency with using network functions in nodes
+func set_network_master(id: int):
+	network_master = id
+
 func task_rset(property: String, value):
 	TaskManager.task_rset(property, value, task_id)
 
@@ -287,7 +321,10 @@ func is_valid_sender(sender: int, rpc_mode: int) -> bool:
 			return my_id != network_master
 	return false
 
+# for consistency with using network functions in nodes
 func get_rpc_sender_id() -> int:
+	# must go through TaskManager because resources do not have access to the scene tree
+	# 	by themselves
 	return TaskManager.get_tree().get_rpc_sender_id()
 
 # not adding a virtual function for this because the same thing is accomplished by
@@ -317,12 +354,22 @@ func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
 
 func get_task_id() -> int:
 	return task_id
-	
+
+func is_task_completed(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> bool:
+	if not is_player_assigned(player_id):
+		return false
+	return get_task_state(player_id) == TaskManager.task_state.COMPLETED
+
 func get_task_state(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> int:
-	if not task_data_player.has(player_id):
+	if not is_player_assigned(player_id):
 		#this player has not been assigned this task
-		return TaskManager.task_state.HIDDEN
+		return TaskManager.task_state.INVALID
 	return task_data_player[player_id]["state"]
+
+func is_player_assigned(player_id: int) -> bool:
+	if is_task_global():
+		return true
+	return task_data_player.has(player_id)
 
 func is_task_global() -> bool:
 	return task_data["is_task_global"]

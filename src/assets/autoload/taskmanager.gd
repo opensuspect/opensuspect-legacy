@@ -33,90 +33,94 @@ func _ready():
 	randomize()
 	self.set_network_master(1)
 
-# GUIs should run this when they think that they have finished the task
-func attempt_complete_task(task_info: Dictionary, task_data: Dictionary):
-	if not is_task_info_valid(task_info):
-		push_error("not sending rpc to server; task_info is not valid")
-		assert(false)
-		return
-	TaskManager.rpc_id(1, "complete_task_remote", task_info, task_data)
-	
-# completes the task on the server, and notifies the client/s that the tasks
-# were compleated
-master func complete_task_remote(task_info: Dictionary, task_data: Dictionary = {}):
-	if not is_task_info_valid(task_info):
-		push_error("provided task_info is not valid" + String(task_info))
-		assert(false)
-		return
-		
-	if not is_valid_rpc_sender(task_info[PLAYER_ID_KEY]):
-		assert(false)
-		return
-	
-	# TODO Probably should validate the task_data
-	
-	# A special case, for when the server's player compleated a task
-	var completed = false
-	if task_info[PLAYER_ID_KEY] == 1:
-		completed = complete_task(task_info, task_data)
-
-	var task_id = task_info[TASK_ID_KEY]
-	if is_task_global(task_id):
-		task_info[PLAYER_ID_KEY] = GLOBAL_TASK_PLAYER_ID
-		if completed or complete_task(task_info, task_data):
-			rpc("task_completed", task_info, task_data)
-			emit_signal("task_completed", task_info)
-	# If the task is not global, just advance it, so that we know that
-	# the client has completed it
-	elif completed:# or advance_task(task_info, task_state.COMPLETED):
-		if task_info[PLAYER_ID_KEY] == 1:
-			emit_signal("task_completed", task_info)
-		else:
-			rpc_id(task_info[PLAYER_ID_KEY], "task_completed", task_info, task_data)
-
-# Called on the client that the task was completed
-# or on all the clients if the completed task was global
-#func complete_task(task_info: Dictionary, data: Dictionary = {}) -> bool:
-func complete_task(task_info: Dictionary, data: Dictionary = {}) -> bool:
-	if not is_task_info_valid(task_info):
-		push_error("provided task_info is not valid")
-		assert(false)
-		return false
-	
-	# TODO Probably should check that the data has correct values
-	
-	var task_id = task_info[TASK_ID_KEY]
-	var player_id = task_info[PLAYER_ID_KEY]
-	
-	print("trying to complete task ", task_id)
-	if not does_task_exist(task_id):
-		return false
-#	if not advance_task(task_info, task_state.COMPLETED):
-#		return false
-
-	return get_task_resource(task_id).complete_task(player_id, data)
-
-# A callback that the server calls when it successfully compleats a task
-puppet func task_completed(task_info: Dictionary, data: Dictionary):
-	
+# called when the task is completed
+# calls task_completed() on the resource
+func task_completed(task_info: Dictionary, data: Dictionary):
 	if not is_task_info_valid(task_info):
 		push_error("provided task_info is not valid")
 		assert(false)
 		return false
 	
 	var task_id = task_info[TASK_ID_KEY]
+	var task_res: InteractTask = get_task_resource(task_id)
 	if not does_task_exist(task_id):
 		return
 	if is_task_global(task_id):
 		task_info[PLAYER_ID_KEY] = GLOBAL_TASK_PLAYER_ID
 	if not is_task_completed(task_info):
 		#warning-ignore:return_value_discarded
-		complete_task(task_info, data)
+		task_res.task_completed(task_info[PLAYER_ID_KEY], data)
 	emit_signal("task_completed", task_info)
 
+# RPCed in complete_task() to confirm that the task is actually completed and to sync
+master func attempt_complete_task(task_info: Dictionary, task_data: Dictionary):
+	if not is_task_info_valid(task_info):
+		push_error("not sending rpc to server; task_info is not valid")
+		assert(false)
+		return
+	
+	var sender: int = get_tree().get_rpc_sender_id()
+	var task_id: int = task_info[TASK_ID_KEY]
+	var player_id: int = task_info[PLAYER_ID_KEY]
+	var task_res: InteractTask = get_task_resource(task_id)
+	var global: bool = is_task_global(task_id)
+	
+	if not global:
+		if not is_valid_rpc_sender(player_id):
+			return
+	
+	var can_complete: bool = task_res.can_complete_task(player_id, task_data)
+	if can_complete:
+		# tell everyone that this task was completed
+		# all task completions should go through confirm_task_completed() at some point,
+		# 	this rpc will call it on the server because it is a puppetsync function
+		# everyone kinda needs to know the task was completed (for task completion bar),
+		# 	but we might want to limit how much we tell non-assigned clients about it
+		# 	in the future
+		rpc("confirm_task_completed", task_info, task_data)
+	else:
+		# only tell the sender that the task failed to complete because that's the only
+		# 	client that needs to know
+		rpc_id(sender, "deny_task_completed", task_info, task_data)
+
+# called by task resources on the client the task was completed on to notify TaskManager 
+# 	that it should confirm the task is actually completed and to sync
+func complete_task(task_info: Dictionary, data: Dictionary = {}):
+	if not is_task_info_valid(task_info):
+		push_error("not sending rpc to server; task_info is not valid")
+		assert(false)
+		return
+	
+	var task_id: int = task_info[TASK_ID_KEY]
+	var player_id: int = task_info[PLAYER_ID_KEY]
+	var task_res: InteractTask = get_task_resource(task_id)
+	var can_complete: bool = task_res.can_complete_task(player_id, data)
+	
+	if not can_complete:
+		push_error("not sending rpc to server; task cannot be completed")
+		return
+	
+	attempt_complete_task(task_info, data)
+
+# A callback that the server calls when it successfully completes a task
+puppetsync func confirm_task_completed(task_info: Dictionary, data: Dictionary):
+	task_completed(task_info, data)
+
+# a callback that the server calls when a client requests to complete a task, but the
+# 	server doesn't agree that it is complete
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+puppet func deny_task_completed(task_info: Dictionary, data: Dictionary):
+	pass
+
 # used to allow task resources to talk to each other over the network
-# needs some kind of check to make sure each call is valid, at least make sure the client sending the rpc is assigned to the task
-# using remote keyword because it's easier, and theoretically each individual task would want to handle network sync differently
+# RPC modes (puppet, remote, remotesync, etc.) are implemented in the TaskInteract class,
+# 	which provides the same networking security that exists in Node classes
+# using remotesync keyword allows each individual task to handle networking their own way,
+# 	this is to avoid limiting task functionality
+# this may cause some unexpected behavior when you task_rpc() in an InteractTask script
+# 	because it could change what get_rpc_sender_id() returns, even if the function isn't
+# 	set to sync in the InteractTask script
 func task_rset(property: String, value, task_id: int):
 	print("task rset")
 	var res = get_task_resource(task_id)
@@ -345,6 +349,13 @@ func assign_task(task_info: Dictionary) -> void:
 	#add player_id to assigned_players in task resource
 	task_dict[task_id].assign_player(player_id)
 
+func can_complete_task(task_info) -> bool:
+	if not is_task_info_valid(task_info):
+		return false
+	var task_id: int = task_info[TASK_ID_KEY]
+	var task_res: Resource = get_task_resource(task_id)
+	return task_res.can_complete_task()
+
 func get_task_data(task_info: Dictionary) -> Dictionary:
 	if not is_task_info_valid(task_info):
 		return {}
@@ -352,7 +363,7 @@ func get_task_data(task_info: Dictionary) -> Dictionary:
 	var player_id = task_info[PLAYER_ID_KEY]
 	return get_task_resource(task_id).get_task_data(player_id)
 
-func get_task_resource(task_id: int) -> Resource:
+func get_task_resource(task_id: int) -> InteractTask:
 	if not does_task_exist(task_id):
 		return null
 	return task_dict[task_id]
