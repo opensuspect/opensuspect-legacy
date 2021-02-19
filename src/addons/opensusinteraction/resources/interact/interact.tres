@@ -33,7 +33,6 @@ resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 5 )
 task_text = ""
-random_numbers = 0
 ui_resource = SubResource( 2 )
 outputs/toggle_map_interactions = false
 outputs/output_map_interactions = [  ]
