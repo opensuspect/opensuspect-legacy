@@ -23,15 +23,20 @@ func ui_data_updated():
 
 func checkComplete():
 	updateCurrentTime()
-	if get_res().is_complete():
-		taskComplete()
-		hide()
+	var completed: bool = is_task_completed()
+	if completed:
+		get_res().complete_task()
+	set_clock_editable(not completed)
 
-func taskComplete():
-	.complete_task({"newText": str(getCurrentTime())})
+#func taskComplete():
+#	.complete_task({"newText": str(getCurrentTime())})
 
 func sync_task():
 	get_res().sync_task()
+
+func set_clock_editable(editable: bool):
+	for node in [hoursNode, minutesNode, ampmNode]:
+		node.editable = editable
 
 func setClockTime(newTime: int):
 # warning-ignore:integer_division
@@ -113,6 +118,9 @@ func times_updated(_target: int, _current: int, task_res: Resource):
 	if task_res != get_res():
 		return
 	ui_data_updated()
+
+func is_task_completed() -> bool:
+	return get_res().can_complete_task()
 
 #so you can't type into the spinboxes
 func _on_hours_focus_entered():

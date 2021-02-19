@@ -50,6 +50,7 @@ func task_completed(task_info: Dictionary, data: Dictionary):
 	if not is_task_completed(task_info):
 		#warning-ignore:return_value_discarded
 		task_res.task_completed(task_info[PLAYER_ID_KEY], data)
+	print("task completed: ", task_id)
 	emit_signal("task_completed", task_info)
 
 # RPCed in complete_task() to confirm that the task is actually completed and to sync
@@ -64,6 +65,8 @@ master func attempt_complete_task(task_info: Dictionary, task_data: Dictionary):
 	var player_id: int = task_info[PLAYER_ID_KEY]
 	var task_res: InteractTask = get_task_resource(task_id)
 	var global: bool = is_task_global(task_id)
+	
+	print("attempting to complete task ", task_id)
 	
 	if not global:
 		if not is_valid_rpc_sender(player_id):

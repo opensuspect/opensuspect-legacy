@@ -69,34 +69,46 @@ var custom_properties_to_show: PoolStringArray = ["ui_resource", "outputs/toggle
 signal transitioned(old_state, new_state, player_id)
 signal task_completed(player_id, data)
 
-# mainly serves as a constant function the TaskManager can call to attempt to complete
-# 	a task, custom checks should be added in _complete_task()
-func complete_task(	player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID, 
+# should be called by task UI or an extending script to complete the task
+# this function should not add any actual behavior, just relay the attempt to
+# 	complete the task to TaskManager
+func complete_task(	player_id: int = Network.get_my_id(), 
 					data: Dictionary = {}) -> void:
-	# I'm adding a virtual function in case we add some base checks here, so you could
-	# 	add custom behavior while retaining the checks
+	if not can_complete_task(player_id, data):
+		return
+	# use virtual function to add custom behavior while retaining the checks or to 
+	# 	cancel the attempt to complete this task
 	# this is similar behavior to assign_player(), registered(), gen_task_data(), etc.
 	# if you want fully custom behavior, override this function instead
 	if _complete_task(player_id, data) == false:
 		return
-	# we might want to add some default behavior here later
+	var task_info: Dictionary = TaskManager.gen_task_info(get_task_id(), player_id)
+	var new_data: Dictionary = Helpers.merge_dicts(data, get_task_data(player_id))
+	TaskManager.complete_task(task_info, new_data)
 
-# override to add custom behavior when an attempt is made to complete the task
+# override to add custom behavior when an attempt is made to complete the task or to
+# 	cancel the attempt
 func _complete_task(player_id: int, data: Dictionary):
 	pass
 
 # mainly serves as a constant function the TaskManager can call to see if the task is
 # 	unofficially completed (all requirements are met, like the time being set correctly
 # 	in the clockset task), custom checks can be added in _can_complete_task()
-func can_complete_task(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID, data: Dictionary = {}) -> bool:
+func can_complete_task(player_id: int = Network.get_my_id(), data: Dictionary = {}) -> bool:
 	if not is_player_assigned(player_id):
 		return false
-	return _can_complete_task(player_id, data)
+	var virt_return = _can_complete_task(player_id, data)
+	if not virt_return is bool:
+		return true
+	return virt_return
 
 # while overriding, you must return a bool (whether or not the task will be completed) which
 # 	will be relayed to whatever called can_complete_task() (most likely TaskManager)
 # this is to add custom checks to see if the task is completed or not
-func _can_complete_task(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID, data: Dictionary = {}) -> bool:
+func _can_complete_task(player_id: int, data: Dictionary) -> bool:
+	# returns true by default to allow you to control a task purely through the UI script
+	# 	to avoid having to make a custom resource. This makes simple tasks much easier
+	# 	to make and reduces unnecessary scripts
 	return true
 
 # called when a task completion is verified by the server, in Among Us the delay in this step
@@ -110,7 +122,7 @@ func task_completed(player_id: int, data: Dictionary):
 	# 	behavior, override this function instead
 	if _task_completed(player_id, data) == false:
 		return
-	var temp_interact_data = task_data_player[player_id]
+	var temp_interact_data = get_task_data(player_id)
 	for key in data.keys():
 		temp_interact_data[key] = data[key]
 	if map_outputs_on:
@@ -124,7 +136,7 @@ func task_completed(player_id: int, data: Dictionary):
 func _task_completed(player_id: int, data: Dictionary):
 	pass
 
-func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
+func assign_player(player_id: int):
 	if task_data_player.has(player_id):
 		return
 	# if nothing is explicitly returned, _assign_player() will return null and will not trigger this
@@ -147,7 +159,7 @@ func assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
 # overridden to add custom behavior for when a player is assigned to this task while
 # 	retaining the checks implemented in assign_player()
 # return false to break out of assign_player() early (before any actions are taken)
-func _assign_player(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID):
+func _assign_player(player_id: int):
 	pass
 
 func registered(new_task_id: int, new_task_data: Dictionary):
@@ -170,7 +182,32 @@ func sync_task():
 func _sync_task():
 	pass
 
+# used to get task data after the task has been registered
+func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
+	if task_registered and is_task_global():
+		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
+	
+	var temp_task_data = task_data
+	if task_data_player.has(player_id):
+		temp_task_data = task_data_player[player_id]
+		
+	temp_task_data["task_id"] = task_id
+	if not task_registered:
+		var generated_task_data = gen_task_data()
+		for key in generated_task_data.keys():
+			temp_task_data[key] = generated_task_data[key]
+	
+	var virt_return: Dictionary = _get_task_data(player_id)
+	temp_task_data = Helpers.merge_dicts(temp_task_data, virt_return)
+	
+	return temp_task_data
+
+# override to add custom data when get_task_data() is called
+func _get_task_data(player_id: int) -> Dictionary:
+	return {}
+
 # generate initial data to send to the task manager, should not be called after it is registered
+# this is the starting data used to sync tasks before the game starts
 func gen_task_data() -> Dictionary:
 #	if task_registered:
 #		return task_data
@@ -334,23 +371,7 @@ func get_interact_data(_from: Node = null) -> Dictionary:
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be used with no defined node")
-	return gen_task_data()
-
-func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
-	if task_registered and is_task_global():
-		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
-	
-	var temp_task_data = task_data
-	if task_data_player.has(player_id):
-		temp_task_data = task_data_player[player_id]
-		
-	temp_task_data["task_id"] = task_id
-	if task_registered:
-		return temp_task_data
-	var generated_task_data = gen_task_data()
-	for key in generated_task_data.keys():
-		temp_task_data[key] = generated_task_data[key]
-	return temp_task_data
+	return get_task_data()
 
 func get_task_id() -> int:
 	return task_id
