@@ -23,7 +23,7 @@ var player_sprite_names: Dictionary = {
 	"Clothes": [
 		"LeftArm",
 		"LeftLeg",
-		"Skeleton/Spine/Pants",
+		"Pants",
 		"RightLeg",
 		"Skeleton/Spine/Clothes",
 		"RightArm"
