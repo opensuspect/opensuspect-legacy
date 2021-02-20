@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/dark_brown_tuxedo.png-fda244cf375f38584983373efadb8681.stex"
+path="res://.import/hair_ponytail.png-ee5e838d6008eba13c6f5ad205f148af.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/textures/characters/customizable/07-clothes/dark_brown_tuxedo.png"
-dest_files=[ "res://.import/dark_brown_tuxedo.png-fda244cf375f38584983373efadb8681.stex" ]
+source_file="res://assets/player/textures/characters/customizable/11-hat-hair/hair_ponytail.png"
+dest_files=[ "res://.import/hair_ponytail.png-ee5e838d6008eba13c6f5ad205f148af.stex" ]
 
 [params]
 

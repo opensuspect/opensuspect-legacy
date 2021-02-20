@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/dark_brown_tuxedo.png-20c675b102c1bdd83f854e742c6c26c3.stex"
+path="res://.import/tuxedo.png-1404d72c995548cedb3bc90ee6926ad7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/textures/characters/customizable/01-left-arm/dark_brown_tuxedo.png"
-dest_files=[ "res://.import/dark_brown_tuxedo.png-20c675b102c1bdd83f854e742c6c26c3.stex" ]
+source_file="res://assets/player/textures/characters/customizable/08-right-arm/tuxedo.png"
+dest_files=[ "res://.import/tuxedo.png-1404d72c995548cedb3bc90ee6926ad7.stex" ]
 
 [params]
 
