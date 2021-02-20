@@ -122,7 +122,7 @@ func task_completed(player_id: int, data: Dictionary):
 	# 	behavior, override this function instead
 	if _task_completed(player_id, data) == false:
 		return
-	transition(TaskManager.task_state.COMPLETED)
+	transition(TaskManager.task_state.COMPLETED, player_id)
 	var temp_interact_data = get_task_data(player_id)
 	for key in data.keys():
 		temp_interact_data[key] = data[key]
@@ -229,7 +229,7 @@ func gen_task_data() -> Dictionary:
 func _gen_task_data() -> Dictionary:
 	return {}
 
-func transition(new_state: int, player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> bool:
+func transition(new_state: int, player_id: int) -> bool:
 	# to add custom behavior/checks before the state is officially changed
 	# if _transition() returns false, interpret it to mean the extending script
 	# 	doesn't want to transition

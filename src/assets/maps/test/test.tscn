@@ -27,7 +27,7 @@ interact_data = {
 }
 advanced/network_sync = false
 
-[sub_resource type="Resource" id=2]
+[sub_resource type="Resource" id=12]
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 11 )
@@ -44,7 +44,7 @@ resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 8 )
 task_text = ""
-ui_resource = SubResource( 2 )
+ui_resource = SubResource( 12 )
 outputs/toggle_map_interactions = false
 outputs/output_map_interactions = [  ]
 is_task_global = false
@@ -90,7 +90,7 @@ interact_data = {
 }
 advanced/network_sync = false
 
-[sub_resource type="Resource" id=8]
+[sub_resource type="Resource" id=13]
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 11 )
@@ -106,7 +106,7 @@ advanced/free_on_close = false
 resource_local_to_scene = true
 script = ExtResource( 8 )
 task_text = ""
-ui_resource = SubResource( 8 )
+ui_resource = SubResource( 13 )
 outputs/toggle_map_interactions = false
 outputs/output_map_interactions = [  ]
 is_task_global = false

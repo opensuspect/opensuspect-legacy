@@ -4,7 +4,7 @@
 [ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=2]
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=3]
 
-[sub_resource type="Resource" id=2]
+[sub_resource type="Resource" id=1]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 3 )
@@ -14,9 +14,8 @@ interact_data = {
 }
 advanced/network_sync = false
 
-[sub_resource type="Resource" id=1]
+[sub_resource type="Resource" id=2]
 resource_local_to_scene = true
-resource_name = "InteractUI"
 script = ExtResource( 2 )
 ui_name = "clockset"
 ui_data = {
@@ -30,7 +29,7 @@ advanced/free_on_close = false
 resource_local_to_scene = true
 script = ExtResource( 1 )
 task_text = "standbutton clockset task"
-ui_resource = SubResource( 1 )
+ui_resource = SubResource( 2 )
 outputs/toggle_map_interactions = true
-outputs/output_map_interactions = [ SubResource( 2 ) ]
+outputs/output_map_interactions = [ SubResource( 1 ) ]
 is_task_global = true
