@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/thin_eyebrows-long_eyelashes.png-5a81f53d77fdc65b98bd4ff6cc01cfe1.stex"
+path="res://.import/eyebrows_2.png-ed887bae9fa8012d86a73cff7f32dc9d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/textures/characters/customizable/09-facial-hair/thin_eyebrows-long_eyelashes.png"
-dest_files=[ "res://.import/thin_eyebrows-long_eyelashes.png-5a81f53d77fdc65b98bd4ff6cc01cfe1.stex" ]
+source_file="res://assets/player/textures/characters/customizable/09-facial-hair/eyebrows_2.png"
+dest_files=[ "res://.import/eyebrows_2.png-ed887bae9fa8012d86a73cff7f32dc9d.stex" ]
 
 [params]
 

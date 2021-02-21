@@ -18,6 +18,14 @@ onready var animator: AnimationPlayer = player_skeleton.get_node("AnimationPlaye
 
 enum Anim {IDLE, MOVE, DEATH}
 
+var sprite_user_names: Dictionary = {
+	"Clothes": tr("Clothes"),
+	"Body": tr("Facial features"),
+	"Facial Hair": tr("Facial hair"),
+	"Face Wear": tr("Face wear"),
+	"Hat/Hair": tr("Hat / hair"),
+	"Mouth": tr("Mouth"),
+}
 # This dictionary contains the names of the nodes that will need to load the sprites
 var player_sprite_names: Dictionary = {
 	"Clothes": [
@@ -47,6 +55,10 @@ var current_customization: Dictionary = {}
 var custom_color_shaders: Dictionary = {
 	"Skin Color": "skin_color", "Hair Color": "hair_color", "Facial Hair Color": "fhair_color"
 }
+var custom_color_names: Dictionary = {
+	"Skin Color": tr("Skin color"), "Hair Color": tr("Hair color"),
+	"Facial Hair Color": tr("Facial hair color")
+}
 # It will contain the custom color selector boxes
 var color_selectors: Dictionary = {}
 
@@ -64,7 +76,7 @@ func _ready() -> void:
 	# Goes through the customizable colors and cretes the color selector UI elements
 	for color_selector_name in custom_color_shaders.keys():
 		color_selector = color_selector_scene.instance()
-		color_selector.get_node("Label").text = color_selector_name
+		color_selector.get_node("Label").text = custom_color_names[color_selector_name]
 		color_selector.my_name = color_selector_name
 		color_selector.color_map_image = AppearanceManager.getColorMap(color_selector_name)
 		color_selector.connect("color_changed", self, "_on_choose_color")
@@ -74,10 +86,9 @@ func _ready() -> void:
 	for part in player_parts.keys():
 		part_selections[part] = AppearanceManager.partFiles(part)
 		part_selector = part_selector_scene.instance()
-		part_selector.get_node("PartLabel").text = part
-		for part_sprite in part_selections[part]:
-			part_selector.parts.append(part_sprite)
-		part_selector.get_node("CurrentPartLabel").text = part_selector.parts[0]
+		part_selector.set_part_name(part, sprite_user_names[part])
+		for part_sprite in part_selections[part].keys():
+			part_selector.parts[part_sprite] = part_selections[part][part_sprite]
 		part_selector.connect("part_changed", self, "_on_part_changed")
 		customization_vbox.add_child(part_selector)
 		part_selectors[part] = part_selector
@@ -135,7 +146,7 @@ func _close_editor() -> void:
 		UIManager.close_ui("appearance_editor")
 
 func _on_part_changed(new_part: String, part_name: String) -> void:
-	var part_options: Array = part_selections[part_name]
+	var part_options: Dictionary = part_selections[part_name]
 	if not part_options.has(new_part):
 		return
 	current_customization[part_name] = new_part

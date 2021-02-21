@@ -28,6 +28,42 @@ var player_parts: Dictionary = {
 	"Hat/Hair": ["11-hat-hair"],
 	"Mouth": ["03-mouth"],
 }
+var part_sprite_list: Dictionary = {
+	"Clothes": {
+		"beige_suit": tr("Beige suit"),
+		"blue_blaser_skirt": tr("Blue blaser and skirt"),
+		"brown_suit": tr("Blue blaser and skirt"),
+		"pink_sweater-blue_jeans": tr("Blue blaser and skirt"),
+		"tuxedo": tr("Blue blaser and skirt"),
+		"white_shirt-red_sweater": tr("White shirt with red sweater")
+	},
+	"Body": {
+		"black_round_eyes-big_nose": tr("Black, round eyes and big nose"),
+		"black_round_eyes-small_nose": tr("Black, round eyes and small nose"),
+		"closed_eyes-big_nose": tr("Closed eyes and big nose"),
+		"closed_eyes-small_nose": tr("Closed eyes and small nose")
+	},
+	"Facial Hair": {
+		"eyebrows_1": tr("Eyebrows 1"), "eyebrows_2": tr("Eyebrows 2"),
+		"sideburns_eyebrows_1": tr("Sideburns and eyebrows 1"),
+		"sideburns_eyebrows_2": tr("Sideburns and eyebrows 2"),
+		"sideburns_eyebrows_3": tr("Sideburns and eyebrows 3")
+	},
+	"Face Wear": {
+		"empty": tr("Nothing"), "glasses": tr("Glasses"),
+		"sunglasses": tr("Sunglasses")
+	},
+	"Hat/Hair": {
+		"bald": tr("Bald"), "hair_bob": tr("Hair, bob"), "hair_curly": tr("Hair, curly"),
+		"hair_ponytail": tr("Hair, ponytail"), "hair_short": tr("Hair, short"),
+		"hat_beige": tr("Hat, beige"), "hat_brown": tr("Hat, brown")
+	},
+	"Mouth": {
+		"angry": tr("Angry"), "concerned": tr("Concerned"), "content": tr("Content"),
+		"small_smile": tr("Small smile"), "small_smile_2": tr("Small smile 2"),
+		"smile": tr("Smile")
+	},
+}
 var custom_color_files: Dictionary = {
 	"Skin Color": "skin_color", "Hair Color": "hair_color", "Facial Hair Color": "facial_hair_color"
 	}
@@ -86,24 +122,12 @@ func getFilePaths(part_name: String, selection_name: String):
 func getPlayerParts():
 	return player_parts
 
-func partFiles(part: String) -> Array:
+func partFiles(part: String) -> Dictionary:
 	"""
-	Returns an array of file names that are available for the part customization
+	Returns a directory of file names and display names that are available for
+	the part customization
 	"""
-	var dirname: String
-	var files: Array = []
-	var available_values: Array = []
-	if not player_parts.has(part):
-		return []
-	dirname = sprites_dir + player_parts[part][0]
-	files = Helpers.list_directory(dirname)
-	available_values = []
-	for file in files:
-		# Skip PNG files. We will instead be modifying the PNG import file
-		# names because PNG resource files aren't saved on export.
-		if not file.ends_with("png"):
-			available_values.append(file.replace(".png.import", ""))
-	return available_values
+	return part_sprite_list[part]
 
 func colorFromMapXY(color_map, x_rel, y_rel):
 	"""
@@ -140,12 +164,12 @@ func setColors(customization):
 	return customization
 
 func randomAppearance():
-	var available_values: Array = []
+	var available_values: Dictionary = {}
 	var customization: Dictionary = {}
 	var colors: Dictionary = {}
 	for part in player_parts.keys():
 		available_values = partFiles(part)
-		customization[part] = Helpers.pick_random(available_values)
+		customization[part] = Helpers.pick_random(available_values.keys())
 	for color_map_name in custom_colors.keys():
 		colors["x"] = randi() % COLOR_XY
 		colors["y"] = randi() % COLOR_XY
