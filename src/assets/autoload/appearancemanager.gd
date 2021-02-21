@@ -32,9 +32,9 @@ var part_sprite_list: Dictionary = {
 	"Clothes": {
 		"beige_suit": tr("Beige suit"),
 		"blue_blaser_skirt": tr("Blue blaser and skirt"),
-		"brown_suit": tr("Blue blaser and skirt"),
-		"pink_sweater-blue_jeans": tr("Blue blaser and skirt"),
-		"tuxedo": tr("Blue blaser and skirt"),
+		"brown_suit": tr("Brown suit"),
+		"pink_sweater-blue_jeans": tr("Pink sweater and blue jeans"),
+		"tuxedo": tr("Tuxedo"),
 		"white_shirt-red_sweater": tr("White shirt with red sweater")
 	},
 	"Body": {
