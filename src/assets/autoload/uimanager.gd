@@ -17,7 +17,9 @@ var ui_list: Dictionary = {
 						"appearance_editor": {"scene": preload("res://assets/ui/submenus/appearance_editor/appearance_editor.tscn")},
 						
 						#task UI
-						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")}
+						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")},
+						"gasvalve": {"scene": preload("res://assets/ui/tasks/gasvalve/gasvalve.tscn")},
+						"mainframecoolant": {"scene": preload("res://assets/ui/tasks/mainframecoolant/mainframecoolant.tscn")}
 						}
 
 var current_ui: Control
@@ -176,3 +178,6 @@ func check_keybinds(configfile):
 		return 0
 	else:
 		write_keybinds()
+		
+func is_ui_name_valid(ui_name: String) -> bool:
+	return ui_list.keys().has(ui_name)

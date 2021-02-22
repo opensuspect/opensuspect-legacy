@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/maps/lobby/background_object.gd"
 }, {
+"base": "Node",
+"class": "BaseMaintenanceTask",
+"language": "GDScript",
+"path": "res://assets/common/classes/tasks-maitenance/base/base-task-maintenance.gd"
+}, {
+"base": "WindowDialogBase",
+"class": "BaseMaintenanceTaskGui",
+"language": "GDScript",
+"path": "res://assets/common/classes/tasks-maitenance/base/base-task-maintenance-gui.gd"
+}, {
 "base": "Control",
 "class": "ControlBase",
 "language": "GDScript",
@@ -86,6 +96,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BackgroundObject": "",
+"BaseMaintenanceTask": "",
+"BaseMaintenanceTaskGui": "",
 "ControlBase": "",
 "ControlTask": "",
 "IPoolable": "",
