@@ -147,7 +147,7 @@ func assign_player(player_id: int):
 	# used to add custom behavior when a player is assigned to this task
 	if _assign_player(player_id) == false:
 		return
-	task_data_player[player_id] = task_data.duplicate(true)
+	task_data_player[player_id] = gen_player_task_data(player_id)
 	var task_text = task_data["task_text"]
 
 # overridden to add custom behavior for when a player is assigned to this task while
@@ -183,9 +183,9 @@ func get_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
 	if task_registered and is_task_global():
 		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
 	
-	var temp_task_data = task_data
+	var temp_task_data = task_data.duplicate()
 	if task_data_player.has(player_id):
-		temp_task_data = task_data_player[player_id]
+		temp_task_data = get_player_task_data(player_id).duplicate()
 		
 	temp_task_data["task_id"] = task_id
 	if not task_registered:
@@ -227,6 +227,32 @@ func gen_task_data() -> Dictionary:
 
 # meant to be overridden in an extending script to allow adding custom data to task_info
 func _gen_task_data() -> Dictionary:
+	return {}
+
+# used to get player specific task data after the task has been registered
+func get_player_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
+	if task_registered and is_task_global():
+		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
+	if not player_id in task_data_player:
+		return {}
+	var info: Dictionary = task_data_player[player_id]
+	var virt_return: Dictionary = _get_player_task_data(player_id)
+	var data: Dictionary = Helpers.merge_dicts(info, virt_return)
+	return data
+
+# override to add custom data when get_player_task_data() is called
+func _get_player_task_data(player_id: int) -> Dictionary:
+	return {}
+
+# function called to generate player specific task data
+func gen_player_task_data(player_id: int) -> Dictionary:
+	var info: Dictionary = task_data.duplicate(true)
+	var virt_return: Dictionary = _gen_player_task_data(player_id)
+	var data = Helpers.merge_dicts(info, virt_return)
+	return data
+
+# overridden by extending script to add player specific data to task_data_player upon generation
+func _gen_player_task_data(player_id: int) -> Dictionary:
 	return {}
 
 func transition(new_state: int, player_id: int) -> bool:
@@ -366,7 +392,7 @@ func get_tree() -> SceneTree:
 	return TaskManager.get_tree()
 
 # not adding a virtual function for this because the same thing is accomplished by
-# overriding _gen_interact_data()
+# overriding _get_task_data()
 func get_interact_data(_from: Node = null) -> Dictionary:
 	if attached_to == null and _from != null:
 		attached_to = _from
@@ -395,6 +421,20 @@ func is_player_assigned(player_id: int) -> bool:
 
 func is_task_global() -> bool:
 	return task_data["is_task_global"]
+
+# to make it easier to store variables in task_data_player
+func set_task_data_player_value(key, value, player_id: int = Network.get_my_id()):
+	if task_registered and is_task_global():
+		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
+	task_data_player[player_id][key] = value
+
+func get_task_data_player_value(key, player_id: int = Network.get_my_id()):
+	if task_registered and is_task_global():
+		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
+	var data: Dictionary = get_player_task_data(player_id)
+	if not key in data:
+		return null
+	return get_player_task_data(player_id)[key]
 
 func _init():
 	#print("task init ", task_name)
