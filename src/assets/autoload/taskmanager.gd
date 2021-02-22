@@ -110,6 +110,8 @@ func complete_task(task_info: Dictionary, data: Dictionary = {}):
 
 # A callback that the server calls when it successfully completes a task
 puppetsync func confirm_task_completed(task_info: Dictionary, data: Dictionary):
+	if is_task_completed(task_info):
+		return
 	task_completed(task_info, data)
 
 # a callback that the server calls when a client requests to complete a task, but the

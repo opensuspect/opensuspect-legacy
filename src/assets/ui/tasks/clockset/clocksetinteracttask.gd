@@ -13,7 +13,7 @@ func _complete_task(player_id: int, data: Dictionary):
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
 func _can_complete_task(player_id: int, data: Dictionary):
-	return get_target_time() == get_current_time()
+	return get_target_time(player_id) == get_current_time(player_id)
 
 func _sync_task():
 	send_times(get_target_time(), get_current_time())
@@ -49,14 +49,14 @@ func _registered(_new_task_id: int, new_task_data: Dictionary):
 func set_target_time(time: int, player_id: int = Network.get_my_id()):
 	set_task_data_player_value("target_time", time, player_id)
 
-func get_target_time() -> int:
-	return get_task_data_player_value("target_time")
+func get_target_time(player_id: int = Network.get_my_id()) -> int:
+	return get_task_data_player_value("target_time", player_id)
 
 func set_current_time(time: int, player_id: int = Network.get_my_id()):
 	set_task_data_player_value("current_time", time, player_id)
 
-func get_current_time() -> int:
-	return get_task_data_player_value("current_time")
+func get_current_time(player_id: int = Network.get_my_id()) -> int:
+	return get_task_data_player_value("current_time", player_id)
 
 func gen_rand_time() -> int:
 	return normalise_time(randi())

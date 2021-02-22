@@ -95,7 +95,7 @@ func _complete_task(player_id: int, data: Dictionary):
 func can_complete_task(player_id: int = Network.get_my_id(), data: Dictionary = {}) -> bool:
 	if not is_player_assigned(player_id):
 		return false
-	if is_task_completed():
+	if is_task_completed(player_id):
 		return false
 	var virt_return = _can_complete_task(player_id, data)
 	if not virt_return is bool:
@@ -282,7 +282,9 @@ func interact(_from: Node = null, _interact_data: Dictionary = {}):
 		attached_to = _from
 	if attached_to == null:
 		push_error("InteractTask resource trying to be used with no defined node")
-	if not task_data_player.has(Network.get_my_id()) and not task_data_player.has(TaskManager.GLOBAL_TASK_PLAYER_ID):
+	if not is_player_assigned(Network.get_my_id()):
+		return
+	if is_task_completed(Network.get_my_id()):
 		return
 	# if nothing is explicitly returned, _interact() will return null and will not trigger this
 	# this check is so an extending script can override interact behavior (while retaining the
@@ -403,12 +405,13 @@ func get_interact_data(_from: Node = null) -> Dictionary:
 func get_task_id() -> int:
 	return task_id
 
-func is_task_completed(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> bool:
+func is_task_completed(player_id: int) -> bool:
 	if not is_player_assigned(player_id):
 		return false
 	return get_task_state(player_id) == TaskManager.task_state.COMPLETED
 
-func get_task_state(player_id: int = TaskManager.GLOBAL_TASK_PLAYER_ID) -> int:
+func get_task_state(player_id: int) -> int:
+	player_id = normalize_player_id(player_id)
 	if not is_player_assigned(player_id):
 		#this player has not been assigned this task
 		return TaskManager.task_state.INVALID
@@ -421,6 +424,18 @@ func is_player_assigned(player_id: int) -> bool:
 
 func is_task_global() -> bool:
 	return task_data["is_task_global"]
+
+# get the id to assume we are using (assume we are using our own network ID, if the task
+# 	is global use the global ID)
+func get_default_id() -> int:
+	return normalize_player_id(Network.get_my_id())
+
+# to get a useable player id (if the task is global and the input is a player id,
+# 	replace it with the global id)
+func normalize_player_id(player_id: int):
+	if is_task_global():
+		return TaskManager.GLOBAL_TASK_PLAYER_ID
+	return player_id
 
 # to make it easier to store variables in task_data_player
 func set_task_data_player_value(key, value, player_id: int = Network.get_my_id()):
