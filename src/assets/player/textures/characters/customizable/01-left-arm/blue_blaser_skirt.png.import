@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/hair_ponyatail.png-f8ee23500f64784ec7d7647376950e7e.stex"
+path="res://.import/blue_blaser_skirt.png-4d71ef90b2473201ee22dc6668cc19ab.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/textures/characters/customizable/11-hat-hair/hair_ponyatail.png"
-dest_files=[ "res://.import/hair_ponyatail.png-f8ee23500f64784ec7d7647376950e7e.stex" ]
+source_file="res://assets/player/textures/characters/customizable/01-left-arm/blue_blaser_skirt.png"
+dest_files=[ "res://.import/blue_blaser_skirt.png-4d71ef90b2473201ee22dc6668cc19ab.stex" ]
 
 [params]
 

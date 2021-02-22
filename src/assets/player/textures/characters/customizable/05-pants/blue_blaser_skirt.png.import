@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/dark_brown_tuxedo.png-5119e9730e819cceda19fb8193026550.stex"
+path="res://.import/blue_blaser_skirt.png-620b2dba93e4b93855ab9c115afe02d2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/textures/characters/customizable/08-right-arm/dark_brown_tuxedo.png"
-dest_files=[ "res://.import/dark_brown_tuxedo.png-5119e9730e819cceda19fb8193026550.stex" ]
+source_file="res://assets/player/textures/characters/customizable/05-pants/blue_blaser_skirt.png"
+dest_files=[ "res://.import/blue_blaser_skirt.png-620b2dba93e4b93855ab9c115afe02d2.stex" ]
 
 [params]
 
