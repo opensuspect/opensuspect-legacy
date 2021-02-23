@@ -62,6 +62,8 @@ master func attempt_complete_task(task_info: Dictionary, task_data: Dictionary):
 		push_error("not sending rpc to server; task_info is not valid")
 		assert(false)
 		return
+	if is_task_completed(task_info):
+		return
 	
 	var sender: int = get_tree().get_rpc_sender_id()
 	var task_id: int = task_info[TASK_ID_KEY]
