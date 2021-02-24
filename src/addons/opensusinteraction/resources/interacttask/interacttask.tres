@@ -24,4 +24,5 @@ random_numbers = 0
 task_id = -1
 ui_resource = SubResource( 1 )
 outputs/toggle_map_interactions = false
+outputs/output_map_interactions = [  ]
 is_task_global = false

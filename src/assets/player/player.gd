@@ -50,7 +50,7 @@ func _ready():
 	# Reparent ItemHandler to Skeleton Node2D
 	remove_child(item_handler)
 	skeleton.add_child(item_handler)
-	skeleton.move_child(item_handler, 6)
+	skeleton.move_child(item_handler, 7)
 	item_transform.remote_path = item_transform.get_path_to(item_handler)
 
 	#print_debug("(player.gd/_ready)")
