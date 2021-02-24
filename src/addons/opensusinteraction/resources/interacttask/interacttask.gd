@@ -137,7 +137,7 @@ func task_completed(player_id: int, data: Dictionary):
 func _task_completed(player_id: int, data: Dictionary):
 	pass
 
-func assign_player(player_id: int):
+func assign_player(player_id: int, data: Dictionary = {}):
 	if task_data_player.has(player_id):
 		return
 	# if nothing is explicitly returned, _assign_player() will return null and will not trigger this
@@ -145,15 +145,18 @@ func assign_player(player_id: int):
 	# 	by defining _assign_player() and returning false. If you want fully custom 
 	# 	behavior, override this function instead
 	# used to add custom behavior when a player is assigned to this task
-	if _assign_player(player_id) == false:
+	if _assign_player(player_id, data) == false:
 		return
-	task_data_player[player_id] = gen_player_task_data(player_id)
+	if get_tree().is_network_server():
+		task_data_player[player_id] = gen_player_task_data(player_id)
+	else:
+		task_data_player[player_id] = data
 	var task_text = task_data["task_text"]
 
 # overridden to add custom behavior for when a player is assigned to this task while
 # 	retaining the checks implemented in assign_player()
 # return false to break out of assign_player() early (before any actions are taken)
-func _assign_player(player_id: int):
+func _assign_player(player_id: int, data: Dictionary):
 	pass
 
 # called by the task manager when it has registered this task
@@ -229,8 +232,8 @@ func gen_task_data() -> Dictionary:
 func _gen_task_data() -> Dictionary:
 	return {}
 
-# used to get player specific task data after the task has been registered
-func get_player_task_data(player_id: int = Network.get_my_id()) -> Dictionary:
+# used to get player specific task data after the task has been registered and assigned
+func get_player_task_data(player_id: int) -> Dictionary:
 	if task_registered and is_task_global():
 		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
 	if not player_id in task_data_player:
@@ -452,7 +455,6 @@ func get_task_data_player_value(key, player_id: int = Network.get_my_id()):
 	return get_player_task_data(player_id)[key]
 
 func _init():
-	#print("task init ", task_name)
 	#ensures customizing this resource won't change other resources
 	if Engine.editor_hint:
 		resource_local_to_scene = true

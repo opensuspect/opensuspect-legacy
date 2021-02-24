@@ -212,18 +212,19 @@ func networkfy_task_data(task_data: Dictionary) -> Dictionary:
 	
 	return filtered
 
-func transition_task(task_info: Dictionary, new_state: int) -> bool:
-	if not is_task_info_valid(task_info):
-		return false
-	var current_state: int = get_task_state(task_info)
-	#if that task type can't transition from current state to new state
-	if not task_transitions[current_state].has(new_state):
-		return false
-	var task_id = task_info[TASK_ID_KEY]
-	var player_id = task_info[PLAYER_ID_KEY]
-	#transition task
-	return get_task_resource(task_id).transition(new_state, player_id)
-	#return set_task_state(task_info, new_state)
+# DEPRECATED: task resources transition themselves
+#func transition_task(task_info: Dictionary, new_state: int) -> bool:
+#	if not is_task_info_valid(task_info):
+#		return false
+#	var current_state: int = get_task_state(task_info)
+#	#if that task type can't transition from current state to new state
+#	if not task_transitions[current_state].has(new_state):
+#		return false
+#	var task_id = task_info[TASK_ID_KEY]
+#	var player_id = task_info[PLAYER_ID_KEY]
+#	#transition task
+#	return get_task_resource(task_id).transition(new_state, player_id)
+#	#return set_task_state(task_info, new_state)
 
 func register_task(task_resource: Resource):
 	var path = Helpers.get_absolute_path_to(task_resource.attached_to)
@@ -311,18 +312,22 @@ func assign_tasks():
 				print("task assigned,",tasks_to_assign[task])
 
 		var tasks_to_send 	= get_tasks_to_send(id)
+		# contains additional player specific data to send
+		var task_info_data_to_send: Dictionary = {}
+		for task_info in tasks_to_send:
+			task_info_data_to_send[task_info] = get_player_task_data(task_info)
 
 		if id == 1:
-			print("host tasks assigned ", tasks_to_send)
+			print("host tasks assigned ", task_info_data_to_send)
 		elif not tasks_to_send.empty():
-			rpc_id(id,"get_tasks", tasks_to_send)
-			print("client " + String(id) + " tasks assigned ", tasks_to_send)
+			rpc_id(id,"receive_tasks", task_info_data_to_send)
+			print("client " + String(id) + " tasks assigned ", task_info_data_to_send)
 
-puppet func get_tasks(tasks_get: Array):
-	for task_info in tasks_get:
+puppet func receive_tasks(task_info_data: Dictionary):
+	for task_info in task_info_data.keys():
 		if is_task_info_valid(task_info):
-			assign_task(task_info)
-	print("we got our tasks!")
+			assign_task(task_info, task_info_data[task_info])
+	print("we got our tasks! ", task_info_data)
 
 func get_tasks_to_send(player_id: int) -> Array:
 	var arr = []
@@ -338,7 +343,7 @@ func get_player_tasks(player_id: int) -> Array:
 		arr.append(gen_task_info(task_id, player_id))
 	return arr
 
-func assign_task(task_info: Dictionary) -> void:
+func assign_task(task_info: Dictionary, data: Dictionary = {}) -> void:
 	if not is_task_info_valid(task_info):
 		return
 		
@@ -351,7 +356,7 @@ func assign_task(task_info: Dictionary) -> void:
 	if not player_tasks[player_id].has(task_id):
 		player_tasks[player_id].append(task_id)
 	#add player_id to assigned_players in task resource
-	task_dict[task_id].assign_player(player_id)
+	task_dict[task_id].assign_player(player_id, data)
 
 func can_complete_task(task_info) -> bool:
 	if not is_task_info_valid(task_info):
@@ -366,6 +371,13 @@ func get_task_data(task_info: Dictionary) -> Dictionary:
 	var task_id = task_info[TASK_ID_KEY]
 	var player_id = task_info[PLAYER_ID_KEY]
 	return get_task_resource(task_id).get_task_data(player_id)
+
+func get_player_task_data(task_info: Dictionary) -> Dictionary:
+	if not is_task_info_valid(task_info):
+		return {}
+	var task_id = task_info[TASK_ID_KEY]
+	var player_id = task_info[PLAYER_ID_KEY]
+	return get_task_resource(task_id).get_player_task_data(player_id)
 
 func get_task_resource(task_id: int) -> InteractTask:
 	if not does_task_exist(task_id):
