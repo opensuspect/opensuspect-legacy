@@ -19,7 +19,8 @@ func _assign_player(player_id: int, data: Dictionary):
 	if "target_time" in data:
 		set_target_time(data["target_time"])
 	if "current_time" in data:
-		set_target_time(data["current_time"])
+		set_current_time(data["current_time"])
+	update_map_text(player_id)
 
 func _sync_task():
 	send_times(get_target_time(), get_current_time())
@@ -39,8 +40,9 @@ func _get_task_data(player_id: int) -> Dictionary:
 
 func _gen_player_task_data(_player_id: int) -> Dictionary:
 	var data: Dictionary = {}
-	data["target_time"] = gen_rand_time()
-	data["current_time"] = gen_rand_time()
+	if get_tree().is_network_server():
+		data["target_time"] = gen_rand_time()
+		data["current_time"] = gen_rand_time()
 	return data
 
 func _registered(_new_task_id: int, new_task_data: Dictionary):
@@ -57,15 +59,27 @@ func _registered(_new_task_id: int, new_task_data: Dictionary):
 func send_times(target: int, current: int, player_id: int = Network.get_my_id()):
 	if task_registered and is_task_global():
 		player_id = TaskManager.GLOBAL_TASK_PLAYER_ID
-	print("sending times out to network")
+	#print("sending times out to network")
 	task_rpc("receive_times", [target, current, player_id])
+	update_map_text(player_id)
 
 func receive_times(target: int, current: int, player_id: int):
-	print("received times, target: ", target, " current: ", current)
+	#print("received times, target: ", target, " current: ", current)
 	# target time shouldn't change
 	# set_target_time(target, player_id)
 	set_current_time(current, player_id)
 	emit_signal("times_updated", get_target_time(), get_current_time(), self)
+	update_map_text(player_id)
+
+# trigger every InteractMap resource connected to this task
+# used to update map text without finishing the task
+func update_map_text(player_id: int):
+	if not is_player_assigned(Network.get_my_id()):
+		return
+	var temp_interact_data = get_task_data(player_id)
+	if map_outputs_on:
+		for resource in map_outputs:
+			resource.interact(attached_to, temp_interact_data)
 
 func set_target_time(time: int, player_id: int = Network.get_my_id()):
 	set_task_data_player_value("target_time", time, player_id)

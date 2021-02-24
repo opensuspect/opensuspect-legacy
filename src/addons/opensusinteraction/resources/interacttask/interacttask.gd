@@ -140,6 +140,11 @@ func _task_completed(player_id: int, data: Dictionary):
 func assign_player(player_id: int, data: Dictionary = {}):
 	if task_data_player.has(player_id):
 		return
+	if get_tree().is_network_server():
+		task_data_player[player_id] = gen_player_task_data(player_id)
+	else:
+		task_data_player[player_id] = data
+	var task_text = task_data["task_text"]
 	# if nothing is explicitly returned, _assign_player() will return null and will not trigger this
 	# this allows an extending script to override behavior while retaining the above checks
 	# 	by defining _assign_player() and returning false. If you want fully custom 
@@ -147,11 +152,6 @@ func assign_player(player_id: int, data: Dictionary = {}):
 	# used to add custom behavior when a player is assigned to this task
 	if _assign_player(player_id, data) == false:
 		return
-	if get_tree().is_network_server():
-		task_data_player[player_id] = gen_player_task_data(player_id)
-	else:
-		task_data_player[player_id] = data
-	var task_text = task_data["task_text"]
 
 # overridden to add custom behavior for when a player is assigned to this task while
 # 	retaining the checks implemented in assign_player()
