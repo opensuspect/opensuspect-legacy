@@ -99,7 +99,7 @@ func gen_rand_time() -> int:
 # returns a valid time(from 00:00 to 12:59)
 # num can be any value
 func normalise_time(num: int) -> int:
-	num = num % 1259
+	num = num % 1300
 	num = roundDown(num, 100) + (num % 100) % 60
 	if num < 100:
 		# this is military time, so can't have values smaller than 100
