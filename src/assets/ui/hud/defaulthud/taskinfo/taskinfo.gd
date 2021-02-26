@@ -27,7 +27,8 @@ func _on_task_completed(task_info: Dictionary):
 	var playerID = task_info[TaskManager.PLAYER_ID_KEY]
 	
 	if not tasks.has(playerID):
-		assert(false)
+		# removing this assert because it will fire when the game is functioning correctly
+		#assert(false)
 		return
 		
 	var allTasksCompleted = true

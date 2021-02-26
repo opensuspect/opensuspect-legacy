@@ -15,6 +15,13 @@ func string_join(string_array: Array, separator: String) -> String:
 	combined_string += string_array[-1]
 	return combined_string
 
+# merge two dicts together, second dict will overwrite the first if they share a key
+func merge_dicts(dict_a: Dictionary, dict_b: Dictionary) -> Dictionary:
+	var dict: Dictionary = dict_a.duplicate(true)
+	for key in dict_b:
+		dict[key] = dict_b[key]
+	return dict
+
 func find_file(file_name: String, start_path: String = "res://", recursive: bool = true) -> String:
 	"""Find file 'file_name' starting at directory 'start_path' recursively."""
 	var directory := Directory.new()

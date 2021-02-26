@@ -160,7 +160,7 @@ func connect_signals() -> void:
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 
 func get_my_id() -> int:
-	return myID
+	return get_tree().get_network_unique_id()
 
 func get_player_names() -> Dictionary:
 	return names
