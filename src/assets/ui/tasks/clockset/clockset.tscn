@@ -273,6 +273,7 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="popup_hide" from="." to="." method="_on_clockset_popup_hide"]
 [connection signal="focus_entered" from="clock/hours" to="." method="_on_hours_focus_entered"]
 [connection signal="value_changed" from="clock/hours" to="." method="_on_hours_value_changed"]
 [connection signal="focus_entered" from="clock/minutes" to="." method="_on_minutes_focus_entered"]

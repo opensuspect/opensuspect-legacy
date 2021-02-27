@@ -12,6 +12,3 @@ func interacted_with(interactNode, from, interact_data):
 	if interact_data.has("newText"):
 		text = interact_data["newText"]
 		return
-	if PlayerManager.assignedtasks[0] == 0:
-		interact_resource.interact(self, {"linkedNode": self, "currentTime": int(text)})
-#test if client has correct assigned task

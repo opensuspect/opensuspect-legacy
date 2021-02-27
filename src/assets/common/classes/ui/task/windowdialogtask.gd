@@ -8,9 +8,9 @@ func _ready():
 	#warning-ignore:return_value_discarded
 	TaskManager.connect("receive_task_data", self, "_on_received_task_data")
 
-func complete_task(data: Dictionary = {}):
-	var taskInfo = TaskManager.gen_task_info(ui_data["task_id"])
-	TaskManager.attempt_complete_task(taskInfo, data)
+#func complete_task(data: Dictionary = {}):
+#	var taskInfo = TaskManager.gen_task_info(ui_data["task_id"])
+#	TaskManager.attempt_complete_task(taskInfo, data)
 
 func _on_task_completed(taskInfo: Dictionary):
 	if not TaskManager.is_task_info_valid(taskInfo):

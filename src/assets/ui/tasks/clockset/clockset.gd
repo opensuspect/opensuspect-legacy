@@ -1,9 +1,5 @@
 extends WindowDialogTask
 
-#var ui_data: Dictionary = {}
-var targetTime: int = 433
-var currentTime: int = 630
-
 onready var hoursNode: Node = get_node("clock/hours")
 onready var minutesNode: Node = get_node("clock/minutes")
 onready var ampmNode: Node = get_node("clock/ampm")
@@ -14,30 +10,36 @@ func _ready():
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
 
 func open():
-# warning-ignore:narrowing_conversion
-	
+	var res: Resource = get_res()
+	if not res.is_connected("times_updated", self, "times_updated"):
+# warning-ignore:return_value_discarded
+		res.connect("times_updated", self, "times_updated")
 	ui_data_updated()
 
-
 func ui_data_updated():
-	if ui_data.has("task_data") and ui_data["task_data"] is Array:
-		if ui_data["task_data"].size() > 0:
-			targetTime = normalise_time(ui_data["task_data"][0])
-		if ui_data["task_data"].size() > 1:
-			currentTime = normalise_time(ui_data["task_data"][1])
-	
-	setClockTime(currentTime)
-	setWatchTime(targetTime)
-		
+	setClockTime(getCurrentTime())
+	setWatchTime(getTargetTime())
+	checkComplete()
+
 func checkComplete():
 	updateCurrentTime()
-	if currentTime == targetTime:
-		taskComplete()
+	var completed: bool = is_task_completed()
+	if completed:
+		get_res().complete_task()
+	set_clock_editable(not completed)
 
-func taskComplete():
-	.complete_task({"newText": str(currentTime)})
+#func taskComplete():
+#	.complete_task({"newText": str(getCurrentTime())})
+
+func sync_task():
+	get_res().sync_task()
+
+func set_clock_editable(editable: bool):
+	for node in [hoursNode, minutesNode, ampmNode]:
+		node.editable = editable
 
 func setClockTime(newTime: int):
+# warning-ignore:integer_division
 	hoursNode.value = roundDown(newTime / 100, 1)
 	minutesNode.value = newTime % 100
 
@@ -45,7 +47,17 @@ func setWatchTime(newTime):
 	$watch/watchface.showTime(newTime)
 
 func updateCurrentTime():
-	currentTime = (hoursNode.value * 100) + minutesNode.value
+	var time = (hoursNode.value * 100) + minutesNode.value
+	get_res().set_current_time(time)
+
+func getTargetTime() -> int:
+	return get_res().get_target_time()
+
+func getCurrentTime() -> int:
+	return get_res().get_current_time()
+
+func get_res() -> Resource:
+	return TaskManager.get_task_resource(ui_data[TaskManager.TASK_ID_KEY])
 
 func _on_hours_value_changed(value):
 	if value == 0:
@@ -100,6 +112,16 @@ func roundDown(num, step) -> int:
 		return normRound - step
 	return int(normRound)
 
+func times_updated(_target: int, _current: int, task_res: Resource):
+	# if the current task data matches the resource this signal is from
+	# this should prevent weirdness if multiple tasks are using this ui
+	if task_res != get_res():
+		return
+	ui_data_updated()
+
+func is_task_completed() -> bool:
+	return get_res().can_complete_task()
+
 #so you can't type into the spinboxes
 func _on_hours_focus_entered():
 	grab_focus()
@@ -109,3 +131,6 @@ func _on_minutes_focus_entered():
 
 func _on_ampm_focus_entered():
 	grab_focus()
+
+func _on_clockset_popup_hide():
+	sync_task()

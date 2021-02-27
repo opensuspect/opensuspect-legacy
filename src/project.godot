@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/common/classes/objectpool/ipoolable.gd"
 }, {
+"base": "Resource",
+"class": "InteractTask",
+"language": "GDScript",
+"path": "res://addons/opensusinteraction/resources/interacttask/interacttask.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Item",
 "language": "GDScript",
@@ -94,6 +99,7 @@ _global_script_class_icons={
 "ControlBase": "",
 "ControlTask": "",
 "IPoolable": "",
+"InteractTask": "",
 "Item": "",
 "ItemHandler": "",
 "MapInfo": "",
