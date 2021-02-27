@@ -421,8 +421,12 @@ func get_task_state(player_id: int) -> int:
 	return task_data_player[player_id]["state"]
 
 func is_player_assigned(player_id: int) -> bool:
-	if is_task_global():
-		return true
+	# it does not return true if the task is global because it is not going to be assigned
+	# 	every round
+	# it should stay this way because it allows the game to choose which global tasks
+	# 	to have in each round
+#	if is_task_global():
+#		return true
 	return task_data_player.has(player_id)
 
 func is_task_global() -> bool:
