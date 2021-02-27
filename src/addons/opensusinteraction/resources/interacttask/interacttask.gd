@@ -427,7 +427,7 @@ func is_player_assigned(player_id: int) -> bool:
 	# 	to have in each round
 #	if is_task_global():
 #		return true
-	return task_data_player.has(player_id)
+	return task_data_player.has(normalize_player_id(player_id))
 
 func is_task_global() -> bool:
 	return task_data["is_task_global"]
