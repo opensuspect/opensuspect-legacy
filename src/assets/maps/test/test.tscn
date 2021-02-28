@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://assets/items/wrench.tscn" type="PackedScene" id=14]
 [ext_resource path="res://assets/maps/map.gd" type="Script" id=15]
 [ext_resource path="res://assets/maps/test/tasks/clockset/interactpointclockset.tres" type="Resource" id=16]
+[ext_resource path="res://assets/ui/tasks/container/containerinteracttask.tres" type="Resource" id=17]
 [ext_resource path="res://assets/maps/test/container_area.gd" type="Script" id=18]
 [ext_resource path="res://assets/maps/test/textures/chemicals-cabinet.png" type="Texture" id=19]
 
@@ -408,6 +409,7 @@ position = Vector2( -96.3763, 93.3395 )
 [node name="Container" type="Area2D" parent="Interactive/Tasks/Containers"]
 position = Vector2( 224, 56 )
 script = ExtResource( 18 )
+interact_resource = ExtResource( 17 )
 
 [node name="Sprite" type="Sprite" parent="Interactive/Tasks/Containers/Container"]
 position = Vector2( -8, 0 )

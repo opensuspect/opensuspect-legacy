@@ -414,7 +414,7 @@ func is_task_completed(player_id: int) -> bool:
 	return get_task_state(player_id) == TaskManager.task_state.COMPLETED
 
 func get_task_state(player_id: int) -> int:
-	player_id = normalize_player_id(player_id)
+	player_id= normalize_player_id(player_id)
 	if not is_player_assigned(player_id):
 		#this player has not been assigned this task
 		return TaskManager.task_state.INVALID

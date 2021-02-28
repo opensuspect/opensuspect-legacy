@@ -1,6 +1,6 @@
 extends Area2D
 
-#export(Resource) var interact_resource
+export(Resource) var interact_resource
 var interacting:bool = false
 var interactor:Dictionary
 var player = null
@@ -8,7 +8,7 @@ var player = null
 
 
 func _ready():
-	#interact_resource.init_resource(self)
+	interact_resource.init_resource(self)
 	pass 
 
 func reset() -> void: #Resets the node
@@ -22,9 +22,8 @@ func register(body) -> void:#Register a body
 
 func _input(event):#Checks that the player presses the key is in interacting dic
 	if event.is_action_pressed("interact") and interactor.keys().has(Network.get_my_id()) and interacting:
-		UIManager.open_ui("container", interactor)
 		player.can_pickup = false
-		#interact(interactor)
+		interact(interactor)
 
 func _on_Container_body_entered(_body):#Check wether the body is player or not and record the player
 	for bodies in get_overlapping_bodies():
@@ -40,8 +39,8 @@ func _on_Container_body_exited(body):#Closes the ui
 	UIManager.close_ui("container")
 	reset()
 	
-#func interact(interactor):#The main func to pass data
-#	interact_resource.interact(self,interactor)
+func interact(interactor):#The main func to pass data
+	interact_resource.interact(self,interactor)
 
 func can_interact() -> bool:
 	if not interactor.empty():

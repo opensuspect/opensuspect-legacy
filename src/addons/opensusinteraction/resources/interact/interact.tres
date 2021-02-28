@@ -20,7 +20,7 @@ advanced/network_sync = false
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 4 )
-ui_name = ""
+ui_name = "container"
 ui_data = {
 
 }
@@ -32,7 +32,7 @@ advanced/free_on_close = false
 resource_local_to_scene = true
 resource_name = "InteractTask"
 script = ExtResource( 5 )
-task_text = ""
+task_text = "container"
 ui_resource = SubResource( 2 )
 outputs/toggle_map_interactions = false
 outputs/output_map_interactions = [  ]
