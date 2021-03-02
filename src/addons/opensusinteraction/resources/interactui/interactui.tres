@@ -6,10 +6,10 @@
 resource_local_to_scene = true
 resource_name = "InteractUI"
 script = ExtResource( 1 )
-ui_name = ""
+ui_name = "container"
 ui_data = {
 
 }
-action = 0
+action = 3
 advanced/reinstance = false
 advanced/free_on_close = false

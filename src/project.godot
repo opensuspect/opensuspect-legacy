@@ -223,6 +223,10 @@ pointing/emulate_touch_from_mouse=true
 translations=PoolStringArray( "res://locale/de.po", "res://locale/el.po", "res://locale/en.po", "res://locale/es.po", "res://locale/fr.po", "res://locale/hu.po", "res://locale/ko.po", "res://locale/ro.po", "res://locale/sr.po", "res://locale/sv.po" )
 locale_filter=[ 0, [  ] ]
 
+[network]
+
+limits/debugger_stdout/max_chars_per_second=70000
+
 [rendering]
 
 quality/driver/driver_name="GLES2"

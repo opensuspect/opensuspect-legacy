@@ -8,25 +8,19 @@ export(int) var slots
 
 func _ready():
 #When the first player interacts then called this func to all others so everyone get the same scene set
-	if grid.get_child(0) == null:
-		rpc_id(1,"set_slot_server")
 #Connects with GameManager to record game transition
 # warning-ignore:return_value_discarded
-	GameManager.connect('state_changed', self, '_on_state_changed')
-
-func _process(_delta):#Called every frame to check interaction status
-	if not ui_data.empty():
-		rpc_id(1, "pass_data_server", ui_data)
+#	GameManager.connect('state_changed', self, '_on_state_changed')
+	pass
 
 func _on_closebutton_pressed():#Resets the data which is passed
 	for key in ui_data.keys():
 		if typeof(key) == TYPE_INT:
 			var player = ui_data[key]
 			get_tree().get_root().get_node(player).can_pickup = true
-	UIManager.close_ui("container")
-	rpc_id(1, "reset_server")
+	interact({},get_res().actions.CLOSE)
 
-puppetsync func set_slot() -> void:
+func _on_set_scene() -> void:
 	#Place where the scene is built
 	for num in range(0, slots):
 		var slot = slot_scene.instance()
@@ -35,49 +29,26 @@ puppetsync func set_slot() -> void:
 		slot.get_child(0).frontend = slot
 		grid.add_child(slot)
 
-puppetsync func pass_data(data:Dictionary) -> void:#Pass data to child
-	for slot in grid.get_children():
-		slot.ui_data = data
-		
-func erase_data() -> void:#Erase data from child
-	for slot in grid.get_children():
-		slot.ui_data.clear()
-
-puppetsync func erase_children() -> void:#erases all child
+func _on_erase_children() -> void:#erases all child
 	for child in grid.get_children():
 		child.queue_free()
 
-puppetsync func reset() -> void:#Clears all the data
-	erase_data()
-	ui_data.clear()
-
-func _on_state_changed(_old_state, new_state) -> void:#resets the task when state changes
-	match new_state:
-		GameManager.State.Normal:
-			if grid.get_child(0) == null:
-				rpc_id(1,"set_slot_server")
-		GameManager.State.Lobby:
-			rpc_id(1, "erase_children_server")
-			rpc_id(1, "reset_server")
-			
-remotesync func set_slot_server() -> void:
-	if not get_tree().is_network_server():
-		return
-	rpc("set_slot")
-
-remotesync func pass_data_server(data:Dictionary) -> void:
-	if not get_tree().is_network_server():
-		return
-	rpc("pass_data", data)
-	
-remotesync func reset_server() -> void:
-	if not get_tree().is_network_server():
-		return
-	rpc("reset")
-remotesync func erase_children_server() -> void:
-	if not get_tree().is_network_server():
-		return
-	rpc("erase_children")
+#func _on_state_changed(_old_state, new_state) -> void:#resets the task when state changes
+#	match new_state:
+#		GameManager.State.Normal:
+#			if grid.get_child(0) == null:
+#				rpc_id(1,"set_slot_server")
+#		GameManager.State.Lobby:
+#			rpc_id(1, "erase_children_server")
+#			rpc_id(1, "reset_server")
 
 
+func interact(data:Dictionary = {}, value = get_res().actions.OPEN):
+	get_res().interact(self,{}, value)
+
+func update():
+# warning-ignore:return_value_discarded
+	print("uupdate got recieve")
+	get_res().connect("set_scene", self, "_on_set_scene")
+	get_res().connect("erase_children", self, "_on_erase_children")
 

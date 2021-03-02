@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/ui/tasks/container/container.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/tasks/container/Textures/Container.png" type="Texture" id=2]
 
-[node name="conatiner" type="MarginContainer"]
+[node name="container" type="MarginContainer"]
 margin_left = 128.0
 margin_top = 48.0
 margin_right = 859.0

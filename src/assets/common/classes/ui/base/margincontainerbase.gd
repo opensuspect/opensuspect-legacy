@@ -9,8 +9,8 @@ export (bool) var disable_movement
 var ui_data: Dictionary = {}
 
 func _init():
+# warning-ignore:return_value_discarded
 	connect("visibility_changed", self, "_on_visibility_changed")
-
 #called by ui system
 func base_open():
 	show()
@@ -19,7 +19,7 @@ func base_open():
 func base_close():
 	hide()
 
-# warning-ignore:unused_argument
+
 
 func _on_visibility_changed():
 	if not disable_movement:
@@ -28,3 +28,7 @@ func _on_visibility_changed():
 		UIManager.ui_opened(menu_name)
 	else:
 		UIManager.ui_closed(menu_name)
+
+func get_res() -> Resource:
+	var res = TaskManager.get_task_resource(ui_data[TaskManager.TASK_ID_KEY])
+	return res
