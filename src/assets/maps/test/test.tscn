@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -16,7 +16,7 @@
 [ext_resource path="res://assets/items/wrench.tscn" type="PackedScene" id=14]
 [ext_resource path="res://assets/maps/map.gd" type="Script" id=15]
 [ext_resource path="res://assets/maps/test/tasks/clockset/interactpointclockset.tres" type="Resource" id=16]
-[ext_resource path="res://assets/ui/tasks/container/Resource/containerintercattask.tres" type="Resource" id=17]
+[ext_resource path="res://assets/maps/test/tasks/container/resource/containerintercattask.tres" type="Resource" id=17]
 [ext_resource path="res://assets/maps/test/container_area.gd" type="Script" id=18]
 [ext_resource path="res://assets/maps/test/textures/chemicals-cabinet.png" type="Texture" id=19]
 
@@ -135,54 +135,6 @@ map_resource = SubResource( 7 )
 
 [sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 48, 48 )
-
-[sub_resource type="Resource" id=13]
-resource_local_to_scene = true
-script = ExtResource( 10 )
-interact_with = NodePath("")
-interact_data = {
-
-}
-advanced/network_sync = false
-
-[sub_resource type="Resource" id=14]
-resource_local_to_scene = true
-script = ExtResource( 11 )
-ui_name = "container"
-ui_data = {
-
-}
-action = 0
-advanced/reinstance = false
-advanced/free_on_close = false
-
-[sub_resource type="Resource" id=15]
-resource_local_to_scene = true
-script = ExtResource( 8 )
-task_text = "Chemicals Cabinet"
-ui_resource = SubResource( 14 )
-outputs/toggle_map_interactions = false
-outputs/output_map_interactions = [  ]
-is_task_global = true
-
-[sub_resource type="Resource" id=16]
-resource_local_to_scene = true
-script = ExtResource( 11 )
-ui_name = ""
-ui_data = {
-
-}
-action = 0
-advanced/reinstance = false
-advanced/free_on_close = false
-
-[sub_resource type="Resource" id=17]
-resource_local_to_scene = true
-script = ExtResource( 9 )
-interact_type = 0
-task_resource = SubResource( 15 )
-ui_resource = SubResource( 16 )
-map_resource = SubResource( 13 )
 
 [node name="test" type="YSort"]
 script = ExtResource( 15 )
@@ -417,7 +369,7 @@ shape = SubResource( 12 )
 
 [node name="ChemicalCabinet" parent="Interactive/Tasks" instance=ExtResource( 5 )]
 position = Vector2( 235, -155 )
-interact_resource = SubResource( 17 )
+interact_resource = ExtResource( 17 )
 display_text = "chemicals"
 
 [node name="Sprite" type="Sprite" parent="Interactive/Tasks/ChemicalCabinet"]
