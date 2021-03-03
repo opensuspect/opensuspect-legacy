@@ -6,6 +6,9 @@ enum actions {OPEN, INSTANCE, UPDATE, CLOSE}
 signal set_scene
 signal erase_children
 
+var slots_info:Dictionary = {}
+var items_to_hold:Array = ["battery","wrench"]
+
 func _init():
 	add_networked_func("_server_set_scene", MultiplayerAPI.RPC_MODE_MASTER)
 	add_networked_func("_client_set_scene", MultiplayerAPI.RPC_MODE_PUPPET)
@@ -49,19 +52,16 @@ func update(_from, data, value):
 
 func _sync_task():
 	print("set_server")
-
 	task_rpc("_server_set_scene",["_no_var"])
-	
 
-	
 func _server_set_scene(_arr):
 	emit_signal("set_scene")
 	print("client one next")
-	task_rpc("_client_set_scene", [])
+	task_rpc("_client_set_scene", ["_no_var"])
 	
 func _server_erase_children(_dic):
 	emit_signal("erase_children")
-	task_rpc("_client_erase_children", [])
+	task_rpc("_client_erase_children", ["_no_var"])
 
 func _client_set_scene(_dic):
 	print("emitted")
@@ -74,5 +74,19 @@ func _client_erase_children(_dic):
 func _on_state_changed(_old_state, new_state) -> void:#resets the task when state changes
 	match new_state:
 		GameManager.State.Lobby:
-			task_rpc("_server_erase_children", [])
+			task_rpc("_server_erase_children", ["no_var"])
 
+func give_item(index):
+	print("slot index")
+	print(slots_info)
+	print("index1")
+	print(index)
+	
+	for slot_index in slots_info.keys():
+		if not index == slot_index:
+			return
+		else:
+			for slot in slot_index:
+				var item_holding = slot_index[slot]
+				print(item_holding)
+	

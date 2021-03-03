@@ -4,6 +4,13 @@ onready var grid = $background/conatainergrid
 
 const slot_scene = preload("res://assets/ui/tasks/container/itemslot.tscn")
 
+var available_items:Dictionary = {
+							"battery":{"scene":preload("res://assets/items/battery.tscn")},
+							"wrench":{"scene":preload("res://assets/items/wrench.tscn")}
+}
+
+var slots_in_grid:Dictionary={}
+ 
 export(int) var slots 
 
 func _ready():
@@ -24,10 +31,13 @@ func _on_set_scene() -> void:
 	#Place where the scene is built
 	for num in range(0, slots):
 		var slot = slot_scene.instance()
-		slot.set_name(str(num))
 		slot.index = num
-		slot.get_child(0).frontend = slot
+		slot.container = self
 		grid.add_child(slot)
+		var item_to_instance = Helpers.pick_random(available_items.keys())
+		position_and_add_child(slot, randomizer(item_to_instance))
+		slots_in_grid[slot.index] = {slot:item_to_instance}
+	get_res().slots_info = slots_in_grid
 
 func _on_erase_children() -> void:#erases all child
 	for child in grid.get_children():
@@ -55,3 +65,12 @@ func update():
 	get_res().connect("set_scene", self, "_on_set_scene")
 	get_res().connect("erase_children", self, "_on_erase_children")
 
+func randomizer(item):
+	for items in available_items.keys():
+		if item == items:
+			var item_as_child = available_items[item].scene.instance()
+			return item_as_child
+
+func position_and_add_child(slot, item):
+	item.position += Vector2(64,64)
+	slot.add_child(item)

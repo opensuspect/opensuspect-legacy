@@ -1,15 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/ui/tasks/container/itemslot.gd" type="Script" id=1]
-[ext_resource path="res://assets/common/shaders/outline.shader" type="Shader" id=2]
-[ext_resource path="res://assets/items/battery.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/ui/tasks/container/itemslotbackend.gd" type="Script" id=4]
-
-[sub_resource type="ShaderMaterial" id=1]
-resource_local_to_scene = true
-shader = ExtResource( 2 )
-shader_param/line_color = Color( 1, 1, 0, 0 )
-shader_param/line_thickness = 5.0
 
 [node name="itemslot" type="MarginContainer"]
 margin_right = 128.0
@@ -22,10 +14,6 @@ __meta__ = {
 
 [node name="Backend" type="Node" parent="."]
 script = ExtResource( 4 )
-
-[node name="Battery" parent="." instance=ExtResource( 3 )]
-material = SubResource( 1 )
-position = Vector2( 64, 64 )
 [connection signal="gui_input" from="." to="." method="_on_itemslot_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_itemslot_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_itemslot_mouse_exited"]

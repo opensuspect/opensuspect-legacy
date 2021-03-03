@@ -2,6 +2,8 @@ extends MarginContainerBase
 
 var mouse_entered:bool
 var index:int
+var container = get_owner()
+
 
 signal input_received(ui_data, index)
 
@@ -27,4 +29,4 @@ func _on_itemslot_mouse_exited():
 func _on_itemslot_gui_input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT and mouse_entered == true:
 		if get_child(1) != null:
-			emit_signal("input_received", ui_data, index)
+			container.get_res().give_item(index)

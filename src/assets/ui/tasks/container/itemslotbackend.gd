@@ -5,7 +5,8 @@ var frontend = null
 #TODO: Set a randomizer 
 
 func _ready():
-	frontend.connect("input_received", self, "on_input_received")
+	pass
+#	frontend.connect("input_received", self, "on_input_received")
 
 func set_in_hand(ui_data_pass, index:int) -> void:#This the crucial function
 	if not frontend.index == index:
