@@ -29,6 +29,3 @@ func _on_visibility_changed():
 	else:
 		UIManager.ui_closed(menu_name)
 
-func get_res() -> Resource:
-	var res = TaskManager.get_task_resource(ui_data[TaskManager.TASK_ID_KEY])
-	return res

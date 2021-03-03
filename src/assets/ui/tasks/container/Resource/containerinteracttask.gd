@@ -31,28 +31,26 @@ func interact(_from: Node = null, _interact_data: Dictionary = {}, value = actio
 	if attached_to == null:
 		push_error("InteractTask resource trying to be used with no defined node")
 	if not is_player_assigned(Network.get_my_id()):
-		print("false1")
 		return
 	if is_task_completed(Network.get_my_id()):
-		print("false2")
 		return
 	
 	var dic = Helpers.merge_dicts(_interact_data, get_task_data())
 	set_action(value)
-	print(dic)
 	ui_res.interact(_from, dic)
 	
 func update(_from, data, value):
 	print("get interaction")
-	interact(_from, data, value)
+	set_action(value)
+	ui_res.interact(_from,task_data)
 	print("next is sync")
 	sync_task()
 
 
 func _sync_task():
 	print("set_server")
-	#call("_server_set_scene", [])
-	task_rpc("_server_set_scene",[])
+
+	task_rpc("_server_set_scene",["_no_var"])
 	
 
 	
@@ -77,3 +75,4 @@ func _on_state_changed(_old_state, new_state) -> void:#resets the task when stat
 	match new_state:
 		GameManager.State.Lobby:
 			task_rpc("_server_erase_children", [])
+

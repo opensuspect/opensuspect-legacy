@@ -41,14 +41,17 @@ func _on_erase_children() -> void:#erases all child
 #		GameManager.State.Lobby:
 #			rpc_id(1, "erase_children_server")
 #			rpc_id(1, "reset_server")
+func get_res() -> Resource:
+	var res = TaskManager.get_task_resource(ui_data[TaskManager.TASK_ID_KEY])
+	return res
 
 
 func interact(data:Dictionary = {}, value = get_res().actions.OPEN):
-	get_res().interact(self,{}, value)
+	get_res().interact(self,data, value)
 
 func update():
 # warning-ignore:return_value_discarded
-	print("uupdate got recieve")
+	
 	get_res().connect("set_scene", self, "_on_set_scene")
 	get_res().connect("erase_children", self, "_on_erase_children")
 

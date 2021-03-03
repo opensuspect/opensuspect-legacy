@@ -9,6 +9,7 @@ var player = null
 
 func _ready():
 	interact_resource.init_resource(self)
+	yield(get_tree(), "idle_frame")
 	interact_resource.update(self, {},interact_resource.actions.UPDATE)
 
 func reset() -> void: #Resets the node
