@@ -35,8 +35,8 @@ func _on_set_scene() -> void:
 		slot.container = self
 		grid.add_child(slot)
 		var item_to_instance = Helpers.pick_random(available_items.keys())
-		position_and_add_child(slot, randomizer(item_to_instance))
-		slots_in_grid[slot.index] = {slot:item_to_instance}
+		set_position_and_add_child(slot, randomizer(item_to_instance))
+		slots_in_grid[slot.index] = {"slot":slot,"item_instanced":item_to_instance}
 	get_res().slots_info = slots_in_grid
 
 func _on_erase_children() -> void:#erases all child
@@ -61,7 +61,6 @@ func interact(data:Dictionary = {}, value = get_res().actions.OPEN):
 
 func update():
 # warning-ignore:return_value_discarded
-	
 	get_res().connect("set_scene", self, "_on_set_scene")
 	get_res().connect("erase_children", self, "_on_erase_children")
 
@@ -71,6 +70,6 @@ func randomizer(item):
 			var item_as_child = available_items[item].scene.instance()
 			return item_as_child
 
-func position_and_add_child(slot, item):
+func set_position_and_add_child(slot, item):
 	item.position += Vector2(64,64)
 	slot.add_child(item)

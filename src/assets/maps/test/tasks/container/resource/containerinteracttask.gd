@@ -8,6 +8,7 @@ signal erase_children
 
 var slots_info:Dictionary = {}
 var items_to_hold:Array = ["battery","wrench"]
+var data = null
 
 func _init():
 	add_networked_func("_server_set_scene", MultiplayerAPI.RPC_MODE_MASTER)
@@ -37,26 +38,22 @@ func interact(_from: Node = null, _interact_data: Dictionary = {}, value = actio
 		return
 	if is_task_completed(Network.get_my_id()):
 		return
-	
-	var dic = Helpers.merge_dicts(_interact_data, get_task_data())
+	data = _interact_data
+	var merged_dic = Helpers.merge_dicts(_interact_data, get_task_data())
 	set_action(value)
-	ui_res.interact(_from, dic)
+	ui_res.interact(_from, merged_dic)
 	
-func update(_from, data, value):
-	print("get interaction")
+func update(_from, _data, value):
 	set_action(value)
 	ui_res.interact(_from,task_data)
-	print("next is sync")
 	sync_task()
 
 
 func _sync_task():
-	print("set_server")
 	task_rpc("_server_set_scene",["_no_var"])
 
 func _server_set_scene(_arr):
 	emit_signal("set_scene")
-	print("client one next")
 	task_rpc("_client_set_scene", ["_no_var"])
 	
 func _server_erase_children(_dic):
@@ -64,7 +61,6 @@ func _server_erase_children(_dic):
 	task_rpc("_client_erase_children", ["_no_var"])
 
 func _client_set_scene(_dic):
-	print("emitted")
 	emit_signal("set_scene")
 
 func _client_erase_children(_dic):
@@ -76,17 +72,15 @@ func _on_state_changed(_old_state, new_state) -> void:#resets the task when stat
 		GameManager.State.Lobby:
 			task_rpc("_server_erase_children", ["no_var"])
 
-func give_item(index):
-	print("slot index")
-	print(slots_info)
-	print("index1")
-	print(index)
-	
-	for slot_index in slots_info.keys():
-		if not index == slot_index:
-			return
-		else:
-			for slot in slot_index:
-				var item_holding = slot_index[slot]
-				print(item_holding)
-	
+func generate_interact_data(slot_index):
+	var interact_data:Dictionary = {}
+	for index in slots_info.keys():
+		if index == slot_index:
+			interact_data = slots_info[index].duplicate()
+			send_interact_data(interact_data)
+
+func send_interact_data(interact_data):
+	var merged_dic = Helpers.merge_dicts(interact_data, data)
+	if map_outputs_on:
+		for resource in map_outputs:
+			resource.interact(attached_to, merged_dic)
