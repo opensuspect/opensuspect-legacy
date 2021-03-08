@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/meeting.png-314a2f196a7483fc8f26c6fc4b5e56c1.stex"
+path="res://.import/kitchen.png-d06bc85cbe50eb0b634f492256d12a4d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/test/offices/meeting.png"
-dest_files=[ "res://.import/meeting.png-314a2f196a7483fc8f26c6fc4b5e56c1.stex" ]
+source_file="res://assets/maps/test/offices/textures/kitchen.png"
+dest_files=[ "res://.import/kitchen.png-d06bc85cbe50eb0b634f492256d12a4d.stex" ]
 
 [params]
 

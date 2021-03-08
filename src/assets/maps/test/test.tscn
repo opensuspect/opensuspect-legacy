@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://assets/common/textures/icons/spawnpad.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/common/dynamic/testdoor/testdoor.tscn" type="PackedScene" id=2]
@@ -131,9 +131,6 @@ task_resource = SubResource( 9 )
 ui_resource = SubResource( 10 )
 map_resource = SubResource( 7 )
 
-[sub_resource type="OccluderPolygon2D" id=12]
-polygon = PoolVector2Array( -386.785, -222.35, -386.621, -154.744, -246.248, -154.713, -246.483, -221.872 )
-
 [node name="test" type="YSort"]
 script = ExtResource( 15 )
 
@@ -250,7 +247,7 @@ position = Vector2( 0, 100 )
 [node name="mainroom" type="YSort" parent="walls"]
 
 [node name="wallhorizontal" parent="walls/mainroom" instance=ExtResource( 6 )]
-position = Vector2( -138, -208 )
+position = Vector2( -137.251, -207.251 )
 scale = Vector2( 10.76, 3 )
 
 [node name="wallhorizontal5" parent="walls/mainroom" instance=ExtResource( 6 )]
@@ -313,15 +310,9 @@ scale = Vector2( 3, 19 )
 
 [node name="offices" type="YSort" parent="walls"]
 
-[node name="wall" type="StaticBody2D" parent="walls/offices"]
-z_index = -2
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="walls/offices/wall"]
-position = Vector2( -481.294, -187.901 )
-polygon = PoolVector2Array( 94.5118, -32.97, 94.9408, 32.8684, 234.771, 33.0452, 234.771, -33.6033 )
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="walls/offices/wall"]
-occluder = SubResource( 12 )
+[node name="Offices" parent="walls/offices" instance=ExtResource( 17 )]
+position = Vector2( -385.99, -719.337 )
+z_index = -4
 
 [node name="Interactive" type="YSort" parent="."]
 
@@ -346,8 +337,3 @@ position = Vector2( -96.3763, 93.3395 )
 [node name="Props" type="YSort" parent="."]
 
 [node name="Corpses" type="YSort" parent="Props"]
-
-[node name="Scene" parent="." instance=ExtResource( 17 )]
-position = Vector2( 49.6917, -454.886 )
-scale = Vector2( 0.13, 0.13 )
-z_index = -4
