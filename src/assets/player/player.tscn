@@ -17,7 +17,8 @@ radius = 100.0
 light_mode = 2
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 12.0
+radius = 7.17992
+height = 11.9869
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 14.5215

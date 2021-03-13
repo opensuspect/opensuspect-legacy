@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/maps/test/offices/textures/offices_horizontal_wall.png" type="Texture" id=1]
 
 [sub_resource type="OccluderPolygon2D" id=1]
-polygon = PoolVector2Array( -99.259, -33.4716, 99.133, -33.5246 )
+polygon = PoolVector2Array( 0, 0, 198.5, 0 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 99.2359, 8.82853 )
@@ -13,10 +13,13 @@ extents = Vector2( 99.2359, 8.82853 )
 [node name="offices_horizontal_wall" type="Sprite" parent="."]
 scale = Vector2( 0.13, 0.13 )
 texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -380 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2( 0, -32 )
 occluder = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 24.6989 )
+position = Vector2( 99.3, 8.6 )
 shape = SubResource( 2 )

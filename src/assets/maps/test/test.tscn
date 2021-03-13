@@ -311,7 +311,7 @@ scale = Vector2( 3, 19 )
 [node name="offices" type="YSort" parent="walls"]
 
 [node name="Offices" parent="walls/offices" instance=ExtResource( 17 )]
-position = Vector2( -385.99, -719.337 )
+position = Vector2( -385.99, -661.337 )
 z_index = -4
 
 [node name="Interactive" type="YSort" parent="."]
