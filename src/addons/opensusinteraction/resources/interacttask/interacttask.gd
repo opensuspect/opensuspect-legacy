@@ -297,7 +297,8 @@ func interact(_from: Node = null, _interact_data: Dictionary = {}):
 	# 	like triggering a map interaction instead of opening a UI
 	if _interact(_from, _interact_data) == false:
 		return
-	ui_res.interact(_from, get_task_data())
+	# overwriting get_task_data() with _interact_data because I think it would be easier to debug - TheSecondReal0
+	ui_res.interact(_from, Helpers.merge_dicts(get_task_data(), _interact_data))
 
 # meant to be overridden by an extending script to allow custom behavior when interacted with
 func _interact(_from: Node = null, _interact_data: Dictionary = {}):
@@ -350,10 +351,10 @@ func receive_task_rset(property: String, value):
 
 # args must be in the form of an array because you can't create functions with variable
 # 	arg amounts in gdscript
-func task_rpc(function: String, args: Array):
+func task_rpc(function: String, args: Array = []):
 	TaskManager.task_rpc(function, args, task_id)
 
-func task_rpc_id(id: int, function: String, args: Array):
+func task_rpc_id(id: int, function: String, args: Array = []):
 	TaskManager.task_rpc_id(id, function, args, task_id)
 
 func receive_task_rpc(function: String, args: Array):
@@ -362,6 +363,10 @@ func receive_task_rpc(function: String, args: Array):
 	var sender: int = get_rpc_sender_id()
 	var rpc_mode: int = networked_functions[function]
 	if not is_valid_sender(sender, rpc_mode):
+		return
+	if args.empty():
+		# if no args, call function normally
+		call(function)
 		return
 	# using callv instead of call because it will translate the array into
 	# 	individual arguments
