@@ -35,6 +35,7 @@ var part_sprite_list: Dictionary = {
 		"brown_suit": tr("Brown suit"),
 		"labcoat": tr("Lab coat"),
 		"pink_sweater-blue_jeans": tr("Pink sweater and blue jeans"),
+		"police_uniform": tr("People's Police uniform"),
 		"tuxedo": tr("Tuxedo"),
 		"white_shirt-red_sweater": tr("White shirt with red sweater")
 	},
@@ -46,6 +47,7 @@ var part_sprite_list: Dictionary = {
 	},
 	"Facial Hair": {
 		"eyebrows_1": tr("Eyebrows 1"), "eyebrows_2": tr("Eyebrows 2"),
+		"moustache_1": tr("Moustache 1"),
 		"sideburns_eyebrows_1": tr("Sideburns and eyebrows 1"),
 		"sideburns_eyebrows_2": tr("Sideburns and eyebrows 2"),
 		"sideburns_eyebrows_3": tr("Sideburns and eyebrows 3"),
@@ -59,7 +61,8 @@ var part_sprite_list: Dictionary = {
 		"bald": tr("Bald"), "hair_bob": tr("Hair, bob"),
 		"hair_curly": tr("Hair, curly"), "hair_long": tr("Hair, long"),
 		"hair_ponytail": tr("Hair, ponytail"), "hair_short": tr("Hair, short"),
-		"hat_beige": tr("Hat, beige"), "hat_brown": tr("Hat, brown")
+		"hat_beige": tr("Hat, beige"), "hat_brown": tr("Hat, brown"),
+		"hat_police": tr("People's Police hat")
 	},
 	"Mouth": {
 		"angry": tr("Angry"), "concerned": tr("Concerned"), "content": tr("Content"),
