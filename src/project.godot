@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/common/classes/ui/task/controltask.gd"
 }, {
+"base": "StaticBody2D",
+"class": "HorizWall",
+"language": "GDScript",
+"path": "res://assets/maps/test/horizontal_wall.gd"
+}, {
 "base": "Node2D",
 "class": "IPoolable",
 "language": "GDScript",
@@ -93,6 +98,7 @@ _global_script_class_icons={
 "BackgroundObject": "",
 "ControlBase": "",
 "ControlTask": "",
+"HorizWall": "",
 "IPoolable": "",
 "InteractTask": "",
 "Item": "",
