@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/maps/test/offices/textures/offices_horizontal_wall.png" type="Texture" id=2]
 
 [sub_resource type="OccluderPolygon2D" id=1]
-polygon = PoolVector2Array( 0, 0, 198.5, 0, 198.5, 1, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 198.5, 0, 198.5, 17.4, 0, 17.4 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 99.3, 9 )
@@ -17,6 +17,7 @@ texture = ExtResource( 2 )
 offset = Vector2( 0, -380 )
 
 [node name="LightOccluder2D" parent="." index="1"]
+position = Vector2( 0, -49.4 )
 occluder = SubResource( 1 )
 
 [node name="PlayerCollision" parent="." index="2"]
