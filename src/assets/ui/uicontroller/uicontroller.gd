@@ -135,5 +135,6 @@ func pre_instance(ui_name: String):#Make the ui to be in active state when a gam
 	update_instanced_uis()
 	if instanced_uis.keys().has(ui_name):
 		return
+	print(instanced_uis)
 	instance_ui(ui_name)
 	close_ui(ui_name)

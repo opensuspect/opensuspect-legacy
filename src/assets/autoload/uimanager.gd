@@ -123,9 +123,13 @@ func state_changed(old_state, new_state):
 func state_changed_priority(old_state, new_state, priority):
 	if priority != 0:
 		return
-	if new_state == GameManager.State.Normal:
+	match new_state:
+		GameManager.State.Normal:
 		# needs to call _on_ready to connect signals, before roles are assigned
-		open_ui("rolescreen")
+			open_ui("rolescreen")
+			pre_instance("container")
+		GameManager.State.Lobby:
+			free_ui("container")
 func in_ui() -> bool:
 	return not open_uis.empty()
 

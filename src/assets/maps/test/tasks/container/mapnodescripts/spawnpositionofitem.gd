@@ -1,19 +1,11 @@
 extends Node2D
 
 onready var map_items: Node2D
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-var available_items:Dictionary = {
-							"battery":{"scene":preload("res://assets/items/battery.tscn")},
-							"wrench":{"scene":preload("res://assets/items/wrench.tscn")},
-							"large-liquid-bottle":{"scene":preload("res://assets/items/large-liquid-bottle.tscn")},
-							"powder-bottle":{"scene":preload("res://assets/items/powder-bottle.tscn")},
-							"small-liquid-bottle":{"scene":preload("res://assets/items/small-liquid-bottle.tscn")}
-}
+
+var available_items:Dictionary = TaskManager.available_items
 var total_items:Array=[]
 var data = null
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	MapManager.connect("interacted_with", self, "on_interacted_with")
 	yield(get_tree(), "idle_frame")

@@ -68,8 +68,8 @@ func switchMap(newMap: String) -> void:
 	# actual current map to position 0 manually.
 	move_child(mapClone, 0)
 	emit_signal("spawn", getSpawnPoints())
-	if newMap == "Test":
-		init_all_tasks()
+	#if newMap == "Test":
+	#	init_all_tasks()
 
 func instance_map(map_name: String) -> Node:
 #	print("instancing map ", map_name)
