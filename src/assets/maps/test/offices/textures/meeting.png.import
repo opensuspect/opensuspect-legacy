@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/corridoor.png-79e872e3868bf8d51d4e892c4cf9e3c7.stex"
+path="res://.import/meeting.png-7e0eafb50d22f610f8d88bf6322ef284.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/test/offices/corridoor.png"
-dest_files=[ "res://.import/corridoor.png-79e872e3868bf8d51d4e892c4cf9e3c7.stex" ]
+source_file="res://assets/maps/test/offices/textures/meeting.png"
+dest_files=[ "res://.import/meeting.png-7e0eafb50d22f610f8d88bf6322ef284.stex" ]
 
 [params]
 

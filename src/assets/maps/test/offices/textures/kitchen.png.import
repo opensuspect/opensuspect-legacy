@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pantry-wall.png-ed6cb6c32443908c89a8759557c3ed01.stex"
+path="res://.import/kitchen.png-d06bc85cbe50eb0b634f492256d12a4d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/test/offices/pantry-wall.png"
-dest_files=[ "res://.import/pantry-wall.png-ed6cb6c32443908c89a8759557c3ed01.stex" ]
+source_file="res://assets/maps/test/offices/textures/kitchen.png"
+dest_files=[ "res://.import/kitchen.png-d06bc85cbe50eb0b634f492256d12a4d.stex" ]
 
 [params]
 
