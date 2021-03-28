@@ -15,21 +15,5 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
-
-[node name="Control" type="Control" parent="."]
-margin_right = 128.0
-margin_bottom = 128.0
-
-[node name="Label" type="Label" parent="Control"]
-margin_left = 96.0
-margin_top = 96.0
-margin_right = 120.0
-margin_bottom = 118.0
-text = "8"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-[connection signal="gui_input" from="Control" to="." method="_on_Control_gui_input"]
-[connection signal="mouse_entered" from="Control" to="." method="_on_Control_mouse_entered"]
-[connection signal="mouse_exited" from="Control" to="." method="_on_Control_mouse_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_itemslot_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_itemslot_mouse_exited"]

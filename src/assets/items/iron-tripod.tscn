@@ -36,6 +36,7 @@ height = 9.22651
 material = SubResource( 1 )
 
 [node name="ItemCollision" parent="." index="0"]
+visible = false
 position = Vector2( 0, 9 )
 shape = SubResource( 2 )
 
@@ -44,6 +45,9 @@ material = SubResource( 3 )
 position = Vector2( 0, 8 )
 scale = Vector2( 0.15, 0.15 )
 frames = SubResource( 4 )
+
+[node name="MouseArea" parent="SpritePosition" index="1"]
+visible = false
 
 [node name="MouseCollision" parent="SpritePosition/MouseArea" index="0"]
 position = Vector2( 0, 5 )

@@ -22,7 +22,7 @@ shader_param/line_thickness = 5.0
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ ExtResource( 3 ) ],
+"frames": [ ExtResource( 3 ), null ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -36,6 +36,7 @@ height = 19.25
 material = SubResource( 1 )
 
 [node name="ItemCollision" parent="." index="0"]
+visible = false
 position = Vector2( 0, 11 )
 shape = SubResource( 2 )
 
@@ -44,6 +45,9 @@ material = SubResource( 3 )
 position = Vector2( 0, 12 )
 scale = Vector2( 0.15, 0.15 )
 frames = SubResource( 4 )
+
+[node name="MouseArea" parent="SpritePosition" index="1"]
+visible = false
 
 [node name="MouseCollision" parent="SpritePosition/MouseArea" index="0"]
 position = Vector2( 0, 8 )

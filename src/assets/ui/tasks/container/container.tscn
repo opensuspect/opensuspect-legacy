@@ -42,11 +42,10 @@ __meta__ = {
 }
 
 [node name="conatainergrid" type="GridContainer" parent="background"]
-margin_left = 32.0
-margin_top = 112.0
-margin_right = 696.0
-margin_bottom = 492.0
-custom_constants/vseparation = 200
+margin_top = 160.0
+margin_right = 728.0
+margin_bottom = 544.0
+custom_constants/vseparation = 175
 custom_constants/hseparation = 92
 columns = 4
 __meta__ = {
