@@ -8,22 +8,26 @@ const fade_speed: float = 5.0
 var fading_in: bool
 var fading_out: bool
 var occluder_height: float
+var occluder_top: float
+var occluder_bottom: float
 
 func _ready():
-	occluder_height = light_occluder.position.y
+	occluder_top = light_occluder.position.y
+	occluder_bottom = 0
+	occluder_height = occluder_top - occluder_bottom
 
 func _process(delta: float) -> void:
 	if fading_in:
 		wall_sprite.modulate.a += delta * fade_speed
 		light_occluder.position.y += delta * fade_speed * occluder_height
 		if wall_sprite.modulate.a >= 1.0:
-			light_occluder.position.y = occluder_height
+			light_occluder.position.y = occluder_top
 			fading_in = false
 	if fading_out:
 		wall_sprite.modulate.a -= delta * fade_speed
 		light_occluder.position.y -= delta * fade_speed * occluder_height
 		if wall_sprite.modulate.a <= 0.0:
-			light_occluder.position.y = 0
+			light_occluder.position.y = occluder_bottom
 			fading_out = false
 
 func _on_FadeTrigger_body_entered(body: Node) -> void:

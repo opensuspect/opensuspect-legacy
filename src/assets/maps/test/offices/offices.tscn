@@ -1,31 +1,23 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/maps/test/offices/textures/corridoor.png" type="Texture" id=1]
-[ext_resource path="res://assets/maps/test/offices/offices_horizontal_wall.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/maps/test/offices/textures/meeting-table.png" type="Texture" id=2]
 [ext_resource path="res://assets/maps/test/offices/textures/pantry.png" type="Texture" id=3]
-[ext_resource path="res://assets/maps/test/offices/office_horizontal_wall.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/maps/test/offices/pantry-bottom-wall.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/maps/test/offices/textures/pipes.png" type="Texture" id=5]
 [ext_resource path="res://assets/maps/test/offices/textures/meeting.png" type="Texture" id=6]
 [ext_resource path="res://assets/maps/test/offices/textures/files.png" type="Texture" id=7]
 [ext_resource path="res://assets/maps/test/offices/textures/kitchen.png" type="Texture" id=8]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 164, 86 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 156.955, 748.064 )
+[ext_resource path="res://assets/maps/test/offices/kitchen-bottom-wall.tscn" type="PackedScene" id=9]
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 20.6375, 100.874 )
+extents = Vector2( 20.6375, 97.05 )
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 23.8516, 9.47095 )
+[sub_resource type="OccluderPolygon2D" id=5]
+polygon = PoolVector2Array( -7, 100, -7, -105, 10, -105, 10, 100 )
 
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 22.2451, 9.66544 )
-
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 50, 115 )
+[sub_resource type="OccluderPolygon2D" id=6]
+polygon = PoolVector2Array( -7, 100, -7, -105, 10, -105, 10, 100 )
 
 [node name="Offices" type="YSort"]
 
@@ -43,18 +35,46 @@ texture = ExtResource( 7 )
 centered = false
 offset = Vector2( 0, -500 )
 
-[node name="MeetingRoom" type="Sprite" parent="."]
+[node name="MeetingRoom" type="YSort" parent="."]
+
+[node name="MeetingRoom" type="Sprite" parent="MeetingRoom"]
 scale = Vector2( 0.13, 0.13 )
 texture = ExtResource( 6 )
 centered = false
 offset = Vector2( 0, -500 )
 
-[node name="Kitchen" type="Sprite" parent="."]
-position = Vector2( 0, 204.115 )
+[node name="MeetingTable" type="Sprite" parent="MeetingRoom"]
+position = Vector2( 61.4489, 69.9246 )
+scale = Vector2( 0.13, 0.13 )
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( 0, -300 )
+
+[node name="Collision" type="StaticBody2D" parent="MeetingRoom/MeetingTable"]
+position = Vector2( -472.684, -537.881 )
+scale = Vector2( 7.69231, 7.69231 )
+
+[node name="Table" type="CollisionPolygon2D" parent="MeetingRoom/MeetingTable/Collision"]
+polygon = PoolVector2Array( 86.7429, 68.2981, 280.137, 69.3588, 280.137, 90.9255, 292.865, 90.9255, 292.511, 107.543, 279.783, 105.775, 279.076, 145.019, 188.566, 145.019, 186.445, 151.03, 171.242, 151.737, 173.01, 143.605, 88.8643, 145.019, 87.8036, 108.957, 62.3478, 108.603, 61.9942, 84.208, 87.45, 82.4403 )
+
+[node name="Kitchen" type="YSort" parent="."]
+position = Vector2( 0, 193.4 )
+
+[node name="Kitchen" type="Sprite" parent="Kitchen"]
 scale = Vector2( 0.13, 0.13 )
 texture = ExtResource( 8 )
 centered = false
 offset = Vector2( 0, -500 )
+
+[node name="KitchenBottomWall" parent="Kitchen" instance=ExtResource( 9 )]
+position = Vector2( 0, 166.7 )
+
+[node name="AreaDetection" parent="Kitchen/KitchenBottomWall" index="6"]
+position = Vector2( 0, -20 )
+
+[node name="DetectorArea" parent="Kitchen/KitchenBottomWall/AreaDetection" index="0"]
+scale = Vector2( 0.999195, 1.00925 )
+polygon = PoolVector2Array( 329.136, -142.981, 329.582, 28.5166, 131.472, 27.359, 131.026, 16.8909, 10.4093, 17.7818, 9.08031, -146.07 )
 
 [node name="Corridor" type="Sprite" parent="."]
 position = Vector2( 329.07, 0 )
@@ -63,52 +83,42 @@ texture = ExtResource( 1 )
 centered = false
 offset = Vector2( 0, -500 )
 
-[node name="KitchenBottomWall" parent="." instance=ExtResource( 4 )]
-position = Vector2( 140.6, 366 )
-scale = Vector2( 0.954, 1 )
-
-[node name="DetectorArea" parent="KitchenBottomWall/AreaDetection" index="0"]
-position = Vector2( 34.5403, -84.9232 )
-shape = SubResource( 1 )
-
-[node name="Pantry" type="StaticBody2D" parent="."]
-position = Vector2( 0, 381.543 )
+[node name="Pantry" type="YSort" parent="."]
+position = Vector2( 0, 354.1 )
 
 [node name="Pantry" type="Sprite" parent="Pantry"]
 scale = Vector2( 0.13, 0.13 )
 texture = ExtResource( 3 )
 centered = false
-offset = Vector2( 0, -500 )
+offset = Vector2( 0, -150 )
 
-[node name="LeftWall" type="CollisionShape2D" parent="Pantry"]
-position = Vector2( 19.878, 92.207 )
-scale = Vector2( 0.13, 0.13 )
-shape = SubResource( 2 )
+[node name="RightWall" type="StaticBody2D" parent="Pantry"]
 
-[node name="RightWall" type="CollisionShape2D" parent="Pantry"]
-position = Vector2( 120.004, 89.007 )
+[node name="RightWall" type="CollisionShape2D" parent="Pantry/RightWall"]
+position = Vector2( 120, 91.5 )
 shape = SubResource( 3 )
 
-[node name="TopRightWall" type="CollisionShape2D" parent="Pantry"]
-position = Vector2( 114.736, -6.6559 )
-shape = SubResource( 4 )
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Pantry/RightWall"]
+position = Vector2( 130.5, 91.5 )
+occluder = SubResource( 5 )
 
-[node name="TopLeftWall" type="CollisionShape2D" parent="Pantry"]
-position = Vector2( 25.3666, -7.66898 )
-shape = SubResource( 5 )
+[node name="LeftWall" type="StaticBody2D" parent="Pantry"]
 
-[node name="PantryBottomWall" parent="." instance=ExtResource( 2 )]
-position = Vector2( -150, 568 )
-scale = Vector2( 0.708, 1 )
+[node name="LeftWall" type="CollisionShape2D" parent="Pantry/LeftWall"]
+position = Vector2( 20, 91.5 )
+shape = SubResource( 3 )
 
-[node name="HorizontalWall" parent="." instance=ExtResource( 4 )]
-position = Vector2( 0, 568 )
-scale = Vector2( 0.708, 1 )
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Pantry/LeftWall"]
+position = Vector2( 7.5, 91.5 )
+occluder = SubResource( 6 )
 
-[node name="DetectorArea" parent="HorizontalWall/AreaDetection" index="0"]
-position = Vector2( 100, -113 )
-shape = SubResource( 6 )
+[node name="PantryBottomWall" parent="Pantry" instance=ExtResource( 4 )]
+position = Vector2( 0, 191.4 )
 
-[editable path="KitchenBottomWall"]
+[node name="DetectorArea" parent="Pantry/PantryBottomWall/AreaDetection" index="0"]
+position = Vector2( 70, -96 )
+polygon = PoolVector2Array( -60, -97, -61, 100, 61, 100, 61, -97 )
 
-[editable path="HorizontalWall"]
+[editable path="Kitchen/KitchenBottomWall"]
+
+[editable path="Pantry/PantryBottomWall"]

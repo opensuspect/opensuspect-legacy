@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pantry-wall.png-c0cf1d7ac5156ad8e04ccd0dc013127d.stex"
+path="res://.import/kitchen-chair.png-2a1e6418411d41b442e1f90503cf445b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/test/offices/textures/pantry-wall.png"
-dest_files=[ "res://.import/pantry-wall.png-c0cf1d7ac5156ad8e04ccd0dc013127d.stex" ]
+source_file="res://assets/maps/test/offices/textures/kitchen-chair.png"
+dest_files=[ "res://.import/kitchen-chair.png-2a1e6418411d41b442e1f90503cf445b.stex" ]
 
 [params]
 
