@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/ui/tasks/container/itemslot.gd" type="Script" id=1]
+
+[node name="itemslot" type="MarginContainer"]
+anchor_left = 0.102
+anchor_top = 0.173
+anchor_right = 0.125
+anchor_bottom = 0.213
+margin_left = -104.448
+margin_top = -103.8
+margin_bottom = 0.199989
+rect_min_size = Vector2( 90, 90 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+[connection signal="gui_input" from="." to="." method="_on_itemslot_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_itemslot_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_itemslot_mouse_exited"]

@@ -6,7 +6,8 @@ export(String) var display_text
 var interact_data: Dictionary = {} setget , get_interact_data
 
 func _ready():
-	interact_resource.init_resource(self)
+	pass
+	#interact_resource.init_resource(self)
 
 func get_interact_data():
 	#var interact_resource: Interact = interact

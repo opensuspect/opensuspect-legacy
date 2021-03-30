@@ -23,6 +23,9 @@ func _ready():
 	UIManager.connect("free_ui", self, "free_ui")
 # warning-ignore:return_value_discarded
 	UIManager.connect("close_all_ui", self, "close_all_ui")
+# warning-ignore:return_value_discarded
+	UIManager.connect("pre_instance", self, "pre_instance")
+	
 	var err = config.load("user://settings.cfg")
 	if err == OK:
 		$ColorblindRect.material.set_shader_param(
@@ -127,3 +130,11 @@ func get_child_node_names() -> Array:
 	for i in get_children():
 		name_list.append(i.name)
 	return name_list
+
+func pre_instance(ui_name: String):#Make the ui to be in active state when a game is started
+	update_instanced_uis()
+	if instanced_uis.keys().has(ui_name):
+		return
+	print(instanced_uis)
+	instance_ui(ui_name)
+	close_ui(ui_name)

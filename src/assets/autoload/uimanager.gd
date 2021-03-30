@@ -17,7 +17,8 @@ var ui_list: Dictionary = {
 						"appearance_editor": {"scene": preload("res://assets/ui/submenus/appearance_editor/appearance_editor.tscn")},
 						
 						#task UI
-						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")}
+						"clockset": {"scene": preload("res://assets/ui/tasks/clockset/clockset.tscn")},
+						"container":{"scene": preload("res://assets/ui/tasks/container/container.tscn")}
 						}
 
 var current_ui: Control
@@ -35,6 +36,7 @@ signal close_ui(ui_name, free)
 signal instance_ui(ui_name, ui_data)
 signal update_ui(ui_name, ui_data)
 signal free_ui(ui_name)
+signal pre_instance(ui_name)
 signal close_all_ui()
 
 func _ready():
@@ -85,6 +87,11 @@ func free_ui(ui_name: String):
 		push_error("free_ui() called with invalid ui name " + ui_name)
 	emit_signal("free_ui", ui_name)
 
+func pre_instance(ui_name:String):
+	if not ui_list.keys().has(ui_name):
+		push_error("pre_ins() called with invalid ui name " + ui_name)
+	emit_signal("pre_instance", ui_name)
+
 func close_all_ui(free: bool = false):
 	emit_signal("close_all_ui", free)
 
@@ -116,9 +123,13 @@ func state_changed(old_state, new_state):
 func state_changed_priority(old_state, new_state, priority):
 	if priority != 0:
 		return
-	if new_state == GameManager.State.Normal:
+	match new_state:
+		GameManager.State.Normal:
 		# needs to call _on_ready to connect signals, before roles are assigned
-		open_ui("rolescreen")
+			open_ui("rolescreen")
+			pre_instance("container")
+		GameManager.State.Lobby:
+			free_ui("container")
 func in_ui() -> bool:
 	return not open_uis.empty()
 

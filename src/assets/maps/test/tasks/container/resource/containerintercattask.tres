@@ -1,14 +1,14 @@
 [gd_resource type="Resource" load_steps=6 format=2]
 
-[ext_resource path="res://addons/opensusinteraction/resources/interacttask/interacttask.gd" type="Script" id=1]
-[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=2]
+[ext_resource path="res://addons/opensusinteraction/resources/interactui/interactui.gd" type="Script" id=1]
+[ext_resource path="res://assets/maps/test/tasks/container/resource/containerinteracttask.gd" type="Script" id=2]
 [ext_resource path="res://addons/opensusinteraction/resources/interactmap/interactmap.gd" type="Script" id=3]
 
 [sub_resource type="Resource" id=1]
 resource_local_to_scene = true
 resource_name = "InteractMap"
 script = ExtResource( 3 )
-interact_with = NodePath("")
+interact_with = NodePath("Node2D")
 interact_data = {
 
 }
@@ -16,8 +16,8 @@ advanced/network_sync = false
 
 [sub_resource type="Resource" id=2]
 resource_local_to_scene = true
-script = ExtResource( 2 )
-ui_name = ""
+script = ExtResource( 1 )
+ui_name = "container"
 ui_data = {
 
 }
@@ -27,10 +27,9 @@ advanced/free_on_close = false
 
 [resource]
 resource_local_to_scene = true
-resource_name = "InteractTask"
-script = ExtResource( 1 )
-task_text = ""
+script = ExtResource( 2 )
+task_text = "Container"
 ui_resource = SubResource( 2 )
-outputs/toggle_map_interactions = false
+outputs/toggle_map_interactions = true
 outputs/output_map_interactions = [ SubResource( 1 ) ]
-is_task_global = false
+is_task_global = true

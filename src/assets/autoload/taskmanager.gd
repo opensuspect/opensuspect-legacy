@@ -22,6 +22,12 @@ var player_tasks: Dictionary = {}
 #format: {<task id>: {name: <task_name>, type: <task type>, state: <task state>, resource: <InteractTask resource>, assigned_players: [<network IDs of players task is assigned to>]}
 var task_dict: Dictionary = {}
 
+var available_items:Dictionary = {
+							"large-liquid-bottle":{"scene":preload("res://assets/items/large-liquid-bottle.tscn"),"position":Vector2(40,56),"shift":8,"scale":Vector2(1.5,1.5)},
+							"powder-bottle":{"scene":preload("res://assets/items/powder-bottle.tscn"),"position":Vector2(40,80),"shift":8,"scale":Vector2(2,2)},
+							"small-liquid-bottle":{"scene":preload("res://assets/items/small-liquid-bottle.tscn"),"position":Vector2(40,64),"shift":8,"scale":Vector2(2,2)}
+}
+
 var node_path_resource: Dictionary = {}
 
 const PLAYER_ID_KEY = "player_id"

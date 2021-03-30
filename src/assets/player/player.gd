@@ -44,6 +44,7 @@ var last_received_input: int = 0
 # velocities for movement prediciton. The values are stored as Arrays of
 # movement and previous velocity.
 var input_queue: Array = []
+var can_pickup = true
 
 func _ready():
 	# Reparent ItemHandler to Skeleton Node2D
@@ -77,8 +78,11 @@ func _ready():
 	customizePlayer(id)
 
 func _input(event: InputEvent) -> void:
-	# Item Handler does not receive input as a child of a Viewport
-	item_handler._input(event)
+	if can_pickup == true:
+		# Item Handler does not receive input as a child of a Viewport
+		item_handler._input(event)
+	else:
+		return
 
 func setName(newName):
 	ourname = newName

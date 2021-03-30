@@ -49,6 +49,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/common/classes/resources/mapinfo/mapinfo.gd"
 }, {
+"base": "MarginContainer",
+"class": "MarginContainerBase",
+"language": "GDScript",
+"path": "res://assets/common/classes/ui/base/margincontainerbase.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -98,6 +103,7 @@ _global_script_class_icons={
 "Item": "",
 "ItemHandler": "",
 "MapInfo": "",
+"MarginContainerBase": "",
 "Player": "",
 "PoolManager": "",
 "PopupBase": "",
@@ -216,6 +222,10 @@ pointing/emulate_touch_from_mouse=true
 
 translations=PoolStringArray( "res://locale/de.po", "res://locale/el.po", "res://locale/en.po", "res://locale/es.po", "res://locale/fr.po", "res://locale/hu.po", "res://locale/ko.po", "res://locale/ro.po", "res://locale/sr.po", "res://locale/sv.po" )
 locale_filter=[ 0, [  ] ]
+
+[network]
+
+limits/debugger_stdout/max_chars_per_second=70000
 
 [rendering]
 
