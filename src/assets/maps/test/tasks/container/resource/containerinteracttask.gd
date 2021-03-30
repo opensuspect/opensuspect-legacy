@@ -12,7 +12,8 @@ var available_items:Dictionary = TaskManager.available_items
 var current_item_instanced:Array = []
 var items_to_hold:Array = ["battery","wrench"]
 
-var data = null
+var player_data = null
+var interact_data:Dictionary = {}
 
 func _init():
 	add_networked_func("_server_set_scene", MultiplayerAPI.RPC_MODE_MASTER)
@@ -42,7 +43,7 @@ func interact(_from: Node = null, _interact_data: Dictionary = {}, value = actio
 		return
 	if is_task_completed(Network.get_my_id()):
 		return
-	data = _interact_data
+	player_data = _interact_data
 	var merged_dic = Helpers.merge_dicts(_interact_data, get_task_data())
 	set_action(value)
 	ui_res.interact(_from, merged_dic)
@@ -121,15 +122,39 @@ func set_item_position(item_name,item,item_count,number_of_item):
 	item.position = position
 
 func generate_interact_data(slot_index):
-	var interact_data:Dictionary = {}
 	for index in slots_info.keys():
 		if index == slot_index:
 			interact_data = slots_info[index].duplicate()
-			send_interact_data(interact_data)
+			send_interact_data(filter_data())
+			update_scene()
 
-func send_interact_data(interact_data):
-	var merged_dic = Helpers.merge_dicts(interact_data, data)
+func send_interact_data(interact_data:Dictionary={}):
+	var merged_dic = Helpers.merge_dicts(interact_data, player_data)
 	if map_outputs_on:
 		for resource in map_outputs:
 			resource.interact(attached_to, merged_dic)
-			
+
+func filter_data():
+	var number = interact_data["number_of_item"]
+	if number == 0:
+		return 
+
+	var key_to_remove=["number_of_item","slot"]
+	var filtered_data:Dictionary = interact_data.duplicate()
+	
+	for key in key_to_remove:
+		filtered_data.erase(key_to_remove)
+		
+	return filtered_data
+	
+func update_scene():
+	var updated_data = interact_data.duplicate()
+	var number = int(updated_data["number_of_item"])
+	updated_data["number_of_item"] = str(number - 1)
+	interact_data = updated_data
+	update_slot()
+	
+func update_slot():
+	var slot = interact_data["slot"]
+	slot.get_child(0).queue_free()
+		

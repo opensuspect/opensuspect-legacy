@@ -16,15 +16,13 @@ func on_interacted_with(interactNode, from, interact_data):
 	if interactNode != self:
 		return
 	data = interact_data.duplicate()
-	print(data)
-	add_item(interact_data["item_instanced"],interact_data["number_of_item"])
+	add_item(data["item_instanced"])
 
 
-func add_item(item_instanced, number):
+func add_item(item_instanced):
 	for items in available_items.keys():
-		if item_instanced == items and int(number) != 0:
+		if item_instanced == items:
 			var item_as_child = available_items[item_instanced].scene.instance()
-			update_data()
 			map_items.add_child(item_as_child)
 			get_tree().get_root().get_node(get_player()).item_handler._test_pickup(item_as_child)
 			
@@ -39,9 +37,3 @@ func get_player():
 				var player = data[key]
 				return player
 				
-func update_data():
-	var dic_to_change = data.duplicate()
-	var number = int(dic_to_change["number_of_item"])
-	dic_to_change["number_of_item"] = str(number - 1)
-	data = dic_to_change
-	#print(data)
