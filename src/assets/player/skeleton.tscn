@@ -2164,6 +2164,7 @@ graph_offset = Vector2( -311, 172 )
 [sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
 [node name="Skeleton" type="Node2D"]
+light_mask = 3
 material = SubResource( 1 )
 script = ExtResource( 13 )
 __meta__ = {
@@ -2185,6 +2186,7 @@ parameters/playback = SubResource( 17 )
 parameters/idle_move_blend/blend_position = Vector2( 0, 0 )
 
 [node name="LeftArm" type="Polygon2D" parent="."]
+light_mask = 3
 use_parent_material = true
 position = Vector2( -19.2083, -51.5386 )
 scale = Vector2( 0.05, 0.05 )
@@ -2200,6 +2202,7 @@ __meta__ = {
 }
 
 [node name="Body" type="Polygon2D" parent="."]
+light_mask = 3
 use_parent_material = true
 position = Vector2( -19.201, -51.6115 )
 scale = Vector2( 0.05, 0.05 )
@@ -2215,6 +2218,7 @@ __meta__ = {
 }
 
 [node name="LeftLeg" type="Polygon2D" parent="."]
+light_mask = 3
 use_parent_material = true
 position = Vector2( -19.1778, -51.5955 )
 scale = Vector2( 0.05, 0.05 )
@@ -2230,6 +2234,7 @@ __meta__ = {
 }
 
 [node name="Pants" type="Polygon2D" parent="."]
+light_mask = 3
 use_parent_material = true
 position = Vector2( -19.1778, -51.5955 )
 scale = Vector2( 0.05, 0.05 )
@@ -2245,6 +2250,7 @@ __meta__ = {
 }
 
 [node name="RightLeg" type="Polygon2D" parent="."]
+light_mask = 3
 use_parent_material = true
 position = Vector2( -19.2102, -51.5166 )
 scale = Vector2( 0.05, 0.05 )
@@ -2427,6 +2433,7 @@ __meta__ = {
 }
 
 [node name="Clothes" type="Sprite" parent="Skeleton/Spine"]
+light_mask = 3
 position = Vector2( -2.51719, -17.5472 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 2 )
@@ -2435,6 +2442,7 @@ __meta__ = {
 }
 
 [node name="Mouth" type="Sprite" parent="Skeleton/Spine"]
+light_mask = -2147483645
 position = Vector2( -2.5172, -17.5472 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 11 )
@@ -2443,6 +2451,7 @@ __meta__ = {
 }
 
 [node name="FacialHair" type="Sprite" parent="Skeleton/Spine"]
+light_mask = 3
 use_parent_material = true
 position = Vector2( -2.51719, -17.5472 )
 scale = Vector2( 0.05, 0.05 )
@@ -2452,6 +2461,7 @@ __meta__ = {
 }
 
 [node name="FaceWear" type="Sprite" parent="Skeleton/Spine"]
+light_mask = 3
 position = Vector2( -2.5172, -17.5472 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 8 )
@@ -2460,6 +2470,7 @@ __meta__ = {
 }
 
 [node name="HatHair" type="Sprite" parent="Skeleton/Spine"]
+light_mask = 3
 use_parent_material = true
 position = Vector2( -2.5172, -17.5472 )
 scale = Vector2( 0.05, 0.05 )
@@ -2469,6 +2480,7 @@ __meta__ = {
 }
 
 [node name="RightArm" type="Polygon2D" parent="."]
+light_mask = 3
 use_parent_material = true
 position = Vector2( -19.3352, -51.6 )
 scale = Vector2( 0.05, 0.05 )

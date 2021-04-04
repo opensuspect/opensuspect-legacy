@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/player/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/player/skeleton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/player/death_handler.gd" type="Script" id=3]
 [ext_resource path="res://assets/common/shaders/skin_color_key.shader" type="Shader" id=4]
 [ext_resource path="res://assets/common/shaders/player.shader" type="Shader" id=5]
+[ext_resource path="res://assets/player/textures/masking-light.png" type="Texture" id=6]
 [ext_resource path="res://assets/player/textures/light.png" type="Texture" id=15]
 [ext_resource path="res://assets/player/interactarea.gd" type="Script" id=16]
 [ext_resource path="res://assets/player/camera.gd" type="Script" id=27]
@@ -49,6 +50,7 @@ viewport_path = NodePath("SpritesViewport")
 [node name="Player" type="KinematicBody2D" groups=[
 "players",
 ]]
+light_mask = -2147483645
 collision_layer = 2
 script = ExtResource( 1 )
 
@@ -83,10 +85,20 @@ rotation = 1.5708
 shape = SubResource( 4 )
 
 [node name="MainLight" type="Light2D" parent="."]
-position = Vector2( -0.37458, -0.226169 )
+position = Vector2( 0, -40 )
 texture = ExtResource( 15 )
 texture_scale = 2.0
 mode = 2
+shadow_enabled = true
+
+[node name="MaskingLight" type="Light2D" parent="."]
+position = Vector2( 0, -40 )
+texture = ExtResource( 6 )
+texture_scale = 2.0
+mode = 3
+range_z_min = -4096
+range_z_max = 4096
+range_item_cull_mask = -2147483646
 shadow_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -144,6 +156,7 @@ __meta__ = {
 }
 
 [node name="ViewportTextureTarget" type="Sprite" parent="."]
+light_mask = 3
 material = SubResource( 7 )
 position = Vector2( 0, -25 )
 scale = Vector2( 0.2, 0.2 )
