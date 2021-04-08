@@ -4,7 +4,6 @@ Project coordinators
 --------------------
 Moxvallix
 NiceMicro
-w4e
 
 Team leaders
 ------------
@@ -69,7 +68,6 @@ Wandang
 Daniel071
 Botatokde
 Darshadi
-w4e
 
 Hall Of Fame:
 -------------
