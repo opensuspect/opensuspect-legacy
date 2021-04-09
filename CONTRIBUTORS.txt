@@ -4,7 +4,6 @@ Project coordinators
 --------------------
 Moxvallix
 NiceMicro
-w4e
 
 Team leaders
 ------------
@@ -69,8 +68,8 @@ Wandang
 Daniel071
 Botatokde
 Darshadi
-w4e
 
 Hall Of Fame:
 -------------
 Luke Connor - Previous art team leader | October - November 2020
+w4e - Previous project manager | October - December 2020
