@@ -17,6 +17,7 @@ window_title = "Meeting"
 resizable = true
 script = ExtResource( 3 )
 menu_name = "votemenu"
+disable_movement = true
 
 [node name="TabContainer" type="TabContainer" parent="."]
 anchor_right = 1.0
