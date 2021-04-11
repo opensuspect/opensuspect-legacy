@@ -14,6 +14,7 @@ interact_with = NodePath("")
 interact_data = {
 
 }
+advanced/network_sync = false
 
 [sub_resource type="Resource" id=4]
 resource_local_to_scene = true
@@ -23,8 +24,9 @@ ui_name = ""
 ui_data = {
 
 }
+action = 0
 advanced/reinstance = false
-advanced/only_instance = false
+advanced/free_on_close = false
 
 [sub_resource type="Resource" id=3]
 resource_local_to_scene = true
@@ -33,6 +35,8 @@ script = ExtResource( 5 )
 task_text = ""
 ui_resource = SubResource( 4 )
 outputs/toggle_map_interactions = false
+outputs/output_map_interactions = [  ]
+is_task_global = false
 
 [resource]
 resource_local_to_scene = true

@@ -10,6 +10,14 @@ const TRANSITIONS = {
 }
 
 var priority_amount: int = 6
+# PRIORITIES:
+# 0 : Switching main scenes in scenemanager.gd and toggling accept/refuse connections in network.gd
+#     Priority 0 should be reserved for cleanup and extremely essential functions.
+# 1 : Switching map in maps.gd
+# 2 : Tasks get sent to clients in taskmanager.gd
+# 3 : Assigning roles in playermanager.gd
+# 4 : N/A
+# 5 : Spawning players in main.gd
 
 #signals that help sync the gamestate
 #can be connected to from anywhere with GameManager.connect("<signal name>", self, "<function name>")
@@ -31,7 +39,7 @@ func transition(new_state: int) -> bool:
 		if get_tree().is_network_server():
 			rpc("receive_transition", new_state)
 		emit_state_changed_signals(old_state, new_state)
-		print("transition successful")
+		print("(gamemanager.gd, transition) State change signals emitted, transition successful")
 		return true
 	print("transition failed")
 	return false
@@ -44,7 +52,7 @@ puppet func receive_transition(new_state: int):
 		var old_state: int = state
 		state = new_state
 		emit_state_changed_signals(old_state, new_state)
-		print("transition successful")
+		print("(gamemanager.gd, receive_transition) State change signals emitted, transition successful")
 		return# true
 	print("transition failed")
 	return# false

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 90338d6e66b962c2e6ed4ca042c527e0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-11-13 20:23+0100\n"
-"PO-Revision-Date: 2020-11-14 14:32\n"
+"PO-Revision-Date: 2021-01-08 17:10\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../src/assets/maps/lobby/lobby.tscn:39
 msgid "LOBBY"
-msgstr ""
+msgstr "LOBY"
 
 #: ../../src/assets/maps/test/test.tscn:57
 msgid "clockset task"
@@ -28,7 +28,7 @@ msgstr ""
 
 #: ../../src/assets/maps/test/test.tscn:69
 msgid "735"
-msgstr ""
+msgstr "735"
 
 #: ../../src/assets/maps/test/test.tscn:89
 msgid "Interact chat"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: ../../src/assets/maps/test/test.tscn:101
 msgid "spooky empty room "
-msgstr ""
+msgstr "cuarto espantoso vacío "
 
 #: ../../src/assets/player/player.tscn:120
 msgid "Pog"
@@ -48,11 +48,11 @@ msgstr ""
 
 #: ../../src/assets/ui/hud/defaulthud/defaulthud.tscn:29
 msgid "Start Game"
-msgstr ""
+msgstr "Comenzar juego"
 
 #: ../../src/assets/ui/lobbyui/chatbox/chatbox.tscn:64
 msgid "Send"
-msgstr ""
+msgstr "Enviar"
 
 #: ../../src/assets/ui/mainmenu/mainmenu.tscn:42
 msgid "OpenSuspect"
@@ -85,12 +85,12 @@ msgstr "Puerto"
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:40
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:121
 msgid "42420"
-msgstr ""
+msgstr "42420"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:55
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:134
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: ../../src/assets/ui/mainmenu/playgame/playgame.tscn:67
 msgid "CREATE"
@@ -141,7 +141,7 @@ msgstr ""
 #: ../../src/assets/ui/submenus/settings/settings.gd:62
 #: ../../src/assets/ui/submenus/settings/settings.gd:64
 msgid "Video"
-msgstr ""
+msgstr "Vídeo"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:62
 msgid "Fullscreen"
@@ -153,7 +153,7 @@ msgstr ""
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:66
 msgid "Sound"
-msgstr ""
+msgstr "Sonido"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:67
 msgid "Locale"
@@ -161,12 +161,12 @@ msgstr ""
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:67
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: ../../src/assets/ui/submenus/settings/keybind/keybind.tscn:28
 #: ../../src/assets/ui/submenus/settings/settings.gd:81
 msgid "Back"
-msgstr ""
+msgstr "Volver"
 
 #: ../../src/assets/ui/submenus/settings/settings.gd:85
 msgid "Keybinds"
@@ -174,57 +174,57 @@ msgstr ""
 
 #: ../../src/assets/ui/submenus/settings/keybind/keybind.tscn:38
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:42
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:92
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:108
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:124
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:140
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:156
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:172
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:188
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:204
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:220
 msgid "9"
-msgstr ""
+msgstr "9"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:236
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:252
 msgid "11"
-msgstr ""
+msgstr "11"
 
 #: ../../src/assets/ui/tasks/clockset/clockset.tscn:268
 msgid "12"
-msgstr ""
+msgstr "12"
 

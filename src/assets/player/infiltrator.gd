@@ -18,12 +18,13 @@ signal stopped_reloading
 # Whether reloading may be cancelled or not
 export(Resource) var ui_interact_resource
 export (bool) var can_cancel_reload := true
-# Whether the infiltrator may kill or not
-var _killing_enabled: bool = true setget enable_killing, is_killing_enabled
-# If the infiltrator has executed a kill and has not reloaded yet; separate from
-# _killing_enabled as an infiltrator may be reloaded but an event may prevent
-# them from killing
-var _reloaded: bool = true setget set_reloaded, is_reloaded
+export (bool) var reload_only_empty := true
+
+# How many shots the infiltrator can take before needing to reload, and the shots left
+const max_shots: int = 1
+var _shots_left: int = 1
+# In case the gun has more than one shot, trigger ready is used by the kill cooldown timer
+var _trigger_ready: bool = true
 # Whether the infiltrator is reloading their weapon
 var _reloading: bool = false setget set_reloading, is_reloading
 # The highlighted target if the infiltrator decides to kill
@@ -32,40 +33,35 @@ var _target_player: KinematicBody2D
 func _ready() -> void:
 	if player.main_player:
 		_instantiate_kill_gui()
-	# Get Main parent node and connect kill player signal to it
-	var main: YSort = get_tree().get_root().find_node("Main", true, false)
-	connect("kill", main, "_on_infiltrator_kill")
+	# Get players.gd node and connect kill player signal to it
+	var player_node: YSort = get_tree().get_root().get_node("Main").get_node("players")
+	connect("kill", player_node, "_on_infiltrator_kill")
 
 func _process(delta: float) -> void:
 	if player.main_player:
-		if is_reloaded() and is_killing_enabled() and Input.is_action_just_pressed("kill") and \
-		   _target_player != null:
+		if is_killing_enabled() and Input.is_action_just_pressed("kill") and \
+				_target_player != null:
 			_kill_player()
 		elif Input.is_action_just_pressed("reload"):
 			if animator.current_animation == "Reload":
 				if can_cancel_reload:
 					_cancel_reload()
-			elif not is_reloaded():
+			elif _shots_left < max_shots and is_reload_enabled():
 				_reload()
-
-	if is_killing_enabled() and player.main_player:
+	if player.main_player:
 		_get_target()
+
+func is_reload_enabled() -> bool:
+	"""Returns wether the infiltrator can reload or not"""
+	if player.item_handler.has_item():
+		return false
+	if reload_only_empty and _shots_left > 0:
+		return false
+	return true
 
 func is_killing_enabled() -> bool:
 	"""Returns whether killing is enabled for the infiltrator."""
-	return _killing_enabled
-
-func enable_killing(enable: bool = true) -> void:
-	"""Enable or disable killing; may be used from outside of script."""
-	_killing_enabled = enable
-
-func is_reloaded() -> bool:
-	"""Check whether the infiltrator has reloaded."""
-	return _reloaded
-
-func set_reloaded(reloaded: bool) -> void:
-	"""Set whether the infiltrator has reloaded."""
-	_reloaded = reloaded
+	return _shots_left > 0 and _trigger_ready and not player.item_handler.has_item()
 
 func is_reloading() -> bool:
 	"""Returns whether the infiltrator is reloading their weapon."""
@@ -81,13 +77,13 @@ func _kill_player() -> void:
 		var target_sprite: Sprite = player.get_node("ViewportTextureTarget")
 		target_sprite.material.set_shader_param("line_color", Color.transparent)
 	emit_signal("kill", player, _target_player)
-	set_reloaded(false)
-	enable_killing(false)
-#	kill_cooldown_timer.start()
+	_shots_left -= 1
+	_trigger_ready = false
+	kill_cooldown_timer.start()
 
 func _get_target() -> void:
 	"""
-	Each frame, highlight the nearest target within the kill area in red as the
+	Each frame, outline the nearest target within the kill area in red as the
 	player who will be killed if the infiltrator decides to do so.
 	"""
 	var distance: float = INF
@@ -100,7 +96,7 @@ func _get_target() -> void:
 			if temp_distance < distance:
 				distance = temp_distance
 				_target_player = player
-	if _target_player != null:
+	if _target_player != null and is_killing_enabled():
 		var target_sprite: Sprite = _target_player.get_node("ViewportTextureTarget")
 		target_sprite.material.set_shader_param("line_color", Color.red)
 
@@ -123,6 +119,10 @@ func _cancel_reload() -> void:
 	emit_signal("stopped_reloading")
 	player.set_movement_disabled(false)
 
+func _finish_reload() -> void:
+	_shots_left = max_shots
+	_trigger_ready = true
+
 func _on_KillArea_body_exited(body: Node) -> void:
 	"""Remove the outline from the body that exited the kill area."""
 	if player.main_player:
@@ -131,7 +131,7 @@ func _on_KillArea_body_exited(body: Node) -> void:
 
 func _on_KillCooldownTimer_timeout() -> void:
 	"""Re-enable killing mechanic after cooldown ends."""
-	enable_killing()
+	_trigger_ready = true
 
 func _on_Animator_animation_finished(anim_name: String) -> void:
 	"""
@@ -140,7 +140,6 @@ func _on_Animator_animation_finished(anim_name: String) -> void:
 	"""
 	match anim_name:
 		"Reload":
-			set_reloaded(true)
+			_finish_reload()
 			set_reloading(false)
-			enable_killing()
 			player.set_movement_disabled(false)

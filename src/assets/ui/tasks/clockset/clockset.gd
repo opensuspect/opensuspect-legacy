@@ -1,9 +1,5 @@
 extends WindowDialogTask
 
-#var ui_data: Dictionary = {}
-var targetTime: int = 433
-var currentTime: int = 630
-
 onready var hoursNode: Node = get_node("clock/hours")
 onready var minutesNode: Node = get_node("clock/minutes")
 onready var ampmNode: Node = get_node("clock/ampm")
@@ -14,34 +10,36 @@ func _ready():
 	ampmNode.get_line_edit().connect("focus_entered", self, "_on_ampm_focus_entered")
 
 func open():
-	if ui_data.has("currentTime"):
-		currentTime = ui_data["currentTime"]
-# warning-ignore:narrowing_conversion
-	targetTime = round(rand_range(100, 1259))
-	targetTime = roundDown(targetTime, 100) + (targetTime % 100) % 60
-	setClockTime(currentTime)
-	setWatchTime(targetTime)
-	#print("current time: ", currentTime)
+	var res: Resource = get_res()
+	if not res.is_connected("times_updated", self, "times_updated"):
+# warning-ignore:return_value_discarded
+		res.connect("times_updated", self, "times_updated")
+	ui_data_updated()
 
-#func close():
-#	pass
+func ui_data_updated():
+	setClockTime(getCurrentTime())
+	setWatchTime(getTargetTime())
+	checkComplete()
 
 func checkComplete():
 	updateCurrentTime()
-	if currentTime == targetTime:
-		taskComplete()
+	var completed: bool = is_task_completed()
+	if completed:
+		get_res().complete_task()
+	set_clock_editable(not completed)
 
-func taskComplete():
-	#theoretically this is where it would hook into the task manager
-	#gotcha!
-	PlayerManager.assignedtasks[0] = 1
-#	print("clockset task complete")
-#	if ui_data.keys().has("linkedNode"):
-#		MapManager.interact_with(ui_data["linkedNode"], self, {"newText": str(currentTime)})
-	.complete_task({"newText": str(currentTime)})
-	#hide()
+#func taskComplete():
+#	.complete_task({"newText": str(getCurrentTime())})
 
-func setClockTime(newTime):
+func sync_task():
+	get_res().sync_task()
+
+func set_clock_editable(editable: bool):
+	for node in [hoursNode, minutesNode, ampmNode]:
+		node.editable = editable
+
+func setClockTime(newTime: int):
+# warning-ignore:integer_division
 	hoursNode.value = roundDown(newTime / 100, 1)
 	minutesNode.value = newTime % 100
 
@@ -49,13 +47,17 @@ func setWatchTime(newTime):
 	$watch/watchface.showTime(newTime)
 
 func updateCurrentTime():
-	currentTime = (hoursNode.value * 100) + minutesNode.value
+	var time = (hoursNode.value * 100) + minutesNode.value
+	get_res().set_current_time(time)
 
-func roundDown(num, step):
-	var normRound = stepify(num, step)
-	if normRound > num:
-		return normRound - step
-	return normRound
+func getTargetTime() -> int:
+	return get_res().get_target_time()
+
+func getCurrentTime() -> int:
+	return get_res().get_current_time()
+
+func get_res() -> Resource:
+	return TaskManager.get_task_resource(ui_data[TaskManager.TASK_ID_KEY])
 
 func _on_hours_value_changed(value):
 	if value == 0:
@@ -93,6 +95,32 @@ func _on_ampm_value_changed(value):
 		#added spaces so the number doesn't show up in spinbox
 		ampmNode.prefix = "PM" + "     "
 	checkComplete()
+	
+# returns a valid time(from 00:00 to 12:59)
+# num can be any value
+func normalise_time(num: int) -> int:
+	num = num % 1259
+	num = roundDown(num, 100) + (num % 100) % 60
+	if num < 100:
+		# this is military time, so can't have values smaller than 100
+		num += 1200
+	return num
+	
+func roundDown(num, step) -> int:
+	var normRound = stepify(num, step)
+	if normRound > num:
+		return normRound - step
+	return int(normRound)
+
+func times_updated(_target: int, _current: int, task_res: Resource):
+	# if the current task data matches the resource this signal is from
+	# this should prevent weirdness if multiple tasks are using this ui
+	if task_res != get_res():
+		return
+	ui_data_updated()
+
+func is_task_completed() -> bool:
+	return get_res().can_complete_task()
 
 #so you can't type into the spinboxes
 func _on_hours_focus_entered():
@@ -103,3 +131,6 @@ func _on_minutes_focus_entered():
 
 func _on_ampm_focus_entered():
 	grab_focus()
+
+func _on_clockset_popup_hide():
+	sync_task()

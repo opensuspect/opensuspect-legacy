@@ -2,16 +2,12 @@
 ![CI](https://github.com/opensuspect/opensuspect/workflows/CI/badge.svg?branch=main)
 # OpenSuspect
 
-*One amongst us is not like the rest*
-
-OpenSuspect is an open source online social deduction game, like mafia.
-
-OpenSuspect aims to be easily modifiable, however, our first maps are going to be focused around cold war themes.
-
-This project is in *very early stage* development.
-Interested to get involved? We'd love to hear from you.
-Join us at [`#opensuspect:matrix.org`](https://matrix.to/#/#opensuspect:matrix.org) on a Matrix client (element.io).
-If you need tech support, use our [`troubleshooting channel`](https://matrix.to/#/!OuHmTdwKPGMJCYeyZH:matrix.org?via=matrix.org&via=privacytools.io).
+*One amongst us is not like the rest*<br/>
+OpenSuspect is an open source online social deduction game, like mafia.<br/>
+OpenSuspect aims to be easily modifiable, however, our first maps and themes are going to be focused around the cold war.<br/>
+It uses the [`Godot Engine`](https://godotengine.org/).<br/>
+This project is in *very early stage* development. However, see [this](https://github.com/opensuspect/opensuspect/wiki/Playtesting) guide for early playtesting.<br/>
+Interested to get involved? We'd love to hear from you. Check out the [contributors guide](https://github.com/opensuspect/opensuspect/wiki/Contributors) to get involved.<br/>
 
 OpenSuspect is licensed under the GNU GPL v3 (see LICENSE.txt)
 
@@ -37,8 +33,8 @@ The main aims of the game:
 * multiplayer up to 15 players,
 * in game text chat,
 * role assignment,
-* tasks to perform for a clean victory of the "home team",
-* sabotage system for a clean victory of the "traitor team",
+* tasks to perform for a clean victory of the "agent team",
+* sabotage system for a clean victory of the "infiltrator team",
 * kill system,
 * mechanics for meetings,
 * unique miscellaneous map features (e.g. intercom system, environmental kills),
@@ -52,17 +48,3 @@ The main aims of the game:
 
 ### Implementation of our goals
 The exact way the abovementioned goals would be reached is part of the ongoing discussion in the community. Some points have been finalized, some are still being debated.
-
-Before contributing to the discussion, please, make sure you read through our quickly evolving documentation to see which topics are still up for debate.
-
-## Requirements for contributors
-After cloning the repository, you need git-lfs to handle asset storage and other large binary files.
-
-Please join our [`NextCloud instance`](https://nextcloud.opensuspect.com) under the same username, you use on Matrix, where most of the coordination will happen.
-
-Important Matrix (Element) rooms for contributors:
-* [`Main discussion room for contributing`](https://matrix.to/#/#opensuspect:matrix.org)
-* [`Important announcements with list of rooms`](https://matrix.to/#/!qpcAgDbArKnMphhMFm:matrix.org?via=matrix.org&via=madek.allaboutlbc.com&via=matrix.leander.media), please read back on this chatroom before contributing!
-* [`Troubleshooting`](https://matrix.to/#/!OuHmTdwKPGMJCYeyZH:matrix.org?via=matrix.org&via=privacytools.io)
-* [`Follow the discussion of the leaders' group here`](https://matrix.to/#/!iknjKWVUzTsLtMtsZN:matrix.org?via=matrix.org)
-* [`Chat used in parallel with voice call meetings`](https://matrix.to/#/!kFCSiUiVIysdSVtRzh:matrix.org?via=matrix.org&via=matrix.leander.media)

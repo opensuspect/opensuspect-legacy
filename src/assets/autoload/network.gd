@@ -67,6 +67,9 @@ remote func receiveName(newName):
 	print("names: ", names)
 	print(get_tree().is_network_server())
 	rset("names", names)
+	#Send all received customization data to the new player
+	AppearanceManager.sendBulkCustomization(sender)
+	AppearanceManager.queryCustomization(sender)
 	emit_signal("connection_handled", sender, newName)
 
 func _player_connected(id) -> void:
@@ -157,7 +160,7 @@ func connect_signals() -> void:
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 
 func get_my_id() -> int:
-	return myID
+	return get_tree().get_network_unique_id()
 
 func get_player_names() -> Dictionary:
 	return names
@@ -171,10 +174,19 @@ func get_player_name(id: int = myID) -> String:
 func get_peers() -> Array:
 	return peers
 
+func reset():
+	peers = []
+	names = {}
+	server = null
+	client = null
+	myID = 1
+	player_name = ""
+
 # warning-ignore:unused_argument
 func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -> void:
 	if priority != 0:
 		return
+	print("(network.gd/_on_state_changed_priority)")
 	match new_state:
 		GameManager.State.Normal:
 			print('Network manager refusing further connections')
@@ -182,3 +194,5 @@ func _on_state_changed_priority(old_state: int, new_state: int, priority: int) -
 		GameManager.State.Lobby:
 			print('Network manager allowing connections')
 			get_tree().set_refuse_new_network_connections(false)
+		GameManager.State.Start:
+			reset()
