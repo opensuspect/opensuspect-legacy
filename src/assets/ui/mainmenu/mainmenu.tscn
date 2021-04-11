@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=124 format=2]
 
 [ext_resource path="res://assets/ui/mainmenu/mainmenu.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/submenus/settings/keybind/keybind.tscn" type="PackedScene" id=2]
@@ -8,6 +8,1217 @@
 [ext_resource path="res://assets/common/fonts/menufont.tres" type="DynamicFont" id=6]
 [ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=7]
 [ext_resource path="res://assets/ui/submenus/appearance_editor/appearance_editor.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/common/themes/pngs/tree-arrow-collapse.png" type="Texture" id=9]
+[ext_resource path="res://assets/common/themes/pngs/vslider_grabber.png" type="Texture" id=10]
+[ext_resource path="res://assets/common/themes/pngs/windowdialog-panel.png" type="Texture" id=11]
+[ext_resource path="res://assets/common/themes/pngs/tree-checked.png" type="Texture" id=12]
+[ext_resource path="res://assets/common/themes/pngs/vslider_slider.png" type="Texture" id=13]
+[ext_resource path="res://assets/common/themes/pngs/windowdialog-close-hilite.png" type="Texture" id=14]
+[ext_resource path="res://assets/common/themes/pngs/vscrollbar-grabber-hilite.png" type="Texture" id=15]
+[ext_resource path="res://assets/common/themes/pngs/vscrollbar-grabber.png" type="Texture" id=16]
+[ext_resource path="res://assets/common/themes/pngs/windowdialog-close.png" type="Texture" id=17]
+[ext_resource path="res://assets/common/themes/pngs/tree-unchecked.png" type="Texture" id=18]
+[ext_resource path="res://assets/common/themes/pngs/tree-arrow.png" type="Texture" id=19]
+[ext_resource path="res://assets/common/themes/pngs/vscrollbar-scroll.png" type="Texture" id=20]
+[ext_resource path="res://assets/common/themes/pngs/vslider_grabber_hilite.png" type="Texture" id=21]
+[ext_resource path="res://assets/common/themes/pngs/menubutton_normal.png" type="Texture" id=22]
+[ext_resource path="res://assets/common/themes/pngs/checkbutton-on.png" type="Texture" id=23]
+[ext_resource path="res://assets/common/themes/pngs/lineedit-focus.png" type="Texture" id=24]
+[ext_resource path="res://assets/common/themes/pngs/lineedit-readonly.png" type="Texture" id=25]
+[ext_resource path="res://assets/common/themes/pngs/hscrollbar-grabber-hilite.png" type="Texture" id=26]
+[ext_resource path="res://assets/common/themes/pngs/menubutton_hover.png" type="Texture" id=27]
+[ext_resource path="res://assets/common/themes/pngs/tabcontainer-bg.png" type="Texture" id=28]
+[ext_resource path="res://assets/common/themes/pngs/checkbutton-off.png" type="Texture" id=29]
+[ext_resource path="res://assets/common/themes/pngs/tabcontainer-fg.png" type="Texture" id=30]
+[ext_resource path="res://assets/common/themes/pngs/textedit-focus.png" type="Texture" id=31]
+[ext_resource path="res://assets/common/themes/pngs/button_focus.png" type="Texture" id=32]
+[ext_resource path="res://assets/common/themes/pngs/menubutton_pressed.png" type="Texture" id=33]
+[ext_resource path="res://assets/common/themes/pngs/panel.png" type="Texture" id=34]
+[ext_resource path="res://assets/common/themes/pngs/textedit-normal.png" type="Texture" id=35]
+[ext_resource path="res://assets/common/themes/pngs/button_hover.png" type="Texture" id=36]
+[ext_resource path="res://assets/common/themes/pngs/menubutton_focus.png" type="Texture" id=37]
+[ext_resource path="res://assets/common/themes/pngs/textedit-completion.png" type="Texture" id=38]
+[ext_resource path="res://assets/common/themes/pngs/menubutton_disabled.png" type="Texture" id=39]
+[ext_resource path="res://assets/common/themes/pngs/button_disabled.png" type="Texture" id=40]
+[ext_resource path="res://assets/common/themes/pngs/hslider_slider.png" type="Texture" id=41]
+[ext_resource path="res://assets/common/themes/pngs/panelf.png" type="Texture" id=42]
+[ext_resource path="res://assets/common/themes/pngs/button_normal.png" type="Texture" id=43]
+[ext_resource path="res://assets/common/themes/pngs/lineedit-normal.png" type="Texture" id=44]
+[ext_resource path="res://assets/common/themes/pngs/hslider_grabber.png" type="Texture" id=45]
+[ext_resource path="res://assets/common/themes/pngs/hslider_grabber_hilite.png" type="Texture" id=46]
+[ext_resource path="res://assets/common/themes/pngs/menubutton_arrow.png" type="Texture" id=47]
+[ext_resource path="res://assets/common/themes/pngs/popuppanel.png" type="Texture" id=48]
+[ext_resource path="res://assets/common/themes/pngs/tabcontainer-increment-hilite.png" type="Texture" id=49]
+[ext_resource path="res://assets/common/themes/pngs/progressbar-fg.png" type="Texture" id=50]
+[ext_resource path="res://assets/common/themes/pngs/hscrollbar-grabber.png" type="Texture" id=51]
+[ext_resource path="res://assets/common/themes/pngs/tabcontainer-decrement-hilite.png" type="Texture" id=52]
+[ext_resource path="res://assets/common/themes/pngs/progressbar-bg.png" type="Texture" id=53]
+[ext_resource path="res://assets/common/themes/pngs/hscrollbar-scroll.png" type="Texture" id=54]
+[ext_resource path="res://assets/common/themes/pngs/button_pressed.png" type="Texture" id=55]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 40 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 32 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 36 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 43 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 55 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 32 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 40 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 32 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 36 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 43 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 7.0
+margin_right = 7.0
+margin_top = 7.0
+margin_bottom = 7.0
+
+[sub_resource type="StyleBoxTexture" id=11]
+texture = ExtResource( 55 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=12]
+texture = ExtResource( 51 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=13]
+texture = ExtResource( 26 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=14]
+texture = ExtResource( 54 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=15]
+texture = ExtResource( 54 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=16]
+texture = ExtResource( 26 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=17]
+texture = ExtResource( 41 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=18]
+texture = ExtResource( 24 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=19]
+texture = ExtResource( 44 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id=20]
+texture = ExtResource( 25 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=21]
+texture = ExtResource( 39 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=22]
+texture = ExtResource( 37 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=23]
+texture = ExtResource( 27 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=24]
+texture = ExtResource( 22 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=25]
+texture = ExtResource( 33 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=26]
+texture = ExtResource( 39 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 4.0
+margin_right = 20.0
+margin_top = 4.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=27]
+texture = ExtResource( 37 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=28]
+texture = ExtResource( 27 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 4.0
+margin_right = 20.0
+margin_top = 4.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=29]
+texture = ExtResource( 22 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 4.0
+margin_right = 20.0
+margin_top = 4.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=30]
+texture = ExtResource( 33 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 4.0
+margin_right = 20.0
+margin_top = 4.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=31]
+texture = ExtResource( 34 )
+region_rect = Rect2( 0, 0, 8, 8 )
+
+[sub_resource type="StyleBoxTexture" id=32]
+texture = ExtResource( 42 )
+region_rect = Rect2( 0, 0, 16, 32 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 19.0
+margin_bottom = 7.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=33]
+texture = ExtResource( 48 )
+region_rect = Rect2( 0, 0, 16, 32 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id=34]
+texture = ExtResource( 42 )
+region_rect = Rect2( 0, 0, 16, 32 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 19.0
+margin_bottom = 7.0
+
+[sub_resource type="StyleBoxTexture" id=35]
+texture = ExtResource( 32 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=36]
+texture = ExtResource( 48 )
+region_rect = Rect2( 0, 0, 16, 32 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 19.0
+margin_bottom = 7.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=37]
+texture = ExtResource( 48 )
+region_rect = Rect2( 0, 0, 16, 32 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 19.0
+margin_bottom = 7.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=38]
+texture = ExtResource( 53 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 10.0
+margin_right = 10.0
+
+[sub_resource type="StyleBoxTexture" id=39]
+texture = ExtResource( 50 )
+region_rect = Rect2( 0, 0, 32, 16 )
+margin_left = 7.0
+margin_right = 7.0
+
+[sub_resource type="StyleBoxTexture" id=40]
+texture = ExtResource( 32 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=41]
+texture = ExtResource( 42 )
+region_rect = Rect2( 0, 0, 16, 32 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 19.0
+margin_bottom = 7.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=42]
+texture = ExtResource( 28 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=43]
+texture = ExtResource( 30 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=44]
+texture = ExtResource( 38 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=45]
+texture = ExtResource( 31 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=46]
+texture = ExtResource( 35 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 12.0
+margin_right = 12.0
+margin_top = 12.0
+margin_bottom = 12.0
+
+[sub_resource type="StyleBoxEmpty" id=47]
+
+[sub_resource type="StyleBoxTexture" id=48]
+texture = ExtResource( 32 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=49]
+texture = ExtResource( 43 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxEmpty" id=50]
+
+[sub_resource type="StyleBoxTexture" id=51]
+texture = ExtResource( 55 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=52]
+texture = ExtResource( 42 )
+region_rect = Rect2( 0, 0, 16, 32 )
+margin_left = 9.0
+margin_right = 9.0
+margin_top = 9.0
+margin_bottom = 9.0
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+expand_margin_top = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id=53]
+texture = ExtResource( 35 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=54]
+texture = ExtResource( 55 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=55]
+texture = ExtResource( 32 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+margin_bottom = 6.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=56]
+texture = ExtResource( 55 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=57]
+texture = ExtResource( 32 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id=58]
+texture = ExtResource( 36 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id=59]
+texture = ExtResource( 36 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id=60]
+texture = ExtResource( 55 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id=61]
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=62]
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=63]
+texture = ExtResource( 20 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=64]
+texture = ExtResource( 20 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=65]
+texture = ExtResource( 13 )
+region_rect = Rect2( 0, 0, 16, 16 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=66]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 16, 64 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 28.0
+margin_bottom = 7.0
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+expand_margin_top = 26.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="Theme" id=67]
+resource_local_to_scene = true
+Button/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+Button/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = null
+Button/styles/disabled = SubResource( 1 )
+Button/styles/focus = SubResource( 2 )
+Button/styles/hover = SubResource( 3 )
+Button/styles/normal = SubResource( 4 )
+Button/styles/pressed = SubResource( 5 )
+CheckButton/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+CheckButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+CheckButton/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+CheckButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+CheckButton/constants/check_vadjust = 0
+CheckButton/constants/hseparation = 4
+CheckButton/fonts/font = null
+CheckButton/icons/off = ExtResource( 29 )
+CheckButton/icons/on = ExtResource( 23 )
+CheckButton/styles/disabled = null
+CheckButton/styles/focus = SubResource( 6 )
+CheckButton/styles/hover = null
+CheckButton/styles/normal = null
+CheckButton/styles/pressed = null
+ColorPicker/constants/h_width = 30
+ColorPicker/constants/label_width = 10
+ColorPicker/constants/margin = 4
+ColorPicker/constants/sv_height = 256
+ColorPicker/constants/sv_width = 256
+ColorPicker/icons/add_preset = null
+ColorPicker/icons/color_hue = null
+ColorPicker/icons/color_sample = null
+ColorPicker/icons/preset_bg = null
+ColorPicker/icons/screen_picker = null
+ColorPickerButton/colors/font_color = Color( 1, 1, 1, 1 )
+ColorPickerButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.3 )
+ColorPickerButton/colors/font_color_hover = Color( 1, 1, 1, 1 )
+ColorPickerButton/colors/font_color_pressed = Color( 0.8, 0.8, 0.8, 1 )
+ColorPickerButton/constants/hseparation = 2
+ColorPickerButton/fonts/font = null
+ColorPickerButton/icons/bg = null
+ColorPickerButton/styles/disabled = SubResource( 7 )
+ColorPickerButton/styles/focus = SubResource( 8 )
+ColorPickerButton/styles/hover = SubResource( 9 )
+ColorPickerButton/styles/normal = SubResource( 10 )
+ColorPickerButton/styles/pressed = SubResource( 11 )
+Dialogs/constants/button_margin = 32
+Dialogs/constants/margin = 10
+FileDialog/colors/files_disabled = Color( 0, 0, 0, 0.7 )
+FileDialog/icons/folder = null
+FileDialog/icons/parent_folder = null
+FileDialog/icons/reload = null
+GridContainer/constants/hseparation = 4
+GridContainer/constants/vseparation = 4
+HBoxContainer/constants/separation = 4
+HScrollBar/icons/decrement = null
+HScrollBar/icons/decrement_highlight = null
+HScrollBar/icons/increment = null
+HScrollBar/icons/increment_highlight = null
+HScrollBar/styles/grabber = SubResource( 12 )
+HScrollBar/styles/grabber_highlight = SubResource( 13 )
+HScrollBar/styles/grabber_pressed = null
+HScrollBar/styles/scroll = SubResource( 14 )
+HScrollBar/styles/scroll_focus = SubResource( 15 )
+HSeparator/constants/separation = 7
+HSeparator/styles/separator = null
+HSlider/icons/grabber = ExtResource( 45 )
+HSlider/icons/grabber_disabled = null
+HSlider/icons/grabber_highlight = ExtResource( 46 )
+HSlider/icons/tick = null
+HSlider/styles/focus = SubResource( 16 )
+HSlider/styles/grabber_area = null
+HSlider/styles/grabber_disabled = null
+HSlider/styles/grabber_highlight = null
+HSlider/styles/slider = SubResource( 17 )
+HSplitContainer/constants/autohide = 1
+HSplitContainer/constants/separation = 8
+HSplitContainer/icons/grabber = null
+HSplitContainer/styles/bg = null
+LineEdit/colors/cursor_color = Color( 0.941176, 0.941176, 0.941176, 1 )
+LineEdit/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+LineEdit/colors/font_color_selected = Color( 0, 0, 0, 1 )
+LineEdit/colors/selection_color = Color( 0.490196, 0.490196, 0.490196, 1 )
+LineEdit/constants/minimum_spaces = 8
+LineEdit/fonts/font = null
+LineEdit/styles/focus = SubResource( 18 )
+LineEdit/styles/normal = SubResource( 19 )
+LineEdit/styles/read_only = SubResource( 20 )
+MarginContainer/constants/margin_bottom = 15
+MarginContainer/constants/margin_left = 15
+MarginContainer/constants/margin_right = 15
+MarginContainer/constants/margin_top = 15
+MenuButton/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+MenuButton/colors/font_color_disabled = Color( 1, 1, 1, 0.3 )
+MenuButton/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+MenuButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+MenuButton/constants/hseparation = 2
+MenuButton/fonts/font = null
+MenuButton/styles/disabled = SubResource( 21 )
+MenuButton/styles/focus = SubResource( 22 )
+MenuButton/styles/hover = SubResource( 23 )
+MenuButton/styles/normal = SubResource( 24 )
+MenuButton/styles/pressed = SubResource( 25 )
+OptionButton/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+OptionButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+OptionButton/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+OptionButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+OptionButton/constants/arrow_margin = 1
+OptionButton/constants/hseparation = 2
+OptionButton/fonts/font = null
+OptionButton/icons/arrow = ExtResource( 47 )
+OptionButton/styles/disabled = SubResource( 26 )
+OptionButton/styles/focus = SubResource( 27 )
+OptionButton/styles/hover = SubResource( 28 )
+OptionButton/styles/normal = SubResource( 29 )
+OptionButton/styles/pressed = SubResource( 30 )
+Panel/styles/panel = SubResource( 31 )
+Panel/styles/panelf = SubResource( 32 )
+Panel/styles/panelnc = SubResource( 33 )
+PanelContainer/styles/panel = SubResource( 34 )
+PopupMenu/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+PopupMenu/colors/font_color_accel = Color( 0.7, 0.7, 0.7, 0.8 )
+PopupMenu/colors/font_color_disabled = Color( 0.4, 0.4, 0.4, 0.8 )
+PopupMenu/colors/font_color_hover = Color( 0.878431, 0.878431, 0.878431, 1 )
+PopupMenu/constants/hseparation = 2
+PopupMenu/constants/vseparation = 1
+PopupMenu/fonts/font = null
+PopupMenu/icons/checked = null
+PopupMenu/icons/radio_checked = null
+PopupMenu/icons/radio_unchecked = null
+PopupMenu/icons/submenu = ExtResource( 49 )
+PopupMenu/icons/unchecked = null
+PopupMenu/styles/hover = SubResource( 35 )
+PopupMenu/styles/panel = SubResource( 36 )
+PopupMenu/styles/panel_disabled = null
+PopupMenu/styles/separator = null
+PopupPanel/styles/panel = SubResource( 37 )
+ProgressBar/colors/font_color = Color( 0.941176, 0.941176, 0.941176, 1 )
+ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+ProgressBar/fonts/font = null
+ProgressBar/styles/bg = SubResource( 38 )
+ProgressBar/styles/fg = SubResource( 39 )
+RichTextLabel/colors/default_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+RichTextLabel/colors/font_color_selected = Color( 0.490196, 0.490196, 0.490196, 1 )
+RichTextLabel/colors/selection_color = Color( 0.1, 0.1, 1, 0.8 )
+RichTextLabel/constants/line_separation = 1
+RichTextLabel/constants/table_hseparation = 3
+RichTextLabel/constants/table_vseparation = 3
+RichTextLabel/fonts/bold_font = null
+RichTextLabel/fonts/bold_italics_font = null
+RichTextLabel/fonts/italics_font = null
+RichTextLabel/fonts/mono_font = null
+RichTextLabel/fonts/normal_font = null
+RichTextLabel/styles/focus = SubResource( 40 )
+RichTextLabel/styles/normal = null
+TabContainer/colors/font_color_bg = Color( 0.690196, 0.690196, 0.690196, 1 )
+TabContainer/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+TabContainer/colors/font_color_fg = Color( 0.941176, 0.941176, 0.941176, 1 )
+TabContainer/constants/hseparation = 2
+TabContainer/constants/label_valign_bg = 5
+TabContainer/constants/label_valign_fg = 4
+TabContainer/constants/side_margin = 5
+TabContainer/constants/top_margin = 5
+TabContainer/fonts/font = null
+TabContainer/icons/decrement = null
+TabContainer/icons/decrement_highlight = ExtResource( 52 )
+TabContainer/icons/increment = null
+TabContainer/icons/increment_highlight = ExtResource( 49 )
+TabContainer/icons/menu = null
+TabContainer/icons/menu_highlight = null
+TabContainer/styles/panel = SubResource( 41 )
+TabContainer/styles/tab_bg = SubResource( 42 )
+TabContainer/styles/tab_fg = SubResource( 43 )
+TextEdit/colors/background_color = Color( 0, 0, 0, 0 )
+TextEdit/colors/brace_mismatch_color = Color( 1, 0.2, 0.2, 1 )
+TextEdit/colors/breakpoint_color = Color( 0.8, 0.8, 0.4, 0.2 )
+TextEdit/colors/caret_background_color = Color( 0, 0, 0, 1 )
+TextEdit/colors/caret_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+TextEdit/colors/code_folding_color = Color( 0.8, 0.8, 0.8, 0.8 )
+TextEdit/colors/completion_background_color = Color( 0.172549, 0.164706, 0.196078, 1 )
+TextEdit/colors/completion_existing_color = Color( 0.87451, 0.87451, 0.87451, 0.129412 )
+TextEdit/colors/completion_font_color = Color( 0.666667, 0.666667, 0.666667, 1 )
+TextEdit/colors/completion_scroll_color = Color( 1, 1, 1, 1 )
+TextEdit/colors/completion_selected_color = Color( 0.262745, 0.258824, 0.266667, 1 )
+TextEdit/colors/current_line_color = Color( 0.25, 0.25, 0.26, 0.8 )
+TextEdit/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+TextEdit/colors/font_color_selected = Color( 0, 0, 0, 1 )
+TextEdit/colors/function_color = Color( 0.4, 0.635294, 0.807843, 1 )
+TextEdit/colors/line_number_color = Color( 0.666667, 0.666667, 0.666667, 0.4 )
+TextEdit/colors/mark_color = Color( 1, 0.4, 0.4, 0.4 )
+TextEdit/colors/member_variable_color = Color( 0.901961, 0.305882, 0.34902, 1 )
+TextEdit/colors/number_color = Color( 0.921569, 0.584314, 0.196078, 1 )
+TextEdit/colors/selection_color = Color( 0.490196, 0.490196, 0.490196, 1 )
+TextEdit/colors/symbol_color = Color( 0.941176, 0.941176, 0.941176, 1 )
+TextEdit/colors/word_highlighted_color = Color( 0.8, 0.9, 0.9, 0.15 )
+TextEdit/constants/completion_lines = 7
+TextEdit/constants/completion_max_width = 50
+TextEdit/constants/completion_scroll_width = 3
+TextEdit/constants/line_spacing = 1
+TextEdit/fonts/font = null
+TextEdit/icons/tab = null
+TextEdit/styles/completion = SubResource( 44 )
+TextEdit/styles/focus = SubResource( 45 )
+TextEdit/styles/normal = SubResource( 46 )
+TextEdit/styles/read_only = null
+ToolButton/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+ToolButton/colors/font_color_disabled = Color( 0.9, 0.95, 1, 0.3 )
+ToolButton/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+ToolButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+ToolButton/constants/hseparation = 2
+ToolButton/fonts/font = null
+ToolButton/styles/disabled = SubResource( 47 )
+ToolButton/styles/focus = SubResource( 48 )
+ToolButton/styles/hover = SubResource( 49 )
+ToolButton/styles/normal = SubResource( 50 )
+ToolButton/styles/pressed = SubResource( 51 )
+TooltipLabel/colors/font_color = Color( 1, 1, 1, 1 )
+TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0.1 )
+TooltipLabel/constants/shadow_offset_x = 1
+TooltipLabel/constants/shadow_offset_y = 1
+TooltipLabel/fonts/font = null
+TooltipPanel/styles/panel = SubResource( 52 )
+Tree/colors/cursor_color = Color( 0, 0, 0, 1 )
+Tree/colors/custom_button_font_highlight = Color( 0.941176, 0.941176, 0.941176, 1 )
+Tree/colors/drop_position_color = Color( 1, 0.3, 0.2, 1 )
+Tree/colors/font_color = Color( 0.690196, 0.690196, 0.690196, 1 )
+Tree/colors/font_color_selected = Color( 1, 1, 1, 1 )
+Tree/colors/guide_color = Color( 0, 0, 0, 0.1 )
+Tree/colors/relationship_line_color = Color( 0.27451, 0.27451, 0.27451, 1 )
+Tree/colors/selection_color = Color( 0.1, 0.1, 1, 0.8 )
+Tree/colors/title_button_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+Tree/constants/button_margin = 3
+Tree/constants/draw_relationship_lines = 0
+Tree/constants/guide_width = 1
+Tree/constants/hseparation = 2
+Tree/constants/item_margin = 12
+Tree/constants/scroll_border = 4
+Tree/constants/scroll_speed = 12
+Tree/constants/vseparation = 1
+Tree/fonts/font = null
+Tree/fonts/title_button_font = null
+Tree/icons/arrow = ExtResource( 19 )
+Tree/icons/arrow_collapsed = ExtResource( 9 )
+Tree/icons/checked = ExtResource( 12 )
+Tree/icons/select_arrow = null
+Tree/icons/unchecked = ExtResource( 18 )
+Tree/icons/updown = null
+Tree/styles/bg = SubResource( 53 )
+Tree/styles/bg_focus = null
+Tree/styles/button_pressed = SubResource( 54 )
+Tree/styles/cursor = SubResource( 55 )
+Tree/styles/cursor_unfocused = null
+Tree/styles/custom_button = null
+Tree/styles/custom_button_hover = null
+Tree/styles/custom_button_pressed = null
+Tree/styles/selected = SubResource( 56 )
+Tree/styles/selected_focus = SubResource( 57 )
+Tree/styles/title_button_hover = SubResource( 58 )
+Tree/styles/title_button_normal = SubResource( 59 )
+Tree/styles/title_button_pressed = SubResource( 60 )
+VBoxContainer/constants/separation = 4
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_highlight = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_highlight = null
+VScrollBar/styles/grabber = SubResource( 61 )
+VScrollBar/styles/grabber_highlight = SubResource( 62 )
+VScrollBar/styles/grabber_pressed = null
+VScrollBar/styles/scroll = SubResource( 63 )
+VScrollBar/styles/scroll_focus = SubResource( 64 )
+VSeparator/constants/separation = 7
+VSeparator/styles/separator = null
+VSlider/icons/grabber = ExtResource( 10 )
+VSlider/icons/grabber_disabled = null
+VSlider/icons/grabber_highlight = ExtResource( 21 )
+VSlider/icons/tick = null
+VSlider/styles/focus = null
+VSlider/styles/grabber_area = null
+VSlider/styles/grabber_disabled = null
+VSlider/styles/grabber_highlight = null
+VSlider/styles/slider = SubResource( 65 )
+VSplitContainer/constants/autohide = 1
+VSplitContainer/constants/separation = 8
+VSplitContainer/icons/grabber = null
+VSplitContainer/styles/bg = null
+WindowDialog/colors/title_color = Color( 1, 1, 1, 1 )
+WindowDialog/constants/close_h_ofs = 22
+WindowDialog/constants/close_v_ofs = 20
+WindowDialog/constants/scaleborder_size = 4
+WindowDialog/constants/title_height = 20
+WindowDialog/fonts/title_font = null
+WindowDialog/icons/close = ExtResource( 17 )
+WindowDialog/icons/close_highlight = ExtResource( 14 )
+WindowDialog/styles/panel = SubResource( 66 )
+
+[sub_resource type="Theme" id=68]
+resource_local_to_scene = true
+Button/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+Button/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = null
+Button/styles/disabled = SubResource( 1 )
+Button/styles/focus = SubResource( 2 )
+Button/styles/hover = SubResource( 3 )
+Button/styles/normal = SubResource( 4 )
+Button/styles/pressed = SubResource( 5 )
+CheckButton/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+CheckButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+CheckButton/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+CheckButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+CheckButton/constants/check_vadjust = 0
+CheckButton/constants/hseparation = 4
+CheckButton/fonts/font = null
+CheckButton/icons/off = ExtResource( 29 )
+CheckButton/icons/on = ExtResource( 23 )
+CheckButton/styles/disabled = null
+CheckButton/styles/focus = SubResource( 6 )
+CheckButton/styles/hover = null
+CheckButton/styles/normal = null
+CheckButton/styles/pressed = null
+ColorPicker/constants/h_width = 30
+ColorPicker/constants/label_width = 10
+ColorPicker/constants/margin = 4
+ColorPicker/constants/sv_height = 256
+ColorPicker/constants/sv_width = 256
+ColorPicker/icons/add_preset = null
+ColorPicker/icons/color_hue = null
+ColorPicker/icons/color_sample = null
+ColorPicker/icons/preset_bg = null
+ColorPicker/icons/screen_picker = null
+ColorPickerButton/colors/font_color = Color( 1, 1, 1, 1 )
+ColorPickerButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.3 )
+ColorPickerButton/colors/font_color_hover = Color( 1, 1, 1, 1 )
+ColorPickerButton/colors/font_color_pressed = Color( 0.8, 0.8, 0.8, 1 )
+ColorPickerButton/constants/hseparation = 2
+ColorPickerButton/fonts/font = null
+ColorPickerButton/icons/bg = null
+ColorPickerButton/styles/disabled = SubResource( 7 )
+ColorPickerButton/styles/focus = SubResource( 8 )
+ColorPickerButton/styles/hover = SubResource( 9 )
+ColorPickerButton/styles/normal = SubResource( 10 )
+ColorPickerButton/styles/pressed = SubResource( 11 )
+Dialogs/constants/button_margin = 32
+Dialogs/constants/margin = 10
+FileDialog/colors/files_disabled = Color( 0, 0, 0, 0.7 )
+FileDialog/icons/folder = null
+FileDialog/icons/parent_folder = null
+FileDialog/icons/reload = null
+GridContainer/constants/hseparation = 4
+GridContainer/constants/vseparation = 4
+HBoxContainer/constants/separation = 4
+HScrollBar/icons/decrement = null
+HScrollBar/icons/decrement_highlight = null
+HScrollBar/icons/increment = null
+HScrollBar/icons/increment_highlight = null
+HScrollBar/styles/grabber = SubResource( 12 )
+HScrollBar/styles/grabber_highlight = SubResource( 13 )
+HScrollBar/styles/grabber_pressed = null
+HScrollBar/styles/scroll = SubResource( 14 )
+HScrollBar/styles/scroll_focus = SubResource( 15 )
+HSeparator/constants/separation = 7
+HSeparator/styles/separator = null
+HSlider/icons/grabber = ExtResource( 45 )
+HSlider/icons/grabber_disabled = null
+HSlider/icons/grabber_highlight = ExtResource( 46 )
+HSlider/icons/tick = null
+HSlider/styles/focus = SubResource( 16 )
+HSlider/styles/grabber_area = null
+HSlider/styles/grabber_disabled = null
+HSlider/styles/grabber_highlight = null
+HSlider/styles/slider = SubResource( 17 )
+HSplitContainer/constants/autohide = 1
+HSplitContainer/constants/separation = 8
+HSplitContainer/icons/grabber = null
+HSplitContainer/styles/bg = null
+LineEdit/colors/cursor_color = Color( 0.941176, 0.941176, 0.941176, 1 )
+LineEdit/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+LineEdit/colors/font_color_selected = Color( 0, 0, 0, 1 )
+LineEdit/colors/selection_color = Color( 0.490196, 0.490196, 0.490196, 1 )
+LineEdit/constants/minimum_spaces = 8
+LineEdit/fonts/font = null
+LineEdit/styles/focus = SubResource( 18 )
+LineEdit/styles/normal = SubResource( 19 )
+LineEdit/styles/read_only = SubResource( 20 )
+MarginContainer/constants/margin_bottom = 15
+MarginContainer/constants/margin_left = 15
+MarginContainer/constants/margin_right = 15
+MarginContainer/constants/margin_top = 15
+MenuButton/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+MenuButton/colors/font_color_disabled = Color( 1, 1, 1, 0.3 )
+MenuButton/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+MenuButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+MenuButton/constants/hseparation = 2
+MenuButton/fonts/font = null
+MenuButton/styles/disabled = SubResource( 21 )
+MenuButton/styles/focus = SubResource( 22 )
+MenuButton/styles/hover = SubResource( 23 )
+MenuButton/styles/normal = SubResource( 24 )
+MenuButton/styles/pressed = SubResource( 25 )
+OptionButton/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+OptionButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+OptionButton/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+OptionButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+OptionButton/constants/arrow_margin = 1
+OptionButton/constants/hseparation = 2
+OptionButton/fonts/font = null
+OptionButton/icons/arrow = ExtResource( 47 )
+OptionButton/styles/disabled = SubResource( 26 )
+OptionButton/styles/focus = SubResource( 27 )
+OptionButton/styles/hover = SubResource( 28 )
+OptionButton/styles/normal = SubResource( 29 )
+OptionButton/styles/pressed = SubResource( 30 )
+Panel/styles/panel = SubResource( 31 )
+Panel/styles/panelf = SubResource( 32 )
+Panel/styles/panelnc = SubResource( 33 )
+PanelContainer/styles/panel = SubResource( 34 )
+PopupMenu/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+PopupMenu/colors/font_color_accel = Color( 0.7, 0.7, 0.7, 0.8 )
+PopupMenu/colors/font_color_disabled = Color( 0.4, 0.4, 0.4, 0.8 )
+PopupMenu/colors/font_color_hover = Color( 0.878431, 0.878431, 0.878431, 1 )
+PopupMenu/constants/hseparation = 2
+PopupMenu/constants/vseparation = 1
+PopupMenu/fonts/font = null
+PopupMenu/icons/checked = null
+PopupMenu/icons/radio_checked = null
+PopupMenu/icons/radio_unchecked = null
+PopupMenu/icons/submenu = ExtResource( 49 )
+PopupMenu/icons/unchecked = null
+PopupMenu/styles/hover = SubResource( 35 )
+PopupMenu/styles/panel = SubResource( 36 )
+PopupMenu/styles/panel_disabled = null
+PopupMenu/styles/separator = null
+PopupPanel/styles/panel = SubResource( 37 )
+ProgressBar/colors/font_color = Color( 0.941176, 0.941176, 0.941176, 1 )
+ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+ProgressBar/fonts/font = null
+ProgressBar/styles/bg = SubResource( 38 )
+ProgressBar/styles/fg = SubResource( 39 )
+RichTextLabel/colors/default_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+RichTextLabel/colors/font_color_selected = Color( 0.490196, 0.490196, 0.490196, 1 )
+RichTextLabel/colors/selection_color = Color( 0.1, 0.1, 1, 0.8 )
+RichTextLabel/constants/line_separation = 1
+RichTextLabel/constants/table_hseparation = 3
+RichTextLabel/constants/table_vseparation = 3
+RichTextLabel/fonts/bold_font = null
+RichTextLabel/fonts/bold_italics_font = null
+RichTextLabel/fonts/italics_font = null
+RichTextLabel/fonts/mono_font = null
+RichTextLabel/fonts/normal_font = null
+RichTextLabel/styles/focus = SubResource( 40 )
+RichTextLabel/styles/normal = null
+TabContainer/colors/font_color_bg = Color( 0.690196, 0.690196, 0.690196, 1 )
+TabContainer/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+TabContainer/colors/font_color_fg = Color( 0.941176, 0.941176, 0.941176, 1 )
+TabContainer/constants/hseparation = 2
+TabContainer/constants/label_valign_bg = 5
+TabContainer/constants/label_valign_fg = 4
+TabContainer/constants/side_margin = 5
+TabContainer/constants/top_margin = 5
+TabContainer/fonts/font = null
+TabContainer/icons/decrement = null
+TabContainer/icons/decrement_highlight = ExtResource( 52 )
+TabContainer/icons/increment = null
+TabContainer/icons/increment_highlight = ExtResource( 49 )
+TabContainer/icons/menu = null
+TabContainer/icons/menu_highlight = null
+TabContainer/styles/panel = SubResource( 41 )
+TabContainer/styles/tab_bg = SubResource( 42 )
+TabContainer/styles/tab_fg = SubResource( 43 )
+TextEdit/colors/background_color = Color( 0, 0, 0, 0 )
+TextEdit/colors/brace_mismatch_color = Color( 1, 0.2, 0.2, 1 )
+TextEdit/colors/breakpoint_color = Color( 0.8, 0.8, 0.4, 0.2 )
+TextEdit/colors/caret_background_color = Color( 0, 0, 0, 1 )
+TextEdit/colors/caret_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+TextEdit/colors/code_folding_color = Color( 0.8, 0.8, 0.8, 0.8 )
+TextEdit/colors/completion_background_color = Color( 0.172549, 0.164706, 0.196078, 1 )
+TextEdit/colors/completion_existing_color = Color( 0.87451, 0.87451, 0.87451, 0.129412 )
+TextEdit/colors/completion_font_color = Color( 0.666667, 0.666667, 0.666667, 1 )
+TextEdit/colors/completion_scroll_color = Color( 1, 1, 1, 1 )
+TextEdit/colors/completion_selected_color = Color( 0.262745, 0.258824, 0.266667, 1 )
+TextEdit/colors/current_line_color = Color( 0.25, 0.25, 0.26, 0.8 )
+TextEdit/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+TextEdit/colors/font_color_selected = Color( 0, 0, 0, 1 )
+TextEdit/colors/function_color = Color( 0.4, 0.635294, 0.807843, 1 )
+TextEdit/colors/line_number_color = Color( 0.666667, 0.666667, 0.666667, 0.4 )
+TextEdit/colors/mark_color = Color( 1, 0.4, 0.4, 0.4 )
+TextEdit/colors/member_variable_color = Color( 0.901961, 0.305882, 0.34902, 1 )
+TextEdit/colors/number_color = Color( 0.921569, 0.584314, 0.196078, 1 )
+TextEdit/colors/selection_color = Color( 0.490196, 0.490196, 0.490196, 1 )
+TextEdit/colors/symbol_color = Color( 0.941176, 0.941176, 0.941176, 1 )
+TextEdit/colors/word_highlighted_color = Color( 0.8, 0.9, 0.9, 0.15 )
+TextEdit/constants/completion_lines = 7
+TextEdit/constants/completion_max_width = 50
+TextEdit/constants/completion_scroll_width = 3
+TextEdit/constants/line_spacing = 1
+TextEdit/fonts/font = null
+TextEdit/icons/tab = null
+TextEdit/styles/completion = SubResource( 44 )
+TextEdit/styles/focus = SubResource( 45 )
+TextEdit/styles/normal = SubResource( 46 )
+TextEdit/styles/read_only = null
+ToolButton/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+ToolButton/colors/font_color_disabled = Color( 0.9, 0.95, 1, 0.3 )
+ToolButton/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+ToolButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+ToolButton/constants/hseparation = 2
+ToolButton/fonts/font = null
+ToolButton/styles/disabled = SubResource( 47 )
+ToolButton/styles/focus = SubResource( 48 )
+ToolButton/styles/hover = SubResource( 49 )
+ToolButton/styles/normal = SubResource( 50 )
+ToolButton/styles/pressed = SubResource( 51 )
+TooltipLabel/colors/font_color = Color( 1, 1, 1, 1 )
+TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0.1 )
+TooltipLabel/constants/shadow_offset_x = 1
+TooltipLabel/constants/shadow_offset_y = 1
+TooltipLabel/fonts/font = null
+TooltipPanel/styles/panel = SubResource( 52 )
+Tree/colors/cursor_color = Color( 0, 0, 0, 1 )
+Tree/colors/custom_button_font_highlight = Color( 0.941176, 0.941176, 0.941176, 1 )
+Tree/colors/drop_position_color = Color( 1, 0.3, 0.2, 1 )
+Tree/colors/font_color = Color( 0.690196, 0.690196, 0.690196, 1 )
+Tree/colors/font_color_selected = Color( 1, 1, 1, 1 )
+Tree/colors/guide_color = Color( 0, 0, 0, 0.1 )
+Tree/colors/relationship_line_color = Color( 0.27451, 0.27451, 0.27451, 1 )
+Tree/colors/selection_color = Color( 0.1, 0.1, 1, 0.8 )
+Tree/colors/title_button_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+Tree/constants/button_margin = 3
+Tree/constants/draw_relationship_lines = 0
+Tree/constants/guide_width = 1
+Tree/constants/hseparation = 2
+Tree/constants/item_margin = 12
+Tree/constants/scroll_border = 4
+Tree/constants/scroll_speed = 12
+Tree/constants/vseparation = 1
+Tree/fonts/font = null
+Tree/fonts/title_button_font = null
+Tree/icons/arrow = ExtResource( 19 )
+Tree/icons/arrow_collapsed = ExtResource( 9 )
+Tree/icons/checked = ExtResource( 12 )
+Tree/icons/select_arrow = null
+Tree/icons/unchecked = ExtResource( 18 )
+Tree/icons/updown = null
+Tree/styles/bg = SubResource( 53 )
+Tree/styles/bg_focus = null
+Tree/styles/button_pressed = SubResource( 54 )
+Tree/styles/cursor = SubResource( 55 )
+Tree/styles/cursor_unfocused = null
+Tree/styles/custom_button = null
+Tree/styles/custom_button_hover = null
+Tree/styles/custom_button_pressed = null
+Tree/styles/selected = SubResource( 56 )
+Tree/styles/selected_focus = SubResource( 57 )
+Tree/styles/title_button_hover = SubResource( 58 )
+Tree/styles/title_button_normal = SubResource( 59 )
+Tree/styles/title_button_pressed = SubResource( 60 )
+VBoxContainer/constants/separation = 4
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_highlight = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_highlight = null
+VScrollBar/styles/grabber = SubResource( 61 )
+VScrollBar/styles/grabber_highlight = SubResource( 62 )
+VScrollBar/styles/grabber_pressed = null
+VScrollBar/styles/scroll = SubResource( 63 )
+VScrollBar/styles/scroll_focus = SubResource( 64 )
+VSeparator/constants/separation = 7
+VSeparator/styles/separator = null
+VSlider/icons/grabber = ExtResource( 10 )
+VSlider/icons/grabber_disabled = null
+VSlider/icons/grabber_highlight = ExtResource( 21 )
+VSlider/icons/tick = null
+VSlider/styles/focus = null
+VSlider/styles/grabber_area = null
+VSlider/styles/grabber_disabled = null
+VSlider/styles/grabber_highlight = null
+VSlider/styles/slider = SubResource( 65 )
+VSplitContainer/constants/autohide = 1
+VSplitContainer/constants/separation = 8
+VSplitContainer/icons/grabber = null
+VSplitContainer/styles/bg = null
+WindowDialog/colors/title_color = Color( 1, 1, 1, 1 )
+WindowDialog/constants/close_h_ofs = 22
+WindowDialog/constants/close_v_ofs = 20
+WindowDialog/constants/scaleborder_size = 4
+WindowDialog/constants/title_height = 20
+WindowDialog/fonts/title_font = null
+WindowDialog/icons/close = ExtResource( 17 )
+WindowDialog/icons/close_highlight = ExtResource( 14 )
+WindowDialog/styles/panel = SubResource( 66 )
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -216,6 +1427,7 @@ margin_left = 64.0
 margin_top = 15.0
 margin_right = 704.0
 margin_bottom = 215.0
+theme = SubResource( 67 )
 
 [node name="KeyBind" parent="." instance=ExtResource( 2 )]
 visible = false
@@ -224,6 +1436,7 @@ anchor_bottom = 1.0
 
 [node name="AppearanceEditor" parent="." instance=ExtResource( 8 )]
 visible = false
+theme = SubResource( 68 )
 [connection signal="returnToMainMenu" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_MenuArea_returnToMainMenu"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2/CenterContainer/Appearence" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_Appearence_pressed"]

@@ -1,0 +1,125 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=1]
+[ext_resource path="res://assets/ui/common/elements/chatboxbase/chatboxbase.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ui/lobbyui/voteui/voteui.gd" type="Script" id=3]
+[ext_resource path="res://assets/ui/lobbyui/voteui/votebuttongrid/VoteButtonGrid.tscn" type="PackedScene" id=4]
+
+[node name="voteui" type="WindowDialog"]
+anchor_left = 0.05
+anchor_top = 0.09
+anchor_right = 0.95
+anchor_bottom = 0.95
+rect_min_size = Vector2( 500, 350 )
+theme = ExtResource( 1 )
+popup_exclusive = true
+window_title = "Meeting"
+resizable = true
+script = ExtResource( 3 )
+menu_name = "votemenu"
+disable_movement = true
+
+[node name="TabContainer" type="TabContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Vote" type="MarginContainer" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = 51.0
+margin_right = -6.0
+margin_bottom = -7.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 0
+custom_constants/margin_top = -16
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
+
+[node name="VoteControl" type="Control" parent="TabContainer/Vote"]
+margin_top = -16.0
+margin_right = 909.0
+margin_bottom = 458.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Vote/VoteControl"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VoteButtonGrid" parent="TabContainer/Vote/VoteControl/VBoxContainer" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 909.0
+margin_bottom = 436.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Vote/VoteControl/VBoxContainer"]
+margin_top = 440.0
+margin_right = 909.0
+margin_bottom = 474.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="TabContainer/Vote/VoteControl/VBoxContainer/HBoxContainer"]
+margin_right = 44.0
+margin_bottom = 34.0
+
+[node name="skip" type="Button" parent="TabContainer/Vote/VoteControl/VBoxContainer/HBoxContainer/CenterContainer"]
+margin_right = 44.0
+margin_bottom = 34.0
+size_flags_vertical = 0
+text = "Skip"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Vote/VoteControl/VBoxContainer/HBoxContainer"]
+margin_left = 48.0
+margin_right = 909.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="TimerText" type="RichTextLabel" parent="TabContainer/Vote/VoteControl/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 861.0
+margin_bottom = 28.0
+grow_horizontal = 0
+grow_vertical = 2
+rect_clip_content = false
+size_flags_horizontal = 3
+bbcode_enabled = true
+bbcode_text = "[right]Time left: 0s"
+text = "Time left: 0s"
+fit_content_height = true
+scroll_active = false
+
+[node name="Chat" type="MarginContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = 51.0
+margin_right = -6.0
+margin_bottom = -7.0
+
+[node name="chatboxbase" parent="TabContainer/Chat" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 894.0
+margin_bottom = 443.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

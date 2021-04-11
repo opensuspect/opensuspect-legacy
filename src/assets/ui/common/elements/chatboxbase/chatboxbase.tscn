@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/ui/common/elements/chatboxbase/chatboxbase.gd" type="Script" id=1]
+
+[node name="chatboxbase" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="chatboxText" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -65.0
+focus_mode = 2
+bbcode_enabled = true
+selection_enabled = true
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -55.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="HBoxContainer"]
+margin_right = 971.0
+margin_bottom = 55.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+wrap_enabled = true
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="send" type="Button" parent="HBoxContainer"]
+margin_left = 975.0
+margin_right = 1024.0
+margin_bottom = 55.0
+text = "Send"
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+[connection signal="cursor_changed" from="HBoxContainer/TextEdit" to="." method="_on_TextEdit_cursor_changed"]
+[connection signal="text_changed" from="HBoxContainer/TextEdit" to="." method="_on_TextEdit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/send" to="." method="_on_send_pressed"]

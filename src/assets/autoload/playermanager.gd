@@ -6,6 +6,13 @@ extends Node
 var inMenu = false
 var ourrole
 var ournumber
+var tasks = [-1]
+var taskstoassign
+var assignedtasks
+
+# stores messages so they can be shown on multiple chatboxes
+var chatbox_cache: Array
+
 #vars for role assignment
 #Percent assigns based on what % should be x role, Amount assigns given amount to x role
 #mustAssign specifies if the role is mandatory to have, team specifies a team number which
@@ -14,15 +21,15 @@ var ournumber
 #in case of tie (check main.gd for details).
 enum assignStyle {Percent, Amount}
 var style: int = assignStyle.Percent
-var enabledRoles: Array = ["infiltrator", "detective", "agent"]
-var roles: Dictionary = {"infiltrator": {"percent": float(2)/7, "amount": 1, "mustAssign": true, "team": 1}, 
+var enabledRoles: Array = ["traitor", "detective", "default"]
+var roles: Dictionary = {"traitor": {"percent": float(2)/7, "amount": 1, "mustAssign": true, "team": 1}, 
 						"detective": {"percent": float(1)/7, "amount": 1, "mustAssign": false, "team": 0}, 
-						"agent": {"percent": 0, "amount": 0, "mustAssign": false, "team": 0}}
+						"default": {"percent": 0, "amount": 0, "mustAssign": false, "team": 0}}
 var players: Dictionary = {}
 var playerRoles: Dictionary = {}
-var playerColors: Dictionary = {enabledRoles[0]: Color(1,0,0),# infiltrator
+var playerColors: Dictionary = {enabledRoles[0]: Color(1,0,0),# traitor
 								enabledRoles[1]: Color(0,0,1),# detective
-								enabledRoles[2]: Color(1,1,1)}# agent
+								enabledRoles[2]: Color(1,1,1)}# default
 var rng = RandomNumberGenerator.new()
 signal roles_assigned
 
@@ -31,19 +38,36 @@ func _ready():
 # warning-ignore:return_value_discarded
 	GameManager.connect("state_changed_priority", self, "state_changed_priority")
 
+func assigntasks():
+	for id in Network.peers:
+		taskstoassign = tasks
+		for task in taskstoassign:
+			if task == -1:
+				rng.randomize()
+				taskstoassign[task] = rng.randi_range(-1,0)
+				print("task assigned,",taskstoassign[task])
+		if id == 1:
+			assignedtasks = taskstoassign
+			print("host tasks assigned",taskstoassign)
+		else:
+			rpc_id(id,"gettasks",taskstoassign)
+			print("client tasks assigned",taskstoassign)
+
+remote func gettasks(tasksget):
+	assignedtasks = tasksget
+	print("we got our tasks!")
+
 # warning-ignore:unused_argument
 func state_changed_priority(old_state: int, new_state: int, priority: int):
-	if priority != 3:
+	if priority != 2:
 		return
-	print("(playermanager.gd/state_changed_priority)")
 	match new_state:
 		GameManager.State.Normal:
 			assignRoles(Network.get_peers())
 		GameManager.State.Lobby:
-			TaskManager.reset_tasks()
 			#revoke special roles when players move to lobby
 			for i in playerRoles.keys():
-				playerRoles[i] = "agent"
+				playerRoles[i] = "default"
 			emit_signal("roles_assigned", playerRoles)
 
 func assignRoles(players: Array):
@@ -56,12 +80,12 @@ func assignRoles(players: Array):
 	toAssign.shuffle()
 	#print(toAssign)
 	var playerAmount = toAssign.size()
-	TaskManager.assign_tasks()
+	assigntasks()
 
 	#if using percent, find how many of each role to assign
 	if style == assignStyle.Percent:
 		for i in enabledRoles:
-			if not roles.keys().has(i) or i == "agent":
+			if not roles.keys().has(i) or i == "default":
 				continue
 			#rounds down to be more predictable, if percent is 1/7th, role won't be assigned until there are 7 players
 			roles[i].amount = roundDown(roles[i].percent * playerAmount, 1)
@@ -69,14 +93,14 @@ func assignRoles(players: Array):
 				roles[i].amount = 1
 
 	# of players that aren't going to be assigned to a special role
-	var agents = playerAmount
+	var defaults = playerAmount
 	for i in enabledRoles:
-		if not roles.keys().has(i) or i == "agent":
+		if not roles.keys().has(i) or i == "default":
 			continue
-		agents -= roles[i].amount
-	if agents < 0:
-		agents = 0
-	roles.agent.amount = agents
+		defaults -= roles[i].amount
+	if defaults < 0:
+		defaults = 0
+	roles.default.amount = defaults
 	#print("roles: ", roles)
 
 	#actually assign roles
@@ -100,13 +124,6 @@ func roundDown(num, step):
 	if normRound > num:
 		return normRound - step
 	return normRound
-
-#TODO recieve a signal that initiates the application of customization to a player sprite.
-
-func getPlayerById(id) -> KinematicBody2D:
-	if players.has(id):
-		return players[id]
-	return null
 
 func get_main_player() -> KinematicBody2D:
 	"""Gets the main player on the local client."""
@@ -145,3 +162,39 @@ func setourrole():
 	ourrole = PlayerManager.get_player_role(Network.myID)
 	print(ourrole)
 	emit_signal("roles_assigned", playerRoles)
+
+signal message_received(sender, content, color)
+signal message_received_server(sender, content, color)
+signal bulk_messages_received(messages)
+
+func send_message(content: String, color):
+	print("message sent")
+	if get_tree().is_network_server():
+		# sender is 1 because the server always has a network ID of 1
+		send_message_server(1, content, color)
+	rpc_id(1, "receive_message_server", Network.get_my_id(), content, color)
+
+# used by the server to sync messages, not to send messages written by the host player
+func send_message_server(sender: int, content: String, color):
+	print("message sent server")
+	if not get_tree().is_network_server():
+		return
+	rpc("receive_message", sender, content, color)
+
+puppet func receive_message(sender: int, content: String, color):
+	print("message received")
+	emit_signal("message_received", sender, content, color)
+
+remote func receive_message_server(sender: int, content: String, color):
+	print("message received server")
+	if not get_tree().is_network_server():
+		return
+	if get_tree().get_rpc_sender_id() != sender:
+		return
+	emit_signal("message_received_server", sender, content, color)
+
+func send_bulk_messages(messages):
+	rpc("receive_bulk_messages", messages)
+
+puppet func receive_bulk_messages(messages: Array):
+	emit_signal("bulk_messages_received", messages)

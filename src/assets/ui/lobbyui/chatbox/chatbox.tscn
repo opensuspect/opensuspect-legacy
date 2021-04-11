@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/ui/lobbyui/chatbox/chatbox.gd" type="Script" id=1]
 [ext_resource path="res://assets/common/themes/iso_dark.theme" type="Theme" id=2]
+[ext_resource path="res://assets/ui/common/elements/chatboxbase/chatboxbase.tscn" type="PackedScene" id=3]
 
 [node name="chatbox" type="WindowDialog"]
 anchor_left = 0.3
@@ -16,60 +17,4 @@ script = ExtResource( 1 )
 menu_name = "chatbox"
 disable_movement = true
 
-[node name="Control" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -10.0
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="chatboxText" type="RichTextLabel" parent="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_bottom = -65.0
-bbcode_enabled = true
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -55.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextEdit" type="TextEdit" parent="Control/HBoxContainer"]
-margin_right = 336.0
-margin_bottom = 55.0
-rect_min_size = Vector2( 150, 0 )
-size_flags_horizontal = 3
-fold_gutter = true
-wrap_enabled = true
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="send" type="Button" parent="Control/HBoxContainer"]
-margin_left = 340.0
-margin_right = 389.0
-margin_bottom = 55.0
-text = "Send"
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-[connection signal="about_to_show" from="." to="." method="_on_chatbox_about_to_show"]
-[connection signal="popup_hide" from="." to="." method="_on_chatbox_popup_hide"]
-[connection signal="cursor_changed" from="Control/HBoxContainer/TextEdit" to="." method="_on_TextEdit_cursor_changed"]
-[connection signal="text_changed" from="Control/HBoxContainer/TextEdit" to="." method="_on_TextEdit_text_changed"]
-[connection signal="pressed" from="Control/HBoxContainer/send" to="." method="_on_send_pressed"]
+[node name="chatboxbase" parent="." instance=ExtResource( 3 )]

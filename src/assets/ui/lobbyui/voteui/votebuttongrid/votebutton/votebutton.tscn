@@ -1,0 +1,92 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/ui/lobbyui/voteui/votebuttongrid/votebutton/votebutton.gd" type="Script" id=1]
+
+
+[node name="votebutton" type="Button"]
+anchor_right = 1.0
+rect_min_size = Vector2( 200, 50 )
+focus_mode = 0
+size_flags_horizontal = 3
+enabled_focus_mode = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameText" type="Label" parent="MarginContainer/HBoxContainer"]
+margin_top = 4.0
+margin_right = 1004.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+text = "player name"
+valign = 1
+
+[node name="ConfirmCancelButtons" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 40.0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ConfirmCancelButtons"]
+margin_right = 1004.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ConfirmCancelButtons/VBoxContainer"]
+margin_top = 1.0
+margin_right = 1004.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="confirm" type="Button" parent="MarginContainer/ConfirmCancelButtons/VBoxContainer/HBoxContainer"]
+margin_left = 869.0
+margin_right = 939.0
+margin_bottom = 28.0
+size_flags_horizontal = 0
+size_flags_vertical = 3
+text = "Confirm"
+align = 0
+
+[node name="cancel" type="Button" parent="MarginContainer/ConfirmCancelButtons/VBoxContainer/HBoxContainer"]
+margin_left = 943.0
+margin_right = 1004.0
+margin_bottom = 28.0
+size_flags_horizontal = 0
+size_flags_vertical = 3
+text = "Cancel"
+align = 0
+[connection signal="pressed" from="MarginContainer/ConfirmCancelButtons/VBoxContainer/HBoxContainer/confirm" to="." method="_on_confirm_pressed"]
+[connection signal="pressed" from="MarginContainer/ConfirmCancelButtons/VBoxContainer/HBoxContainer/cancel" to="." method="_on_cancel_pressed"]

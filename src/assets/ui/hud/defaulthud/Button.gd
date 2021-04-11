@@ -1,5 +1,7 @@
 extends Button
 
+export(Resource) var interact_ui_resource
+
 func _ready():
 # warning-ignore:return_value_discarded
 	GameManager.connect("state_changed", self, "state_changed")
@@ -13,4 +15,5 @@ func state_changed(old_state, new_state):
 			show()
 
 func _on_Button_pressed():
-	UIManager.open_ui("chatbox")
+	print("chat pressed")
+	interact_ui_resource.interact(self)
