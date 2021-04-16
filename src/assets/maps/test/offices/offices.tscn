@@ -13,45 +13,45 @@
 [ext_resource path="res://assets/maps/test/offices/textures/kitchen-chair.png" type="Texture" id=11]
 [ext_resource path="res://assets/maps/test/offices/meeting-bottom-wall.tscn" type="PackedScene" id=12]
 
-[sub_resource type="CapsuleShape2D" id=7]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 138.163
 height = 115.136
 
-[sub_resource type="CapsuleShape2D" id=8]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 84.7502
 height = 30.4053
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 9, 80 )
 
-[sub_resource type="OccluderPolygon2D" id=10]
+[sub_resource type="OccluderPolygon2D" id=4]
 polygon = PoolVector2Array( 0, 0, 17, 0, 17, 160, 0, 160 )
 
-[sub_resource type="RectangleShape2D" id=15]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 12, 35 )
 
-[sub_resource type="OccluderPolygon2D" id=14]
+[sub_resource type="OccluderPolygon2D" id=6]
 polygon = PoolVector2Array( 0, 0, 17, 0, 17, 60, 0, 60 )
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 9, 35 )
 
-[sub_resource type="OccluderPolygon2D" id=13]
+[sub_resource type="OccluderPolygon2D" id=8]
 polygon = PoolVector2Array( 0, 0, 17, 0, 17, 5, 0, 5 )
 
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 45, 12 )
 
-[sub_resource type="RectangleShape2D" id=17]
+[sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 80, 7 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 20.6375, 97.05 )
 
-[sub_resource type="OccluderPolygon2D" id=5]
+[sub_resource type="OccluderPolygon2D" id=12]
 polygon = PoolVector2Array( -7, 100, -7, -105, 10, -105, 10, 100 )
 
-[sub_resource type="OccluderPolygon2D" id=6]
+[sub_resource type="OccluderPolygon2D" id=13]
 polygon = PoolVector2Array( -7, 100, -7, -105, 10, -105, 10, 100 )
 
 [node name="Offices" type="YSort"]
@@ -128,7 +128,7 @@ texture = ExtResource( 10 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Kitchen/Table/Collision"]
 position = Vector2( 0, 140 )
 rotation = 1.5708
-shape = SubResource( 7 )
+shape = SubResource( 1 )
 
 [node name="Chair" type="Sprite" parent="Kitchen"]
 position = Vector2( 250, 60 )
@@ -140,44 +140,44 @@ texture = ExtResource( 11 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Kitchen/Chair/Collision"]
 position = Vector2( 0, 100 )
 rotation = 0.785398
-shape = SubResource( 8 )
+shape = SubResource( 2 )
 
 [node name="Left Wall" type="StaticBody2D" parent="Kitchen"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Kitchen/Left Wall"]
 position = Vector2( 9, 80 )
-shape = SubResource( 9 )
+shape = SubResource( 3 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Kitchen/Left Wall"]
-occluder = SubResource( 10 )
+occluder = SubResource( 4 )
 
 [node name="Counter" type="CollisionShape2D" parent="Kitchen/Left Wall"]
 position = Vector2( 29, 35 )
-shape = SubResource( 15 )
+shape = SubResource( 5 )
 
 [node name="Right Wall" type="StaticBody2D" parent="Kitchen"]
 position = Vector2( 312.8, 0 )
 
 [node name="LightOccluderBottom" type="LightOccluder2D" parent="Kitchen/Right Wall"]
 position = Vector2( 0, 72 )
-occluder = SubResource( 14 )
+occluder = SubResource( 6 )
 
 [node name="CollisionTop" type="CollisionShape2D" parent="Kitchen/Right Wall"]
 position = Vector2( 9, 20 )
-shape = SubResource( 11 )
+shape = SubResource( 7 )
 
 [node name="LightOccluderTop" type="LightOccluder2D" parent="Kitchen/Right Wall"]
-occluder = SubResource( 13 )
+occluder = SubResource( 8 )
 
 [node name="Equipment" type="StaticBody2D" parent="Kitchen"]
 
 [node name="LeftCounter" type="CollisionShape2D" parent="Kitchen/Equipment"]
 position = Vector2( 60, 12 )
-shape = SubResource( 16 )
+shape = SubResource( 9 )
 
 [node name="RightCounter" type="CollisionShape2D" parent="Kitchen/Equipment"]
 position = Vector2( 234, 8 )
-shape = SubResource( 17 )
+shape = SubResource( 10 )
 
 [node name="Corridor" type="Sprite" parent="."]
 position = Vector2( 329.07, 0 )
@@ -193,27 +193,27 @@ position = Vector2( 0, 354.1 )
 scale = Vector2( 0.13, 0.13 )
 texture = ExtResource( 3 )
 centered = false
-offset = Vector2( 0, -150 )
+offset = Vector2( 0, -332 )
 
 [node name="RightWall" type="StaticBody2D" parent="Pantry"]
 
 [node name="RightWall" type="CollisionShape2D" parent="Pantry/RightWall"]
 position = Vector2( 120, 91.5 )
-shape = SubResource( 3 )
+shape = SubResource( 11 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Pantry/RightWall"]
 position = Vector2( 130.5, 91.5 )
-occluder = SubResource( 5 )
+occluder = SubResource( 12 )
 
 [node name="LeftWall" type="StaticBody2D" parent="Pantry"]
 
 [node name="LeftWall" type="CollisionShape2D" parent="Pantry/LeftWall"]
 position = Vector2( 20, 91.5 )
-shape = SubResource( 3 )
+shape = SubResource( 11 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Pantry/LeftWall"]
 position = Vector2( 7.5, 91.5 )
-occluder = SubResource( 6 )
+occluder = SubResource( 13 )
 
 [node name="PantryBottomWall" parent="Pantry" instance=ExtResource( 4 )]
 position = Vector2( 0, 191.4 )

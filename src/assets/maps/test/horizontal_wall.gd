@@ -9,11 +9,10 @@ var fading_in: bool
 var fading_out: bool
 var occluder_height: float
 var occluder_top: float
-var occluder_bottom: float
+export var occluder_bottom: float
 
 func _ready():
 	occluder_top = light_occluder.position.y
-	occluder_bottom = 0
 	occluder_height = occluder_top - occluder_bottom
 
 func _process(delta: float) -> void:
