@@ -66,6 +66,7 @@ func _ready():
 	else:
 		$MainLight.hide()
 		$Camera2D.queue_free()
+		$MaskingLight.hide()
 	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded

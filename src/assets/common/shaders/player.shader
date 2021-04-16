@@ -5,9 +5,7 @@ uniform float line_thickness : hint_range(0, 10) = 1.0;
 
 void fragment()
 {
-	// Only show the player when they are in light
-	if (AT_LIGHT_PASS)
-	{
+
 		vec4 color = texture(TEXTURE, UV);
 
 		vec2 size = TEXTURE_PIXEL_SIZE * line_thickness / 2.0;
@@ -28,9 +26,5 @@ void fragment()
 
 		// Outline color
 		COLOR = mix(color, outlined_result, outlined_result.a);
-	}
-	else
-	{
-		COLOR.a = 0.0;
-	}
+
 }
