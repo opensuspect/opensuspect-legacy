@@ -143,6 +143,7 @@ rotation = 0.785398
 shape = SubResource( 2 )
 
 [node name="Left Wall" type="StaticBody2D" parent="Kitchen"]
+collision_layer = 65
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Kitchen/Left Wall"]
 position = Vector2( 9, 80 )
@@ -157,6 +158,7 @@ shape = SubResource( 5 )
 
 [node name="Right Wall" type="StaticBody2D" parent="Kitchen"]
 position = Vector2( 312.8, 0 )
+collision_layer = 65
 
 [node name="LightOccluderBottom" type="LightOccluder2D" parent="Kitchen/Right Wall"]
 position = Vector2( 0, 72 )
@@ -196,6 +198,7 @@ centered = false
 offset = Vector2( 0, -332 )
 
 [node name="RightWall" type="StaticBody2D" parent="Pantry"]
+collision_layer = 65
 
 [node name="RightWall" type="CollisionShape2D" parent="Pantry/RightWall"]
 position = Vector2( 120, 91.5 )
@@ -206,6 +209,7 @@ position = Vector2( 130.5, 91.5 )
 occluder = SubResource( 12 )
 
 [node name="LeftWall" type="StaticBody2D" parent="Pantry"]
+collision_layer = 65
 
 [node name="LeftWall" type="CollisionShape2D" parent="Pantry/LeftWall"]
 position = Vector2( 20, 91.5 )
