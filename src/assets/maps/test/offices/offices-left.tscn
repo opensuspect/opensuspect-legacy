@@ -1,17 +1,46 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=34 format=2]
 
-[ext_resource path="res://assets/maps/test/offices/textures/corridoor.png" type="Texture" id=1]
 [ext_resource path="res://assets/maps/test/offices/textures/meeting-table.png" type="Texture" id=2]
 [ext_resource path="res://assets/maps/test/offices/textures/pantry.png" type="Texture" id=3]
 [ext_resource path="res://assets/maps/test/offices/pantry-bottom-wall.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/maps/test/offices/textures/pipes.png" type="Texture" id=5]
 [ext_resource path="res://assets/maps/test/offices/textures/meeting.png" type="Texture" id=6]
-[ext_resource path="res://assets/maps/test/offices/textures/files.png" type="Texture" id=7]
 [ext_resource path="res://assets/maps/test/offices/textures/kitchen.png" type="Texture" id=8]
 [ext_resource path="res://assets/maps/test/offices/kitchen-bottom-wall.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/maps/test/offices/textures/kitchen-table.png" type="Texture" id=10]
 [ext_resource path="res://assets/maps/test/offices/textures/kitchen-chair.png" type="Texture" id=11]
 [ext_resource path="res://assets/maps/test/offices/meeting-bottom-wall.tscn" type="PackedScene" id=12]
+
+[sub_resource type="RectangleShape2D" id=16]
+extents = Vector2( 165, 10 )
+
+[sub_resource type="OccluderPolygon2D" id=17]
+polygon = PoolVector2Array( -165, -56, 165, -56, 165, -39, -165, -39 )
+
+[sub_resource type="RectangleShape2D" id=20]
+extents = Vector2( 70, 12 )
+
+[sub_resource type="RectangleShape2D" id=21]
+
+[sub_resource type="RectangleShape2D" id=22]
+extents = Vector2( 10, 7 )
+
+[sub_resource type="RectangleShape2D" id=14]
+extents = Vector2( 9, 95 )
+
+[sub_resource type="OccluderPolygon2D" id=15]
+polygon = PoolVector2Array( 0, 147, 17, 147, 17, -65, 0, -65 )
+
+[sub_resource type="RectangleShape2D" id=23]
+extents = Vector2( 11, 32 )
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 8.5, 60 )
+
+[sub_resource type="OccluderPolygon2D" id=19]
+polygon = PoolVector2Array( 0, -65, 17.2, -65, 17.2, 23.222, 0, 22.925 )
+
+[sub_resource type="OccluderPolygon2D" id=24]
+polygon = PoolVector2Array( 0, 0, 0, 45, 17, 45, 17, 0 )
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 138.163
@@ -37,38 +66,24 @@ polygon = PoolVector2Array( 0, 0, 17, 0, 17, 60, 0, 60 )
 extents = Vector2( 9, 35 )
 
 [sub_resource type="OccluderPolygon2D" id=8]
-polygon = PoolVector2Array( 0, 0, 17, 0, 17, 5, 0, 5 )
+polygon = PoolVector2Array( 0, -50, 17, -50, 17, 5, 0, 5 )
 
 [sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 45, 12 )
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 80, 7 )
+extents = Vector2( 80, 11 )
 
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 20.6375, 97.05 )
 
 [sub_resource type="OccluderPolygon2D" id=12]
-polygon = PoolVector2Array( -7, 100, -7, -105, 10, -105, 10, 100 )
+polygon = PoolVector2Array( -7, 60, -7, -105, 10, -105, 10, 60 )
 
 [sub_resource type="OccluderPolygon2D" id=13]
-polygon = PoolVector2Array( -7, 100, -7, -105, 10, -105, 10, 100 )
+polygon = PoolVector2Array( -7, 60, -7, -105, 10, -105, 10, 60 )
 
-[node name="Offices" type="YSort"]
-
-[node name="PipesRoom" type="Sprite" parent="."]
-position = Vector2( 415, 0 )
-scale = Vector2( 0.13, 0.13 )
-texture = ExtResource( 5 )
-centered = false
-offset = Vector2( 0, -500 )
-
-[node name="FilesStorage" type="Sprite" parent="."]
-position = Vector2( 415, 268.79 )
-scale = Vector2( 0.13, 0.13 )
-texture = ExtResource( 7 )
-centered = false
-offset = Vector2( 0, -500 )
+[node name="OfficesLeft" type="YSort"]
 
 [node name="MeetingRoom" type="YSort" parent="."]
 
@@ -79,18 +94,53 @@ centered = false
 offset = Vector2( 0, -500 )
 
 [node name="MeetingTable" type="Sprite" parent="MeetingRoom"]
-position = Vector2( 61.4489, 69.9246 )
+position = Vector2( 77, 70 )
 scale = Vector2( 0.13, 0.13 )
 texture = ExtResource( 2 )
 centered = false
-offset = Vector2( 0, -300 )
+offset = Vector2( 0, -440 )
 
 [node name="Collision" type="StaticBody2D" parent="MeetingRoom/MeetingTable"]
-position = Vector2( -472.684, -537.881 )
+position = Vector2( -472.684, -670 )
 scale = Vector2( 7.69231, 7.69231 )
 
 [node name="Table" type="CollisionPolygon2D" parent="MeetingRoom/MeetingTable/Collision"]
-polygon = PoolVector2Array( 86.7429, 68.2981, 280.137, 69.3588, 280.137, 90.9255, 292.865, 90.9255, 292.511, 107.543, 279.783, 105.775, 279.076, 145.019, 188.566, 145.019, 186.445, 151.03, 171.242, 151.737, 173.01, 143.605, 88.8643, 145.019, 87.8036, 108.957, 62.3478, 108.603, 61.9942, 84.208, 87.45, 82.4403 )
+polygon = PoolVector2Array( 86.7429, 68.2981, 229.248, 69.5571, 231.02, 93.1771, 255.561, 94.1209, 256.884, 107.798, 233.257, 107.866, 227.021, 130.361, 161.094, 131.92, 161.094, 138.602, 146.172, 139.047, 146.172, 131.92, 89.4226, 131.614, 87.8036, 108.957, 60.962, 109.581, 61.5846, 87.4544, 87.7767, 87.8513 )
+
+[node name="TopWall" type="StaticBody2D" parent="MeetingRoom"]
+position = Vector2( 165, -9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeetingRoom/TopWall"]
+shape = SubResource( 16 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="MeetingRoom/TopWall"]
+occluder = SubResource( 17 )
+
+[node name="Counter" type="CollisionShape2D" parent="MeetingRoom/TopWall"]
+position = Vector2( -82, 22 )
+shape = SubResource( 20 )
+
+[node name="Chair" type="CollisionShape2D" parent="MeetingRoom/TopWall"]
+position = Vector2( 92, 17 )
+rotation = 1.5708
+shape = SubResource( 21 )
+
+[node name="Watercooler" type="CollisionShape2D" parent="MeetingRoom/TopWall"]
+position = Vector2( 125, 12 )
+shape = SubResource( 22 )
+
+[node name="Left Wall" type="StaticBody2D" parent="MeetingRoom"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeetingRoom/Left Wall"]
+position = Vector2( 9, 85 )
+shape = SubResource( 14 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="MeetingRoom/Left Wall"]
+occluder = SubResource( 15 )
+
+[node name="Counter" type="CollisionShape2D" parent="MeetingRoom/Left Wall"]
+position = Vector2( 29, 30 )
+shape = SubResource( 23 )
 
 [node name="MeetingBottomWall" parent="MeetingRoom" instance=ExtResource( 12 )]
 position = Vector2( 0, 180.1 )
@@ -99,8 +149,22 @@ position = Vector2( 0, 180.1 )
 position = Vector2( 15, -180 )
 polygon = PoolVector2Array( 0, 0, 315, 0, 315, 194, 0, 194 )
 
+[node name="RightWall" type="StaticBody2D" parent="MeetingRoom"]
+position = Vector2( 312.8, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeetingRoom/RightWall"]
+position = Vector2( 8.5, 12.6 )
+shape = SubResource( 18 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="MeetingRoom/RightWall"]
+occluder = SubResource( 19 )
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="MeetingRoom/RightWall"]
+position = Vector2( 0, 97 )
+occluder = SubResource( 24 )
+
 [node name="Kitchen" type="YSort" parent="."]
-position = Vector2( 0, 193.4 )
+position = Vector2( 0, 194 )
 
 [node name="Kitchen" type="Sprite" parent="Kitchen"]
 scale = Vector2( 0.13, 0.13 )
@@ -178,15 +242,8 @@ position = Vector2( 60, 12 )
 shape = SubResource( 9 )
 
 [node name="RightCounter" type="CollisionShape2D" parent="Kitchen/Equipment"]
-position = Vector2( 234, 8 )
+position = Vector2( 234, 12 )
 shape = SubResource( 10 )
-
-[node name="Corridor" type="Sprite" parent="."]
-position = Vector2( 329.07, 0 )
-scale = Vector2( 0.13, 0.13 )
-texture = ExtResource( 1 )
-centered = false
-offset = Vector2( 0, -500 )
 
 [node name="Pantry" type="YSort" parent="."]
 position = Vector2( 0, 354.1 )

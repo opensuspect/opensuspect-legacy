@@ -7,7 +7,7 @@
 polygon = PoolVector2Array( 153.5, 17, 330, 17, 330, -32.5, 313, -32.5, 313, 0, 153.5, 0 )
 
 [sub_resource type="OccluderPolygon2D" id=2]
-polygon = PoolVector2Array( 34, 0, 104.5, 0, 104.5, 17, 0, 17, 0, 0 )
+polygon = PoolVector2Array( 17, 0.453, 104.5, 0, 104.5, 17, 0, 17, 0, -32.5, 17, -32.5 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 88.2, 9 )
@@ -19,6 +19,7 @@ extents = Vector2( 53, 9 )
 extents = Vector2( 9, 42.121 )
 
 [node name="MeetingBottomWall" instance=ExtResource( 1 )]
+occluder_bottom = -13.0
 
 [node name="Sprite" parent="." index="0"]
 scale = Vector2( 0.13, 0.13 )

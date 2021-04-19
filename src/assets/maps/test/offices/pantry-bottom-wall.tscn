@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/maps/test/offices/textures/pantry-bottom-wall.png" type="Texture" id=2]
 
 [sub_resource type="OccluderPolygon2D" id=1]
-polygon = PoolVector2Array( 0, 0, 140.6, 0, 140.6, 17.4, 0, 17.4 )
+polygon = PoolVector2Array( 140.6, 17, 140.6, -40, 123.6, -40, 123.6, 0, 14.7, 0, 14.7, -40, 0, -40, 0.147, 17 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 70.3, 9 )
