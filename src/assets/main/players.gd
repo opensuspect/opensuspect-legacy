@@ -11,6 +11,21 @@ var spawn_pos = Vector2(0,0)
 func _ready():
 	GameManager.connect("state_changed_priority", self, "state_changed_priority")
 
+func _process(delta: float) -> void:
+	var id = Network.get_my_id()
+	# These lines hide players that are behind obstacles like the terrain
+	var to = players[id].global_position
+	for i in players.keys():
+		if i != id:
+			var player_finder = players[i].get_node("ObstructionFinder")
+			player_finder.cast_to = player_finder.to_local(to)
+			player_finder.force_raycast_update()
+			var result = player_finder.get_collider()
+			if result == null:
+				players[i].show_player()
+			else:
+				players[i].hide_player()
+
 func tell_all_to_setup_new_player(id, playerName):
 	#tell all existing players to create this player
 	for i in players.keys():
