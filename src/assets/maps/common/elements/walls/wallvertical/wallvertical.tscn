@@ -5,6 +5,7 @@ polygon = PoolVector2Array( -10, -10, -10, 10, 10, 10, 10, -10 )
 
 [node name="wallvertical" type="StaticBody2D"]
 scale = Vector2( 3, 6 )
+collision_layer = 65
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color( 0.219608, 0.219608, 1, 1 )

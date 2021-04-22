@@ -49,6 +49,7 @@ shader_param/line_thickness = 5.0
 [node name="Item" type="KinematicBody2D" groups=[
 "items",
 ]]
+light_mask = 3
 material = SubResource( 1 )
 input_pickable = true
 collision_layer = 16
@@ -70,6 +71,7 @@ __meta__ = {
 }
 
 [node name="SpritePosition" type="Position2D" parent="."]
+light_mask = 3
 use_parent_material = true
 position = Vector2( 0, 2.5 )
 __meta__ = {
@@ -77,6 +79,7 @@ __meta__ = {
 }
 
 [node name="ItemSprite" type="AnimatedSprite" parent="SpritePosition"]
+light_mask = 3
 material = SubResource( 4 )
 offset = Vector2( 0, -25 )
 __meta__ = {

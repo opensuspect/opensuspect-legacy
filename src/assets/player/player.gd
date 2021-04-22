@@ -45,6 +45,11 @@ var last_received_input: int = 0
 # movement and previous velocity.
 var input_queue: Array = []
 
+# Player fading in and out when moving behind obstacle
+const fade_speed: float = 5.0
+var fading_in: bool
+var fading_out: bool
+
 func _ready():
 	# Reparent ItemHandler to Skeleton Node2D
 	remove_child(item_handler)
@@ -66,6 +71,7 @@ func _ready():
 	else:
 		$MainLight.hide()
 		$Camera2D.queue_free()
+		$MaskingLight.hide()
 	#TODO: tell the player node their role upon creation in main.gd
 	roles_assigned(PlayerManager.get_player_roles())
 # warning-ignore:return_value_discarded
@@ -169,7 +175,7 @@ func customizePlayer(customize_id):
 		elif self.has_node("Skeleton"):
 			self.get_node("Skeleton").applyCustomization(customizationData)
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	if main_player:
 		get_input()
 		input_number += 1
@@ -189,6 +195,29 @@ func _physics_process(_delta):
 		if face_right:
 			face_right = false
 			skeleton.scale.x *= -1
+
+	# Fading in and out behind obstacles
+	if fading_in:
+		modulate.a += delta * fade_speed
+		if modulate.a >= 1.0:
+			fading_in = false
+			modulate.a = 1.0
+	if fading_out:
+		modulate.a -= delta * fade_speed
+		if modulate.a <= 0.0:
+			fading_out = false
+			visible = false
+
+func hide_player():
+	if visible:
+		fading_out = true
+		fading_in = false
+
+func show_player():
+	if modulate.a < 1.0:
+		visible = true
+		fading_in = true
+		fading_out = false
 
 # Only called on the main player. Rerolls the player's unreceived inputs on top
 # of the server's player position

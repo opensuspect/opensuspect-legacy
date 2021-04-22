@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://assets/common/classes/ui/task/controltask.gd"
 }, {
+"base": "StaticBody2D",
+"class": "HorizWall",
+"language": "GDScript",
+"path": "res://assets/maps/test/horizontal_wall.gd"
+}, {
 "base": "Node2D",
 "class": "IPoolable",
 "language": "GDScript",
@@ -93,6 +98,7 @@ _global_script_class_icons={
 "BackgroundObject": "",
 "ControlBase": "",
 "ControlTask": "",
+"HorizWall": "",
 "IPoolable": "",
 "InteractTask": "",
 "Item": "",
@@ -211,11 +217,16 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_4="infiltrators"
 2d_physics/layer_5="interactive"
 2d_physics/layer_6="corpse"
+2d_physics/layer_7="vision_obstruction"
 
 [locale]
 
 translations=PoolStringArray( "res://locale/de.po", "res://locale/el.po", "res://locale/en.po", "res://locale/es.po", "res://locale/fr.po", "res://locale/hu.po", "res://locale/ko.po", "res://locale/ro.po", "res://locale/sr.po", "res://locale/sv.po" )
 locale_filter=[ 0, [  ] ]
+
+[network]
+
+limits/debugger_stdout/max_chars_per_second=70000
 
 [rendering]
 
