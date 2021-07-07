@@ -1,17 +1,17 @@
 extends Node
 
-#this script will keep track of info about the player and what they can and can't do
-#for instance, keeping track if they are in a menu in order to disable movement
+# this script will keep track of info about the player and what they can and can't do
+# for instance, keeping track if they are in a menu in order to disable movement
 
 var inMenu = false
 var ourrole
 var ournumber
-#vars for role assignment
-#Percent assigns based on what % should be x role, Amount assigns given amount to x role
-#mustAssign specifies if the role is mandatory to have, team specifies a team number which
-#will be checked by the win condition scripts. When giving numbers out to the infiltrator
-#teams, consider, that the majority count for elimination victory will favor the lower number
-#in case of tie (check main.gd for details).
+# vars for role assignment
+# Percent assigns based on what % should be x role, Amount assigns given amount to x role
+# mustAssign specifies if the role is mandatory to have, team specifies a team number which
+# will be checked by the win condition scripts. When giving numbers out to the infiltrator
+# teams, consider, that the majority count for elimination victory will favor the lower number
+# in case of tie (check main.gd for details).
 enum assignStyle {Percent, Amount}
 var style: int = assignStyle.Percent
 var enabledRoles: Array = ["infiltrator", "detective", "agent"]
@@ -28,7 +28,7 @@ signal roles_assigned
 
 func _ready():
 	set_network_master(1)
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 	GameManager.connect("state_changed_priority", self, "state_changed_priority")
 
 # warning-ignore:unused_argument
@@ -41,7 +41,7 @@ func state_changed_priority(old_state: int, new_state: int, priority: int):
 			assignRoles(Network.get_peers())
 		GameManager.State.Lobby:
 			TaskManager.reset_tasks()
-			#revoke special roles when players move to lobby
+			# revoke special roles when players move to lobby
 			for i in playerRoles.keys():
 				playerRoles[i] = "agent"
 			emit_signal("roles_assigned", playerRoles)
@@ -58,12 +58,12 @@ func assignRoles(players: Array):
 	var playerAmount = toAssign.size()
 	TaskManager.assign_tasks()
 
-	#if using percent, find how many of each role to assign
+	# if using percent, find how many of each role to assign
 	if style == assignStyle.Percent:
 		for i in enabledRoles:
 			if not roles.keys().has(i) or i == "agent":
 				continue
-			#rounds down to be more predictable, if percent is 1/7th, role won't be assigned until there are 7 players
+			# rounds down to be more predictable, if percent is 1/7th, role won't be assigned until there are 7 players
 			roles[i].amount = roundDown(roles[i].percent * playerAmount, 1)
 			if roles[i].amount < 1 and roles[i].mustAssign:
 				roles[i].amount = 1
@@ -79,7 +79,7 @@ func assignRoles(players: Array):
 	roles.agent.amount = agents
 	#print("roles: ", roles)
 
-	#actually assign roles
+	# actually assign roles
 	for i in enabledRoles:
 		if not roles.keys().has(i):
 			continue
@@ -101,7 +101,7 @@ func roundDown(num, step):
 		return normRound - step
 	return normRound
 
-#TODO recieve a signal that initiates the application of customization to a player sprite.
+# TODO recieve a signal that initiates the application of customization to a player sprite.
 
 func getPlayerById(id) -> KinematicBody2D:
 	if players.has(id):
@@ -109,31 +109,31 @@ func getPlayerById(id) -> KinematicBody2D:
 	return null
 
 func get_main_player() -> KinematicBody2D:
-	"""Gets the main player on the local client."""
+	# Gets the main player on the local client.
 	for player in players.values():
 		if player.main_player:
 			return player
-	#There is no main player, the program runs as a dedicated server
+	# There is no main player, the program runs as a dedicated server
 	return null
 
 func get_player_roles() -> Dictionary:
-	"""Returns all players and their roles"""
+	# Returns all players and their roles
 	return playerRoles
 
 func get_player_role(id) -> String:
-	"""Returns the role name of the player with the requested id"""
+	# Returns the role name of the player with the requested id
 	return playerRoles[id]
 
 func get_player_team(id) -> int:
-	"""Returns the team number of the player with the requested id"""
+	# Returns the team number of the player with the requested id
 	return roles[playerRoles[id]]["team"]
 
 func get_enabledRoles():
-	"""Returns all roles that are enabled in the current game"""
+	# Returns all roles that are enabled in the current game
 	return enabledRoles
 
 func get_enabledTeams() -> Array:
-	"""Returns an array with the teams (numbered) enabled in the current game"""
+	# Returns an array with the teams (numbered) enabled in the current game
 	var teams: Array
 	
 	for role in roles:

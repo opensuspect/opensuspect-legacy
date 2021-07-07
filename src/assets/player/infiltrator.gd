@@ -52,7 +52,7 @@ func _process(delta: float) -> void:
 		_get_target()
 
 func is_reload_enabled() -> bool:
-	"""Returns wether the infiltrator can reload or not"""
+	# Returns wether the infiltrator can reload or not
 	if player.item_handler.has_item():
 		return false
 	if reload_only_empty and _shots_left > 0:
@@ -60,19 +60,19 @@ func is_reload_enabled() -> bool:
 	return true
 
 func is_killing_enabled() -> bool:
-	"""Returns whether killing is enabled for the infiltrator."""
+	# Returns whether killing is enabled for the infiltrator.
 	return _shots_left > 0 and _trigger_ready and not player.item_handler.has_item()
 
 func is_reloading() -> bool:
-	"""Returns whether the infiltrator is reloading their weapon."""
+	# Returns whether the infiltrator is reloading their weapon.
 	return _reloading
 
 func set_reloading(reloading: bool) -> void:
-	"""Set whether the infiltrator is reloading their weapon."""
+	# Set whether the infiltrator is reloading their weapon.
 	_reloading = reloading
 
 func _kill_player() -> void:
-	"""Kill the player who is currently the target."""
+	# Kill the player who is currently the target.
 	for player in kill_area.get_overlapping_bodies():
 		var target_sprite: Sprite = player.get_node("ViewportTextureTarget")
 		target_sprite.material.set_shader_param("line_color", Color.transparent)
@@ -82,10 +82,10 @@ func _kill_player() -> void:
 	kill_cooldown_timer.start()
 
 func _get_target() -> void:
-	"""
-	Each frame, outline the nearest target within the kill area in red as the
-	player who will be killed if the infiltrator decides to do so.
-	"""
+	#------------------
+	# Each frame, outline the nearest target within the kill area in red as the
+	# player who will be killed if the infiltrator decides to do so.
+	#------------------
 	var distance: float = INF
 	_target_player = null
 	for player in kill_area.get_overlapping_bodies():
@@ -101,19 +101,18 @@ func _get_target() -> void:
 		target_sprite.material.set_shader_param("line_color", Color.red)
 
 func _instantiate_kill_gui() -> void:
-	"""
-	Add kill UI to the infiltrator's HUD
-	"""
+	# Add kill UI to the infiltrator's HUD
+	
 	ui_interact_resource.interact(self, {"linked_node": self, "rect_position": Vector2(850, 500)})
 
 func _reload() -> void:
-	"""Reload the infiltrator's weapon and freeze the parent player node."""
+	# Reload the infiltrator's weapon and freeze the parent player node.
 	animator.play("Reload")
 	set_reloading(true)
 	player.set_movement_disabled(true)
 
 func _cancel_reload() -> void:
-	"""Stop reload animation, returning control to the player."""
+	# Stop reload animation, returning control to the player.
 	animator.stop()
 	set_reloading(false)
 	emit_signal("stopped_reloading")
@@ -124,20 +123,20 @@ func _finish_reload() -> void:
 	_trigger_ready = true
 
 func _on_KillArea_body_exited(body: Node) -> void:
-	"""Remove the outline from the body that exited the kill area."""
+	# Remove the outline from the body that exited the kill area.
 	if player.main_player:
 		var target_sprite: Sprite = body.get_node("ViewportTextureTarget")
 		target_sprite.material.set_shader_param("line_color", Color.transparent)
 
 func _on_KillCooldownTimer_timeout() -> void:
-	"""Re-enable killing mechanic after cooldown ends."""
+	# Re-enable killing mechanic after cooldown ends.
 	_trigger_ready = true
 
 func _on_Animator_animation_finished(anim_name: String) -> void:
-	"""
-	Re-enable killing mechanic and player movement after reload animation is
-	finished.
-	"""
+	#------------------
+	# Re-enable killing mechanic and player movement after reload animation is
+	# finished.
+	#------------------
 	match anim_name:
 		"Reload":
 			_finish_reload()

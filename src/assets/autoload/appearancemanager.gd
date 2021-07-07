@@ -1,10 +1,12 @@
 extends Node
-"""
-This autoload script is keeping persistent information about the customized
-appearance of players so when the actual player nodes (or other nodes
-representing the players) are instanced, the information is available at one
-place.
-"""
+
+# --------------------------------------------------------------
+# This autoload script is keeping persistent information about the customized
+# appearance of players so when the actual player nodes (or other nodes
+# representing the players) are instanced, the information is available at one
+# place.
+# --------------------------------------------------------------
+
 # Location of the saved customization
 const customization_path : String = "user://custom_appearance.save"
 # Variables that manage the in-game appearance of the player character
@@ -81,9 +83,8 @@ const COLOR_XY = 500
 signal apply_appearance(id)
 
 func _ready():
-	"""
-	When this script is ready, it loads the saved customization of the user.
-	"""
+	# When this script is ready, it loads the saved customization of the user.
+
 	var color_map: Image
 	var texture: StreamTexture
 	for color_map_name in custom_color_files.keys():
@@ -104,17 +105,17 @@ func _ready():
 #-------------------------------------------------------------------------------
 
 func getColorMap(color_map_name: String):
-	"""Returns the custom color map by the name"""
+	# Returns the custom color map by the name
 	if custom_color_files.has(color_map_name):
 		return custom_colors[color_map_name]
 	return null
 
 func getFilePaths(part_name: String, selection_name: String):
-	"""
-	Returns all the file names that are related to a certain customization of a 
-	part: part_name is the high-level, uniquely customizable part, while selection_name
-	is the name of the selection for the certain part.
-	"""
+	#-----------------
+	# Returns all the file names that are related to a certain customization of a 
+	# part: part_name is the high-level, uniquely customizable part, while selection_name
+	# is the name of the selection for the certain part.
+	#-----------------
 	var paths = []
 	var directory: String
 	
@@ -129,17 +130,17 @@ func getPlayerParts():
 	return player_parts
 
 func partFiles(part: String) -> Dictionary:
-	"""
-	Returns a directory of file names and display names that are available for
-	the part customization
-	"""
+	# ---------------------------
+	# Returns a directory of file names and display names that are available for
+	# the part customization
+	# ----------------
 	return part_sprite_list[part]
 
 func colorFromMapXY(color_map, x_rel, y_rel):
-	"""
-	Returns the color of the color map at x_rel, y_rel relative coordinates where
-	both x_rel and y_rel are in the range of [0..COLOR_XY]
-	"""
+	# ----------------------------
+	# Returns the color of the color map at x_rel, y_rel relative coordinates where
+	# both x_rel and y_rel are in the range of [0..COLOR_XY]
+	# ----------------------------
 	var max_x: int
 	var max_y: int
 	var x: int
@@ -155,10 +156,10 @@ func colorFromMapXY(color_map, x_rel, y_rel):
 	return rgba
 
 func setColors(customization):
-	"""
-	Based on the coordinates on the color maps, it adds rgb values to the customization
-	dictionary received.
-	"""
+	# ------------------------
+	# Based on the coordinates on the color maps, it adds rgb values to the customization
+	# dictionary received.
+	# -----------------------
 	var rgba: Color
 	for color_map_name in custom_colors.keys():
 		rgba = colorFromMapXY(custom_colors[color_map_name],
@@ -198,54 +199,49 @@ func enableAllAppearances():
 		enableAppearance(id)
 
 func setPlayerAppearance(id: int, custmoization_data: Dictionary):
-	"""
-	This function only saves the received customization data at the proper id.
-	"""
+	# This function only saves the received customization data at the proper id.
+
 	customization_dict[id] = custmoization_data
 	emit_signal("apply_appearance", id)
 
 func getPlayerAppearance(id):
-	"""
-	The customization details of the requested players are returned.
-	"""
+	# The customization details of the requested players are returned.
 	if customization_dict.has(id):
 		return customization_dict[id]
 	return null
 
 func savePlayerAppearance():
-	"""
-	Saves the visual appearance of the player to the file.
-	"""
+	# Saves the visual appearance of the player to the file.
 	SaveLoadHandler.save_data(customization_path, my_customization)
 
 func queryCustomization(id: int) -> void:
-	"""The server asks a client to send their customization data back."""
+	# The server asks a client to send their customization data back.
 	if not get_tree().is_network_server():
 		return
 	rpc_id(id, "sendCustomizationToServer")
 
 puppet func sendCustomizationToServer() -> void:
-	"""Sends the actual customization data of the main player to the server."""
+	# Sends the actual customization data of the main player to the server.
 	print("I am ", Network.get_my_id(), ", sending my customization data to the server")
 	rpc_id(1, "receiveCustomizationFromClient", customization_dict[Network.get_my_id()])
 
 master func receiveCustomizationFromClient(custmoization_data: Dictionary) -> void:
-	"""
-	Confirms that player data has been received on the server from the client.
-	Sends this player data to all the other clients along with its own player data.
-	"""
+	# ----------------
+	# Confirms that player data has been received on the server from the client.
+	# Sends this player data to all the other clients along with its own player data.
+	# ----------------
 	if not get_tree().is_network_server():
 		return
 	var id: int = get_tree().get_rpc_sender_id()
-	#If customization is not changable AND this player's customization is
-	#already registered, don't broadcast
+	# if customization is not changable AND this player's customization is
+	# already registered, don't broadcast
 	if not customization_change and customization_dict.has(id):
 		return
 	setPlayerAppearance(id, custmoization_data)
 	rpc("receiveCustomizationFromServer", id, custmoization_data)
 
 puppet func receiveCustomizationFromServer(id: int, custmoization_data: Dictionary) -> void:
-	"""Takes player data received from the server and applies them to the local player."""
+	# Takes player data received from the server and applies them to the local player.
 	if get_tree().get_rpc_sender_id() != 1:
 		return
 	if id == Network.get_my_id():
@@ -253,8 +249,8 @@ puppet func receiveCustomizationFromServer(id: int, custmoization_data: Dictiona
 	setPlayerAppearance(id, custmoization_data)
 
 puppet func receiveBulkCustomization(received_customizatios: Dictionary):
-	"""Receives multiple customization data from the server and merges it with
-	the local dictionary"""
+	# Receives multiple customization data from the server and merges it with
+	# the local dictionary
 	if get_tree().get_rpc_sender_id() != 1:
 		return
 	for player in received_customizatios.keys():
@@ -262,13 +258,13 @@ puppet func receiveBulkCustomization(received_customizatios: Dictionary):
 			setPlayerAppearance(player, received_customizatios[player])
 
 func sendBulkCustomization(id: int):
-	"""Sends the whole customization dictionary to the relevant player"""
+	# Sends the whole customization dictionary to the relevant player
 	if not get_tree().is_network_server():
 		return
 	rpc_id(id, "receiveBulkCustomization", customization_dict)
 
 func changeMyAppearance(custmoization_data) -> void:
-	"""Called when the player changes their appearance in-game."""
+	# Called when the player changes their appearance in-game.
 	if custmoization_data != null:
 		my_customization = custmoization_data
 	if customization_change && Network.get_connection() != 0:

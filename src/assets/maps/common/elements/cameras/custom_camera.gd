@@ -29,10 +29,11 @@ func _process(delta: float) -> void:
 			_track_player(player, delta)
 
 func _track_player(player: KinematicBody2D, delta: float) -> void:
-	"""
-	Tracks a player while staying within the limits specified by child LimitMin 
-	and LimitMax Position2D nodes.
-	"""
+	#---------------
+	# Tracks a player while staying within the limits specified by child LimitMin 
+	# and LimitMax Position2D nodes.
+	#---------------
+	
 	# Interpolate the camera's offset to the main player's position
 	offset = offset.linear_interpolate(player.global_position, delta * smoothing)
 	# Make sure camera's extents do not go past set limits

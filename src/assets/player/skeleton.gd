@@ -34,9 +34,9 @@ func _ready():
 		sprite_nodes[part] = sprites
 
 func applyCustomization(customizationData):
-	"""
-	Receives the customization data, and applies it to the current instance.
-	"""
+	#----------
+	# Receives the customization data, and applies it to the current instance.
+	#----------
 	if customizationData.empty():
 		print_debug("Empty customization data received")
 		return

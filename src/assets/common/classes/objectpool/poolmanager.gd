@@ -20,7 +20,7 @@ var _spawned_objects: Array = [] setget , get_spawned_objects
 var _recycled_objects: Array = [] setget , get_recycled_objects
 
 func create_pool(pool_name: String, pool_object: IPoolable, size: int = 100, manager: PoolManager = self) -> ObjectPool:
-	"""Creates a pool of objects."""
+	# Creates a pool of objects.
 	var object_pool := ObjectPool.new(pool_object, size)
 	object_pool.name = pool_name
 	self.add_child(object_pool)
@@ -28,7 +28,7 @@ func create_pool(pool_name: String, pool_object: IPoolable, size: int = 100, man
 	return object_pool
 
 func destroy_pool(pool_name: String) -> void:
-	"""Destroys an object pool."""
+	# Destroys an object pool.
 	if not has_node(pool_name):
 		return
 	var object_pool: ObjectPool = get_node(pool_name)
@@ -36,14 +36,14 @@ func destroy_pool(pool_name: String) -> void:
 	self.emit_signal("pool_destroyed", object_pool)
 
 func get_pool(pool_name: String) -> ObjectPool:
-	"""Gets an object pool by its name."""
+	# Gets an object pool by its name.
 	for object_pool in get_children():
 		if object_pool.name == pool_name:
 			return object_pool
 	return null
 
 func recycle(object: IPoolable) -> void:
-	"""Recycles an object into its respective pool."""
+	# Recycles an object into its respective pool.
 	for object_pool in get_children():
 		if object_pool.object_references.has(object):
 			object_pool.recycle(object)
@@ -52,7 +52,7 @@ func recycle(object: IPoolable) -> void:
 			self.emit_signal("object_recycled", object)
 
 func spawn(object: IPoolable) -> IPoolable:
-	"""Spawns an object from its pool."""
+	# Spawns an object from its pool.
 	for object_pool in get_children():
 		if object_pool.pool.has(object):
 			self._spawned_objects.append(object)
@@ -62,7 +62,7 @@ func spawn(object: IPoolable) -> IPoolable:
 	return null
 
 func spawn_from_pool(pool_name: String) -> IPoolable:
-	"""Spawns an object from its pool by the pool's name."""
+	# Spawns an object from its pool by the pool's name.
 	for object_pool in get_children():
 		if object_pool.name == pool_name and len(object_pool.pool) > 0:
 			var object: IPoolable = object_pool.spawn()
@@ -73,11 +73,11 @@ func spawn_from_pool(pool_name: String) -> IPoolable:
 	return null
 
 func get_spawned_objects() -> Array:
-	"""Gets an array of spawned objects within the pool manager."""
+	# Gets an array of spawned objects within the pool manager.
 	return _spawned_objects
 
 func get_recycled_objects() -> Array:
-	"""Gets an array of recycled objects within the pool manager."""
+	# Gets an array of recycled objects within the pool manager.
 	return _recycled_objects
 
 
@@ -100,7 +100,7 @@ class ObjectPool extends Node:
 		self._init_pool()
 
 	func spawn() -> IPoolable:
-		"""Spawns an object."""
+		# Spawns an object.
 		if len(self.pool) <= 0:
 			return null
 		var spawned_object: IPoolable = self.pool.pop_back()
@@ -109,14 +109,14 @@ class ObjectPool extends Node:
 		return spawned_object
 
 	func recycle(_object: IPoolable) -> void:
-		"""Recycles an object."""
+		# Recycles an object.
 		if len(self.pool) < size and self.object_references.has(_object):
 			_object.recycled()
 			self.remove_child(_object)
 			self.pool.push_back(_object)
 
 	func _init_pool() -> void:
-		"""Initializes the object pool."""
+		# Initializes the object pool.
 		for i in range(self.size):
 			var new_object: IPoolable = self.object.duplicate()
 			self.pool.push_back(new_object)

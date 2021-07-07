@@ -25,7 +25,7 @@ func _on_FadeTrigger_body_exited(body: Node) -> void:
 	_check_fade(body)
 
 func _check_fade(body: KinematicBody2D) -> void:
-	"""Fade the bottom wall in or out if the main player is moving away from or towards it."""
+	# Fade the bottom wall in or out if the main player is moving away from or towards it.
 	if body.is_in_group("players") and body.main_player:
 		if body.velocity.y > 0:
 			fading_in = false
