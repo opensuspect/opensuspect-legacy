@@ -8,7 +8,7 @@ func pick_random(array: Array):
 	return array[random_index]
 
 func string_join(string_array: Array, separator: String) -> String:
-	"""Join an array of strings together, separated by 'separator'"""
+	# Join an array of strings together, separated by 'separator'
 	var combined_string: String = ""
 	for index in range(len(string_array) - 1):
 		combined_string += string_array[index] + separator
@@ -23,7 +23,7 @@ func merge_dicts(dict_a: Dictionary, dict_b: Dictionary) -> Dictionary:
 	return dict
 
 func find_file(file_name: String, start_path: String = "res://", recursive: bool = true) -> String:
-	"""Find file 'file_name' starting at directory 'start_path' recursively."""
+	# Find file 'file_name' starting at directory 'start_path' recursively.
 	var directory := Directory.new()
 	assert(directory.open(start_path) == OK)
 	directory.list_dir_begin(true)
@@ -39,7 +39,7 @@ func find_file(file_name: String, start_path: String = "res://", recursive: bool
 	return ""
 
 func list_directory(path: String, recursive: bool = false) -> Array:
-	"""Return an Array of all the files in directory 'path' recursively."""
+	# Return an Array of all the files in directory 'path' recursively.
 	var directory := Directory.new()
 	assert(directory.open(path) == OK)
 	var files: Array = []
@@ -105,7 +105,7 @@ func is_valid_file_name(file_name: String, ext: String = "") -> bool:
 	return true
 
 func map(in_value: float, in_value_min: float, in_value_max: float, out_value_min: float, out_value_max: float) -> float:
-	"""Map a value from an input range to an output range."""
+	# Map a value from an input range to an output range.
 	return (in_value - in_value_min) * (out_value_max - out_value_min) / (in_value_max - in_value_min) + out_value_min
 
 func filename_to_label(filename: String) -> String:

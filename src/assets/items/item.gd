@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 			picked_up()
 
 func picked_up() -> void:
-	"""Item is picked up."""
+	# Item is picked up.
 	set_collision_layer_bit(4, false)
 	being_held = true
 	map_items.remove_child(self)
@@ -39,12 +39,12 @@ func picked_up() -> void:
 	position = Vector2.ZERO
 
 func picking_up() -> void:
-	"""Item is being picked up."""
+	# Item is being picked up.
 	animator.play("idle", 0.25)
 	being_picked_up = true
 
 func dropped() -> void:
-	"""Item has been dropped."""
+	# Item has been dropped.
 	animator.play("hover")
 	map_items.add_child(self)
 	global_position = holding_player.global_position - map_items.global_position

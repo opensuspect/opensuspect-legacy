@@ -26,9 +26,9 @@ func _ready() -> void:
 		kill_cooldown_timer = infiltrator.get_node("KillCooldownTimer")
 
 func _process(_delta: float) -> void:
-#	if kill_cooldown_timer != null and not kill_cooldown_timer.is_stopped():
-#		var progress: float = (kill_cooldown_timer.wait_time - kill_cooldown_timer.time_left) / kill_cooldown_timer.wait_time
-#		sprite.material.set_shader_param("progress", progress)
+	#if kill_cooldown_timer != null and not kill_cooldown_timer.is_stopped():
+	#	var progress: float = (kill_cooldown_timer.wait_time - kill_cooldown_timer.time_left) / kill_cooldown_timer.wait_time
+	#	sprite.material.set_shader_param("progress", progress)
 	if infiltrator == null:
 		return
 	if infiltrator.is_reloading():
@@ -38,36 +38,36 @@ func _process(_delta: float) -> void:
 		reload_button.material.set_shader_param("progress", progress)
 
 func _on_Infiltrator_Animator_animation_finished(anim_name: String) -> void:
-	"""
-	Hide the reload button and show the kill button once the reload animation
-	has finished.
-	"""
+	#----------
+	# Hide the reload button and show the kill button once the reload animation
+	# has finished.
+	#----------
 	if anim_name == "Reload":
 		reload_button.hide()
 		kill_button.show()
 
 func _on_Infiltrator_kill(_emitter: KinematicBody2D, _target_player: KinematicBody2D) -> void:
-	"""Disable the kill button once a kill has been executed."""
+	# Disable the kill button once a kill has been executed.
 	kill_button.hide()
 	reload_button.show()
 	# Set the reload button to be fully visible initially
 	reload_button.material.set_shader_param("progress", 1.0)
 
 func _on_Infiltrator_stopped_reloading() -> void:
-	"""
-	Reset the reload button's progress when the player stops reloading their
-	weapon.
-	"""
+	#-------
+	# Reset the reload button's progress when the player stops reloading their
+	# weapon.
+	#-------
 	reload_button.material.set_shader_param("progress", 1.0)
 
 func _on_Infiltrator_tree_exited() -> void:
-	"""Remove the infiltrator icons when the infiltrator node is removed from the player."""
+	# Remove the infiltrator icons when the infiltrator node is removed from the player.
 	queue_free()
 
 func _on_KillButton_pressed() -> void:
-	"""Execute kill input event action when kill button is pressed."""
+	# execute kill input event action when kill button is pressed.
 	Input.action_press("kill")
 
 func _on_ReloadButton_pressed() -> void:
-	"""Execute reload input event action when reload button is pressed."""
+	# Execute reload input event action when reload button is pressed.
 	Input.action_press("reload")

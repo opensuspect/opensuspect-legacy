@@ -30,7 +30,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if player.main_player:
 		pass
-#		_get_target()
+	#_get_target()
 
 func _input(event: InputEvent) -> void:
 	# IMPORTANT NOTE: here, we don't check whether the pick up can happen or not.
@@ -58,7 +58,7 @@ func _exit_tree() -> void:
 	emit_signal("main_player_dropped_item")
 
 func _test_pickup(item: Item) -> void:
-	"""Drop the player's current held item if it exists and pick up the new item."""
+	# Drop the player's current held item if it exists and pick up the new item.
 	if get_child_count() > 0:
 		delay_timer = true
 		emit_signal("main_player_dropped_item")
@@ -71,10 +71,10 @@ func isPickupEnabled() -> bool:
 	return true
 
 func pick_up(item: Item) -> void:
-	"""Pick up an item."""
+	# Pick up an item.
 	if item == null:
 		return
-	# print("(item_handler.gd/pick_up)")
+	#print("(item_handler.gd/pick_up)")
 	#if delay_timer: 
 	pickup_timer.start()
 	item.holding_player = player
@@ -83,10 +83,10 @@ func pick_up(item: Item) -> void:
 	_set_item_outlines()
 
 func drop(item: Item) -> void:
-	"""Drop an item."""
+	# Drop an item.
 	if item == null:
 		return
-	# print("(item_handler.gd/drop)")
+	#print("(item_handler.gd/drop)")
 	if not delay_timer: 
 		pickup_timer.start()
 	remove_child(item)

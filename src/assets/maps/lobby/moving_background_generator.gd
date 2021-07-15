@@ -66,10 +66,10 @@ func _physics_process(delta: float) -> void:
 			pool_manager.recycle(instance)
 
 func _spawn_object(global_spawn_position: Vector2) -> void:
-	"""
-	Spawns an object at 'global_spawn_position', setting a random distance and
-	modifying properties based on it.
-	"""
+	#-------------------
+	# Spawns an object at 'global_spawn_position', setting a random distance and
+	# modifying properties based on it.
+	#-------------------
 	randomize()
 	var distance: int = randi() % distance_max + distance_min
 
@@ -92,7 +92,7 @@ func _spawn_object(global_spawn_position: Vector2) -> void:
 	instance.material.set_shader_param("tint_amount", -instance.z_index / float(background_distance))
 
 func _reset_spawn_timer() -> void:
-	"""Reset the spawn timer with a randomized time."""
+	# Reset the spawn timer with a randomized time.
 	var spawn_delay: float = rand_range(spawn_delay_min, spawn_delay_max)
 	spawn_timer.wait_time = spawn_delay
 	spawn_timer.start()

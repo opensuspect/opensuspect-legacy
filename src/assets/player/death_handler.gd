@@ -21,7 +21,7 @@ signal dead
 var is_dead: bool = false
 
 func die_by(killer_id: int) -> void:
-	"""Player death."""
+	# Player death.
 	is_dead = true
 	var killer: KinematicBody2D = PlayerManager.players[killer_id]
 	var kill_direction: int = sign(killer.global_position.x - player.global_position.x)
@@ -41,7 +41,7 @@ func die_by(killer_id: int) -> void:
 		player_light.shadow_enabled = false
 	
 func create_corpse() -> void:
-	"""Create a corpse where the killed player was."""
+	# Create a corpse where the killed player was.
 	var corpse: Node2D = corpse_scene.instance()
 	var corpses: Node2D = MapManager.get_current_map().corpses
 	var offset: Vector2 = player.global_position + player.get_node("ViewportTextureTarget").position
@@ -54,15 +54,15 @@ func create_corpse() -> void:
 	corpse_sprite.texture = image_texture
 
 func show_ghost() -> void:
-	"""Show the player ghost."""
+	# Show the player ghost.
 	player.modulate.a = 0.5
 
 func hide_ghost() -> void:
-	"""Make the player ghost transparent."""
+	# Make the player ghost transparent.
 	player.modulate.a = 0.0
 
 func update_dead_players() -> void:
-	"""Either show or hide ghosts depending on whether the player is living or dead."""
+	# Either show or hide ghosts depending on whether the player is living or dead.
 	for _player in PlayerManager.players.values():
 		var _player_death_handler: Node2D = _player.death_handler
 		if _player_death_handler.is_dead:

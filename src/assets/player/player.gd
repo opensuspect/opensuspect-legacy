@@ -99,7 +99,7 @@ func roles_assigned(playerRoles: Dictionary):
 	_checkRole(myRole)
 
 func _checkRole(role: String) -> void:
-	"""Performs certain functions depending on the passed in role parameter."""
+	# Performs certain functions depending on the passed in role parameter.
 	match role:
 		"infiltrator":
 			set_collision_layer_bit(3, true)
@@ -119,7 +119,7 @@ func changeNameColor(role: String):
 			if PlayerManager.ourrole == "infiltrator":
 				setNameColor(PlayerManager.playerColors["infiltrator"])
 		"detective":
-			#not checking if our role is detective because everyone should see detectives
+			# not checking if our role is detective because everyone should see detectives
 			setNameColor(PlayerManager.playerColors["detective"])
 		"agent":
 			setNameColor(PlayerManager.playerColors["agent"])
@@ -128,11 +128,11 @@ func setNameColor(newColor: Color):
 	$Label.set("custom_colors/font_color", newColor)
 
 func is_movement_disabled() -> bool:
-	"""Returns whether player movement is disabled or not."""
+	# Returns whether player movement is disabled or not.
 	return _movement_disabled
 
 func set_movement_disabled(movement_disabled: bool) -> void:
-	"""Set whether player movement should be disabled."""
+	# Set whether player movement should be disabled.
 	_movement_disabled = movement_disabled
 
 # Only called when main_player is true
@@ -144,10 +144,10 @@ func get_input():
 		movement = movement.normalized()
 
 func animate(current_velocity: Vector2) -> void:
-	"""
-	Set the blend between the idle and move animations in the animation tree's
-	root state machine based on the player's current velocity.
-	"""
+	#---------------
+	# Set the blend between the idle and move animations in the animation tree's
+	# root state machine based on the player's current velocity.
+	#---------------
 	var blend_position := Vector2(0, current_velocity.length() / speed)
 	animation_tree.set("parameters/idle_move_blend/blend_position", blend_position)
 
@@ -163,9 +163,9 @@ func run_physics(motion):
 	velocity = move_and_slide(velocity)
 
 func customizePlayer(customize_id):
-	"""
-	Customizes the player's character
-	"""
+	#------------
+	# Customizes the player's character
+	#------------
 	if id != customize_id:
 		return
 	var customizationData = AppearanceManager.getPlayerAppearance(id)

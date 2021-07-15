@@ -100,7 +100,7 @@ func _ready() -> void:
 		sprite_nodes[part] = sprites
 
 func _on_choose_color(new_color, part_name):
-	"""Receives the selected color from the color selectors"""
+	# Receives the selected color from the color selectors
 	current_customization[part_name] = new_color
 	_update_preview()
 
@@ -113,7 +113,7 @@ func _update_ui_elements():
 			current_customization[color_selector]["y"])
 
 func _update_preview() -> void:
-	"""Updates the player preview with the currently selected customizations."""
+	# Updates the player preview with the currently selected customizations.
 	var color_for_shader: Color
 	var file_paths: Array
 	var player_parts = AppearanceManager.getPlayerParts()
@@ -139,7 +139,7 @@ func close() -> void:
 	hide()
 
 func _close_editor() -> void:
-	"""Handle closing the editor differently depending on game state."""
+	# Handle closing the editor differently depending on game state.
 	if GameManager.state == GameManager.State.Start:
 		close()
 	else:
@@ -169,16 +169,16 @@ func _on_SaveButton_pressed() -> void:
 	_close_editor()
 
 func _load() -> void:
-	"""
-	Asks for the player's appearance data from AppearanceManager and applies it
-	to the preview.
-	"""
+	#----------------
+	# Asks for the player's appearance data from AppearanceManager and applies it
+	# to the preview.
+	#----------------
 	current_customization = AppearanceManager.getMyAppearance()
 	_update_ui_elements()
 	_update_preview()
 
 func _save() -> void:
-	"""Saves the player's selected appearance to player_data.save."""
+	# Saves the player's selected appearance to player_data.save.
 	AppearanceManager.changeMyAppearance(current_customization)
 	AppearanceManager.savePlayerAppearance()
 
