@@ -184,6 +184,7 @@ script = ExtResource( 28 )
 
 [node name="PickUp" type="Timer" parent="Timers"]
 one_shot = true
+
 [connection signal="body_entered" from="interactarea" to="interactarea" method="_on_interactarea_body_entered"]
 [connection signal="body_exited" from="interactarea" to="interactarea" method="_on_interactarea_body_exited"]
 [connection signal="body_entered" from="ItemPickupRange" to="ItemHandler" method="_on_ItemPickupRange_body_entered"]

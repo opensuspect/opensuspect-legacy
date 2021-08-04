@@ -224,6 +224,7 @@ anchor_bottom = 1.0
 
 [node name="AppearanceEditor" parent="." instance=ExtResource( 8 )]
 visible = false
+
 [connection signal="returnToMainMenu" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_MenuArea_returnToMainMenu"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control/CenterContainer/PlayGame" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_NewGame_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuArea/MainMenu/Control2/CenterContainer/Appearence" to="MarginContainer/VBoxContainer/MarginContainer/MenuArea" method="_on_Appearence_pressed"]
