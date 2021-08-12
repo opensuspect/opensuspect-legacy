@@ -55,11 +55,12 @@ func create_corpse() -> void:
 
 func show_ghost() -> void:
 	# Show the player ghost.
-	player.modulate.a = 0.5
+	player.show()
+	player_sprite.modulate.a = 0.5 # Give it an alpha of 0.5
 
 func hide_ghost() -> void:
-	# Make the player ghost transparent.
-	player.modulate.a = 0.0
+	# Hide the player ghost
+	player.hide()
 
 func update_dead_players() -> void:
 	# Either show or hide ghosts depending on whether the player is living or dead.
