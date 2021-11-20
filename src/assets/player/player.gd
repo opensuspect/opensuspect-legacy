@@ -12,7 +12,7 @@ onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("pa
 onready var item_transform: RemoteTransform2D = skeleton.get_node("Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand/ItemTransform")
 onready var sprites_viewport: Viewport = $SpritesViewport
 
-signal main_player_moved(position, velocity, input_number)
+signal main_player_moved(movement, input_number)
 
 export (int) var speed = 150
 
@@ -22,6 +22,8 @@ var _movement_disabled: bool setget set_movement_disabled, is_movement_disabled
 var id: int
 var ourname: String
 var myRole: String
+# Where the server thinks this player is. Only used in the client.
+var server_position: Vector2
 var velocity = Vector2(0,0)
 # Contains the current intended movement direction and magnitude in range 0 to 1
 var movement = Vector2(0,0)
@@ -159,8 +161,9 @@ func run_physics(motion):
 		velocity.x = lerp(prev_velocity.x, 0, 0.17)
 	if velocity.y == 0:
 		velocity.y = lerp(prev_velocity.y, 0, 0.17)
-	# TODO: provide a delta value to this function and use it here
-	velocity = move_and_slide(velocity)
+	var collision = move_and_collide(velocity / 60)
+	if collision:
+		velocity = velocity.slide(collision.normal)
 
 func customizePlayer(customize_id):
 	#------------
@@ -180,7 +183,7 @@ func _physics_process(delta):
 		get_input()
 		input_number += 1
 		input_queue.push_back([movement, velocity])
-		emit_signal("main_player_moved", movement, velocity, input_number)
+		emit_signal("main_player_moved", movement, input_number)
 	# Remove this if check to get bad movement extrapolation for all players
 	if main_player or get_tree().is_network_server():
 		run_physics(movement)
@@ -233,12 +236,21 @@ func _on_positions_updated(new_last_received_input: int):
 	if input_queue.size() >= 1:
 		velocity = input_queue[0][1]
 	# Run the physics model for the unreceived inputs
+	var old_position = position
+	position = server_position
 	for i in input_queue:
 		run_physics(i[0])
+	var target_position = position
+	position = old_position
+	$Tween.interpolate_property(self, "position", null, target_position, 0.3)
+	$Tween.start()
 
 func move_to(new_pos, new_movement):
-	position = new_pos
+	server_position = new_pos
 	movement = new_movement
+	if not main_player:
+		$Tween.interpolate_property(self, "position", null, server_position, 0.2)
+		$Tween.start()
 
 func get_is_alive() -> bool:
 	return not death_handler.is_dead
