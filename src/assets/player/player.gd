@@ -12,7 +12,7 @@ onready var anim_fsm: AnimationNodeStateMachinePlayback = animation_tree.get("pa
 onready var item_transform: RemoteTransform2D = skeleton.get_node("Skeleton/Spine/RightUpperArm/RightLowerArm/RightHand/ItemTransform")
 onready var sprites_viewport: Viewport = $SpritesViewport
 
-signal main_player_moved(position, velocity, input_number)
+signal main_player_moved(movement, input_number)
 
 export (int) var speed = 150
 
@@ -180,7 +180,7 @@ func _physics_process(delta):
 		get_input()
 		input_number += 1
 		input_queue.push_back([movement, velocity])
-		emit_signal("main_player_moved", movement, velocity, input_number)
+		emit_signal("main_player_moved", movement, input_number)
 	# Remove this if check to get bad movement extrapolation for all players
 	if main_player or get_tree().is_network_server():
 		run_physics(movement)

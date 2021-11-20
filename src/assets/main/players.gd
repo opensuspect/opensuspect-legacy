@@ -83,9 +83,9 @@ puppet func update_positions(positions_dict: Dictionary, last_received_input: in
 			players[id].velocity = positions_dict[id][2]
 	emit_signal("positions_updated", last_received_input)
 
-func _on_main_player_moved(movement: Vector2, velocity: Vector2, last_input: int):
+func _on_main_player_moved(movement: Vector2, last_input: int):
 	if not get_tree().is_network_server():
-		rpc_id(1, "player_moved", movement, velocity, last_input)
+		rpc_id(1, "player_moved", movement, last_input)
 
 # Keep the clients' player positions updated
 func _physics_process(_delta: float) -> void:
@@ -107,7 +107,7 @@ func get_network_id_from_player_node_name(node_name: String) -> int:
 	return -1
 
 # Called from client side to tell the server about the player's actions
-remote func player_moved(new_movement: Vector2, velocity: Vector2, last_input: int) -> void:
+remote func player_moved(new_movement: Vector2, last_input: int) -> void:
 	# Should only be run on the server
 	if !get_tree().is_network_server():
 		return
