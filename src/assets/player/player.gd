@@ -159,8 +159,9 @@ func run_physics(motion):
 		velocity.x = lerp(prev_velocity.x, 0, 0.17)
 	if velocity.y == 0:
 		velocity.y = lerp(prev_velocity.y, 0, 0.17)
-	# TODO: provide a delta value to this function and use it here
-	velocity = move_and_slide(velocity)
+	var collision = move_and_collide(velocity / 60)
+	if collision:
+		velocity = velocity.slide(collision.normal)
 
 func customizePlayer(customize_id):
 	#------------
