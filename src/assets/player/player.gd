@@ -22,6 +22,8 @@ var _movement_disabled: bool setget set_movement_disabled, is_movement_disabled
 var id: int
 var ourname: String
 var myRole: String
+# Where the server thinks this player is. Only used in the client.
+var server_position: Vector2
 var velocity = Vector2(0,0)
 # Contains the current intended movement direction and magnitude in range 0 to 1
 var movement = Vector2(0,0)
@@ -234,12 +236,21 @@ func _on_positions_updated(new_last_received_input: int):
 	if input_queue.size() >= 1:
 		velocity = input_queue[0][1]
 	# Run the physics model for the unreceived inputs
+	var old_position = position
+	position = server_position
 	for i in input_queue:
 		run_physics(i[0])
+	var target_position = position
+	position = old_position
+	$Tween.interpolate_property(self, "position", null, target_position, 0.3)
+	$Tween.start()
 
 func move_to(new_pos, new_movement):
-	position = new_pos
+	server_position = new_pos
 	movement = new_movement
+	if not main_player:
+		$Tween.interpolate_property(self, "position", null, server_position, 0.2)
+		$Tween.start()
 
 func get_is_alive() -> bool:
 	return not death_handler.is_dead
